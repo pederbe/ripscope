@@ -1,0 +1,427 @@
+{
+  "provenance": {
+    "source": "Retained attribution captures. All lowercase-sensitive queries also run caseless without changing fixture spellings. The preprocessor-defined Correction removes conditional operator calls under ADR 0002, and changed queries retain reference_stdout.",
+    "reference_profile": "Ubuntu cscope 15.9-2build1 amd64",
+    "reference_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "receipt": "admission-attribution-results.json"
+  },
+  "cases": {
+    "if_defined": {
+      "source": "void f(void) {\n#if defined(FLAG)\n target();\n#endif\n}\n",
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "defined"
+          ],
+          "stdout": "case.c f 2 #if defined(FLAG)\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-2",
+            "f"
+          ],
+          "reference_stdout": "case.c defined 2 #if defined(FLAG)\ncase.c target 3 target();\n",
+          "stdout": "case.c target 3 target();\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "defined"
+          ],
+          "reference_stdout": "case.c f 2 #if defined(FLAG)\n",
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "target"
+          ],
+          "stdout": "case.c f 3 target();\n"
+        }
+      ]
+    },
+    "elif_defined": {
+      "source": "void f(void) {\n#if FLAG\n target();\n#elif defined(OTHER)\n other();\n#endif\n}\n",
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "defined"
+          ],
+          "stdout": "case.c f 4 #elif defined(OTHER)\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-2",
+            "f"
+          ],
+          "reference_stdout": "case.c target 3 target();\ncase.c defined 4 #elif defined(OTHER)\ncase.c other 5 other();\n",
+          "stdout": "case.c target 3 target();\ncase.c other 5 other();\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "defined"
+          ],
+          "reference_stdout": "case.c f 4 #elif defined(OTHER)\n",
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "target"
+          ],
+          "stdout": "case.c f 3 target();\n"
+        }
+      ]
+    },
+    "if_invocation": {
+      "source": "void f(void) {\n#if COND(FLAG)\n target();\n#endif\n}\n",
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "defined"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-2",
+            "f"
+          ],
+          "stdout": "case.c COND 2 #if COND(FLAG)\ncase.c target 3 target();\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "defined"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "COND"
+          ],
+          "stdout": "case.c f 2 #if COND(FLAG)\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "COND"
+          ],
+          "stdout": "case.c f 2 #if COND(FLAG)\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "target"
+          ],
+          "stdout": "case.c f 3 target();\n"
+        }
+      ]
+    },
+    "if_name": {
+      "source": "void f(void) {\n#if FLAG\n target();\n#endif\n}\n",
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "defined"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-2",
+            "f"
+          ],
+          "stdout": "case.c target 3 target();\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "defined"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "target"
+          ],
+          "stdout": "case.c f 3 target();\n"
+        }
+      ]
+    },
+    "ordinary_defined": {
+      "source": "void f(void) { defined(FLAG); target(); }\n",
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "defined"
+          ],
+          "stdout": "case.c f 1 void f(void ) { defined(FLAG); target(); }\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-2",
+            "f"
+          ],
+          "stdout": "case.c defined 1 void f(void ) { defined(FLAG); target(); }\ncase.c target 1 void f(void ) { defined(FLAG); target(); }\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "defined"
+          ],
+          "stdout": "case.c f 1 void f(void ) { defined(FLAG); target(); }\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "target"
+          ],
+          "stdout": "case.c f 1 void f(void ) { defined(FLAG); target(); }\n"
+        }
+      ]
+    },
+    "macro_payload": {
+      "source": "#define WRAP() target()\nvoid f(void) { WRAP(); }\n",
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "defined"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-2",
+            "f"
+          ],
+          "stdout": "case.c WRAP 2 void f(void ) { WRAP(); }\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "defined"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "target"
+          ],
+          "stdout": "case.c WRAP 1 #define WRAP() target()\n"
+        }
+      ]
+    },
+    "global_defined": {
+      "source": "#if defined(FLAG)\nvoid f(void) { target(); }\n#endif\n",
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "defined"
+          ],
+          "stdout": "case.c <global> 1 #if defined(FLAG)\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-2",
+            "f"
+          ],
+          "stdout": "case.c target 2 void f(void ) { target(); }\n"
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "defined"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-0",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "COND"
+          ],
+          "stdout": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-3",
+            "target"
+          ],
+          "stdout": "case.c f 2 void f(void ) { target(); }\n"
+        }
+      ]
+    }
+  }
+}

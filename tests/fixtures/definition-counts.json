@@ -1,0 +1,619 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "source": "int a;\nint aa;\nint aaa;\nint aaaa;\nint ab;\nint abab;\nint b;\nint bb;\nint A;\nint AA;\nint AAA;\nint ABAB;\n",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{2} 2 int aa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{1,3}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{1,3} 1 int a;\ncase.c a{1,3} 2 int aa;\ncase.c a{1,3} 3 int aaa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{2,}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{2,} 2 int aa;\ncase.c a{2,} 3 int aaa;\ncase.c a{2,} 4 int aaaa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{0}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{0,0}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(ab){2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (ab){2} 6 int abab;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "[aA]{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c [aA]{2} 2 int aa;\ncase.c [aA]{2} 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(a{1,2}){2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (a{1,2}){2} 2 int aa;\ncase.c (a{1,2}){2} 3 int aaa;\ncase.c (a{1,2}){2} 4 int aaaa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(A{1,2}|b{2})"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (A{1,2}|b{2}) 8 int bb;\ncase.c (A{1,2}|b{2}) 9 int A;\ncase.c (A{1,2}|b{2}) 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{0002}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{0002} 2 int aa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{01,03}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{01,03} 1 int a;\ncase.c a{01,03} 2 int aa;\ncase.c a{01,03} 3 int aaa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{,2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{,2} 1 int a;\ncase.c a{,2} 2 int aa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{32767}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{32768}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{3,2}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{2}{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{2}{2} 4 int aaaa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{2}+"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{2}+ 2 int aa;\ncase.c a{2}+ 4 int aaaa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{bad}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{1,2,3}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "{2}a"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(^){2}a"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (^){2}a 1 int a;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a\\{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "[{a}]{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c [{a}]{2} 2 int aa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{0}b"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{0}b 7 int b;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{0,}b"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{0,}b 5 int ab;\ncase.c a{0,}b 7 int b;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(a{0})b"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (a{0})b 7 int b;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "^a{02}$"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{02} 2 int aa;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{2} 2 int aa;\ncase.c a{2} 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{1,3}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{1,3} 1 int a;\ncase.c a{1,3} 2 int aa;\ncase.c a{1,3} 3 int aaa;\ncase.c a{1,3} 9 int A;\ncase.c a{1,3} 10 int AA;\ncase.c a{1,3} 11 int AAA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{2,}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{2,} 2 int aa;\ncase.c a{2,} 3 int aaa;\ncase.c a{2,} 4 int aaaa;\ncase.c a{2,} 10 int AA;\ncase.c a{2,} 11 int AAA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{0}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{0,0}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(ab){2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (ab){2} 6 int abab;\ncase.c (ab){2} 12 int ABAB;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "[aA]{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c [aA]{2} 2 int aa;\ncase.c [aA]{2} 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(a{1,2}){2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (a{1,2}){2} 2 int aa;\ncase.c (a{1,2}){2} 3 int aaa;\ncase.c (a{1,2}){2} 4 int aaaa;\ncase.c (a{1,2}){2} 10 int AA;\ncase.c (a{1,2}){2} 11 int AAA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(A{1,2}|b{2})"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (A{1,2}|b{2}) 1 int a;\ncase.c (A{1,2}|b{2}) 2 int aa;\ncase.c (A{1,2}|b{2}) 8 int bb;\ncase.c (A{1,2}|b{2}) 9 int A;\ncase.c (A{1,2}|b{2}) 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{0002}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{0002} 2 int aa;\ncase.c a{0002} 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{01,03}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{01,03} 1 int a;\ncase.c a{01,03} 2 int aa;\ncase.c a{01,03} 3 int aaa;\ncase.c a{01,03} 9 int A;\ncase.c a{01,03} 10 int AA;\ncase.c a{01,03} 11 int AAA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{,2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{,2} 1 int a;\ncase.c a{,2} 2 int aa;\ncase.c a{,2} 9 int A;\ncase.c a{,2} 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{32767}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{32768}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{3,2}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{2}{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{2}{2} 4 int aaaa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{2}+"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{2}+ 2 int aa;\ncase.c a{2}+ 4 int aaaa;\ncase.c a{2}+ 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{bad}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{1,2,3}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "{2}a"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(^){2}a"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (^){2}a 1 int a;\ncase.c (^){2}a 9 int A;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a\\{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "[{a}]{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c [{a}]{2} 2 int aa;\ncase.c [{a}]{2} 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{0}b"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{0}b 7 int b;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{0,}b"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{0,}b 5 int ab;\ncase.c a{0,}b 7 int b;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(a{0})b"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (a{0})b 7 int b;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "^a{02}$"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ^a{02}$ 2 int aa;\ncase.c ^a{02}$ 10 int AA;\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "build": {
+    "args": [
+      "-bk",
+      "case.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

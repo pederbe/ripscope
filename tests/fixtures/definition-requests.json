@@ -1,0 +1,367 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "source": "int Alpha;\nint alpha;\nint ALPHA;\nint AlphaTail;\nint tailAlpha;\nint Beta;\nint BetaTail;\nint tailBeta;\nint _value2;\nint Alpha, alpha;\n",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Alpha 1 int Alpha;\ncase.c Alpha 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c alpha 2 int alpha;\ncase.c alpha 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ALPHA"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ALPHA 3 int ALPHA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "_value2"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c _value2 9 int _value2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Alpha "
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Alpha 1 int Alpha;\ncase.c Alpha 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Alpha\t\r\n\u000b\f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Alpha 1 int Alpha;\ncase.c Alpha 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            " Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Alpha Beta"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "9Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Alpha?"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Al.*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Al.* 1 int Alpha;\ncase.c Al.* 4 int AlphaTail;\ncase.c Al.* 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "^Alpha$"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Alpha 1 int Alpha;\ncase.c Alpha 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Alpha|Beta"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Alpha|Beta 1 int Alpha;\ncase.c Alpha|Beta 4 int AlphaTail;\ncase.c Alpha|Beta 6 int Beta;\ncase.c Alpha|Beta 8 int tailBeta;\ncase.c Alpha|Beta 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(Alpha|Beta)"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (Alpha|Beta) 1 int Alpha;\ncase.c (Alpha|Beta) 6 int Beta;\ncase.c (Alpha|Beta) 10 int Alpha, alpha;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Alpha 1 int Alpha;\ncase.c Alpha 2 int alpha;\ncase.c Alpha 3 int ALPHA;\ncase.c Alpha 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c alpha 1 int Alpha;\ncase.c alpha 2 int alpha;\ncase.c alpha 3 int ALPHA;\ncase.c alpha 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "ALPHA"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ALPHA 1 int Alpha;\ncase.c ALPHA 2 int alpha;\ncase.c ALPHA 3 int ALPHA;\ncase.c ALPHA 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "_value2"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c _value2 9 int _value2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "Alpha "
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Alpha 1 int Alpha;\ncase.c Alpha 2 int alpha;\ncase.c Alpha 3 int ALPHA;\ncase.c Alpha 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "Alpha\t\r\n\u000b\f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Alpha 1 int Alpha;\ncase.c Alpha 2 int alpha;\ncase.c Alpha 3 int ALPHA;\ncase.c Alpha 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            " Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "Alpha Beta"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "9Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "Alpha?"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "Al.*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Al.* 1 int Alpha;\ncase.c Al.* 2 int alpha;\ncase.c Al.* 3 int ALPHA;\ncase.c Al.* 4 int AlphaTail;\ncase.c Al.* 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "^Alpha$"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ^Alpha$ 1 int Alpha;\ncase.c ^Alpha$ 2 int alpha;\ncase.c ^Alpha$ 3 int ALPHA;\ncase.c ^Alpha$ 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "Alpha|Beta"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Alpha|Beta 1 int Alpha;\ncase.c Alpha|Beta 2 int alpha;\ncase.c Alpha|Beta 3 int ALPHA;\ncase.c Alpha|Beta 4 int AlphaTail;\ncase.c Alpha|Beta 6 int Beta;\ncase.c Alpha|Beta 8 int tailBeta;\ncase.c Alpha|Beta 10 int Alpha, alpha;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(Alpha|Beta)"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (Alpha|Beta) 1 int Alpha;\ncase.c (Alpha|Beta) 2 int alpha;\ncase.c (Alpha|Beta) 3 int ALPHA;\ncase.c (Alpha|Beta) 6 int Beta;\ncase.c (Alpha|Beta) 10 int Alpha, alpha;\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "build": {
+    "args": [
+      "-bk",
+      "case.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

@@ -1,0 +1,4715 @@
+{
+ "source_commit": "612a539b585ccdb70a1261652954f579ccedb270",
+ "cases": {
+  "ifndef_comment": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #ifndef OLDIES\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #ifndef OLDIES\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef OLDIES /* define this to test if your app builds with all\n                  int phantom; the obsolete stuff removed! */\nint kept;\nvoid f(void) { g(); }\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 3 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 3 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef OLDIES /* define this to test if your app builds with all\n                  int phantom; the obsolete stuff removed! */\nint kept;\nvoid f(void) { g(); }\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef OLDIES /* define this to test if your app builds with all\n                  int phantom; the obsolete stuff removed! */\nint kept;\nvoid f(void) { g(); }\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 4 void f(void ) { g(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef OLDIES /* define this to test if your app builds with all\n                  int phantom; the obsolete stuff removed! */\nint kept;\nvoid f(void) { g(); }\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef OLDIES /* define this to test if your app builds with all\n                  int phantom; the obsolete stuff removed! */\nint kept;\nvoid f(void) { g(); }\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "ifdef_comment_define": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #ifdef FEATURE\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #ifdef FEATURE\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifdef FEATURE /* start\n#define PHANTOM 1\n*/\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 4 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 4 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifdef FEATURE /* start\n#define PHANTOM 1\n*/\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifdef FEATURE /* start\n#define PHANTOM 1\n*/\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifdef FEATURE /* start\n#define PHANTOM 1\n*/\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifdef FEATURE /* start\n#define PHANTOM 1\n*/\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "if_comment_closing_tokens": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #if A\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2  && B\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #if A\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2  && B\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* one\n two */ && B\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 3 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 3 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* one\n two */ && B\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* one\n two */ && B\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* one\n two */ && B\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* one\n two */ && B\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "elif_comment": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #if A\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 #elif B\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 int first;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #if A\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 #elif B\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 int first;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A\nint first;\n#elif B /* one\n int phantom; */\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 5 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c first 2 int first;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 5 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c first 2 int first;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A\nint first;\n#elif B /* one\n int phantom; */\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A\nint first;\n#elif B /* one\n int phantom; */\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A\nint first;\n#elif B /* one\n int phantom; */\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A\nint first;\n#elif B /* one\n int phantom; */\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "successive_comments": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #if A\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #if A\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* x\n */ /* y\n z */ // w\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 4 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 4 int kept;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* x\n */ /* y\n z */ // w\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* x\n */ /* y\n z */ // w\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* x\n */ /* y\n z */ // w\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if A /* x\n */ /* y\n z */ // w\nint kept;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "comment_then_code": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int kept = 1;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #ifndef GUARD\ncase.c <global> 3 #define GUARD\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "OLDIES"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int kept = 1;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "FEATURE"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "A"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "B"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #ifndef GUARD\ncase.c GUARD 3 #define GUARD\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "one"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "two"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef GUARD /* guard\n call(x); */\n#define GUARD\nint kept = 1;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 4 int kept = 1;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c GUARD 3 #define GUARD\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "phantom"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c kept 4 int kept = 1;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "PHANTOM"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "first"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "GUARD"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c GUARD 3 #define GUARD\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "obsolete"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef GUARD /* guard\n call(x); */\n#define GUARD\nint kept = 1;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef GUARD /* guard\n call(x); */\n#define GUARD\nint kept = 1;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "call"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef GUARD /* guard\n call(x); */\n#define GUARD\nint kept = 1;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int kept = 1;\n",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "kept"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int kept = 1;\n",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifndef GUARD /* guard\n call(x); */\n#define GUARD\nint kept = 1;\n#endif\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  }
+ }
+}

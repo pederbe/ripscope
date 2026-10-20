@@ -1,0 +1,378 @@
+{
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "commands": [
+   "cscope -bk <files>",
+   "cscope -dL [-C] -<field> <pattern>"
+  ],
+  "inverted_index": "rowsq/statusq/stderrq: the same queries on `cscope -bqk -f qscope.out <files>`",
+  "rows": "each byte one character (Latin-1)"
+ },
+ "files": [
+  "a_open.c",
+  "body.inc",
+  "p1.c"
+ ],
+ "queries": [
+  {
+   "field": "0",
+   "pattern": "page",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c <global> 1 struct page *pop(void ) {",
+    "p1.c <global> 2 struct page *p = first();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c <global> 1 struct page *pop(void ) {",
+    "p1.c pop 2 struct page *p = first();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "p",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c pop 2 struct page *p = first();",
+    "p1.c pop 3 return p;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c pop 2 struct page *p = first();",
+    "p1.c pop 3 return p;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "pop",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c pop 1 struct page *pop(void ) {"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c pop 1 struct page *pop(void ) {"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "body.inc <global> 1 int incl;",
+    "p1.c <global> 1 struct page *pop(void ) {",
+    "p1.c <global> 2 struct page *p = first();",
+    "p1.c <global> 3 return p;",
+    "p1.c <global> 10 #if A",
+    "a_open.c opened 1 void opened(void ) {",
+    "a_open.c opened 2 go();",
+    "p1.c g 5 void g(void )",
+    "p1.c g 8 helper();",
+    "p1.c left 11 void left(void ) {",
+    "p1.c right 13 void right(void ) {",
+    "p1.c right 15 after();",
+    "p1.c outer 17 void outer(void ) {",
+    "p1.c outer 18 #define INNER(x) inner_call(x)",
+    "p1.c outer 19 INNER(1);"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "body.inc <global> 1 int incl;",
+    "p1.c <global> 1 struct page *pop(void ) {",
+    "p1.c <global> 10 #if A",
+    "a_open.c opened 1 void opened(void ) {",
+    "a_open.c opened 2 go();",
+    "p1.c pop 2 struct page *p = first();",
+    "p1.c pop 3 return p;",
+    "p1.c g 5 void g(void )",
+    "p1.c g 8 helper();",
+    "p1.c left 11 void left(void ) {",
+    "p1.c left 13 void right(void ) {",
+    "p1.c right 15 after();",
+    "p1.c outer 17 void outer(void ) {",
+    "p1.c INNER 18 #define INNER(x) inner_call(x)",
+    "p1.c outer 19 INNER(1);"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": "body",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c <global> 7 #include \"body.inc\""
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c g 7 #include \"body.inc\""
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c <global> 7 #include \"body.inc\""
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c g 7 #include \"body.inc\""
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "after",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c left 15 after();",
+    "p1.c right 15 after();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c right 15 after();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "left",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c after 15 after();"
+   ],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "right",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c after 15 after();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c after 15 after();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "outer",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c INNER 19 INNER(1);"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c INNER 19 INNER(1);"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "INNER",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c inner_call 18 #define INNER(x) inner_call(x)"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c inner_call 18 #define INNER(x) inner_call(x)"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a_open.c go 2 go();",
+    "p1.c first 2 struct page *p = first();",
+    "p1.c helper 8 helper();",
+    "p1.c after 15 after();",
+    "p1.c INNER 19 INNER(1);"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a_open.c go 2 go();",
+    "p1.c first 2 struct page *p = first();",
+    "p1.c helper 8 helper();",
+    "p1.c after 15 after();",
+    "p1.c INNER 19 INNER(1);",
+    "p1.c inner_call 18 #define INNER(x) inner_call(x)"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "inner_call",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c INNER 18 #define INNER(x) inner_call(x)"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c INNER 18 #define INNER(x) inner_call(x)"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "INNER",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c outer 18 #define INNER(x) inner_call(x)",
+    "p1.c outer 19 INNER(1);"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c outer 18 #define INNER(x) inner_call(x)",
+    "p1.c outer 19 INNER(1);"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "INNER",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c INNER 18 #define INNER(x) inner_call(x)",
+    "p1.c outer 19 INNER(1);"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c outer 18 #define INNER(x) inner_call(x)",
+    "p1.c outer 19 INNER(1);"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": "p",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c pop 2 struct page *p = first();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c pop 2 struct page *p = first();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c pop 2 struct page *p = first();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c pop 2 struct page *p = first();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "go",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a_open.c opened 2 go();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a_open.c opened 2 go();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "first",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "p1.c opened 2 struct page *p = first();",
+    "p1.c pop 2 struct page *p = first();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "p1.c pop 2 struct page *p = first();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "opened",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a_open.c opened 1 void opened(void ) {"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a_open.c opened 1 void opened(void ) {"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "opened",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a_open.c go 2 go();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a_open.c go 2 go();"
+   ],
+   "stderrq": ""
+  }
+ ]
+}

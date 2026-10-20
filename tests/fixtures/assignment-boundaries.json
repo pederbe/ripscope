@@ -1,0 +1,312 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "x"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 2 int x = x = 1;\nedges.c g 9 x(); x = 1;\nedges.c g 12 x = 1; x == 1;\nedges.c g 13 x =x;\nedges.c g 14 x = x;\nedges.c g 15 x = 1;\nedges.c g 16 x = 1;\nedges.c g 17 x += 1;\nedges.c second 21 int first(void ) { x; } int second(void ) { x = 1; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "SAME"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c SAME 5 #define SAME SAME = 1\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "A"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 3 enum E { A = 1, B = A };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "B"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 3 enum E { A = 1, B = A };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "tag"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 22 struct tag { int a; }; int t = (tag=1);\nedges.c localtag 27 int localtag(void ) { struct tag { int a; }; tag=1; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "uni"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 23 union uni { int a; }; int u = (uni=1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "en"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 24 enum en { VAL }; int e = (en=1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "ext"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "mem"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "ITEM"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "alias"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c localtypedef 28 int localtypedef(void ) { typedef int alias; alias=1; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c proto 29 int proto(void ) { int callback(void ); callback=4; }\nedges.c spaces 31 int spaces(void ) { callback (); callback=6; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 2 int x = x = 1;\nedges.c <global> 3 enum E { A = 1, B = A };\nedges.c SAME 5 #define SAME SAME = 1\nedges.c g 9 x(); x = 1;\nedges.c g 12 x = 1; x == 1;\nedges.c g 13 x =x;\nedges.c g 14 x = x;\nedges.c g 15 x = 1;\nedges.c g 16 x = 1;\nedges.c g 17 x += 1;\nedges.c second 21 int first(void ) { x; } int second(void ) { x = 1; }\nedges.c second 22 struct tag { int a; }; int t = (tag=1);\nedges.c second 23 union uni { int a; }; int u = (uni=1);\nedges.c second 24 enum en { VAL }; int e = (en=1);\nedges.c second 25 extern int ext; int z = (ext=1);\nedges.c localtag 27 int localtag(void ) { struct tag { int a; }; tag=1; }\nedges.c localtypedef 28 int localtypedef(void ) { typedef int alias; alias=1; }\nedges.c proto 29 int proto(void ) { int callback(void ); callback=4; }\nedges.c spaces 31 int spaces(void ) { callback (); callback=6; }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "x"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 2 int x = x = 1;\nedges.c g 9 x(); x = 1;\nedges.c g 12 x = 1; x == 1;\nedges.c g 13 x =x;\nedges.c g 14 x = x;\nedges.c g 15 x = 1;\nedges.c g 16 x = 1;\nedges.c g 17 x += 1;\nedges.c second 21 int first(void ) { x; } int second(void ) { x = 1; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "SAME"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c SAME 5 #define SAME SAME = 1\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "A"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 3 enum E { A = 1, B = A };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "B"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 3 enum E { A = 1, B = A };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "tag"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 22 struct tag { int a; }; int t = (tag=1);\nedges.c localtag 27 int localtag(void ) { struct tag { int a; }; tag=1; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "uni"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 23 union uni { int a; }; int u = (uni=1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "en"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 24 enum en { VAL }; int e = (en=1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "ext"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "mem"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "ITEM"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "alias"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c localtypedef 28 int localtypedef(void ) { typedef int alias; alias=1; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c proto 29 int proto(void ) { int callback(void ); callback=4; }\nedges.c spaces 31 int spaces(void ) { callback (); callback=6; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c <global> 2 int x = x = 1;\nedges.c <global> 3 enum E { A = 1, B = A };\nedges.c SAME 5 #define SAME SAME = 1\nedges.c g 9 x(); x = 1;\nedges.c g 12 x = 1; x == 1;\nedges.c g 13 x =x;\nedges.c g 14 x = x;\nedges.c g 15 x = 1;\nedges.c g 16 x = 1;\nedges.c g 17 x += 1;\nedges.c second 21 int first(void ) { x; } int second(void ) { x = 1; }\nedges.c second 22 struct tag { int a; }; int t = (tag=1);\nedges.c second 23 union uni { int a; }; int u = (uni=1);\nedges.c second 24 enum en { VAL }; int e = (en=1);\nedges.c second 25 extern int ext; int z = (ext=1);\nedges.c localtag 27 int localtag(void ) { struct tag { int a; }; tag=1; }\nedges.c localtypedef 28 int localtypedef(void ) { typedef int alias; alias=1; }\nedges.c proto 29 int proto(void ) { int callback(void ); callback=4; }\nedges.c spaces 31 int spaces(void ) { callback (); callback=6; }\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "edges.c": "int x;\nint x = x = 1;\nenum E { A = 1, B = A };\n#define DUP(x) x = 1\n#define SAME SAME = 1\nint f(int x) { x = 1; }\nint g(void) {\n x; x = 1;\n x(); x = 1;\n int x; x = 1;\n x == 1; x = 1;\n x = 1; x == 1;\n x =x;\n x = x;\n x /*a*/ /*b*/ = 1;\n x = /*a*/ 1;\n x /*a*/ += 1;\n x // gap\n = 1;\n}\nint first(void) { x; } int second(void) { x = 1; }\nstruct tag { int a; }; int t = (tag=1);\nunion uni { int a; }; int u = (uni=1);\nenum en { VAL }; int e = (en=1);\nextern int ext; int z = (ext=1);\nint localtypes(void) { struct S { int mem; }; mem=1; enum E { ITEM }; ITEM=1; }\nint localtag(void) { struct tag { int a; }; tag=1; }\nint localtypedef(void) { typedef int alias; alias=1; }\nint proto(void) { int callback(void); callback=4; }\nint comments(void) { callback/*comment*/(); callback=5; }\nint spaces(void) { callback (); callback=6; }\n"
+  },
+  "seeds": [
+    "edges.c"
+  ],
+  "field": "9",
+  "build": {
+    "args": [
+      "-bk",
+      "edges.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sources_deleted_before_queries": true,
+  "unreadable": []
+}

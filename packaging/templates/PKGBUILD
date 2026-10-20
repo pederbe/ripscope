@@ -1,0 +1,31 @@
+# Maintainer: Peder Bergan <https://github.com/pederbe/ripscope/issues>
+pkgname=ripscope-bin
+pkgver=@VERSION@
+pkgrel=1
+pkgdesc='C navigation with atomic index updates'
+arch=('x86_64')
+url='https://ripscope.com'
+license=('MIT OR Apache-2.0' 'GPL-2.0-or-later')
+depends=('glibc>=2.28' 'gcc-libs')
+checkdepends=('diffutils' 'findutils' 'grep')
+provides=("ripscope=$pkgver")
+conflicts=('ripscope')
+options=('!strip' '!debug')
+_name="ripscope-${pkgver}-x86_64-linux-gnu"
+source=("https://github.com/pederbe/ripscope/releases/download/v${pkgver}/${_name}.tar.gz"
+        'check-installed.sh')
+sha256sums=('@ARCHIVE_SHA256@' '@CHECK_SHA256@')
+
+check() {
+    sh "$srcdir/check-installed.sh" "$pkgver" "$srcdir/$_name/bin/ripscope" "$srcdir/$_name"
+}
+
+package() {
+    install -d "$pkgdir/usr/lib/ripscope" "$pkgdir/usr/bin"
+    cp -a "$srcdir/$_name/." "$pkgdir/usr/lib/ripscope/"
+    ln -s ../lib/ripscope/bin/ripscope "$pkgdir/usr/bin/ripscope"
+    install -d "$pkgdir/usr/share/licenses/$pkgname"
+    cp -a "$pkgdir/usr/lib/ripscope/licenses" "$pkgdir/usr/share/licenses/$pkgname/"
+    install -m644 "$srcdir/$_name/LICENSE-MIT" "$srcdir/$_name/LICENSE-APACHE" \
+        "$srcdir/$_name/contrib/emacs/vendor/COPYING" "$pkgdir/usr/share/licenses/$pkgname/"
+}

@@ -1,0 +1,32 @@
+{
+ "decision": "The two_words expectation keeps a possible declaration (ADR 0002).",
+ "reference": "tests/fixtures/written-bare-word-arms-cscope.json holds the original pinned cscope observations; these are the intended responses for both case modes. The two_words response deliberately retains the reference reading.",
+ "cases": {
+  "guard_end": {
+   "1": {
+    "TUKLIB_DECLS_END": ""
+   }
+  },
+  "else_arm": {
+   "1": {
+    "SQLITE_EXTENSION_INIT1": ""
+   }
+  },
+  "both_arms": {
+   "1": {
+    "DWORD": "",
+    "UINT": ""
+   }
+  },
+  "two_words": {
+   "1": {
+    "FT_END_HEADER": "case.c FT_END_HEADER 3 FT_END_HEADER\n"
+   }
+  },
+  "before_invocation": {
+   "1": {
+    "WORD": ""
+   }
+  }
+ }
+}

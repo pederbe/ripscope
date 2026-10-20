@@ -1,0 +1,957 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "binary": "Ubuntu cscope 15.9-2build1"
+  },
+  "cases": [
+    {
+      "name": "exact",
+      "source": "unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                              z_size_t len) { return crc; }\nint marker;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "crc32_z"
+          ],
+          "exit": 0,
+          "stdout": "case.c crc32_z 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "write_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "marker"
+          ],
+          "exit": 0,
+          "stdout": "case.c marker 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "buf"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_size_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "two-exact",
+      "source": "unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                              z_size_t len) { return crc; }\nunsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                              z_size_t len) { return crc; }\nint marker;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 3 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 5 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "crc32_z"
+          ],
+          "exit": 0,
+          "stdout": "case.c crc32_z 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\ncase.c crc32_z 3 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "write_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "marker"
+          ],
+          "exit": 0,
+          "stdout": "case.c marker 5 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "buf"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_size_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "preprocessor",
+      "source": "#if X\nunsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                              z_size_t len) { return crc; }\n#endif\nint marker;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 2 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 5 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "crc32_z"
+          ],
+          "exit": 0,
+          "stdout": "case.c crc32_z 2 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "write_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "marker"
+          ],
+          "exit": 0,
+          "stdout": "case.c marker 5 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "buf"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_size_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "tab-indentation",
+      "source": "unsigned\tlong\tZEXPORT\tcrc32_z(unsigned\tlong\tcrc,\tconst\tunsigned\tchar\tFAR\t*buf,\n\tz_size_t\tlen)\t{ return crc; }\nint marker;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "crc32_z"
+          ],
+          "exit": 0,
+          "stdout": "case.c crc32_z 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "write_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "marker"
+          ],
+          "exit": 0,
+          "stdout": "case.c marker 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "buf"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_size_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "mixed-adapters",
+      "source": "const z_crc_t FAR * ZEXPORT get_crc_table(void) { return 0; }\nvoid write_table(z_crc_t FAR *table) {}\nunsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                              z_size_t len) { return crc; }\nint marker;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 const z_crc_t FAR * ZEXPORT get_crc_table(void ) { return 0; }\ncase.c .* 2 void write_table(z_crc_t FAR *table) {}\ncase.c .* 3 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 5 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "crc32_z"
+          ],
+          "exit": 0,
+          "stdout": "case.c crc32_z 3 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c get_crc_table 1 const z_crc_t FAR * ZEXPORT get_crc_table(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "write_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c write_table 2 void write_table(z_crc_t FAR *table) {}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "marker"
+          ],
+          "exit": 0,
+          "stdout": "case.c marker 5 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "buf"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_size_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "ordinary-control",
+      "source": "unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char *buf,\n                              z_size_t len) { return crc; }\nint marker;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char *buf,\ncase.c .* 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "crc32_z"
+          ],
+          "exit": 0,
+          "stdout": "case.c crc32_z 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char *buf,\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "write_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "marker"
+          ],
+          "exit": 0,
+          "stdout": "case.c marker 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "buf"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_size_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "prototype-boundary",
+      "source": "unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                              z_size_t len);\nint marker;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "crc32_z"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "write_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "marker"
+          ],
+          "exit": 0,
+          "stdout": "case.c marker 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "buf"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_size_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": false
+    },
+    {
+      "name": "one-line-boundary",
+      "source": "unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf, z_size_t len) { return crc; }\nint marker;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf, z_size_t len) { return crc; }\ncase.c .* 2 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "crc32_z"
+          ],
+          "exit": 0,
+          "stdout": "case.c crc32_z 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf, z_size_t len) { return crc; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "write_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "marker"
+          ],
+          "exit": 0,
+          "stdout": "case.c marker 2 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "buf"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_size_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": false
+    },
+    {
+      "name": "cast-boundary",
+      "source": "unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                              z_size_t len) { return (const unsigned char FAR *)word != buf; }\nint marker;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "crc32_z"
+          ],
+          "exit": 0,
+          "stdout": "case.c crc32_z 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "write_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "marker"
+          ],
+          "exit": 0,
+          "stdout": "case.c marker 3 int marker;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "buf"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_size_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": true
+    }
+  ]
+}

@@ -1,0 +1,178 @@
+name: Release preparation
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Exact existing version tag, such as v0.1.0
+        required: true
+        type: string
+      source_sha:
+        description: Exact 40-character source commit
+        required: true
+        type: string
+      publish:
+        description: Create attestations and a draft GitHub release after environment approval
+        default: false
+        type: boolean
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ inputs.tag }}
+  cancel-in-progress: false
+jobs:
+  preflight:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      actions: read
+    outputs:
+      publish: ${{ steps.guard.outputs.publish }}
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ inputs.tag }}
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+        with:
+          toolchain: '1.98.1'
+      # Built with no token in the environment or in .git/config. Only the next step,
+      # which runs the guard, is given one.
+      - name: Build the release guard
+        run: cargo build --locked --quiet --manifest-path tools/release/Cargo.toml
+      - id: guard
+        name: Validate immutable source and publication protection
+        env:
+          TAG: ${{ inputs.tag }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+          DISPATCH_REF: ${{ github.ref }}
+          DISPATCH_SHA: ${{ github.sha }}
+          PUBLISH: ${{ inputs.publish }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          [[ "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          test "$DISPATCH_REF" = "refs/tags/$TAG"
+          test "$DISPATCH_SHA" = "$SOURCE_SHA"
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test "$(git rev-parse "refs/tags/$TAG^{commit}")" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+          release=tools/release/target/debug/ripscope-release
+          "$release" check-tag "$TAG"
+          if [ "$PUBLISH" = true ]; then
+            test "$(gh api "repos/$GITHUB_REPOSITORY" --jq .private)" = false
+            gh api "repos/$GITHUB_REPOSITORY/environments/release" > "$RUNNER_TEMP/release-environment.json"
+            "$release" check-environment "$RUNNER_TEMP/release-environment.json"
+          fi
+          echo "publish=$PUBLISH" >> "$GITHUB_OUTPUT"
+  linux:
+    needs: preflight
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ inputs.source_sha }}
+      - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+        with:
+          toolchain: '1.98.1'
+      - name: Build exact Linux archive
+        run: |
+          set -euo pipefail
+          release="cargo run --locked --quiet --manifest-path tools/release/Cargo.toml --"
+          curl --proto '=https' --tlsv1.2 -fL "$($release profile linux mold_url)" -o "$RUNNER_TEMP/mold.tar.gz"
+          $release linux --work "$RUNNER_TEMP/linux" \
+            --toolchain "$HOME/.rustup/toolchains/1.98.1-x86_64-unknown-linux-gnu" --mold-archive "$RUNNER_TEMP/mold.tar.gz"
+      - name: Package the inspected executable and check installers
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends rpm cpio
+          version=${TAG#v}
+          bash scripts/package-linux.sh "$version" "$RUNNER_TEMP/linux/ripscope-$version-x86_64-linux-gnu" "$RUNNER_TEMP/linux/dist"
+          cargo run --locked --example check-installers -- \
+            --archive "$RUNNER_TEMP/linux/dist/ripscope-$version-x86_64-linux-gnu.tar.gz" \
+            --installer "$PWD/install.sh" --work "$RUNNER_TEMP/linux-installer"
+          podman pull docker.io/library/debian:12-slim
+          podman pull docker.io/library/almalinux:8-minimal
+          podman run --rm --network=none --tmpfs /work:rw,exec,mode=1777 -v "$RUNNER_TEMP/linux/dist:/input:ro" docker.io/library/debian:12-slim sh -ec '
+            dpkg -i /input/ripscope_*_amd64.deb; cd /work; printf "int value;\n" > source.c
+            ripscope -bk source.c; ripscope -dL -1 value | grep "source.c value 1 int value;"
+            dpkg -r ripscope; test ! -e /usr/bin/ripscope; test -f ripscope.db'
+          podman run --rm --network=none --tmpfs /work:rw,exec,mode=1777 -v "$RUNNER_TEMP/linux/dist:/input:ro" docker.io/library/almalinux:8-minimal sh -ec '
+            rpm -i /input/ripscope-*.x86_64.rpm; cd /work; printf "int value;\n" > source.c
+            ripscope -bk source.c; ripscope -dL -1 value | grep "source.c value 1 int value;"
+            rpm -e ripscope; test ! -e /usr/bin/ripscope; test -f ripscope.db'
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: linux-release
+          path: ${{ runner.temp }}/linux/dist/*
+          if-no-files-found: error
+  windows:
+    needs: preflight
+    runs-on: windows-2022
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ inputs.source_sha }}
+      - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+        with:
+          toolchain: '1.98.1'
+      - name: Build exact Windows archive and check installer
+        env:
+          TAG: ${{ inputs.tag }}
+        shell: powershell
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $profile = Get-Content tools/release/windows-release-profile.json -Raw | ConvertFrom-Json
+          $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
+          $vs = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
+          $msvc = Join-Path $vs "VC\Tools\MSVC\$($profile.msvc_directory)"
+          if (-not (Test-Path -LiteralPath $msvc)) { throw 'Pinned MSVC is unavailable; install the recorded profile before release.' }
+          $toolchain = Join-Path $HOME '.rustup\toolchains\1.98.1-x86_64-pc-windows-msvc'
+          cargo run --locked --manifest-path tools/release/Cargo.toml -- windows --work "$env:RUNNER_TEMP\windows" --toolchain $toolchain --msvc $msvc --sdk "${env:ProgramFiles(x86)}\Windows Kits\10"
+          if ($LASTEXITCODE) { throw 'Windows archive build failed' }
+          $version = $env:TAG.Substring(1)
+          cargo run --locked --example check-installers -- --archive "$env:RUNNER_TEMP\windows\dist\ripscope-$version-x86_64-windows-msvc.zip" --installer "$PWD\install.ps1" --work "$env:RUNNER_TEMP\windows-installer"
+          if ($LASTEXITCODE) { throw 'Windows installer checks failed' }
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: windows-release
+          path: ${{ runner.temp }}/windows/dist/*
+          if-no-files-found: error
+  publish:
+    needs: [preflight, linux, windows]
+    if: needs.preflight.outputs.publish == 'true'
+    runs-on: ubuntu-24.04
+    environment: release
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+        with:
+          pattern: '*-release'
+          path: artifacts
+          merge-multiple: true
+      - uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8
+        with:
+          subject-path: |
+            artifacts/*.tar.gz
+            artifacts/*.zip
+            artifacts/*.deb
+            artifacts/*.rpm
+      - name: Create draft release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          gh release create "$TAG" artifacts/*.tar.gz artifacts/*.zip artifacts/*.deb artifacts/*.rpm artifacts/*.sha256 \
+            --repo "$GITHUB_REPOSITORY" --verify-tag --target "$SOURCE_SHA" --draft --title "Ripscope ${TAG#v}" \
+            --notes 'See the changelog and installation documentation for this version.'

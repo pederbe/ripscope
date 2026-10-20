@@ -1,0 +1,155 @@
+{
+ "probe": "probes/33-linkage-blocks.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "struct ",
+    " { int ",
+    "; };"
+   ],
+   "symbols": [
+    [
+     "s",
+     "ss",
+     false
+    ],
+    [
+     " ",
+     "a",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "enum ",
+    " { ",
+    " };"
+   ],
+   "symbols": [
+    [
+     "e",
+     "ee",
+     false
+    ],
+    [
+     " ",
+     "RED",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "static int ",
+    "(int ",
+    ") { return ",
+    "(x); }"
+   ],
+   "symbols": [
+    [
+     " ",
+     "twice",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ],
+    [
+     " ",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "extern \"C\" int ",
+    "(void );"
+   ],
+   "symbols": [
+    [
+     " ",
+     "declared",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "after",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

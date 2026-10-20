@@ -1,0 +1,8 @@
+# Vim scripts sourced by the isolated Unix test profile require LF.
+tests/editor/*.vim text eol=lf
+
+plugin/*.vim text eol=lf
+
+# Scanner probes are byte-exact inputs (CRLF, control bytes, no final newline).
+tests/fixtures/scanner/probes/** -text
+tests/fixtures/queries/** -text

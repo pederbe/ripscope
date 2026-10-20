@@ -1,0 +1,359 @@
+{
+ "probe": "probes/23-nested-parameters-blanks.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    "(void (*",
+    ") (int )) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "b01",
+     false
+    ],
+    [
+     " ",
+     "cb",
+     false
+    ],
+    [
+     "`",
+     "g01",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    "(void ( *",
+    ")(int )) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "b02",
+     false
+    ],
+    [
+     " ",
+     "cb",
+     false
+    ],
+    [
+     "`",
+     "g02",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    "(void (*",
+    " )(int )) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "b03",
+     false
+    ],
+    [
+     " ",
+     "cb",
+     false
+    ],
+    [
+     "`",
+     "g03",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "int ",
+    "(void (*"
+   ],
+   "symbols": [
+    [
+     " ",
+     "b04",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "",
+    ")(int )) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     " ",
+     "cb",
+     false
+    ],
+    [
+     "`",
+     "g04",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "int ",
+    "(void (*",
+    ") (int )) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "b05",
+     false
+    ],
+    [
+     " ",
+     "cb",
+     false
+    ],
+    [
+     "`",
+     "g05",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "int ",
+    "(void (*",
+    ")( )) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "b06",
+     false
+    ],
+    [
+     " ",
+     "cb",
+     false
+    ],
+    [
+     "`",
+     "g06",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "int ",
+    "(void (*",
+    ")(int )(int )) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     " ",
+     "b07",
+     false
+    ],
+    [
+     " ",
+     "cb",
+     false
+    ],
+    [
+     "`",
+     "g07",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "int ",
+    "(void (*",
+    ")(int )) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "b08",
+     false
+    ],
+    [
+     " ",
+     "$cb",
+     false
+    ],
+    [
+     "`",
+     "g08",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "int ",
+    "(void (*",
+    ")("
+   ],
+   "symbols": [
+    [
+     "$",
+     "b09",
+     false
+    ],
+    [
+     " ",
+     "cb",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    ")) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "`",
+     "g09",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "int ",
+    "(void ( *",
+    ")(int )) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "b10",
+     false
+    ],
+    [
+     " ",
+     "cb",
+     false
+    ],
+    [
+     "`",
+     "g10",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

@@ -1,0 +1,92 @@
+{
+  "adapter_sha256": "3e39161ffea71903631f6ad87f7ba0acee0ea048fe7476fefca7ac0ea34dc291",
+  "backend": {
+    "build_receipt": null,
+    "sha256": "edb8840544a602bc5632cf22967e56430e0789f7ab094a6854d490f043fc9c6e",
+    "version": "ripscope 0.1.0"
+  },
+  "callers_after": "main.c main 5 greet(\"world\");\nmain.c helper 8 void helper(void ) { greet(\"x\"); }\n",
+  "callers_before": "main.c main 5 greet(\"world\");\n",
+  "capture": "Actual Vim terminal screens; playback holds are editorial, not recorded timing.",
+  "checkout_revision_at_capture": "1928c0bd924ff006233b4ffe9825a733ed31e191",
+  "commands": [
+    "RipscopeBuild",
+    "cs find c greet",
+    "copen 5",
+    "cclose",
+    "Go; insert helper; Escape",
+    "w",
+    "cs find c greet",
+    "copen 5"
+  ],
+  "definition": "greet.c greet 6 void greet(const char *name)\n",
+  "fixture_sha256": {
+    "greet.c": "9a6b1b6d2abe6d7ce004dc8cf6c145563c410fea1f1a5a235fe772f975669184",
+    "include/greet.h": "a5f75d8eff59139483322583894465a0fd4e770cff0924936fe2cf668eb554b6",
+    "main.c": "c7b6ede60fcb930c5593c81e157ff1d50f97f195e8815bc13ee1384dfb82df83",
+    "main.c.after": "826b57c4af6128fda67f54ea64aac9cd69cd8a4347f2b5551b48e0df41c0a792"
+  },
+  "format": 1,
+  "frames": [
+    {
+      "file": "01-first-caller.txt",
+      "hold_seconds": 2.2,
+      "label": ":cs find c greet"
+    },
+    {
+      "file": "02-edit.txt",
+      "hold_seconds": 1.6,
+      "label": "Add a call"
+    },
+    {
+      "file": "03-save.txt",
+      "hold_seconds": 1.2,
+      "label": ":w"
+    },
+    {
+      "file": "04-two-callers.txt",
+      "hold_seconds": 2.8,
+      "label": ":cs find c greet"
+    }
+  ],
+  "observation_sha256": "4f5a30afe54f44012e8db1182ee13d02f8fa4da8b406c8d843627dade0911e61",
+  "platform": "Linux x86-64",
+  "provenance_note": "Checkout HEAD is recorded separately; it is not a binary build receipt. Media demonstrates a bounded workflow, not performance.",
+  "recording_toolchain": "rustc 1.99.0 (b940084d7 2026-09-28)",
+  "same_connection": true,
+  "screen_sha256": {
+    "01-first-caller.cursor": "000bcf4ae9186350103bd94173a5ae165eb50f43a1f83c38355dcaaa3a5be410",
+    "01-first-caller.txt": "962c45726ba1698cb18f2f1ca16bb6ee569045e34e0eeaa1cc616cdbfc6ec0b4",
+    "02-edit.cursor": "b29cc91526c810cc6e5606586cfbf41c7865076e0d7025efd705ac10e873797e",
+    "02-edit.txt": "d4cc40dba92eeb99a69d12f78930eebc628ab5ad34087b33ac5b9569562b0687",
+    "03-save.cursor": "615eeff7b11af692a437d7beea98f51f6b576ce2b97da98f5bfbb14d5b4132fd",
+    "03-save.txt": "160c479c46665637e69ea8c99307acb09ba39fa124fea82bdc09600056b3ec18",
+    "04-two-callers.cursor": "000bcf4ae9186350103bd94173a5ae165eb50f43a1f83c38355dcaaa3a5be410",
+    "04-two-callers.txt": "83e6de5df4dd2adf7086053db2b5ffc5c9252aa1eb1a4bd14ac254e0b3e41498"
+  },
+  "sources": {
+    "greet.c": "#include <stdio.h>\n#include \"greet.h\"\n\nint greet_count;\n\nvoid greet(const char *name)\n{\n    greet_count = greet_count + 1;\n    printf(\"Hello, %s!\\n\", name);\n}\n",
+    "include/greet.h": "void greet(const char *name);\nextern int greet_count;\n",
+    "main.c": "#include \"greet.h\"\n\nint main(void)\n{\n    greet(\"world\");\n    return 0;\n}\n",
+    "main.c.after": "#include \"greet.h\"\n\nint main(void)\n{\n    greet(\"world\");\n    return 0;\n}\nvoid helper(void) { greet(\"x\"); }\n"
+  },
+  "terminal": {
+    "columns": 100,
+    "rows": 30
+  },
+  "vim_version": "VIM - Vi IMproved 9.2 (2026 Feb 14, compiled Oct 12 2026 22:40:28)",
+  "renderer": {
+    "browser": "Chrome/154.0.8037.57",
+    "source_sha256": {
+      "render.mjs": "6c10a6c95506a7467c97547f6280f05013f7c64a7bbdc7444adfaef83abe9b72",
+      "demo.html": "a0627e5ba2d67fb3468fc6bcb2be7d0fee6e45e5b6180b5978d5da58530b4e56",
+      "og.html": "847f429ae416731f4c204fbce4b8571a8ac3e1cd0b634eddd89632174c47c043"
+    }
+  },
+  "rendered_sha256": {
+    "og.png": "38794903a7848e4348503f1f3031b1ee84f9583f67a83b963488e9c450238e18",
+    "demo-poster.png": "65e0be3eefc90b3ec90a9b68c6f5a9f6482c4d2eb93fdfbf9b4b9a723ea1508b",
+    "demo.mp4": "d5065e751b1eca30024472e653f69e7ea994bd890c8ed91c22c6cd23cddef3f7",
+    "demo.gif": "568d22f9ab2a2dea9cae5679bd3b8675663bcf15cdf0ea82630027e4994f88f1"
+  }
+}

@@ -1,0 +1,212 @@
+{
+ "decision": "In continued directives other than #define, the analyzer never creates a function owner or definition after the first physical line, at file and C-linkage scope.",
+ "reference": "tests/fixtures/written-continued-conditions-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "define_after": {
+   "0": {
+    "defined": "case.c <global> 1 #if defined(A) && \\\ncase.c <global> 2 defined(B)\n",
+    "B": "case.c <global> 2 defined(B)\n",
+    "USE_X": "case.c <global> 3 #define USE_X\n",
+    "after": "case.c <global> 5 int after;\n"
+   },
+   "1": {
+    "defined": "",
+    "after": "case.c after 5 int after;\n"
+   },
+   "2": {
+    "defined": ""
+   },
+   "3": {
+    "g": "case.c f 6 void f(void ) { g(); }\n"
+   },
+   "caseless": {
+    "0": {
+     "USE_X": "case.c USE_X 3 #define USE_X\n"
+    }
+   }
+  },
+  "comment_between": {
+   "0": {
+    "defined": "case.c <global> 1 #if defined(A) && \\\ncase.c <global> 2 defined(B)\n",
+    "B": "case.c <global> 2 defined(B)\n",
+    "USE_X": "case.c <global> 4 #define USE_X\n",
+    "h": "case.c <global> 6 static void h(void );\n"
+   },
+   "1": {
+    "defined": ""
+   },
+   "2": {
+    "defined": ""
+   },
+   "3": {
+    "g": "case.c f 7 void f(void ) { g(); }\n"
+   },
+   "caseless": {
+    "0": {
+     "USE_X": "case.c USE_X 4 #define USE_X\n"
+    }
+   }
+  },
+  "declaration_after": {
+   "0": {
+    "defined": "case.c <global> 1 #if defined(A) || \\\ncase.c <global> 2 defined(B)\n",
+    "B": "case.c <global> 2 defined(B)\n",
+    "after": "case.c <global> 5 int after;\n",
+    "in_arm": "case.c <global> 3 int in_arm;\n"
+   },
+   "1": {
+    "defined": "",
+    "after": "case.c after 5 int after;\n",
+    "in_arm": "case.c in_arm 3 int in_arm;\n"
+   }
+  },
+  "invocation_owner": {
+   "0": {
+    "B": "case.c <global> 2 WINAPI_FAMILY_PARTITION(B)\n",
+    "WINAPI_FAMILY_PARTITION": "case.c <global> 2 WINAPI_FAMILY_PARTITION(B)\n",
+    "USE_X": "case.c <global> 3 #define USE_X\n",
+    "after": "case.c <global> 5 int after;\n"
+   },
+   "1": {
+    "WINAPI_FAMILY_PARTITION": "",
+    "after": "case.c after 5 int after;\n"
+   },
+   "caseless": {
+    "0": {
+     "USE_X": "case.c USE_X 3 #define USE_X\n"
+    }
+   }
+  },
+  "elif_last": {
+   "0": {
+    "defined": "case.c <global> 2 #elif defined(C) && \\\ncase.c <global> 3 defined(B)\n",
+    "B": "case.c <global> 3 defined(B)\n",
+    "USE_X": "case.c <global> 4 #define USE_X\n",
+    "after": "case.c <global> 6 int after;\n"
+   },
+   "1": {
+    "defined": "",
+    "after": "case.c after 6 int after;\n"
+   },
+   "caseless": {
+    "0": {
+     "USE_X": "case.c USE_X 4 #define USE_X\n"
+    }
+   }
+  },
+  "and_last": {
+   "0": {
+    "defined": "case.c <global> 1 #if defined(A) \\\ncase.c <global> 2 && defined(B)\n",
+    "B": "case.c <global> 2 && defined(B)\n",
+    "USE_X": "case.c <global> 3 #define USE_X\n",
+    "after": "case.c <global> 5 int after;\n"
+   },
+   "1": {
+    "defined": "",
+    "after": "case.c after 5 int after;\n"
+   },
+   "caseless": {
+    "0": {
+     "USE_X": "case.c USE_X 3 #define USE_X\n"
+    }
+   }
+  },
+  "paren_last": {
+   "0": {
+    "defined": "case.c <global> 1 #if (defined(A) || \\\ncase.c <global> 2 defined(B))\n",
+    "B": "case.c <global> 2 defined(B))\n",
+    "USE_X": "case.c <global> 3 #define USE_X\n",
+    "after": "case.c <global> 5 int after;\n"
+   },
+   "1": {
+    "defined": "",
+    "after": "case.c after 5 int after;\n"
+   },
+   "caseless": {
+    "0": {
+     "USE_X": "case.c USE_X 3 #define USE_X\n"
+    }
+   }
+  },
+  "endif_follower": {
+   "0": {
+    "defined": "case.c <global> 1 #if defined(A) && \\\ncase.c <global> 2 defined(B)\n",
+    "B": "case.c <global> 2 defined(B)\n",
+    "after": "case.c <global> 4 int after;\n"
+   },
+   "1": {
+    "defined": "",
+    "after": "case.c after 4 int after;\n"
+   }
+  },
+  "repeated_calls": {
+   "0": {
+    "defined": "case.c <global> 1 #if defined(A) && \\\ncase.c <global> 2 defined(B)\n",
+    "B": "case.c <global> 2 defined(B)\n",
+    "USE_X": "case.c <global> 3 #define USE_X\n"
+   },
+   "1": {
+    "defined": ""
+   },
+   "2": {
+    "defined": ""
+   },
+   "3": {
+    "g": "case.c f 5 void f(void ) { g(); }\ncase.c k 6 void k(void ) { g(); }\n"
+   },
+   "caseless": {
+    "0": {
+     "USE_X": "case.c USE_X 3 #define USE_X\n"
+    }
+   }
+  },
+  "lost_member": {
+   "0": {
+    "defined": "case.c <global> 1 #if defined(A) && \\\ncase.c <global> 2 defined(B)\n",
+    "B": "case.c <global> 2 defined(B)\n",
+    "USE_X": "case.c <global> 3 #define USE_X\n",
+    "after": "case.c <global> 6 int after;\n",
+    "s": "case.c <global> 5 struct s { int member; };\n",
+    "member": "case.c <global> 5 struct s { int member; };\n"
+   },
+   "1": {
+    "defined": "",
+    "after": "case.c after 6 int after;\n",
+    "member": "case.c member 5 struct s { int member; };\n"
+   },
+   "caseless": {
+    "0": {
+     "USE_X": "case.c USE_X 3 #define USE_X\n"
+    }
+   }
+  },
+  "continued_error": {
+   "0": {
+    "B": "case.c <global> 2 two(B)\n",
+    "after": "case.c <global> 3 int after;\n",
+    "two": "case.c <global> 2 two(B)\n"
+   },
+   "1": {
+    "after": "case.c after 3 int after;\n",
+    "two": ""
+   }
+  },
+  "inside_linkage": {
+   "0": {
+    "defined": "case.c <global> 4 #if defined(A) && \\\ncase.c <global> 5 defined(B)\n",
+    "B": "case.c <global> 5 defined(B)\n",
+    "USE_X": "case.c <global> 6 #define USE_X\n",
+    "after": "case.c <global> 8 int after;\n"
+   },
+   "1": {
+    "defined": "",
+    "after": "case.c after 8 int after;\n"
+   },
+   "caseless": {
+    "0": {
+     "USE_X": "case.c USE_X 6 #define USE_X\n"
+    }
+   }
+  }
+ }
+}

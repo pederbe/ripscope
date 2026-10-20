@@ -1,0 +1,2054 @@
+{
+ "source_commit": "612a539b585ccdb70a1261652954f579ccedb270",
+ "cases": {
+  "libuv_inline": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 int before;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 inline int uv_set(uv_t* handle, int mode) {\ncase.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 inline int uv_set(uv_t* handle, int mode) {\ncase.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "mode"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 inline int uv_set(uv_t* handle, int mode) {\ncase.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "uv_mode_t"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 12 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 int before;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 inline int uv_set(uv_t* handle, int mode) {\ncase.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 inline int uv_set(uv_t* handle, int mode) {\ncase.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "mode"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 inline int uv_set(uv_t* handle, int mode) {\ncase.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "uv_mode_t"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 6 return uv_set(handle, static_cast<uv_mode_t>(mode));\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 12 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "int before;\n#ifdef __cplusplus\nextern \"C++\" {\n\ninline int uv_set(uv_t* handle, int mode) {\n  return uv_set(handle, static_cast<uv_mode_t>(mode));\n}\n\n}\n#endif\n\nint after;\nvoid g(void) { h(); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c before 1 int before;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c before 1 int before;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "int before;\n#ifdef __cplusplus\nextern \"C++\" {\n\ninline int uv_set(uv_t* handle, int mode) {\n  return uv_set(handle, static_cast<uv_mode_t>(mode));\n}\n\n}\n#endif\n\nint after;\nvoid g(void) { h(); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c h 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c h 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "int before;\n#ifdef __cplusplus\nextern \"C++\" {\n\ninline int uv_set(uv_t* handle, int mode) {\n  return uv_set(handle, static_cast<uv_mode_t>(mode));\n}\n\n}\n#endif\n\nint after;\nvoid g(void) { h(); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 13 void g(void ) { h(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "int before;\n#ifdef __cplusplus\nextern \"C++\" {\n\ninline int uv_set(uv_t* handle, int mode) {\n  return uv_set(handle, static_cast<uv_mode_t>(mode));\n}\n\n}\n#endif\n\nint after;\nvoid g(void) { h(); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "if_defined_guard": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "mode"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "uv_mode_t"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 extern \"C++\" { inline int f(int x) { return k(x); } }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 extern \"C++\" { inline int f(int x) { return k(x); } }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 extern \"C++\" { inline int f(int x) { return k(x); } }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "mode"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "uv_mode_t"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 extern \"C++\" { inline int f(int x) { return k(x); } }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 extern \"C++\" { inline int f(int x) { return k(x); } }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 extern \"C++\" { inline int f(int x) { return k(x); } }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 4 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if defined(__cplusplus)\nextern \"C++\" { inline int f(int x) { return k(x); } }\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if defined(__cplusplus)\nextern \"C++\" { inline int f(int x) { return k(x); } }\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if defined(__cplusplus)\nextern \"C++\" { inline int f(int x) { return k(x); } }\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if defined(__cplusplus)\nextern \"C++\" { inline int f(int x) { return k(x); } }\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "empty_block": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "mode"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "uv_mode_t"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "mode"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "uv_mode_t"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifdef __cplusplus\nextern \"C++\" {\n}\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "before"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "handle"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifdef __cplusplus\nextern \"C++\" {\n}\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifdef __cplusplus\nextern \"C++\" {\n}\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "uv_set"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "k"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "h"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "static_cast"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#ifdef __cplusplus\nextern \"C++\" {\n}\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  }
+ }
+}

@@ -1,0 +1,474 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "caller"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c target 12 p->target(4);\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c target 5 target();\na.c TARGET 7 TARGET();\na.c target 9 return target();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "BODY"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c target 3 #define BODY(x) target(x)\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "PARAM"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c target 5 #define PARAM(target) target(1)\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "INNER"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c target 3 #define INNER target()\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "before"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "MAC"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 2 #define MAC(x) one(x) + two(x)\nedges.c two 2 #define MAC(x) one(x) + two(x)\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "LOCAL"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c hidden 5 #define LOCAL(x) hidden(x)\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "same.*"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c two 8 int same(void ) { one(); } int same2(void ) { two(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "empty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c target 5 target();\na.c TARGET 7 TARGET();\na.c target 9 return target();\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 12 int last(void ) { target(); }\nedges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\nedges.c one 2 #define MAC(x) one(x) + two(x)\nedges.c two 2 #define MAC(x) one(x) + two(x)\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\nedges.c one 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c two 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c upper 10 int AFTER(void ) { upper(); }\nz.c target 3 #define BODY(x) target(x)\nz.c target 5 #define PARAM(target) target(1)\nz.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c target 12 p->target(4);\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c target 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "^after$"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "aft"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "before|after"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "after "
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            " after"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-2",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "caller"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c target 12 p->target(4);\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c target 5 target();\na.c TARGET 7 TARGET();\na.c target 9 return target();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "BODY"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c target 3 #define BODY(x) target(x)\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "PARAM"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c target 5 #define PARAM(target) target(1)\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "INNER"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c target 3 #define INNER target()\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "before"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\nedges.c upper 10 int AFTER(void ) { upper(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "MAC"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 2 #define MAC(x) one(x) + two(x)\nedges.c two 2 #define MAC(x) one(x) + two(x)\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "LOCAL"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c hidden 5 #define LOCAL(x) hidden(x)\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "same.*"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c two 8 int same(void ) { one(); } int same2(void ) { two(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "empty"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c target 5 target();\na.c TARGET 7 TARGET();\na.c target 9 return target();\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 12 int last(void ) { target(); }\nedges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\nedges.c one 2 #define MAC(x) one(x) + two(x)\nedges.c two 2 #define MAC(x) one(x) + two(x)\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\nedges.c one 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c two 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c upper 10 int AFTER(void ) { upper(); }\nz.c target 3 #define BODY(x) target(x)\nz.c target 5 #define PARAM(target) target(1)\nz.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c target 12 p->target(4);\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c target 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "^after$"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\nedges.c upper 10 int AFTER(void ) { upper(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "aft"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "before|after"
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\nedges.c upper 10 int AFTER(void ) { upper(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "after "
+          ],
+          "exit_code": 0,
+          "stdout": "edges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\nedges.c upper 10 int AFTER(void ) { upper(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            " after"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-2",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "z.c": "int target(int);\nint global = target(1);\n#define BODY(x) target(x)\n#define INDIRECT(x) (*target)(x)\n#define PARAM(target) target(1)\nstruct Ops { int (*target)(int); };\nint caller(int (*fp)(int), struct Ops *p) {\n target(1); target(2);\n fp(1);\n (*fp)(2);\n (target)(3);\n p->target(4);\n p->target /* gap */ (5);\n target\n (6);\n int target(int);\n int local = target(7);\n BODY(8);\n sizeof(target(9));\n return caller(fp, p);\n}\nint after = target(10);\nint other(void) { return target(11); }\n",
+    "a.c": "int TARGET(void);\nint alpha(void) {\n#define INNER target()\n#if FLAG\n target();\n#else\n TARGET();\n#endif\n return target();\n}\nint first(void) { target(); } int second(void) { target(); }\nint last(void) { target(); }\n",
+    "edges.c": "int before(void) { one(); two(); one(); }\n#define MAC(x) one(x) + two(x)\nint after(void) {\n one(); two();\n#define LOCAL(x) hidden(x)\n three();\n}\nint same(void) { one(); } int same2(void) { two(); }\nint empty(void) { return 0; }\nint AFTER(void) { upper(); }\n"
+  },
+  "seeds": [
+    "z.c",
+    "edges.c",
+    "a.c"
+  ],
+  "field": "2",
+  "build": {
+    "args": [
+      "-bk",
+      "z.c",
+      "edges.c",
+      "a.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sources_deleted_before_queries": true,
+  "unreadable": [],
+  "persistent_input": "2after\n2[\n2missing\nc\n2after\nq\n",
+  "persistent": {
+    "args": [
+      "-dl"
+    ],
+    "exit_code": 0,
+    "stdout": ">> cscope: 3 lines\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\n>> Unable to search database\n>> Unable to search database\n>> >> cscope: 4 lines\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\nedges.c upper 10 int AFTER(void ) { upper(); }\n>> ",
+    "stderr": ""
+  }
+}

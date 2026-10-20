@@ -1,0 +1,6382 @@
+{
+ "source_commit": "612a539b585ccdb70a1261652954f579ccedb270",
+ "cases": {
+  "ddec": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\ncase.c g 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\ncase.c g 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\nint after;\nvoid g(void) { x(luai_ctype_); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\nint after;\nvoid g(void) { x(luai_ctype_); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c x 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c x 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\nint after;\nvoid g(void) { x(luai_ctype_); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { x(luai_ctype_); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\nint after;\nvoid g(void) { x(luai_ctype_); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\nint after;\nvoid g(void) { x(luai_ctype_); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "ddec_conditional": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 7 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 #define lislalpha(c) (isalpha(c) || (c) == '_')\n",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 LUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 7 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c lislalpha 5 #define lislalpha(c) (isalpha(c) || (c) == '_')\n",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if defined(USE_CTYPE)\n/* table */\nLUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n#else\n#define lislalpha(c) (isalpha(c) || (c) == '_')\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 7 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c lislalpha 5 #define lislalpha(c) (isalpha(c) || (c) == '_')\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 7 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c lislalpha 5 #define lislalpha(c) (isalpha(c) || (c) == '_')\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if defined(USE_CTYPE)\n/* table */\nLUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n#else\n#define lislalpha(c) (isalpha(c) || (c) == '_')\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if defined(USE_CTYPE)\n/* table */\nLUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n#else\n#define lislalpha(c) (isalpha(c) || (c) == '_')\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if defined(USE_CTYPE)\n/* table */\nLUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n#else\n#define lislalpha(c) (isalpha(c) || (c) == '_')\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#if defined(USE_CTYPE)\n/* table */\nLUAI_DDEC(const lu_byte luai_ctype_[UCHAR_MAX + 2];)\n#else\n#define lislalpha(c) (isalpha(c) || (c) == '_')\n#endif\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "ddec_pointer": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const char *const luaT_typenames_[LUA_TOTALTYPES];)\ncase.c <global> 2 LUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 LUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const char *const luaT_typenames_[LUA_TOTALTYPES];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 LUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const char *const luaT_typenames_[LUA_TOTALTYPES];)\ncase.c <global> 2 LUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 LUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 LUAI_DDEC(const char *const luaT_typenames_[LUA_TOTALTYPES];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 LUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const char *const luaT_typenames_[LUA_TOTALTYPES];)\nLUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 3 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 3 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const char *const luaT_typenames_[LUA_TOTALTYPES];)\nLUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const char *const luaT_typenames_[LUA_TOTALTYPES];)\nLUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const char *const luaT_typenames_[LUA_TOTALTYPES];)\nLUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "LUAI_DDEC(const char *const luaT_typenames_[LUA_TOTALTYPES];)\nLUAI_DDEC(const lu_byte luaP_opmodes[NUM_OPCODES];)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "wrapped_function": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int f(void );)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int f(void );)\ncase.c g 3 void g(void ) { f(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int f(void );)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int f(void );)\ncase.c g 3 void g(void ) { f(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int f(void);)\nint after;\nvoid g(void) { f(); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { f(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { f(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int f(void);)\nint after;\nvoid g(void) { f(); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 3 void g(void ) { f(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c f 3 void g(void ) { f(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int f(void);)\nint after;\nvoid g(void) { f(); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { f(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 void g(void ) { f(); }\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int f(void);)\nint after;\nvoid g(void) { f(); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int f(void);)\nint after;\nvoid g(void) { f(); }\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "wrapped_call_arg": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int v = init(1);)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int v = init(1);)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int v = init(1);)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int v = init(1);)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int v = init(1);)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int v = init(1);)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int v = init(1);)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 2 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int v = init(1);)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int v = init(1);)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int v = init(1);)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int v = init(1);)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 WRAP(int v = init(1);)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "WRAP(int v = init(1);)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "defined_wrapper": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 1 #define WRAP(d) d\ncase.c WRAP 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 3 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c WRAP 1 #define WRAP(d) d\ncase.c WRAP 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#define WRAP(d) d\nWRAP(int x;)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 3 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c WRAP 1 #define WRAP(d) d\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 3 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c WRAP 1 #define WRAP(d) d\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#define WRAP(d) d\nWRAP(int x;)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#define WRAP(d) d\nWRAP(int x;)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#define WRAP(d) d\nWRAP(int x;)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "#define WRAP(d) d\nWRAP(int x;)\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  },
+  "local_wrapper": {
+   "0": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 f();\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lu_byte"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "UCHAR_MAX"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c <global> 5 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 f();\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-0",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "void g(void) {\nWRAP(int x;)\nf();\n}\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "0",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "1": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 5 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 1 void g(void ) {\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaT_typenames_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "luaP_opmodes"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "after"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c after 5 int after;\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 1 void g(void ) {\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "lislalpha"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-1",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "void g(void) {\nWRAP(int x;)\nf();\n}\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "1",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "2": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c WRAP 2 WRAP(int x;)\ncase.c f 3 f();\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "g"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c WRAP 2 WRAP(int x;)\ncase.c f 3 f();\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-2",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "void g(void) {\nWRAP(int x;)\nf();\n}\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "2",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "3": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 f();\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "x"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "f"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 3 f();\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "init"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "WRAP"
+        ],
+        "exit_code": 0,
+        "stdout": "case.c g 2 WRAP(int x;)\n",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-3",
+         "LUAI_DDEC"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "void g(void) {\nWRAP(int x;)\nf();\n}\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "3",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   },
+   "9": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+     "LC_ALL": "C",
+     "PATH": "/usr/bin:/bin",
+     "HOME": "<isolated case directory>",
+     "inherit_other_variables": false
+    },
+    "profiles": [
+     {
+      "caseless": false,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     },
+     {
+      "caseless": true,
+      "queries": [
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "v"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       },
+       {
+        "args": [
+         "-dL",
+         "-C",
+         "-9",
+         "luai_ctype_"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+       }
+      ]
+     }
+    ],
+    "files": {
+     "case.c": "void g(void) {\nWRAP(int x;)\nf();\n}\nint after;\n"
+    },
+    "seeds": [
+     "case.c"
+    ],
+    "field": "9",
+    "build": {
+     "args": [
+      "-bk",
+      "case.c"
+     ],
+     "exit_code": 0,
+     "stdout": "",
+     "stderr": ""
+    },
+    "sources_deleted_before_queries": true,
+    "unreadable": []
+   }
+  }
+ }
+}

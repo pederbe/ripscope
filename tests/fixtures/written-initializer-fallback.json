@@ -1,0 +1,436 @@
+{
+  "provenance": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "locale": "C",
+    "version": "cscope 15.9"
+  },
+  "cases": {
+    "direct": {
+      "source": "void f(void) { int value =\n#if A\ninner()\n#else\nother()\n#endif\n; after(); }\n",
+      "source_sha256": "91c9f3a407d5f09cb54ce343fb3718ba628e6f13c031a9ba4b541cc0c0f93da1",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\ncase.c f 2 #if A\ncase.c f 3 inner()\ncase.c f 5 other()\ncase.c f 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { int value =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c inner 3 inner()\ncase.c other 5 other()\ncase.c after 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 inner()\ncase.c f 5 other()\ncase.c f 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "cast": {
+      "source": "void f(void) { int value =\n#if A\n(T)inner()\n#else\n(T)other()\n#endif\n; after(); }\n",
+      "source_sha256": "d2464245055fbaf3e94a9d007951b9392e8e3313c218fe6030f9614dd2c6331d",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\ncase.c f 2 #if A\ncase.c f 3 (T)inner()\ncase.c f 5 (T)other()\ncase.c f 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { int value =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c inner 3 (T)inner()\ncase.c other 5 (T)other()\ncase.c after 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 (T)inner()\ncase.c f 5 (T)other()\ncase.c f 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "renamed": {
+      "source": "void f(void) { int value =\n#if A\nrenamed()\n#else\nanother(1)\n#endif\n; after(); }\n",
+      "source_sha256": "c5c5dac14bc88561f9bdd1086f52c469c6405f96215e27b2695953abba71e0cd",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\ncase.c f 2 #if A\ncase.c f 3 renamed()\ncase.c f 5 another(1)\ncase.c f 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { int value =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c renamed 3 renamed()\ncase.c another 5 another(1)\ncase.c after 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 renamed()\ncase.c f 5 another(1)\ncase.c f 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "first": {
+      "source": "void f(void) { int value =\n#if A\ninner()\n#elif B\n2\n#else\n3\n#endif\n; after(); }\n",
+      "source_sha256": "6ea586d82f1f65c0338b6381f1d653e75c4617c6f954aca9b109ecf8d1b9b774",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\ncase.c f 2 #if A\ncase.c f 3 inner()\ncase.c f 4 #elif B\ncase.c f 9 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { int value =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c inner 3 inner()\ncase.c after 9 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 inner()\ncase.c f 9 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "middle": {
+      "source": "void f(void) { int value =\n#if A\n1\n#elif B\ninner()\n#else\n3\n#endif\n; after(); }\n",
+      "source_sha256": "c641f1d707ca42b65dee8ef1e5a8cd6bf9c0277597d7928858cd3ba98cce05b1",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\ncase.c f 2 #if A\ncase.c f 4 #elif B\ncase.c f 5 inner()\ncase.c f 9 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { int value =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c inner 5 inner()\ncase.c after 9 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 5 inner()\ncase.c f 9 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "last": {
+      "source": "void f(void) { int value =\n#if A\n1\n#elif B\n2\n#else\ninner()\n#endif\n; after(); }\n",
+      "source_sha256": "cb9f3bc804aab0a223b4069b98fb815b521d4a88b60bd66c4095218b7a1cb1d7",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\ncase.c f 2 #if A\ncase.c f 4 #elif B\ncase.c f 7 inner()\ncase.c f 9 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { int value =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c inner 7 inner()\ncase.c after 9 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 7 inner()\ncase.c f 9 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value =\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

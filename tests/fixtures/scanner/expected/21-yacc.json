@@ -1,0 +1,155 @@
+{
+ "probe": "probes/21-yacc.y",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "yacc_global",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "%",
+    " ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "token",
+     false
+    ],
+    [
+     " ",
+     "NUM",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "%% /* ",
+    " */ ",
+    "()"
+   ],
+   "symbols": [
+    [
+     "$",
+     "yyparse",
+     false
+    ],
+    [
+     "`",
+     "yylex",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    ": ",
+    " { ",
+    " = ",
+    "(",
+    "); }"
+   ],
+   "symbols": [
+    [
+     " ",
+     "expr",
+     false
+    ],
+    [
+     " ",
+     "NUM",
+     false
+    ],
+    [
+     " ",
+     "$$",
+     true
+    ],
+    [
+     "`",
+     "make",
+     false
+    ],
+    [
+     " ",
+     "$1",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "",
+    "%%"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "int ",
+    "(char *",
+    ") { return ",
+    "(s); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "yyerror",
+     false
+    ],
+    [
+     " ",
+     "s",
+     false
+    ],
+    [
+     "`",
+     "report",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

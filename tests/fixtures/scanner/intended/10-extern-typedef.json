@@ -1,0 +1,180 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/10-extern-typedef.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "extern int ",
+        ";"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          " ",
+          "ext_var",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "extern int ",
+        "(int );"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          " ",
+          "ext_func",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "g",
+          "defined_after_extern",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int (*",
+        ")(void *",
+        ");"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "t",
+          "callback_t",
+          false
+        ],
+        [
+          " ",
+          "ctx",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef struct ",
+        " { struct ",
+        " *",
+        "; int ",
+        "; } ",
+        ", *",
+        ";"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "s",
+          "node",
+          false
+        ],
+        [
+          " ",
+          "node",
+          false
+        ],
+        [
+          "m",
+          "next",
+          false
+        ],
+        [
+          "m",
+          "key",
+          false
+        ],
+        [
+          "t",
+          "node_t",
+          false
+        ],
+        [
+          "t",
+          "node_ptr",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef enum { ",
+        ", ",
+        " } ",
+        ";"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "m",
+          "OFF",
+          false
+        ],
+        [
+          "m",
+          "ON",
+          false
+        ],
+        [
+          "t",
+          "state_t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef unsigned char ",
+        ";"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "t",
+          "byte",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " ",
+        "[16];"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "byte",
+          false
+        ],
+        [
+          "g",
+          "buffer",
+          false
+        ]
+      ]
+    }
+  ]
+}

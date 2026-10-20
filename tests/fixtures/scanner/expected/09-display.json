@@ -1,0 +1,182 @@
+{
+ "probe": "probes/09-display.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    "(int ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "spacing",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "while (",
+    ") x--;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "if(",
+    ") x++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "if (",
+    ") x++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "switch (",
+    ") { case 1: return (int )x; default: return (unsigned )x; }"
+   ],
+   "symbols": [
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "return sizeof(",
+    ") + (long )x;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "char *",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "p",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "static int ",
+    " = 1 ;"
+   ],
+   "symbols": [
+    [
+     "g",
+     "wide_gaps",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "tabs_and_spaces",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "trailing",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

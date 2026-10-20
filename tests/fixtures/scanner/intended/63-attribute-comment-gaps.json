@@ -1,0 +1,414 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/63-attribute-comment-gaps.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) ",
+        " ((",
+        ")) { ",
+        "(); return 0; ",
+        "}"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "$",
+          "annotated",
+          false
+        ],
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "unused",
+          false
+        ],
+        [
+          "`",
+          "target",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) ",
+        " ((",
+        "(",
+        "()))) { ",
+        "(); return 0; ",
+        "}"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "$",
+          "expression",
+          false
+        ],
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "annotate",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ],
+        [
+          "`",
+          "target",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        " ((",
+        "(8))) ",
+        " { int ",
+        "; };"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "aligned",
+          false
+        ],
+        [
+          "s",
+          "item",
+          false
+        ],
+        [
+          "m",
+          "member",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        "(8)) int ",
+        ";"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          " ",
+          "__declspec",
+          false
+        ],
+        [
+          " ",
+          "align",
+          false
+        ],
+        [
+          "g",
+          "global",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "g",
+          "after",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) ",
+        " ((",
+        ")) { ",
+        "(); return 0; ",
+        "}"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "$",
+          "synonym",
+          false
+        ],
+        [
+          " ",
+          "__attribute",
+          false
+        ],
+        [
+          " ",
+          "unused",
+          false
+        ],
+        [
+          "`",
+          "target",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        " ((",
+        ")) ",
+        " { int ",
+        "; };"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "packed",
+          false
+        ],
+        [
+          "s",
+          "chained",
+          false
+        ],
+        [
+          "m",
+          "member",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) ",
+        " ((",
+        "));"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "prototype",
+          false
+        ],
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "unused",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " ",
+        " ((",
+        "(",
+        "())))"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "#",
+          "EXPR",
+          false
+        ],
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "annotate",
+          false
+        ],
+        [
+          "`",
+          "macro_helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) ",
+        ""
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "$",
+          "closed",
+          false
+        ],
+        [
+          " ",
+          "__attribute__",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        " ((",
+        ")) { ",
+        "(); return 0; ",
+        "}"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          " ",
+          "unused",
+          false
+        ],
+        [
+          "`",
+          "target",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) ",
+        ""
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          "$",
+          "spliced",
+          false
+        ],
+        [
+          " ",
+          "__attribute__",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        " ((",
+        ")) { ",
+        "(); return 0; ",
+        "}"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          " ",
+          "unused",
+          false
+        ],
+        [
+          "`",
+          "target",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) ",
+        ""
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          " ",
+          "unterminated",
+          false
+        ],
+        [
+          " ",
+          "__attribute__",
+          false
+        ]
+      ]
+    }
+  ]
+}

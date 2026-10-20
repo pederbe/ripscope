@@ -1,0 +1,293 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "cases": [
+    {
+      "name": "scalar",
+      "source": "int API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 int API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "pointer",
+      "source": "int * API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 int * API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "before-pointer",
+      "source": "int API *x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 int API *x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "array",
+      "source": "int API x[3];\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 int API x[3];\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "initialized",
+      "source": "int API x = 1;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 int API x = 1;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "source": "const Type API x[] = {1, 2};\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 const Type API x[] = {1, 2};\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "extern",
+      "source": "extern int API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "source": "struct S { int API x; };\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 struct S { int API x; };\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "case.c S 1 struct S { int API x; };\n",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "typedef",
+      "source": "typedef int API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef int API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef int API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "mixed",
+      "source": "int API x, y;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 int API x, y;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "function-pointer",
+      "source": "int API (*x)(void);\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 int API (*x)(void );\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "aliased",
+      "source": "Type API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 Type API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}

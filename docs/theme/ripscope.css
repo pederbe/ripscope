@@ -1,0 +1,161 @@
+/* Blueprint carries the website's color into mdBook's reading and navigation UI. */
+:root {
+  --doc-accent: #ffd24a;
+  --doc-cyan: #8ccbe4;
+  --doc-surface: #152233;
+  --doc-line: #304b64;
+  --doc-tint: #8ccbe410;
+  --doc-warm: #ffd24a12;
+  --doc-shadow: #00000040;
+  --doc-glow: #8ccbe425;
+  --content-max-width: 860px;
+}
+.navy {
+  --bg: #0e1621; --fg: #e4ecf3; --sidebar-bg: #0a111a;
+  --sidebar-fg: #b5c7d9; --sidebar-active: #ffd24a;
+  --icons: #a4b7ca; --icons-hover: #ffd24a; --links: #8ccbe4;
+  --inline-code-color: #ffdc65; --quote-bg: #152233; --quote-border: #ffd24a;
+  --table-border-color: #304b64; --table-header-bg: #1a2e42;
+  --table-alternate-bg: #121f2f; color-scheme: dark;
+}
+.coal, .ayu { --doc-surface: var(--quote-bg); --doc-line: var(--table-border-color); }
+.light, .rust {
+  --doc-accent: #975016; --doc-cyan: #175978;
+  --doc-surface: var(--quote-bg); --doc-line: #aab9c5;
+  --doc-tint: #17597809; --doc-warm: #97501609;
+  --doc-shadow: #16202a12; --doc-glow: #17597815;
+  --links: #175978; --sidebar-active: #975016; --inline-code-color: #975016;
+}
+
+.skip-link { position: fixed; top: 1rem; left: 1rem; z-index: 1000; padding: .7rem 1rem; border: 2px solid var(--links); border-radius: 6px; background: var(--bg); color: var(--fg); transform: translateY(calc(-100% - 2rem)); }
+.skip-link:focus { transform: none; }
+.sidebar-contents-link { margin-inline: 10px; }
+html:not(.js) #mdbook-sidebar-toggle { display: none; }
+
+/* A compact masthead leaves the useful space to the page and its controls. */
+#mdbook-menu-bar { border-bottom: 1px solid var(--doc-line); box-shadow: 0 6px 22px var(--doc-shadow); }
+#mdbook-menu-bar.bordered { border-bottom-color: var(--doc-cyan); }
+.menu-title { display: flex; align-items: center; justify-content: center; gap: 12px; font-size: 1.8rem; font-weight: 700; }
+.menu-title a { color: var(--fg); text-decoration: none; }
+.docs-brand { display: inline-flex; align-items: center; gap: 9px; }
+.brand-reticle { width: 17px; height: 17px; border: 1px solid var(--doc-cyan); box-shadow: 0 0 14px var(--doc-glow); background: linear-gradient(var(--doc-accent), var(--doc-accent)) center / 5px 5px no-repeat; }
+.menu-title .docs-home { color: var(--doc-cyan); font-size: 1.2rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; border-left: 1px solid var(--doc-line); padding-left: 12px; }
+.menu-bar .right-buttons a { display: inline-flex; align-items: center; justify-content: center; min-width: 40px; min-height: 44px; }
+.theme-popup { border-color: var(--doc-line); box-shadow: 0 8px 28px var(--doc-shadow); }
+#mdbook-searchbar { border: 1px solid var(--doc-cyan); border-radius: 8px; box-shadow: 0 4px 24px var(--doc-glow); }
+
+/* Colored wayfinding stays quiet enough for a long list of chapters. */
+.sidebar { border-right: 1px solid var(--doc-line); }
+.sidebar .sidebar-scrollbox { padding: 22px 14px 45px; }
+.chapter .part-title { color: var(--doc-cyan); font-size: 1.1rem; line-height: 1.5; letter-spacing: .14em; text-transform: uppercase; margin-top: 24px; padding: 13px 10px 7px; border-top: 1px solid var(--doc-line); }
+.chapter-link-wrapper { border-radius: 5px; }
+.chapter-link-wrapper > a:not(.chapter-fold-toggle) { min-height: 28px; padding: 4px 10px; line-height: 1.45; }
+.chapter-link-wrapper:has(> a.active) { background: var(--doc-warm); box-shadow: inset 3px 0 var(--doc-accent); }
+.chapter-link-wrapper:hover { background-color: var(--doc-tint); }
+.chapter li a.active { font-weight: 650; }
+.chapter ol.section { margin-left: 14px; padding-left: 9px; border-left: 1px solid var(--doc-line); }
+.chapter .chapter-fold-toggle { min-width: 30px; padding: 4px 6px; color: var(--doc-cyan); }
+.chapter-fold-toggle:focus-visible, .content code:focus-visible, .table-wrapper:focus-visible { outline: 2px solid var(--links); outline-offset: 4px; }
+
+.content { padding: 0 28px 65px; }
+.content main { padding-top: 30px; }
+.content p, .content li { line-height: 1.75; }
+.content li + li { margin-top: .35em; }
+.content main > h1:first-child {
+  position: relative; margin: 0 0 28px; padding: 34px 0 28px;
+  font-size: clamp(3.2rem, 4vw, 4.8rem); line-height: 1.14; letter-spacing: -.035em;
+  border-bottom: 1px solid var(--doc-line);
+  background: radial-gradient(ellipse at 0 100%, var(--doc-warm), transparent 65%);
+}
+.content main > h1:first-child::after { content: ""; position: absolute; bottom: -2px; left: 0; width: 84px; height: 3px; background: var(--doc-accent); box-shadow: 0 0 18px var(--doc-accent); }
+.content h2 { margin-top: 2.4em; padding-top: 10px; border-top: 1px solid var(--doc-line); font-size: 2.5rem; letter-spacing: -.02em; }
+.content h2 .header { border-left: 3px solid var(--doc-cyan); padding-left: 13px; }
+.content h3 { margin-top: 1.9em; font-size: 1.95rem; }
+.content h3 .header { color: var(--doc-accent); }
+.content main a:not(.header):not(.docs-card) { text-decoration: underline; text-underline-offset: .2em; text-decoration-color: color-mix(in srgb, var(--links) 55%, transparent); }
+.content main a:hover { text-decoration-color: currentColor; }
+.content :not(pre):not(.header) > code { display: inline; padding: .12em .35em; border-radius: 4px; background: var(--doc-warm); }
+.content hr { border: 0; border-top: 1px solid var(--doc-line); margin: 35px 0; }
+
+/* Code, tabular references and diagrams have distinct, readable surfaces. */
+.content pre { margin: 24px 0; border: 1px solid var(--doc-line); border-top: 2px solid var(--doc-cyan); border-radius: 8px; box-shadow: 0 12px 28px var(--doc-shadow), 0 0 20px var(--doc-glow); }
+.content pre > code { padding: 20px 22px; line-height: 1.65; }
+.navy pre, .navy code.hljs { background: #0a111a; }
+.content pre:has(> code.language-console) { border-top-color: var(--doc-accent); }
+.content pre:has(> code.language-console)::before { content: "TERMINAL"; display: block; padding: 9px 22px; border-bottom: 1px solid var(--doc-line); color: var(--doc-accent); background: var(--doc-warm); font: 600 1rem/1.5 var(--mono-font); letter-spacing: .14em; }
+.table-wrapper { margin: 25px 0; border: 1px solid var(--doc-line); border-top: 2px solid var(--doc-cyan); border-radius: 8px; box-shadow: 0 8px 24px var(--doc-shadow); }
+.content table { width: 100%; margin: 0; font-size: .94em; }
+.content table th { color: var(--doc-cyan); text-align: left; padding: 13px 16px; }
+.content table td { padding: 11px 16px; border: 0; border-top: 1px solid var(--doc-line); vertical-align: top; line-height: 1.6; }
+.content table tbody tr:hover { background: var(--doc-tint); }
+.content blockquote, .doc-callout { margin: 26px 0; padding: 8px 22px; border: 1px solid var(--doc-line); border-left: 3px solid var(--doc-accent); border-radius: 0 8px 8px 0; background: var(--doc-warm); }
+.doc-callout p { margin: .7em 0; }
+.doc-callout strong { color: var(--doc-accent); }
+.diagram { margin: 30px 0; padding: 20px; border: 1px solid var(--doc-line); border-radius: 8px; background: var(--doc-surface); box-shadow: 0 10px 30px var(--doc-shadow), 0 0 24px var(--doc-glow); }
+.diagram img { display: block; max-width: 100%; height: auto; margin: 0 auto; }
+.diagram-light { display: none !important; }
+.light .diagram-dark, .rust .diagram-dark { display: none !important; }
+.light .diagram-light, .rust .diagram-light { display: block !important; }
+.diagram figcaption { margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--doc-line); font-size: .85em; line-height: 1.6; color: var(--fg); }
+
+/* The docs entrance gives each reader a short route to a useful answer. */
+.docs-lead { font-size: 1.2em; line-height: 1.7; max-width: 42em; }
+.docs-lead strong { color: var(--doc-accent); }
+.docs-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 28px 0 36px; }
+.content a.docs-card { position: relative; display: flex; flex-direction: column; gap: 9px; padding: 23px; border: 1px solid var(--doc-line); border-top: 2px solid var(--doc-cyan); border-radius: 8px; background: linear-gradient(135deg, var(--doc-tint), transparent 80%), var(--bg); color: var(--fg); text-decoration: none; box-shadow: 0 8px 24px var(--doc-shadow); }
+.content a.docs-card:nth-child(even) { border-top-color: var(--doc-accent); background: linear-gradient(135deg, var(--doc-warm), transparent 80%), var(--bg); }
+.docs-card .card-label { font-size: 1.05rem; font-weight: 600; color: var(--doc-cyan); text-transform: uppercase; letter-spacing: .14em; }
+.docs-card:nth-child(even) .card-label { color: var(--doc-accent); }
+.docs-card strong { font-size: 1.25em; line-height: 1.35; }
+.docs-card .card-description { font-size: .9em; line-height: 1.65; }
+.docs-card .card-action { margin-top: auto; padding-top: 10px; font-size: .85em; font-weight: 650; color: var(--links); }
+.content a.docs-card:hover { border-color: var(--doc-cyan); box-shadow: 0 12px 28px var(--doc-shadow), 0 0 24px var(--doc-glow); text-decoration: none; }
+.editor-links { display: flex; flex-wrap: wrap; gap: 12px; margin: 20px 0 28px; }
+.content .editor-links a { padding: 10px 22px; border: 1px solid var(--doc-line); border-radius: 6px; color: var(--doc-accent); background: var(--doc-warm); font-weight: 650; }
+
+@media (max-width: 700px) {
+  .content { padding-inline: 20px; }
+  .content main { padding-top: 12px; }
+  .content main > h1:first-child { padding-top: 26px; }
+  .docs-grid { grid-template-columns: 1fr; }
+  .diagram { padding: 12px; }
+  .menu-title { gap: 8px; font-size: 1.6rem; }
+  .menu-title .docs-home { padding-left: 8px; }
+  .brand-reticle { display: none; }
+  .menu-bar .right-buttons { margin-inline: 3px; }
+  .menu-bar .right-buttons a { min-width: 30px; }
+  .content pre > code { padding: 16px; }
+}
+@media (max-width: 370px) { .menu-title .docs-home { display: none; } }
+@media print {
+  .content main > h1:first-child { font-size: 3.2rem; }
+  .content pre, .table-wrapper, .diagram, .content a.docs-card { box-shadow: none; }
+  .docs-grid { display: block; }
+  .docs-card { margin: 15px 0; break-inside: avoid; }
+}
+@media (forced-colors: active) {
+  .content main > h1:first-child::after, .brand-reticle { box-shadow: none; }
+  .chapter-link-wrapper:has(> a.active) { border-left: 3px solid Highlight; }
+  .content a.docs-card { border-color: LinkText; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; animation: none !important; } }
+
+/* Fixed benchmark observations remain readable with or without selectors. */
+.benchmark-controls { display: flex; flex-wrap: wrap; gap: 16px; margin-block: 24px; }
+.benchmark-controls[hidden], .benchmark-panel[hidden] { display: none; }
+.benchmark-controls label { display: grid; gap: 8px; font-size: 1.4rem; }
+.benchmark-controls select { max-width: 100%; min-height: 44px; padding: 8px; border: 1px solid var(--doc-line); border-radius: 4px; color: var(--fg); background: var(--bg); font: inherit; }
+.benchmark-panel { margin-block: 18px; }
+.benchmark-panel summary { padding-block: 12px; cursor: pointer; font-weight: 600; }
+.benchmark-scroll { overflow-x: auto; }
+.benchmark-table { width: 100%; min-width: 650px; font-variant-numeric: tabular-nums; }
+.benchmark-table th, .benchmark-table td { text-align: left; vertical-align: top; padding: 12px; }
+.benchmark-table .benchmark-note, .benchmark-table td > a { display: block; margin-top: 6px; font-size: 1.2rem; line-height: 1.5; }
+.benchmark-table td[data-outcome="faster"] { background: #18302c; color: #c8e4bc; }
+.benchmark-table td[data-outcome="slower"] { background: #392320; color: #f6c5b7; }
+.benchmark-table td[data-outcome="inconclusive"] { background: #352a1d; color: #f4d5a6; }
+.benchmark-table td[data-outcome] a { color: inherit; text-decoration: underline; }
+.light .benchmark-table td[data-outcome="faster"], .rust .benchmark-table td[data-outcome="faster"] { background: #edf5e8; color: #285735; }
+.light .benchmark-table td[data-outcome="slower"], .rust .benchmark-table td[data-outcome="slower"] { background: #fbece7; color: #8a3025; }
+.light .benchmark-table td[data-outcome="inconclusive"], .rust .benchmark-table td[data-outcome="inconclusive"] { background: #fbf3df; color: #71500a; }
+@media print { .benchmark-controls { display: none; } .benchmark-panel[hidden] { display: block; } }

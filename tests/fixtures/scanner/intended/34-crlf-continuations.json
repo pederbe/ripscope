@@ -1,0 +1,87 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/34-crlf-continuations.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "#define ",
+        "(",
+        ") \\"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "#",
+          "X",
+          false
+        ],
+        [
+          " ",
+          "a",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "do { ",
+        "; } while (0)"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          " ",
+          "a",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "g",
+          "g",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "char *",
+        " = \"a \\\";"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "g",
+          "s",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "g",
+          "h",
+          false
+        ]
+      ]
+    }
+  ]
+}

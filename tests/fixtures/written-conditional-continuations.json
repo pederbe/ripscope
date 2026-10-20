@@ -1,0 +1,577 @@
+{
+  "provenance": {
+    "note": "Original field 1 and 2 captures plus prefix-call field 0 to 3 captures, without expected-output edits. Annotation payload correction is tested separately against existing structural ownership.",
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "locale": "C",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43"
+  },
+  "cases": {
+    "attribute_optional": {
+      "source_sha256": "3b55489e24b3a83bfcbe68d41aded57be9fe5dc10511ec357afd5e758c6c7b23",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 4 void f(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ],
+      "source": "#if X\n__attribute__((no_sanitize(\"memory\")))\n#endif\nvoid f(void) { target(); }\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "attribute_unconditional": {
+      "source_sha256": "ffb25e492ec83b01310be6de6da15358c73088ce809704f3457998ead4339236",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 2 void f(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ],
+      "source": "__attribute__((no_sanitize(\"memory\")))\nvoid f(void) { target(); }\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "attribute_absent": {
+      "source_sha256": "9e223ade9cdd449978d74d550fcce5fcf26f7b497e25f72c3e572beafbd9ae1b",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void f(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { target(); }\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "else_optional": {
+      "source_sha256": "0f89caba8d54379621cea83d5bed4cad4c26b0e70729e0e1ab93e6f7864b4ed8",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c first 3 if (flag) { first(); }\ncase.c second 6 second();\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) {\n#if X\nif (flag) { first(); }\nelse\n#endif\nsecond();\n}\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "else_unconditional": {
+      "source_sha256": "ab0ba01e9f7f046c5cd087f409bbd3f642e3b7e0f703572b7bde83fab7fd6f61",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c first 2 if (flag) { first(); }\ncase.c second 4 second();\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) {\nif (flag) { first(); }\nelse\nsecond();\n}\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "else_complete_arms": {
+      "source_sha256": "ef27e274ffbf16545ce23f04ab2ebe9d165db90b06cdb7adae52221aaaa58408",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c first 3 if (flag) { first(); } else second();\ncase.c second 3 if (flag) { first(); } else second();\ncase.c second 5 second();\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) {\n#if X\nif (flag) { first(); } else second();\n#else\nsecond();\n#endif\n}\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "condition_alternative": {
+      "source_sha256": "485ff72d3e686a028e583e0f1c64ae6f36e625dc0ac21386f01cb1b4e04df839",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c check 7 check()) { target(); }\ncase.c target 7 check()) { target(); }\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) {\n#if X\nif (extra ||\n#else\nif (\n#endif\ncheck()) { target(); }\n}\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "condition_complete_arms": {
+      "source_sha256": "bbbc3108c2fde21315063270457e87376004c4b92d6415ea61654d9dcc026b39",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c check 3 if (extra || check()) { target(); }\ncase.c target 3 if (extra || check()) { target(); }\ncase.c check 5 if (check()) { target(); }\ncase.c target 5 if (check()) { target(); }\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) {\n#if X\nif (extra || check()) { target(); }\n#else\nif (check()) { target(); }\n#endif\n}\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "condition_identical_spelling": {
+      "source_sha256": "152da0a65a676f70a86d4d91e4a5621f3aaecccdfb4fc8908c168ec954969788",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c check 7 check()) { target(); }\ncase.c target 7 check()) { target(); }\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) {\n#if X\nif (\n#else\nif (\n#endif\ncheck()) { target(); }\n}\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "condition_shared_prefix": {
+      "source_sha256": "66a4e71ec424ce783b4ecb69f7b6be3e9830c5d191e63929ae115c23965a0aff",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { if (\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c check 5 check()) { target(); }\ncase.c target 5 check()) { target(); }\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { if (\n#if X\nextra ||\n#endif\ncheck()) { target(); }\n}\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "initializer_existing_join": {
+      "source_sha256": "8fdbd7e7712283608e876b30eca9905682cc3e5fab6c149fd3bde1c067a181b3",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int x =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c first 3 first()\ncase.c second 5 second()\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { int x =\n#if X\nfirst()\n#else\nsecond()\n#endif\n; }\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "conditional_complete_attribute": {
+      "source_sha256": "938b68a6e914abcb2155a42a127cde0a1463c21ef9d699cc2ff652a5335142d6",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 void f(void ) { target(); }\ncase.c f 5 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 3 void f(void ) { target(); }\ncase.c target 5 void f(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ],
+      "source": "#if X\n__attribute__((no_sanitize(\"memory\")))\nvoid f(void) { target(); }\n#else\nvoid f(void) { target(); }\n#endif\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "initializer_constant_join": {
+      "source_sha256": "fa1c9184f13ee3f36b7fe2d272d5168370bf32b0e93dfcb5229d00f286aebaae",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int x =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { int x =\n#if X\n1\n#else\n2\n#endif\n; }\n",
+      "retained_from": "conditional-pending-attribution.json"
+    },
+    "condition_prefix_calls": {
+      "source": "void f(void) {\n#if X\nif (left() ||\n#else\nif (right() &&\n#endif\nshared()) { target(); }\n}\n",
+      "source_sha256": "920db4db85b0658ce490a7d2775560e8836b53f8371ce46c813d670b141229c7",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c f 1 void f(void ) {\ncase.c f 2 #if X\ncase.c f 3 if (left() ||\ncase.c f 5 if (right() &&\ncase.c f 7 shared()) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit": 0,
+          "stdout": "case.c left 3 if (left() ||\ncase.c right 5 if (right() &&\ncase.c shared 7 shared()) { target(); }\ncase.c target 7 shared()) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c f 3 if (left() ||\ncase.c f 5 if (right() &&\ncase.c f 7 shared()) { target(); }\ncase.c f 7 shared()) { target(); }\n",
+          "stderr": ""
+        }
+      ],
+      "retained_from": "conditional-continuation-design-evidence.json"
+    }
+  }
+}

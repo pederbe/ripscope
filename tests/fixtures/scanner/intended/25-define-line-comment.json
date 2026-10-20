@@ -1,0 +1,93 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/25-define-line-comment.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ! ",
+        "(",
+        ")"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "STATIC_X",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        "(",
+        ")"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "TESTING",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        ""
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "#",
+          "STATIC_X",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " static "
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "#",
+          "STATIC_X",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          "g",
+          "after_directives",
+          false
+        ]
+      ]
+    }
+  ]
+}

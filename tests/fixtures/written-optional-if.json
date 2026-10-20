@@ -1,0 +1,291 @@
+{
+  "provenance": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "note": "Unmodified self-checked cscope observations, source deleted, both case modes."
+  },
+  "cases": {
+    "original-shape": {
+      "source": "void f(void) {\n#ifndef FORCE_STATIC\nif (static_lenb <= opt_lenb || s->strategy == Z_FIXED)\n#endif\nopt_lenb = static_lenb;\n}\n",
+      "source_sha256": "b2a76072a344e615df1d7e5a1520723ea229762f061b338ae8840f424d320f02",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "predicate"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "body"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "opt_lenb"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 if (static_lenb <= opt_lenb || s->strategy == Z_FIXED)\ncase.c f 5 opt_lenb = static_lenb;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "predicate"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "opt_lenb"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 5 opt_lenb = static_lenb;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "calls": {
+      "source": "void f(void) {\n#if FLAG\nif (predicate())\n#endif\ntarget = body();\nafter();\n}\n",
+      "source_sha256": "b2caf74a8a9e01489a72fa43a23fc65c4961c4041a1ebfe90cbeee1f7093ad82",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c predicate 3 if (predicate())\ncase.c body 5 target = body();\ncase.c after 6 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "predicate"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 if (predicate())\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "body"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 5 target = body();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 6 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "opt_lenb"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "predicate"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 if (predicate())\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 5 target = body();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "opt_lenb"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "plain-control": {
+      "source": "void f(void) {\nif (predicate())\ntarget = body();\nafter();\n}\n",
+      "source_sha256": "0ae0f176944d64304ccc957db122944c3a88765d7f6249c9ee4bcea80d0d4853",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c predicate 2 if (predicate())\ncase.c body 3 target = body();\ncase.c after 4 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "predicate"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 if (predicate())\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "body"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 target = body();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "opt_lenb"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "predicate"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 if (predicate())\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 target = body();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "opt_lenb"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

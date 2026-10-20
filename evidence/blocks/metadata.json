@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "date": "2026-10-01",
+  "purpose": "Historical size and full-verification tradeoff in ADR 0011; not a current performance claim or a complete reproduction kit.",
+  "source": {
+    "project": "Linux kernel",
+    "revision": "551c722f40809618230001baccf219193e22fc5a",
+    "scope": "Historical full-kernel indexed selection; the source tree and generated indexes are not bundled here."
+  },
+  "products": {
+    "main_revision": "12608e5e35c3038e13b4cfaa73ff880a9b8cbe69",
+    "blocks_base_revision": "aa7515daba4ff25f7f3ff723da8028e3c318b51e",
+    "blocks_only_changed_file": "src/store.rs",
+    "blocks_changed_file_sha256": "afaa4643464669b5d863ae3823254022e33dbc9a89c88492f5671c9a6d918761",
+    "blocks_layout": "Ordinary rowid names table with separate primary-key index, schema 5",
+    "limitation": "The archived report identifies source revisions and the changed file but does not provide executable SHA-256 values or source snapshots in this public evidence set."
+  },
+  "sampling": "Warm-cache runs; six alternating --verify -d samples per platform, medians without exclusions. Six index-build samples per product retain sizes and memory. The before-postings rows are historical controls outside the ADR's main-versus-blocks comparison.",
+  "platforms": [
+    {
+      "platform": "WSL Linux x86_64, Linux 6.18.33.2-microsoft-standard-WSL2, 16 threads",
+      "verify_samples": "verify-linux.tsv",
+      "verify_samples_sha256": "09359633f5a5eb9b5d0d9ad47409efd8653d59a9013b3a8f57ebf540da09e310",
+      "index_build_samples": "index-builds-linux.tsv",
+      "index_build_samples_sha256": "a62342e47c4ed34dff1fbff7c596a6c80d2e9a277160832a486626ad8a908154",
+      "median_verify_seconds": {"main": 4.734, "blocks": 6.295}
+    },
+    {
+      "platform": "Windows x86_64, Microsoft Windows 10.0.26200.9550, 16 threads",
+      "verify_samples": "verify-windows.tsv",
+      "verify_samples_sha256": "965fcfdad68fb6db91b3b60c8d0e25946d46a2d51f0d3ecc54b88efbbca3b395",
+      "index_build_samples": "index-builds-windows.tsv",
+      "index_build_samples_sha256": "56aa046fac9952369367ff3d4c8f5a93c1834ac16c9ae2a0b5a44458a5160fd4",
+      "median_verify_seconds": {"main": 7.599, "blocks": 9.089}
+    }
+  ],
+  "provenance": "TSV files are byte-exact copies of the original measure-linux-rowid and measure-windows-rowid capture files. This metadata is a curated description, not an original capture. Cold-cache behavior, maximum latency and subsequent revisions are unmeasured here."
+}

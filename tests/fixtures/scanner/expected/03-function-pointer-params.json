@@ -1,0 +1,161 @@
+{
+ "probe": "probes/03-function-pointer-params.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    "(int (*",
+    ")(int ",
+    "), int ",
+    ") { return ",
+    "(arg); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "apply",
+     false
+    ],
+    [
+     " ",
+     "fn",
+     false
+    ],
+    [
+     " ",
+     "value",
+     false
+    ],
+    [
+     " ",
+     "arg",
+     false
+    ],
+    [
+     "`",
+     "fn",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    "(int (*",
+    ")(int (*",
+    ")(int )), int ",
+    ") { return ",
+    "(0) + y; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     " ",
+     "twice",
+     false
+    ],
+    [
+     " ",
+     "outer",
+     false
+    ],
+    [
+     " ",
+     "inner",
+     false
+    ],
+    [
+     " ",
+     "y",
+     false
+    ],
+    [
+     "`",
+     "outer",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "void (*",
+    "(int ",
+    ", void (*",
+    ")(int )))(int ) { return handler; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "signal_like",
+     false
+    ],
+    [
+     " ",
+     "sig",
+     false
+    ],
+    [
+     " ",
+     "handler",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "int ",
+    "(int ",
+    ") { return x; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "plain",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

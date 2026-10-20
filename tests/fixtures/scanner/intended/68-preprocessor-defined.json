@@ -1,0 +1,636 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/68-preprocessor-defined.c",
+  "records": [
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        "(",
+        ") ",
+        "(x)"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "#",
+          "MACRO_DEFINED",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ],
+        [
+          "`",
+          "defined",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(int ",
+        ") { return value; ",
+        "}"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "$",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) { return 1; ",
+        "}"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "$",
+          "helper",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) { return ",
+        "(2); ",
+        "}"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "$",
+          "call_defined",
+          false
+        ],
+        [
+          "`",
+          "defined",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) {"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "$",
+          "conditional",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        "(",
+        ") && ",
+        "(",
+        "())"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "OPTION",
+          false
+        ],
+        [
+          "`",
+          "CHECK",
+          false
+        ],
+        [
+          "`",
+          "nested",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "return ",
+        "();"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#elif !",
+        " ",
+        ""
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "OTHER",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "return ",
+        "(",
+        "());"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "`",
+          "alternate",
+          false
+        ],
+        [
+          "`",
+          "inside",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "return ",
+        "();"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          "`",
+          "fallback",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) {"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          "$",
+          "continued",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        " && \\"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          " ",
+          "OPTION",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        ") && ",
+        "(",
+        "())"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "SECOND",
+          false
+        ],
+        [
+          "`",
+          "CHECK_SPLIT",
+          false
+        ],
+        [
+          "`",
+          "inner_split",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 17,
+      "symbols": [
+        [
+          "`",
+          "first_arm",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#elif !",
+        "(",
+        ")"
+      ],
+      "line": 18,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "THIRD",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 19,
+      "symbols": [
+        [
+          "`",
+          "second_arm",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "return ",
+        "(3);"
+      ],
+      "line": 21,
+      "symbols": [
+        [
+          "`",
+          "defined",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 22,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) {"
+      ],
+      "line": 23,
+      "symbols": [
+        [
+          "$",
+          "unspaced",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if(",
+        "(",
+        "))"
+      ],
+      "line": 24,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "FOURTH",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 25,
+      "symbols": [
+        [
+          "`",
+          "unspaced_arm",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#elif ",
+        " (",
+        ")"
+      ],
+      "line": 26,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "FIFTH",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 27,
+      "symbols": [
+        [
+          "`",
+          "comment_arm",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "return ",
+        "();"
+      ],
+      "line": 29,
+      "symbols": [
+        [
+          "`",
+          "defined_neighbor",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 30,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) {"
+      ],
+      "line": 31,
+      "symbols": [
+        [
+          "$",
+          "neighboring",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 32,
+      "symbols": [
+        [
+          "`",
+          "defined_neighbor",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        "(4));"
+      ],
+      "line": 33,
+      "symbols": [
+        [
+          "`",
+          "use",
+          false
+        ],
+        [
+          "`",
+          "defined",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#pragma ",
+        " ",
+        "(5)"
+      ],
+      "line": 34,
+      "symbols": [
+        [
+          " ",
+          "retain",
+          false
+        ],
+        [
+          "`",
+          "defined",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#ifdef ",
+        ""
+      ],
+      "line": 35,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 36,
+      "symbols": [
+        [
+          "`",
+          "true_branch",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 38,
+      "symbols": [
+        [
+          "`",
+          "false_branch",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 41,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    }
+  ]
+}

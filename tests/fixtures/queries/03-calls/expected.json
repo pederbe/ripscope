@@ -1,0 +1,334 @@
+{
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "commands": [
+   "cscope -bk <files>",
+   "cscope -dL [-C] -<field> <pattern>"
+  ],
+  "inverted_index": "rowsq/statusq/stderrq: the same queries on `cscope -bqk -f qscope.out <files>`",
+  "rows": "each byte one character (Latin-1)"
+ },
+ "files": [
+  "calls.c",
+  "d.c",
+  "e.c"
+ ],
+ "queries": [
+  {
+   "field": "2",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "calls.c target 24 target();",
+    "calls.c target 27 #define WRAP(v) target(v)",
+    "calls.c first 30 first();",
+    "calls.c second 32 second();",
+    "calls.c third 34 void macros_after(void ) { third(); }",
+    "d.c first_call 2 first_call();",
+    "d.c second_call 1 void next_fn(void ) { second_call(); }",
+    "d.c next_fn 2 int plain(void ) { return next_fn(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "calls.c target 24 target();",
+    "calls.c target 27 #define WRAP(v) target(v)",
+    "calls.c first 30 first();",
+    "calls.c second 32 second();",
+    "calls.c hidden 31 #define INNER(z) hidden(z)",
+    "calls.c third 34 void macros_after(void ) { third(); }",
+    "d.c first_call 2 first_call();",
+    "e.c second_call 1 void next_fn(void ) { second_call(); }",
+    "e.c next_fn 2 int plain(void ) { return next_fn(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "body",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "calls.c first 30 first();",
+    "calls.c second 32 second();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "calls.c first 30 first();",
+    "calls.c second 32 second();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "WRAP",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "calls.c target 27 #define WRAP(v) target(v)"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "calls.c target 27 #define WRAP(v) target(v)"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "open_end",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "d.c first_call 2 first_call();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "d.c first_call 2 first_call();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "next_fn",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "e.c second_call 1 void next_fn(void ) { second_call(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "e.c second_call 1 void next_fn(void ) { second_call(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "plain",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "e.c next_fn 2 int plain(void ) { return next_fn(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "e.c next_fn 2 int plain(void ) { return next_fn(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "target",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "calls.c f1 24 target();",
+    "calls.c f2 24 target();",
+    "calls.c f3 24 target();",
+    "calls.c f4 24 target();",
+    "calls.c f5 24 target();",
+    "calls.c f6 24 target();",
+    "calls.c f7 24 target();",
+    "calls.c f8 24 target();",
+    "calls.c f9 24 target();",
+    "calls.c WRAP 27 #define WRAP(v) target(v)"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "calls.c f11 24 target();",
+    "calls.c WRAP 27 #define WRAP(v) target(v)"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "calls.c f1 24 target();",
+    "calls.c f2 24 target();",
+    "calls.c f3 24 target();",
+    "calls.c f4 24 target();",
+    "calls.c f5 24 target();",
+    "calls.c f6 24 target();",
+    "calls.c f7 24 target();",
+    "calls.c f8 24 target();",
+    "calls.c f9 24 target();",
+    "calls.c WRAP 27 #define WRAP(v) target(v)",
+    "calls.c body 30 first();",
+    "calls.c INNER 31 #define INNER(z) hidden(z)",
+    "calls.c body 32 second();",
+    "calls.c macros_after 34 void macros_after(void ) { third(); }",
+    "d.c open_end 2 first_call();",
+    "e.c open_end 1 void next_fn(void ) { second_call(); }",
+    "e.c next_fn 1 void next_fn(void ) { second_call(); }",
+    "e.c plain 2 int plain(void ) { return next_fn(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "calls.c f11 24 target();",
+    "calls.c WRAP 27 #define WRAP(v) target(v)",
+    "calls.c body 30 first();",
+    "calls.c INNER 31 #define INNER(z) hidden(z)",
+    "calls.c body 32 second();",
+    "calls.c macros_after 34 void macros_after(void ) { third(); }",
+    "d.c open_end 2 first_call();",
+    "e.c next_fn 1 void next_fn(void ) { second_call(); }",
+    "e.c plain 2 int plain(void ) { return next_fn(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "first_call",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "d.c open_end 2 first_call();"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "d.c open_end 2 first_call();"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "second_call",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "e.c open_end 1 void next_fn(void ) { second_call(); }",
+    "e.c next_fn 1 void next_fn(void ) { second_call(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "e.c next_fn 1 void next_fn(void ) { second_call(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "hidden",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "calls.c INNER 31 #define INNER(z) hidden(z)"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "calls.c INNER 31 #define INNER(z) hidden(z)"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "target",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "calls.c <global> 26 int top = target();",
+    "calls.c f11 24 target();",
+    "calls.c WRAP 27 #define WRAP(v) target(v)"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "calls.c <global> 26 int top = target();",
+    "calls.c f11 24 target();",
+    "calls.c WRAP 27 #define WRAP(v) target(v)"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "calls.c <global> 1 #if A",
+    "calls.c <global> 26 int top = target();",
+    "calls.c <global> 27 #define WRAP(v) target(v)",
+    "calls.c f1 2 int f1(void ) {",
+    "calls.c f1 3 #elif B",
+    "calls.c f2 4 int f2(void ) {",
+    "calls.c f2 5 #elif C",
+    "calls.c f3 6 int f3(void ) {",
+    "calls.c f3 7 #elif D",
+    "calls.c f4 8 int f4(void ) {",
+    "calls.c f4 9 #elif E",
+    "calls.c f5 10 int f5(void ) {",
+    "calls.c f5 11 #elif F",
+    "calls.c f6 12 int f6(void ) {",
+    "calls.c f6 13 #elif G",
+    "calls.c f7 14 int f7(void ) {",
+    "calls.c f7 15 #elif H",
+    "calls.c f8 16 int f8(void ) {",
+    "calls.c f8 17 #elif I",
+    "calls.c f9 18 int f9(void ) {",
+    "calls.c f9 19 #elif J",
+    "calls.c f10 20 int f10(void ) {",
+    "calls.c f11 22 int f11(void ) {",
+    "calls.c f11 24 target();",
+    "calls.c body 28 void body(void )",
+    "calls.c body 30 first();",
+    "calls.c body 31 #define INNER(z) hidden(z)",
+    "calls.c body 32 second();",
+    "calls.c macros_after 34 void macros_after(void ) { third(); }",
+    "d.c open_end 1 void open_end(void ) {",
+    "d.c open_end 2 first_call();",
+    "e.c next_fn 1 void next_fn(void ) { second_call(); }",
+    "e.c plain 2 int plain(void ) { return next_fn(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "calls.c <global> 1 #if A",
+    "calls.c <global> 26 int top = target();",
+    "calls.c f1 2 int f1(void ) {",
+    "calls.c f1 3 #elif B",
+    "calls.c f1 4 int f2(void ) {",
+    "calls.c f2 5 #elif C",
+    "calls.c f2 6 int f3(void ) {",
+    "calls.c f3 7 #elif D",
+    "calls.c f3 8 int f4(void ) {",
+    "calls.c f4 9 #elif E",
+    "calls.c f4 10 int f5(void ) {",
+    "calls.c f5 11 #elif F",
+    "calls.c f5 12 int f6(void ) {",
+    "calls.c f6 13 #elif G",
+    "calls.c f6 14 int f7(void ) {",
+    "calls.c f7 15 #elif H",
+    "calls.c f7 16 int f8(void ) {",
+    "calls.c f8 17 #elif I",
+    "calls.c f8 18 int f9(void ) {",
+    "calls.c f9 19 #elif J",
+    "calls.c f9 20 int f10(void ) {",
+    "calls.c f10 22 int f11(void ) {",
+    "calls.c f11 24 target();",
+    "calls.c WRAP 27 #define WRAP(v) target(v)",
+    "calls.c body 28 void body(void )",
+    "calls.c body 30 first();",
+    "calls.c INNER 31 #define INNER(z) hidden(z)",
+    "calls.c body 32 second();",
+    "calls.c macros_after 34 void macros_after(void ) { third(); }",
+    "d.c open_end 1 void open_end(void ) {",
+    "d.c open_end 2 first_call();",
+    "e.c next_fn 1 void next_fn(void ) { second_call(); }",
+    "e.c plain 2 int plain(void ) { return next_fn(); }"
+   ],
+   "stderrq": ""
+  }
+ ]
+}

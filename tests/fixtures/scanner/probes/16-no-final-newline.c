@@ -1,0 +1,1 @@
+int no_final_newline(void) { return tail(); }

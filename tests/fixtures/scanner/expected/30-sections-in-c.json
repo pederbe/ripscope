@@ -1,0 +1,113 @@
+{
+ "probe": "probes/30-sections-in-c.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "before",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "inside",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "%% /* ",
+    " */ ",
+    "()"
+   ],
+   "symbols": [
+    [
+     "$",
+     "yyparse",
+     false
+    ],
+    [
+     "`",
+     "yylex",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "(",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "name",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "",
+    "%%"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "last",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

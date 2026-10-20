@@ -1,0 +1,19 @@
+{
+  "fixture": "definition-requests.json",
+  "corrections": [
+    {
+      "pattern": "Alpha|Beta",
+      "caseless": false,
+      "control_pattern": "(Alpha|Beta)",
+      "cscope_stdout": "case.c Alpha|Beta 1 int Alpha;\ncase.c Alpha|Beta 4 int AlphaTail;\ncase.c Alpha|Beta 6 int Beta;\ncase.c Alpha|Beta 8 int tailBeta;\ncase.c Alpha|Beta 10 int Alpha, alpha;\n",
+      "ripscope_stdout": "case.c Alpha|Beta 1 int Alpha;\ncase.c Alpha|Beta 6 int Beta;\ncase.c Alpha|Beta 10 int Alpha, alpha;\n"
+    },
+    {
+      "pattern": "Alpha|Beta",
+      "caseless": true,
+      "control_pattern": "(Alpha|Beta)",
+      "cscope_stdout": "case.c Alpha|Beta 1 int Alpha;\ncase.c Alpha|Beta 2 int alpha;\ncase.c Alpha|Beta 3 int ALPHA;\ncase.c Alpha|Beta 4 int AlphaTail;\ncase.c Alpha|Beta 6 int Beta;\ncase.c Alpha|Beta 8 int tailBeta;\ncase.c Alpha|Beta 10 int Alpha, alpha;\n",
+      "ripscope_stdout": "case.c Alpha|Beta 1 int Alpha;\ncase.c Alpha|Beta 2 int alpha;\ncase.c Alpha|Beta 3 int ALPHA;\ncase.c Alpha|Beta 6 int Beta;\ncase.c Alpha|Beta 10 int Alpha, alpha;\n"
+    }
+  ]
+}

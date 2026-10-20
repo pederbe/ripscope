@@ -1,0 +1,160 @@
+{
+  "provenance": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "locale": "C",
+    "note": "Unmodified reference outputs for nested optional annotation wrappers; raw capture profiles retained in target/diagnostics/ticket-48-nested/reference.json."
+  },
+  "cases": {
+    "nested_optional": {
+      "source": "#if A\n#if B\n__attribute__((no_sanitize(\"memory\")))\n#endif\n#endif\nvoid f(void) { target(); }\n",
+      "source_sha256": "c75031d3d2ba652cba8b36b2fbb0bbb9fcd5bcbcc91ea680f872ebaef83e9464",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 6 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 6 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 6 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 6 void f(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "nested_empty_else": {
+      "source": "#if A\n#if B\n__attribute__((unused))\n#endif\n#else\n/* empty */\n#endif\nvoid f(void) { target(); }\n",
+      "source_sha256": "b65fc8da794581d946af1ae49129a4dfccdb1478b1de0e76022cc03b3a11e039",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 8 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 8 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 8 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 8 void f(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "deep_alternative": {
+      "source": "#if A\n#if B\n#if C\n__attribute__((unused))\n#else\n__attribute__((noinline))\n#endif\n#endif\n#endif\nvoid f(void) { target(); }\n",
+      "source_sha256": "0d593b5bc79f02cb4b0c4f0cbf95df1150ea4225b8abcc1908319c46b3c69f15",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 10 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 10 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 10 void f(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 10 void f(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

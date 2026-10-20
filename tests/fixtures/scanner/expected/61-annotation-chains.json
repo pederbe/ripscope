@@ -1,0 +1,458 @@
+{
+ "probe": "probes/61-annotation-chains.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "",
+    "(3.12) ",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "DEPRECATED",
+     false
+    ],
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "DebugFlag",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "",
+    "(3.12) ",
+    "(const char *) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "DEPRECATED",
+     false
+    ],
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "FileEncoding",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "(2, 4)"
+   ],
+   "symbols": [
+    [
+     " ",
+     "DEPRECATED",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "",
+    "(unsigned long ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "SplitFlag",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "",
+    "(int ) ",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "TYPED",
+     false
+    ],
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "TypedTail",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "NAMED",
+     false
+    ],
+    [
+     " ",
+     "version",
+     false
+    ],
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "NamedTail",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "",
+    "() ",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "EMPTY",
+     false
+    ],
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "EmptyTail",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "",
+    "(",
+    " (*",
+    ")(int )) ",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "CALLBACK",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     " ",
+     "cb",
+     false
+    ],
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "CallbackTail",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "",
+    "(",
+    " [10]) ",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "ARRAY",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "ArrayTail",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "",
+    "(3.12) ",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "DEPRECATED",
+     false
+    ],
+    [
+     " ",
+     "implicit",
+     false
+    ],
+    [
+     " ",
+     "ATTR",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "",
+    "(3.12) int ",
+    "(int ",
+    ") {"
+   ],
+   "symbols": [
+    [
+     " ",
+     "DEPRECATED",
+     false
+    ],
+    [
+     " ",
+     "real",
+     false
+    ],
+    [
+     " ",
+     "value",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "",
+    "(3.12);"
+   ],
+   "symbols": [
+    [
+     " ",
+     "DEPRECATED",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "return ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "value",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "",
+    "(3.12) ",
+    "(int ) ",
+    " = 0;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "DEPRECATED",
+     false
+    ],
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "Initialised",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "after",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 20,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 23,
+   "fragments": [
+    "",
+    "(3.12) ",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "$",
+     "DEPRECATED",
+     false
+    ],
+    [
+     "$",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "Outside",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 24,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "outside_after",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

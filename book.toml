@@ -1,0 +1,30 @@
+[book]
+title = "Ripscope"
+description = "Cscope-compatible code navigation for C with content-aware, atomic index updates."
+authors = ["Peder Bergan"]
+language = "en"
+src = "docs"
+
+[build]
+build-dir = "target/book"
+create-missing = false
+
+[output.html]
+site-url = "/docs/"
+git-repository-url = "https://github.com/pederbe/ripscope"
+edit-url-template = "https://github.com/pederbe/ripscope/edit/main/{path}"
+default-theme = "navy"
+preferred-dark-theme = "navy"
+theme = "docs/theme"
+additional-css = ["docs/theme/ripscope.css"]
+additional-js = ["docs/theme/navigation.js", "docs/theme/benchmarks.js"]
+no-section-label = true
+
+# mdBook renders README.md chapters as index.html; keep GitHub-friendly README.md links working.
+[output.html.redirect]
+"/README.html" = "index.html"
+"/adr/README.html" = "index.html"
+
+[output.html.fold]
+enable = true
+level = 0

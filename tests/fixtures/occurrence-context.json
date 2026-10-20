@@ -1,0 +1,738 @@
+{
+  "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+  "source_commit": "612a539b585ccdb70a1261652954f579ccedb270",
+  "fields": {
+    "0": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-0",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 1 int before = 0;\na.c <global> 2 #define REPEAT(arg) arg\nc.c <global> 1 #define CLEAR extern \nc.c <global> 2 int cleared = 4;\nc.c <global> 3 #define UNIQUE(arg) different\nc.c <global> 4 int final = 5;\nd.c <global> 1 #define TRAIL(arg) arg\nd.c <global> 3 #define STOP(arg) arg;\nd.c <global> 4 int stopped = 7;\ne.c <global> 1 #define SET value = value\ne.c <global> 3 #define SET_STOP value = value;\ne.c <global> 4 int after_stop = 2;\ne.c <global> 5 #define LAST(arg) arg\na.c REPEAT 3 int after = 1;\nb.c REPEAT 1 int other = 2;\nb.c REPEAT 2 void function(void ) {\nb.c function 3 #define INNER(value) value;\nb.c function 4 other = 3;\nd.c TRAIL 2 int trailing = 6;\ne.c SET 2 int after_set = 1;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "before"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 1 int before = 0;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "REPEAT"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 2 #define REPEAT(arg) arg\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "^REPEAT$"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 2 #define REPEAT(arg) arg\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "arg"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c REPEAT 2 #define REPEAT(arg) arg\nc.c UNIQUE 3 #define UNIQUE(arg) different\nd.c TRAIL 1 #define TRAIL(arg) arg\nd.c STOP 3 #define STOP(arg) arg;\ne.c LAST 5 #define LAST(arg) arg\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "(after|other)"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nb.c function 4 other = 3;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "(function|INNER|other)"
+              ],
+              "exit_code": 0,
+              "stdout": "b.c <global> 1 int other = 2;\nb.c function 2 void function(void ) {\nb.c function 3 #define INNER(value) value;\nb.c function 4 other = 3;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "INNER"
+              ],
+              "exit_code": 0,
+              "stdout": "b.c function 3 #define INNER(value) value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "value"
+              ],
+              "exit_code": 0,
+              "stdout": "b.c INNER 3 #define INNER(value) value;\ne.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "(value|after_set|after_stop)"
+              ],
+              "exit_code": 0,
+              "stdout": "e.c <global> 4 int after_stop = 2;\nb.c INNER 3 #define INNER(value) value;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "CLEAR"
+              ],
+              "exit_code": 0,
+              "stdout": "c.c <global> 1 #define CLEAR extern \n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "cleared"
+              ],
+              "exit_code": 0,
+              "stdout": "c.c <global> 2 int cleared = 4;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "(TRAIL|trailing)"
+              ],
+              "exit_code": 0,
+              "stdout": "d.c <global> 1 #define TRAIL(arg) arg\nd.c TRAIL 2 int trailing = 6;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "(STOP|stopped)"
+              ],
+              "exit_code": 0,
+              "stdout": "d.c <global> 3 #define STOP(arg) arg;\nd.c <global> 4 int stopped = 7;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "missing"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 1 int before = 0;\nc.c <global> 2 int cleared = 4;\nc.c <global> 4 int final = 5;\nd.c <global> 4 int stopped = 7;\ne.c <global> 4 int after_stop = 2;\na.c REPEAT 2 #define REPEAT(arg) arg\na.c REPEAT 3 int after = 1;\nb.c REPEAT 1 int other = 2;\nb.c REPEAT 2 void function(void ) {\nb.c INNER 3 #define INNER(value) value;\nb.c function 4 other = 3;\nc.c CLEAR 1 #define CLEAR extern \nc.c UNIQUE 3 #define UNIQUE(arg) different\nd.c TRAIL 1 #define TRAIL(arg) arg\nd.c TRAIL 2 int trailing = 6;\nd.c STOP 3 #define STOP(arg) arg;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\ne.c LAST 5 #define LAST(arg) arg\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "before"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 1 int before = 0;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "REPEAT"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c REPEAT 2 #define REPEAT(arg) arg\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "^REPEAT$"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c REPEAT 2 #define REPEAT(arg) arg\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "arg"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c REPEAT 2 #define REPEAT(arg) arg\nc.c UNIQUE 3 #define UNIQUE(arg) different\nd.c TRAIL 1 #define TRAIL(arg) arg\nd.c STOP 3 #define STOP(arg) arg;\ne.c LAST 5 #define LAST(arg) arg\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "(after|other)"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nb.c function 4 other = 3;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "(function|INNER|other)"
+              ],
+              "exit_code": 0,
+              "stdout": "b.c <global> 1 int other = 2;\nb.c function 2 void function(void ) {\nb.c INNER 3 #define INNER(value) value;\nb.c function 4 other = 3;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "INNER"
+              ],
+              "exit_code": 0,
+              "stdout": "b.c INNER 3 #define INNER(value) value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "value"
+              ],
+              "exit_code": 0,
+              "stdout": "b.c INNER 3 #define INNER(value) value;\ne.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "(value|after_set|after_stop)"
+              ],
+              "exit_code": 0,
+              "stdout": "e.c <global> 4 int after_stop = 2;\nb.c INNER 3 #define INNER(value) value;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "CLEAR"
+              ],
+              "exit_code": 0,
+              "stdout": "c.c CLEAR 1 #define CLEAR extern \n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "cleared"
+              ],
+              "exit_code": 0,
+              "stdout": "c.c <global> 2 int cleared = 4;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "(TRAIL|trailing)"
+              ],
+              "exit_code": 0,
+              "stdout": "d.c TRAIL 1 #define TRAIL(arg) arg\nd.c TRAIL 2 int trailing = 6;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "(STOP|stopped)"
+              ],
+              "exit_code": 0,
+              "stdout": "d.c <global> 4 int stopped = 7;\nd.c STOP 3 #define STOP(arg) arg;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "missing"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "a.c": "int before = 0;\n#define REPEAT(arg) arg\nint after = 1;\n",
+        "b.c": "int other = 2;\nvoid function(void) {\n#define INNER(value) value;\nother = 3;\n}\n",
+        "c.c": "#define CLEAR extern\nint cleared = 4;\n#define UNIQUE(arg) different\nint final = 5;\n",
+        "d.c": "#define TRAIL(arg) arg \t\r\nint trailing = 6;\n#define STOP(arg) arg;\nint stopped = 7;\n",
+        "e.c": "#define SET value = value\nint after_set = 1;\n#define SET_STOP value = value;\nint after_stop = 2;\n#define LAST(arg) arg\n"
+      },
+      "seeds": [
+        "a.c",
+        "b.c",
+        "c.c",
+        "d.c",
+        "e.c"
+      ],
+      "field": "0",
+      "build": {
+        "args": [
+          "-bk",
+          "a.c",
+          "b.c",
+          "c.c",
+          "d.c",
+          "e.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    },
+    "9": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-9",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 1 int before = 0;\na.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nc.c <global> 2 int cleared = 4;\nc.c <global> 4 int final = 5;\nd.c <global> 2 int trailing = 6;\nd.c <global> 4 int stopped = 7;\ne.c <global> 4 int after_stop = 2;\nb.c function 4 other = 3;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "before"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 1 int before = 0;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "REPEAT"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "^REPEAT$"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "arg"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "(after|other)"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nb.c function 4 other = 3;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "(function|INNER|other)"
+              ],
+              "exit_code": 0,
+              "stdout": "b.c <global> 1 int other = 2;\nb.c function 4 other = 3;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "INNER"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "value"
+              ],
+              "exit_code": 0,
+              "stdout": "e.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "(value|after_set|after_stop)"
+              ],
+              "exit_code": 0,
+              "stdout": "e.c <global> 4 int after_stop = 2;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "CLEAR"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "cleared"
+              ],
+              "exit_code": 0,
+              "stdout": "c.c <global> 2 int cleared = 4;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "(TRAIL|trailing)"
+              ],
+              "exit_code": 0,
+              "stdout": "d.c <global> 2 int trailing = 6;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "(STOP|stopped)"
+              ],
+              "exit_code": 0,
+              "stdout": "d.c <global> 4 int stopped = 7;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "missing"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 1 int before = 0;\na.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nc.c <global> 2 int cleared = 4;\nc.c <global> 4 int final = 5;\nd.c <global> 2 int trailing = 6;\nd.c <global> 4 int stopped = 7;\ne.c <global> 4 int after_stop = 2;\nb.c function 4 other = 3;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "before"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 1 int before = 0;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "REPEAT"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "^REPEAT$"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "arg"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "(after|other)"
+              ],
+              "exit_code": 0,
+              "stdout": "a.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nb.c function 4 other = 3;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "(function|INNER|other)"
+              ],
+              "exit_code": 0,
+              "stdout": "b.c <global> 1 int other = 2;\nb.c function 4 other = 3;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "INNER"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "value"
+              ],
+              "exit_code": 0,
+              "stdout": "e.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "(value|after_set|after_stop)"
+              ],
+              "exit_code": 0,
+              "stdout": "e.c <global> 4 int after_stop = 2;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "CLEAR"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "cleared"
+              ],
+              "exit_code": 0,
+              "stdout": "c.c <global> 2 int cleared = 4;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "(TRAIL|trailing)"
+              ],
+              "exit_code": 0,
+              "stdout": "d.c <global> 2 int trailing = 6;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "(STOP|stopped)"
+              ],
+              "exit_code": 0,
+              "stdout": "d.c <global> 4 int stopped = 7;\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "missing"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "a.c": "int before = 0;\n#define REPEAT(arg) arg\nint after = 1;\n",
+        "b.c": "int other = 2;\nvoid function(void) {\n#define INNER(value) value;\nother = 3;\n}\n",
+        "c.c": "#define CLEAR extern\nint cleared = 4;\n#define UNIQUE(arg) different\nint final = 5;\n",
+        "d.c": "#define TRAIL(arg) arg \t\r\nint trailing = 6;\n#define STOP(arg) arg;\nint stopped = 7;\n",
+        "e.c": "#define SET value = value\nint after_set = 1;\n#define SET_STOP value = value;\nint after_stop = 2;\n#define LAST(arg) arg\n"
+      },
+      "seeds": [
+        "a.c",
+        "b.c",
+        "c.c",
+        "d.c",
+        "e.c"
+      ],
+      "field": "9",
+      "build": {
+        "args": [
+          "-bk",
+          "a.c",
+          "b.c",
+          "c.c",
+          "d.c",
+          "e.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    }
+  }
+}

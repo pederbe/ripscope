@@ -1,0 +1,195 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 2 #include \"hidden.h\"\ncase.c <global> 5 #include \"a  b.h\"\ncase.c <global> 7 #include <c\t\td.h>\ncase.c <global> 9 #include <body.h>\ncase.c <global> 11 #include \"foo>bar.h\"\ncase.c <global> 13 #include <a\"b.h>\ncase.c <global> 15 #include \"suffix.h\" trailing\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "body"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 9 #include <body.h>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "hidden"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 2 #include \"hidden.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "string"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "^a  b.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 5 #include \"a  b.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "^a b.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "d.h"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 7 #include <c\t\td.h>\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 2 #include \"hidden.h\"\ncase.c <global> 5 #include \"a  b.h\"\ncase.c <global> 7 #include <c\t\td.h>\ncase.c <global> 9 #include <body.h>\ncase.c <global> 11 #include \"foo>bar.h\"\ncase.c <global> 13 #include <a\"b.h>\ncase.c <global> 15 #include \"suffix.h\" trailing\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "body"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 9 #include <body.h>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "hidden"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 2 #include \"hidden.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "string"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "^a  b.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 5 #include \"a  b.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "^a b.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "d.h"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 7 #include <c\t\td.h>\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "case.c": "// comment \\\n#include \"hidden.h\"\nchar *s = \"#include <string.h>\";\n// comment \\\n#include \"a  b.h\"\n// comment \\\n#include <c\t\td.h>\n#define BODY \\\r\n#include <body.h>\r\n// hidden \\\n#include \"foo>bar.h\" /* tail */\n// hidden \\\n#include <a\"b.h>\n// hidden \\\n#include \"suffix.h\" trailing\n"
+  },
+  "seeds": [
+    "case.c"
+  ],
+  "field": "8",
+  "build": {
+    "args": [
+      "-bk",
+      "case.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sources_deleted_before_queries": true,
+  "unreadable": [],
+  "persistent_input": "8missing\n8[\n8inactive\nq\n",
+  "persistent": {
+    "args": [
+      "-dl"
+    ],
+    "exit_code": 0,
+    "stdout": ">> Unable to search database\n>> Unable to search database\n>> Unable to search database\n>> ",
+    "stderr": ""
+  }
+}

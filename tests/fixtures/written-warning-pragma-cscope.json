@@ -1,0 +1,2368 @@
+{
+  "source_commit": "612a539b585ccdb70a1261652954f579ccedb270",
+  "cases": {
+    "global": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #pragma warn -8004\ncase.c <global> 2 #pragma warn -8008\ncase.c <global> 3 #pragma warn -8066\ncase.c <global> 4 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #pragma warn -8004\ncase.c <global> 2 #pragma warn -8008\ncase.c <global> 3 #pragma warn -8066\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #pragma warn -8004\ncase.c <global> 2 #pragma warn -8008\ncase.c <global> 3 #pragma warn -8066\ncase.c <global> 4 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #pragma warn -8004\ncase.c <global> 2 #pragma warn -8008\ncase.c <global> 3 #pragma warn -8066\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\n#pragma warn -8008\n#pragma warn -8066\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 4 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 4 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\n#pragma warn -8008\n#pragma warn -8066\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\n#pragma warn -8008\n#pragma warn -8066\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\n#pragma warn -8008\n#pragma warn -8066\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\n#pragma warn -8008\n#pragma warn -8066\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "body": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 void f(void ) {\ncase.c f 2 #pragma warn -1234\ncase.c f 3 target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 2 #pragma warn -1234\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 void f(void ) {\ncase.c f 2 #pragma warn -1234\ncase.c f 3 target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 2 #pragma warn -1234\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void f(void) {\n#pragma warn -1234 /* comment */\ntarget();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void f(void ) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void f(void ) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void f(void) {\n#pragma warn -1234 /* comment */\ntarget();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 3 target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 3 target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void f(void) {\n#pragma warn -1234 /* comment */\ntarget();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 3 target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 3 target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void f(void) {\n#pragma warn -1234 /* comment */\ntarget();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void f(void) {\n#pragma warn -1234 /* comment */\ntarget();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "conditional": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #if FLAG\ncase.c <global> 2 #pragma warn -8004\ncase.c <global> 4 #pragma warn -9999\ncase.c <global> 6 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 2 #pragma warn -8004\ncase.c <global> 4 #pragma warn -9999\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #if FLAG\ncase.c <global> 2 #pragma warn -8004\ncase.c <global> 4 #pragma warn -9999\ncase.c <global> 6 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 2 #pragma warn -8004\ncase.c <global> 4 #pragma warn -9999\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if FLAG\n#pragma warn -8004\n#else\n#pragma warn -9999\n#endif\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 6 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 6 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if FLAG\n#pragma warn -8004\n#else\n#pragma warn -9999\n#endif\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if FLAG\n#pragma warn -8004\n#else\n#pragma warn -9999\n#endif\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if FLAG\n#pragma warn -8004\n#else\n#pragma warn -9999\n#endif\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if FLAG\n#pragma warn -8004\n#else\n#pragma warn -9999\n#endif\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "assignments": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #pragma warn -8004\ncase.c <global> 2 int after=1;\ncase.c f 3 void f(void ) {\ncase.c f 4 #pragma warn -1234\ncase.c f 5 after=2; target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #pragma warn -8004\ncase.c f 4 #pragma warn -1234\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #pragma warn -8004\ncase.c <global> 2 int after=1;\ncase.c f 3 void f(void ) {\ncase.c f 4 #pragma warn -1234\ncase.c f 5 after=2; target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #pragma warn -8004\ncase.c f 4 #pragma warn -1234\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\nint after=1;\nvoid f(void) {\n#pragma warn -1234\nafter=2; target();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 2 int after=1;\ncase.c .* 3 void f(void ) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 2 int after=1;\ncase.c .* 3 void f(void ) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\nint after=1;\nvoid f(void) {\n#pragma warn -1234\nafter=2; target();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 5 after=2; target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 5 after=2; target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\nint after=1;\nvoid f(void) {\n#pragma warn -1234\nafter=2; target();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 5 after=2; target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 5 after=2; target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\nint after=1;\nvoid f(void) {\n#pragma warn -1234\nafter=2; target();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 2 int after=1;\ncase.c f 5 after=2; target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 2 int after=1;\ncase.c f 5 after=2; target();\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "pragma"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "warn"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#pragma warn -8004\nint after=1;\nvoid f(void) {\n#pragma warn -1234\nafter=2; target();\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    }
+  }
+}

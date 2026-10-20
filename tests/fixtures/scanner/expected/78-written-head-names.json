@@ -1,0 +1,269 @@
+{
+ "probe": "probes/78-written-head-names.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 3,
+   "fragments": [
+    "",
+    "(",
+    ")(const char *",
+    ", int ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "PRIV",
+     false
+    ],
+    [
+     " ",
+     "check_escape",
+     false
+    ],
+    [
+     " ",
+     "text",
+     false
+    ],
+    [
+     " ",
+     "length",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "return ",
+    " (",
+    ", ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "scan_escape",
+     false
+    ],
+    [
+     " ",
+     "text",
+     false
+    ],
+    [
+     " ",
+     "length",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "",
+    "(",
+    ", const char *, ",
+    ", int , ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "SYSCALL_DEFINE2",
+     false
+    ],
+    [
+     " ",
+     "open",
+     false
+    ],
+    [
+     " ",
+     "path",
+     false
+    ],
+    [
+     " ",
+     "flags",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "return ",
+    " (",
+    ", ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "do_open",
+     false
+    ],
+    [
+     " ",
+     "path",
+     false
+    ],
+    [
+     " ",
+     "flags",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "",
+    "(int )(const char *",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "WRAP",
+     false
+    ],
+    [
+     " ",
+     "text",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "return ",
+    " (",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "count_text",
+     false
+    ],
+    [
+     " ",
+     "text",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "void ",
+    " (void )"
+   ],
+   "symbols": [
+    [
+     "$",
+     "caller",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 23,
+   "fragments": [
+    "",
+    "(",
+    ")(\"x\", 1);"
+   ],
+   "symbols": [
+    [
+     "`",
+     "PRIV",
+     false
+    ],
+    [
+     " ",
+     "check_escape",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 24,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

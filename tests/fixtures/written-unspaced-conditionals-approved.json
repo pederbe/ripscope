@@ -1,0 +1,31 @@
+{
+ "decision": "Unspaced #if( and #elif! read exactly as their spaced forms.",
+ "reference": "tests/fixtures/written-unspaced-conditionals-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "alternative_heads": {
+   "0": {
+    "C": "case.c <global> 8 #ifdef C\n",
+    "d": "case.c <global> 9 int d;\n",
+    "h": "case.c h 11 void h(void ) { k(); }\n",
+    "k": "case.c h 11 void h(void ) { k(); }\n"
+   },
+   "1": {
+    "d": "case.c d 9 int d;\n",
+    "f": "case.c f 2 void f(void ) {\ncase.c f 4 void f(int x) {\n",
+    "h": "case.c h 11 void h(void ) { k(); }\n"
+   },
+   "2": {
+    "f": "case.c g 6 g();\n",
+    "h": "case.c k 11 void h(void ) { k(); }\n"
+   },
+   "3": {
+    "k": "case.c h 11 void h(void ) { k(); }\n"
+   },
+   "caseless": {
+    "0": {
+     "c": "case.c <global> 8 #ifdef C\n"
+    }
+   }
+  }
+ }
+}

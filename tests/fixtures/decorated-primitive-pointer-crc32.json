@@ -1,0 +1,84 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "binary": "Ubuntu cscope 15.9-2build1"
+  },
+  "cases": [
+    {
+      "name": "exact",
+      "source": "unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\n                            uInt len) { return crc; }\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 3 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "crc32"], "exit": 0, "stdout": "case.c crc32 1 unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\n", "stderr": "" },
+        { "args": ["-dL", "-1", "marker"], "exit": 0, "stdout": "case.c marker 3 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "ZEXPORT"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "buf"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "uInt"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "len"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "tab-spacing",
+      "source": "unsigned\tlong\tZEXPORT\tcrc32(unsigned\tlong\tcrc,\tconst\tunsigned\tchar\tFAR\t*buf,\n\tuInt\tlen)\t{ return crc; }\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 3 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "crc32"], "exit": 0, "stdout": "case.c crc32 1 unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\n", "stderr": "" }
+      ]
+    },
+    {
+      "name": "mixed-owners",
+      "source": "unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                              z_size_t len) { return crc; }\nunsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\n                            uInt len) { return crc; }\nint f(void) { return (API Type *)p != 0; }\nint p;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 3 unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\ncase.c .* 5 int f(void ) { return (API Type *)p != 0; }\ncase.c .* 6 int p;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "crc32"], "exit": 0, "stdout": "case.c crc32 3 unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\n", "stderr": "" },
+        { "args": ["-dL", "-1", "crc32_z"], "exit": 0, "stdout": "case.c crc32_z 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n", "stderr": "" },
+        { "args": ["-dL", "-1", "f"], "exit": 0, "stdout": "case.c f 5 int f(void ) { return (API Type *)p != 0; }\n", "stderr": "" },
+        { "args": ["-dL", "-1", "p"], "exit": 0, "stdout": "case.c p 6 int p;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "uInt"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "z_size_t"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "crossed-crc32-z-size",
+      "source": "unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\n                            z_size_t len) { return crc; }\nint marker;\n",
+      "ripscope_accept": false,
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "crc32"], "exit": 0, "stdout": "case.c crc32 1 unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\n", "stderr": "" }
+      ]
+    },
+    {
+      "name": "crossed-crc32-z-uint",
+      "source": "unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                            uInt len) { return crc; }\nint marker;\n",
+      "ripscope_accept": false,
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "crc32_z"], "exit": 0, "stdout": "case.c crc32_z 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n", "stderr": "" }
+      ]
+    },
+    {
+      "name": "prototype-boundary",
+      "source": "unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf,\n                            uInt len);\nint marker;\n",
+      "ripscope_accept": false,
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "crc32"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "one-line-boundary",
+      "source": "unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf, uInt len) { return crc; }\nint marker;\n",
+      "ripscope_accept": false,
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "crc32"], "exit": 0, "stdout": "case.c crc32 1 unsigned long ZEXPORT crc32(unsigned long crc, const unsigned char FAR *buf, uInt len) { return crc; }\n", "stderr": "" }
+      ]
+    }
+  ]
+}

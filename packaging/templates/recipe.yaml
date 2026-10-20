@@ -1,0 +1,74 @@
+schema_version: 1
+context:
+  version: "@VERSION@"
+package:
+  name: ripscope
+  version: ${{ version }}
+source:
+  url: https://github.com/pederbe/ripscope/releases/download/v${{ version }}/ripscope-${{ version }}-x86_64-linux-gnu.tar.gz
+  sha256: @ARCHIVE_SHA256@
+build:
+  number: 0
+  skip: not (linux and x86_64)
+  script: build.sh
+  dynamic_linking:
+    binary_relocation: false
+    missing_dso_allowlist:
+      - '**/ld-linux-x86-64.so.2'
+      - '**/libc.so.6'
+      - '**/libm.so.6'
+      - '**/libdl.so.2'
+      - '**/libpthread.so.0'
+  prefix_detection:
+    ignore: true
+requirements:
+  build:
+    - coreutils
+    - findutils
+    - patchelf
+  host:
+    - libgcc
+  run:
+    - __glibc >=2.28
+    - libgcc
+tests:
+  - script: sh check-installed.sh ${{ version }} "$PREFIX/bin/ripscope" "$PREFIX/lib/ripscope"
+    requirements:
+      run:
+        - coreutils
+        - grep
+        - findutils
+        - diffutils
+    files:
+      recipe:
+        - check-installed.sh
+  - package_contents:
+      bin:
+        - ripscope
+      files:
+        - lib/ripscope/bin/ripscope
+        - lib/ripscope/BUILD.json
+        - lib/ripscope/MANIFEST.sha256
+        - lib/ripscope/DEPENDENCIES.json
+        - lib/ripscope/licenses/**
+        - lib/ripscope/contrib/emacs/vendor/COPYING
+        - lib/ripscope/contrib/emacs/vendor/xcscope.el
+about:
+  homepage: https://ripscope.com
+  summary: C navigation with atomic index updates
+  description: |
+    Repackages the upstream Linux x86-64 glibc archive without recompilation,
+    adjusting its relative runtime path to the environment's GCC library.
+    SQLite is bundled. Vim, Neovim and Emacs integration sources are included;
+    the Emacs integration and xcscope are separately GPL-2.0-or-later licensed.
+  license: (MIT OR Apache-2.0) AND GPL-2.0-or-later
+  license_file:
+    - LICENSE-MIT
+    - LICENSE-APACHE
+    - licenses/
+    - contrib/emacs/vendor/COPYING
+  documentation: https://ripscope.com/docs
+  repository: https://github.com/pederbe/ripscope
+extra:
+  recipe-maintainers:
+    - pederbe

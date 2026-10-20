@@ -1,0 +1,402 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/41-pointer-declarators.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef unsigned long ",
+        ";"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "t",
+          "u64",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        " {"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "s",
+          "ops",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (*",
+        ")(const void *",
+        ");"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          "m",
+          "hash",
+          false
+        ],
+        [
+          " ",
+          "key",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int (*",
+        ")(const void *",
+        ", const void *",
+        ");"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "m",
+          "compare",
+          false
+        ],
+        [
+          " ",
+          "a",
+          false
+        ],
+        [
+          " ",
+          "b",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (*",
+        "[4])(int );"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          "m",
+          "table",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (* const ",
+        ")(void );"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          "m",
+          "fixed",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void (^",
+        ")(int );"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "m",
+          "block",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (*",
+        ")[4];"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          "m",
+          "rows",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int (*",
+        ")[4];"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "m",
+          "krows",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef ",
+        " (*",
+        ")(const void *",
+        ");"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          "t",
+          "hash_fn",
+          false
+        ],
+        [
+          " ",
+          "key",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "static ",
+        " (*",
+        ")(int ) = 0;"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          "g",
+          "global_hook",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "extern ",
+        " (*",
+        ")(int );"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          " ",
+          "external_hook",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int (*",
+        ")(void ), (*",
+        ")(void );"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          "g",
+          "first",
+          false
+        ],
+        [
+          "g",
+          "second",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(",
+        " (*",
+        ")(int ",
+        "));"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          " ",
+          "install",
+          false
+        ],
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          " ",
+          "callback",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(void ) { ",
+        " (*",
+        ")(int ) = 0; (*",
+        ")(1); ",
+        "}"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          "$",
+          "run",
+          false
+        ],
+        [
+          "`",
+          "u64",
+          false
+        ],
+        [
+          " ",
+          "local",
+          false
+        ],
+        [
+          "`",
+          "local",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (*",
+        ")[4];"
+      ],
+      "line": 17,
+      "symbols": [
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          "g",
+          "grows",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "static const ",
+        " (*",
+        ")[4] = 0;"
+      ],
+      "line": 18,
+      "symbols": [
+        [
+          " ",
+          "u64",
+          false
+        ],
+        [
+          "g",
+          "sg",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 19,
+      "symbols": [
+        [
+          "g",
+          "after",
+          false
+        ]
+      ]
+    }
+  ]
+}

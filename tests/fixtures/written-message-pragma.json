@@ -1,0 +1,474 @@
+{
+  "reference_sha256": "280a731342470f38f776aaac0360725264ee2a0ca24aab155c92fd3a3b2e2d1d",
+  "reference_profile": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "locale": "C",
+    "version": {
+      "args": [
+        "--version"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "cscope: version 15.9\n"
+    }
+  },
+  "correction_policy": "Existing quoted-literal whitespace preservation only; guarded after-context is an exact reference match, not a new correction.",
+  "cases": {
+    "message_file": {
+      "source": "#pragma message(\"Assembler code may have bugs -- use at your own risk\")\nint after;\nvoid f(void) { target(); }\n",
+      "queries": [
+        {
+          "field": "0",
+          "pattern": ".*",
+          "reference": "case.c <global> 1 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\ncase.c <global> 2 int after;\ncase.c f 3 void f(void ) { target(); }\n",
+          "expected": "case.c <global> 1 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\ncase.c <global> 2 int after;\ncase.c f 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "0",
+          "pattern": "message",
+          "reference": "case.c <global> 1 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n",
+          "expected": "case.c <global> 1 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n"
+        },
+        {
+          "field": "0",
+          "pattern": "pragma",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "target",
+          "reference": "case.c f 3 void f(void ) { target(); }\n",
+          "expected": "case.c f 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "1",
+          "pattern": ".*",
+          "reference": "case.c .* 2 int after;\ncase.c .* 3 void f(void ) { target(); }\n",
+          "expected": "case.c .* 2 int after;\ncase.c .* 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "2",
+          "pattern": "f",
+          "reference": "case.c target 3 void f(void ) { target(); }\n",
+          "expected": "case.c target 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "3",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "9",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "4",
+          "pattern": "message",
+          "reference": "case.c <unknown> 1 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n",
+          "expected": "case.c <unknown> 1 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n"
+        },
+        {
+          "field": "6",
+          "pattern": "message",
+          "reference": "case.c <unknown> 1 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n",
+          "expected": "case.c <unknown> 1 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n"
+        }
+      ]
+    },
+    "message_guarded": {
+      "source": "#ifdef ASMINF\n#pragma message(\"Assembler code may have bugs -- use at your own risk\")\n#else\nvoid f(void) { target(); }\n#endif\nint after;\n",
+      "queries": [
+        {
+          "field": "0",
+          "pattern": ".*",
+          "reference": "case.c <global> 1 #ifdef ASMINF\ncase.c <global> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\ncase.c f 4 void f(void ) { target(); }\ncase.c f 6 int after;\n",
+          "expected": "case.c <global> 1 #ifdef ASMINF\ncase.c <global> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\ncase.c f 4 void f(void ) { target(); }\ncase.c f 6 int after;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "message",
+          "reference": "case.c <global> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n",
+          "expected": "case.c <global> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n"
+        },
+        {
+          "field": "0",
+          "pattern": "pragma",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "target",
+          "reference": "case.c f 4 void f(void ) { target(); }\n",
+          "expected": "case.c f 4 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "1",
+          "pattern": ".*",
+          "reference": "case.c .* 4 void f(void ) { target(); }\ncase.c .* 6 int after;\n",
+          "expected": "case.c .* 4 void f(void ) { target(); }\ncase.c .* 6 int after;\n"
+        },
+        {
+          "field": "2",
+          "pattern": "f",
+          "reference": "case.c target 4 void f(void ) { target(); }\n",
+          "expected": "case.c target 4 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "3",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "9",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "4",
+          "pattern": "message",
+          "reference": "case.c <unknown> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n",
+          "expected": "case.c <unknown> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n"
+        },
+        {
+          "field": "6",
+          "pattern": "message",
+          "reference": "case.c <unknown> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n",
+          "expected": "case.c <unknown> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\n"
+        }
+      ]
+    },
+    "message_body": {
+      "source": "void f(void) {\n#pragma message(\"Text  with \\\"quotes\\\" and target()\") // tail\ntarget();\n}\n",
+      "queries": [
+        {
+          "field": "0",
+          "pattern": ".*",
+          "reference": "case.c f 1 void f(void ) {\ncase.c f 2 #pragma message(\"Text with \\\"quotes\\\" and target()\")\ncase.c f 3 target();\n",
+          "expected": "case.c f 1 void f(void ) {\ncase.c f 2 #pragma message(\"Text  with \\\"quotes\\\" and target()\")\ncase.c f 3 target();\n"
+        },
+        {
+          "field": "0",
+          "pattern": "message",
+          "reference": "case.c f 2 #pragma message(\"Text with \\\"quotes\\\" and target()\")\n",
+          "expected": "case.c f 2 #pragma message(\"Text  with \\\"quotes\\\" and target()\")\n"
+        },
+        {
+          "field": "0",
+          "pattern": "pragma",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "target",
+          "reference": "case.c f 3 target();\n",
+          "expected": "case.c f 3 target();\n"
+        },
+        {
+          "field": "1",
+          "pattern": ".*",
+          "reference": "case.c .* 1 void f(void ) {\n",
+          "expected": "case.c .* 1 void f(void ) {\n"
+        },
+        {
+          "field": "2",
+          "pattern": "f",
+          "reference": "case.c message 2 #pragma message(\"Text with \\\"quotes\\\" and target()\")\ncase.c target 3 target();\n",
+          "expected": "case.c message 2 #pragma message(\"Text  with \\\"quotes\\\" and target()\")\ncase.c target 3 target();\n"
+        },
+        {
+          "field": "3",
+          "pattern": "message",
+          "reference": "case.c f 2 #pragma message(\"Text with \\\"quotes\\\" and target()\")\n",
+          "expected": "case.c f 2 #pragma message(\"Text  with \\\"quotes\\\" and target()\")\n"
+        },
+        {
+          "field": "9",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "4",
+          "pattern": "message",
+          "reference": "case.c <unknown> 2 #pragma message(\"Text  with \\\"quotes\\\" and target()\") // tail\n",
+          "expected": "case.c <unknown> 2 #pragma message(\"Text  with \\\"quotes\\\" and target()\") // tail\n"
+        },
+        {
+          "field": "6",
+          "pattern": "message",
+          "reference": "case.c <unknown> 2 #pragma message(\"Text  with \\\"quotes\\\" and target()\") // tail\n",
+          "expected": "case.c <unknown> 2 #pragma message(\"Text  with \\\"quotes\\\" and target()\") // tail\n"
+        }
+      ]
+    },
+    "message_empty": {
+      "source": "#pragma message(\"\")\nint after;\n",
+      "queries": [
+        {
+          "field": "0",
+          "pattern": ".*",
+          "reference": "case.c <global> 1 #pragma message(\"\")\ncase.c <global> 2 int after;\n",
+          "expected": "case.c <global> 1 #pragma message(\"\")\ncase.c <global> 2 int after;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "message",
+          "reference": "case.c <global> 1 #pragma message(\"\")\n",
+          "expected": "case.c <global> 1 #pragma message(\"\")\n"
+        },
+        {
+          "field": "0",
+          "pattern": "pragma",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "target",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "1",
+          "pattern": ".*",
+          "reference": "case.c .* 2 int after;\n",
+          "expected": "case.c .* 2 int after;\n"
+        },
+        {
+          "field": "2",
+          "pattern": "f",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "3",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "9",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "4",
+          "pattern": "message",
+          "reference": "case.c <unknown> 1 #pragma message(\"\")\n",
+          "expected": "case.c <unknown> 1 #pragma message(\"\")\n"
+        },
+        {
+          "field": "6",
+          "pattern": "message",
+          "reference": "case.c <unknown> 1 #pragma message(\"\")\n",
+          "expected": "case.c <unknown> 1 #pragma message(\"\")\n"
+        }
+      ]
+    },
+    "map_control": {
+      "source": "#pragma map(mapped,\"NAME\")\nint after;\nvoid f(void) { target(); }\n",
+      "queries": [
+        {
+          "field": "0",
+          "pattern": ".*",
+          "reference": "case.c <global> 1 #pragma map(mapped,\"NAME\")\ncase.c <global> 2 int after;\ncase.c f 3 void f(void ) { target(); }\n",
+          "expected": "case.c <global> 1 #pragma map(mapped,\"NAME\")\ncase.c <global> 2 int after;\ncase.c f 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "0",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "pragma",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "target",
+          "reference": "case.c f 3 void f(void ) { target(); }\n",
+          "expected": "case.c f 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "1",
+          "pattern": ".*",
+          "reference": "case.c .* 2 int after;\ncase.c .* 3 void f(void ) { target(); }\n",
+          "expected": "case.c .* 2 int after;\ncase.c .* 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "2",
+          "pattern": "f",
+          "reference": "case.c target 3 void f(void ) { target(); }\n",
+          "expected": "case.c target 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "3",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "9",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "4",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "6",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        }
+      ]
+    },
+    "warn_control": {
+      "source": "#pragma warn -8004\nint after;\nvoid f(void) { target(); }\n",
+      "queries": [
+        {
+          "field": "0",
+          "pattern": ".*",
+          "reference": "case.c <global> 1 #pragma warn -8004\ncase.c <global> 2 int after;\ncase.c f 3 void f(void ) { target(); }\n",
+          "expected": "case.c <global> 1 #pragma warn -8004\ncase.c <global> 2 int after;\ncase.c f 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "0",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "pragma",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "target",
+          "reference": "case.c f 3 void f(void ) { target(); }\n",
+          "expected": "case.c f 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "1",
+          "pattern": ".*",
+          "reference": "case.c .* 2 int after;\ncase.c .* 3 void f(void ) { target(); }\n",
+          "expected": "case.c .* 2 int after;\ncase.c .* 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "2",
+          "pattern": "f",
+          "reference": "case.c target 3 void f(void ) { target(); }\n",
+          "expected": "case.c target 3 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "3",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "9",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "4",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "6",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        }
+      ]
+    },
+    "absent_control": {
+      "source": "int after;\nvoid f(void) { target(); }\n",
+      "queries": [
+        {
+          "field": "0",
+          "pattern": ".*",
+          "reference": "case.c <global> 1 int after;\ncase.c f 2 void f(void ) { target(); }\n",
+          "expected": "case.c <global> 1 int after;\ncase.c f 2 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "0",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "pragma",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "0",
+          "pattern": "target",
+          "reference": "case.c f 2 void f(void ) { target(); }\n",
+          "expected": "case.c f 2 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "1",
+          "pattern": ".*",
+          "reference": "case.c .* 1 int after;\ncase.c .* 2 void f(void ) { target(); }\n",
+          "expected": "case.c .* 1 int after;\ncase.c .* 2 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "2",
+          "pattern": "f",
+          "reference": "case.c target 2 void f(void ) { target(); }\n",
+          "expected": "case.c target 2 void f(void ) { target(); }\n"
+        },
+        {
+          "field": "3",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "9",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "4",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        },
+        {
+          "field": "6",
+          "pattern": "message",
+          "reference": "",
+          "expected": ""
+        }
+      ]
+    }
+  }
+}

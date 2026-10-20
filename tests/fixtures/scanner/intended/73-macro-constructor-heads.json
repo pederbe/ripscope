@@ -1,0 +1,705 @@
+{
+  "note": "Enabled constructor-head reading; pinned reference captures remain in ../expected/.",
+  "probe": "probes/73-macro-constructor-heads.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) { return 1; ",
+        "}"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "$",
+          "helper",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#define ",
+        "(",
+        ", ",
+        ") left ## ",
+        "right"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "#",
+          "CppConcat",
+          false
+        ],
+        [
+          " ",
+          "left",
+          false
+        ],
+        [
+          " ",
+          "right",
+          false
+        ],
+        [
+          ")",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#define ",
+        "(",
+        ") \\"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "#",
+          "GENERATED",
+          false
+        ],
+        [
+          " ",
+          "stat",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        ", ",
+        ")(void ) \\"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          " ",
+          "CppConcat",
+          false
+        ],
+        [
+          " ",
+          "generated_",
+          false
+        ],
+        [
+          " ",
+          "stat",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "{ return ",
+        "(); }"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        ")"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "$",
+          "GENERATED",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#undef ",
+        ""
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "CppConcat",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(int ",
+        ") { return value; ",
+        "}"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "$",
+          "CppConcat",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) { return ",
+        "(",
+        "()); ",
+        "}"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "$",
+          "ordinary",
+          false
+        ],
+        [
+          "`",
+          "CppConcat",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        "(",
+        ") static int ",
+        "(",
+        ", stat)(void ) { return ",
+        "(); }"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          "#",
+          "CTOR_SAME",
+          false
+        ],
+        [
+          " ",
+          "stat",
+          false
+        ],
+        [
+          " ",
+          "CppConcat",
+          false
+        ],
+        [
+          " ",
+          "same_",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int ",
+        ";"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          "t",
+          "Datum",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " void "
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          "#",
+          "PG_FUNCTION_ARGS",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#define ",
+        "(",
+        ") \\"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          "#",
+          "GENERATED_OPAQUE",
+          false
+        ],
+        [
+          " ",
+          "stat",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " \\"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          " ",
+          "Datum",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        ", ",
+        ")(",
+        ") \\"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          " ",
+          "CppConcat",
+          false
+        ],
+        [
+          " ",
+          "generated_",
+          false
+        ],
+        [
+          " ",
+          "stat",
+          false
+        ],
+        [
+          " ",
+          "PG_FUNCTION_ARGS",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "{ return ",
+        "(); }"
+      ],
+      "line": 17,
+      "symbols": [
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#define ",
+        "(",
+        ")  static ",
+        " \\"
+      ],
+      "line": 18,
+      "symbols": [
+        [
+          "#",
+          "TRIVIA",
+          false
+        ],
+        [
+          " ",
+          "stat",
+          false
+        ],
+        [
+          " ",
+          "Datum",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        " , ",
+        ") \\"
+      ],
+      "line": 19,
+      "symbols": [
+        [
+          " ",
+          "CppConcat",
+          false
+        ],
+        [
+          " ",
+          "generated_",
+          false
+        ],
+        [
+          " ",
+          "stat",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        " (",
+        ")  { return ",
+        "(); }"
+      ],
+      "line": 20,
+      "symbols": [
+        [
+          " ",
+          "PG_FUNCTION_ARGS",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " int ",
+        "(",
+        ", ",
+        ")(void ) { ",
+        "(); }"
+      ],
+      "line": 21,
+      "symbols": [
+        [
+          "#",
+          "OBJECT_HEAD",
+          false
+        ],
+        [
+          " ",
+          "CppConcat",
+          false
+        ],
+        [
+          " ",
+          "object_",
+          false
+        ],
+        [
+          " ",
+          "name",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        "(",
+        ") static int NAME(void ) { return ",
+        "(); }"
+      ],
+      "line": 22,
+      "symbols": [
+        [
+          "#",
+          "DIRECT",
+          false
+        ],
+        [
+          " ",
+          "NAME",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#define ",
+        "(",
+        ") static int \\"
+      ],
+      "line": 23,
+      "symbols": [
+        [
+          "#",
+          "SPLIT",
+          false
+        ],
+        [
+          " ",
+          "NAME",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "",
+        "(void ) { return ",
+        "(); }"
+      ],
+      "line": 24,
+      "symbols": [
+        [
+          "`",
+          "NAME",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        "(",
+        ") int ; ",
+        " ",
+        "(",
+        ", stat)(void ) { ",
+        "(); }"
+      ],
+      "line": 25,
+      "symbols": [
+        [
+          "#",
+          "INVALID",
+          false
+        ],
+        [
+          " ",
+          "stat",
+          false
+        ],
+        [
+          " ",
+          "Datum",
+          false
+        ],
+        [
+          "`",
+          "CppConcat",
+          false
+        ],
+        [
+          " ",
+          "body_",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        "(",
+        ") do { ",
+        "(",
+        ", stat)(",
+        "); ",
+        "(); } while (0)"
+      ],
+      "line": 26,
+      "symbols": [
+        [
+          "#",
+          "BODY",
+          false
+        ],
+        [
+          " ",
+          "stat",
+          false
+        ],
+        [
+          "`",
+          "CppConcat",
+          false
+        ],
+        [
+          " ",
+          "body_",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#define ",
+        "\\"
+      ],
+      "line": 27,
+      "symbols": [
+        [
+          "#",
+          "SPLICED_HEADER",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "(",
+        ") int ",
+        "(",
+        ", ",
+        ")(",
+        ") { return ",
+        "(); }"
+      ],
+      "line": 28,
+      "symbols": [
+        [
+          " ",
+          "stat",
+          false
+        ],
+        [
+          " ",
+          "Ctor",
+          false
+        ],
+        [
+          " ",
+          "left",
+          false
+        ],
+        [
+          " ",
+          "right",
+          false
+        ],
+        [
+          " ",
+          "PG_FUNCTION_ARGS",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    }
+  ]
+}

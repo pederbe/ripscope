@@ -1,0 +1,554 @@
+{
+ "probe": "probes/76-closing-arms.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 2,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "WIDE",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    " (long ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "pick",
+     false
+    ],
+    [
+     " ",
+     "wide",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "NARROW",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "int ",
+    " (int ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "pick",
+     false
+    ],
+    [
+     " ",
+     "narrow",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "return ",
+    " ();"
+   ],
+   "symbols": [
+    [
+     "`",
+     "choose",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "int ",
+    " (void )"
+   ],
+   "symbols": [
+    [
+     "$",
+     "after_pick",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "return ",
+    " (0);"
+   ],
+   "symbols": [
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "int ",
+    " (int ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "retry_read",
+     false
+    ],
+    [
+     " ",
+     "fd",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "got",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 22,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "ASYNC_IO",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 25,
+   "fragments": [
+    "",
+    " = ",
+    " (",
+    ");"
+   ],
+   "symbols": [
+    [
+     " ",
+     "got",
+     true
+    ],
+    [
+     "`",
+     "read_some",
+     false
+    ],
+    [
+     " ",
+     "fd",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 26,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "ASYNC_IO",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 27,
+   "fragments": [
+    "} while (",
+    " == ",
+    ");"
+   ],
+   "symbols": [
+    [
+     " ",
+     "got",
+     false
+    ],
+    [
+     " ",
+     "PENDING",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 29,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "BLINDING",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 30,
+   "fragments": [
+    "",
+    " ();"
+   ],
+   "symbols": [
+    [
+     "`",
+     "free_blinding",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 32,
+   "fragments": [
+    "return ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "got",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 35,
+   "fragments": [
+    "int ",
+    " (int ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "`",
+     "after_retry",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 37,
+   "fragments": [
+    "return ",
+    " (",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "helper",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 42,
+   "fragments": [
+    "int ",
+    " (int ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "`",
+     "serve",
+     false
+    ],
+    [
+     " ",
+     "fd",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 44,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "SOCKET_ACTIVATION",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 45,
+   "fragments": [
+    "if (",
+    " (",
+    "))"
+   ],
+   "symbols": [
+    [
+     "`",
+     "activated",
+     false
+    ],
+    [
+     " ",
+     "fd",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 46,
+   "fragments": [
+    "",
+    " (",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "use_socket",
+     false
+    ],
+    [
+     " ",
+     "fd",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 49,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "LOCAL_SOCKETS",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 50,
+   "fragments": [
+    "",
+    " (",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "open_local",
+     false
+    ],
+    [
+     " ",
+     "fd",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 51,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "SOCKET_ACTIVATION",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 55,
+   "fragments": [
+    "",
+    " (",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "open_default",
+     false
+    ],
+    [
+     " ",
+     "fd",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 57,
+   "fragments": [
+    "return ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "fd",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 60,
+   "fragments": [
+    "int ",
+    " (void )"
+   ],
+   "symbols": [
+    [
+     "`",
+     "after_serve",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 62,
+   "fragments": [
+    "return ",
+    " (1);"
+   ],
+   "symbols": [
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

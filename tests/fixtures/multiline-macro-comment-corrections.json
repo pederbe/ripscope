@@ -1,0 +1,130 @@
+{
+  "cases": {
+    "line-comment": {
+      "false": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1 + 2\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1 + 2\ncase.c .* 3 int value = VALUE;\n"
+        },
+        "value": {
+          "cscope_stdout": "",
+          "ripscope_stdout": "case.c value 3 int value = VALUE;\n"
+        }
+      },
+      "true": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1 + 2\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1 + 2\ncase.c .* 3 int value = VALUE;\n"
+        },
+        "VALUE": {
+          "cscope_stdout": "case.c VALUE 1 #define VALUE 1 + 2\n",
+          "ripscope_stdout": "case.c VALUE 1 #define VALUE 1 + 2\ncase.c VALUE 3 int value = VALUE;\n"
+        },
+        "value": {
+          "cscope_stdout": "case.c value 1 #define VALUE 1 + 2\n",
+          "ripscope_stdout": "case.c value 1 #define VALUE 1 + 2\ncase.c value 3 int value = VALUE;\n"
+        }
+      }
+    },
+    "line-comment-single": {
+      "false": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 2 int value = VALUE;\n"
+        },
+        "value": {
+          "cscope_stdout": "",
+          "ripscope_stdout": "case.c value 2 int value = VALUE;\n"
+        }
+      },
+      "true": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 2 int value = VALUE;\n"
+        },
+        "VALUE": {
+          "cscope_stdout": "case.c VALUE 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 int value = VALUE;\n"
+        },
+        "value": {
+          "cscope_stdout": "case.c value 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c value 1 #define VALUE 1\ncase.c value 2 int value = VALUE;\n"
+        }
+      }
+    },
+    "line-comment-chain": {
+      "false": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 4 int after = VALUE;\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 2 int value = VALUE;\ncase.c .* 3 int next = VALUE;\ncase.c .* 4 int after = VALUE;\n"
+        },
+        "value": {
+          "cscope_stdout": "",
+          "ripscope_stdout": "case.c value 2 int value = VALUE;\n"
+        }
+      },
+      "true": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 4 int after = VALUE;\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 2 int value = VALUE;\ncase.c .* 3 int next = VALUE;\ncase.c .* 4 int after = VALUE;\n"
+        },
+        "VALUE": {
+          "cscope_stdout": "case.c VALUE 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 int value = VALUE;\n"
+        },
+        "value": {
+          "cscope_stdout": "case.c value 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c value 1 #define VALUE 1\ncase.c value 2 int value = VALUE;\n"
+        }
+      }
+    },
+    "line-comment-eof": {
+      "false": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 2 int value = VALUE;\n"
+        },
+        "value": {
+          "cscope_stdout": "",
+          "ripscope_stdout": "case.c value 2 int value = VALUE;\n"
+        }
+      },
+      "true": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 2 int value = VALUE;\n"
+        },
+        "VALUE": {
+          "cscope_stdout": "case.c VALUE 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 int value = VALUE;\n"
+        },
+        "value": {
+          "cscope_stdout": "case.c value 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c value 1 #define VALUE 1\ncase.c value 2 int value = VALUE;\n"
+        }
+      }
+    },
+    "line-comment-approved-definition": {
+      "false": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 2 int after;\n"
+        },
+        "after": {
+          "cscope_stdout": "",
+          "ripscope_stdout": "case.c after 2 int after;\n"
+        }
+      },
+      "true": {
+        ".*": {
+          "cscope_stdout": "case.c .* 1 #define VALUE 1\n",
+          "ripscope_stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 2 int after;\n"
+        },
+        "after": {
+          "cscope_stdout": "",
+          "ripscope_stdout": "case.c after 2 int after;\n"
+        }
+      }
+    }
+  }
+}

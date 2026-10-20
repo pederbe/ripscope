@@ -1,0 +1,901 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "cases": {
+    "object": {
+      "source": "#define VALUE 1\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE 1\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 2 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "spaced": {
+      "source": " \t# \tdefine VALUE(x) ((int)(x))\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE(x) ((int )(x))\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "stringify": {
+      "source": "#define STRING(x) # x\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "STRING"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c STRING 1 #define STRING(x) #x\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "paste": {
+      "source": "#define JOIN(a,b) a ## b\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "JOIN"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c JOIN 1 #define JOIN(a,b) a ## b\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "paste-keyword": {
+      "source": "#define JOIN(a) a ## int\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "JOIN"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c JOIN 1 #define JOIN(a) a ## int \n",
+          "stderr": ""
+        }
+      ]
+    },
+    "macro-literal": {
+      "source": "#define VALUE \"int  /*keep*/ #keep\"\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \"int  /*keep*/ #keep\"\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "comment-merge": {
+      "source": "#define VALUE /*first\nsecond\nthird*/ ((int)1)\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE ((int )1)\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 4 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "comment-prefix": {
+      "source": "/*prefix*/ #define VALUE 1\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define #define VALUE 1\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "continuation": {
+      "source": "#define VALUE \\\n ((int)1)\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \\\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 3 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "continuation-crlf": {
+      "source": "#define VALUE \\\r\n ((int)1)\r\nint after;\r\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \\\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 3 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "continued-comment": {
+      "source": "#define VALUE \\\n /*first\nsecond*/ ((int)1)\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \\\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 4 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "conditional": {
+      "source": "#ifndef HEADER\n#define HEADER\n#if 0\nint disabled;\n#else\nint enabled;\n#endif\n#endif\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "HEADER"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c HEADER 2 #define HEADER\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "disabled"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c disabled 4 int disabled;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "enabled"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c enabled 6 int enabled;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "include-quote": {
+      "source": "# include \"int.h\"\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "int.h"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 1 #include \"int.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 2 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "include-angle": {
+      "source": "# include<int.h>\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "int.h"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 1 #include <int.h>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 2 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "include-macro": {
+      "source": "#include HEADER\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-0",
+            "HEADER"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 1 #include HEADER\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 2 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "line-comment": {
+      "source": "#define VALUE 1 // comment\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE 1\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "line-comment-then-block": {
+      "source": "#define VALUE 1 // comment\nint /*a\nb*/ after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE 1\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-0",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 2 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "continued-block-lf": {
+      "source": "#define VALUE \\\n /*first\nsecond*/ TARGET\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \\\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-0",
+            "TARGET"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 2  TARGET\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 4 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "continued-block-crlf": {
+      "source": "#define VALUE \\\r\n /*first\r\nsecond*/ TARGET\r\nint after;\r\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \\\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-0",
+            "TARGET"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c <global> 3  TARGET\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 4 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "ordinary-continuation": {
+      "source": "int value = \\\n 1;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value = \\\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "eof": {
+      "source": "#define VALUE ((int)1)",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE ((int )1)\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "string-continuation": {
+      "source": "#define VALUE \"first\\\nsecond\"\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \"first\\\"\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-single": {
+      "source": "char *value = \"a  b\";\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"a b\";\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-later-symbol": {
+      "source": "char *value = \"a  b\"; int after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"a  b\"; int after;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 1 char *value = \"a  b\"; int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-macro": {
+      "source": "#define VALUE \"a  b\"\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \"a  b\"\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-macro-eof": {
+      "source": "#define VALUE \"a  b\"",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \"a b\"\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-function": {
+      "source": "void run(void) { char *value = \"a  b\"; }\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "run"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c run 1 void run(void ) { char *value = \"a  b\"; }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-tab": {
+      "source": "char *value = \"a\tb\";\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"a b\";\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-character-tab": {
+      "source": "int value = '\t';\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value = ' ';\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-escapes": {
+      "source": "char *value = \"a\\t  b\\\\c\\\"d\";\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"a\\t b\\\\c\\\"d\";\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

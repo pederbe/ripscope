@@ -1,0 +1,47 @@
+name: Compatibility difference
+description: Ripscope's output or behavior differs from cscope for the same input.
+labels: ["compatibility"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Ripscope aims to match cscope's observable query behavior, except for
+        [documented differences](https://ripscope.com/docs/reference/differences-from-cscope).
+        Please check that list first.
+  - type: textarea
+    id: source
+    attributes:
+      label: Source input
+      description: The smallest C source (and headers) that shows the difference.
+      render: c
+    validations:
+      required: true
+  - type: textarea
+    id: commands
+    attributes:
+      label: Commands
+      description: The cscope and ripscope commands you ran, including the query field and pattern.
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: cscope-output
+    attributes:
+      label: cscope output
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: ripscope-output
+    attributes:
+      label: Ripscope output
+      render: text
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions and platform
+      placeholder: "cscope 15.9, ripscope 0.1.0, Debian 12 x86-64"
+    validations:
+      required: true

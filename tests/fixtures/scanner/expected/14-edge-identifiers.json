@@ -1,0 +1,77 @@
+{
+ "probe": "probes/14-edge-identifiers.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "$dollar",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    " = 0x1F",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "with$dollar",
+     true
+    ],
+    [
+     " ",
+     "$",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "very_long_identifier_name_that_keeps_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_end",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "after_long",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

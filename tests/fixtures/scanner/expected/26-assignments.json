@@ -1,0 +1,623 @@
+{
+ "probe": "probes/26-assignments.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    ", ",
+    ", ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "g1",
+     false
+    ],
+    [
+     "g",
+     "g2",
+     false
+    ],
+    [
+     "g",
+     "g3",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "void ",
+    "(void )"
+   ],
+   "symbols": [
+    [
+     "$",
+     "f",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "",
+    " = 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "",
+    " == 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    " += 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g3",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "",
+    " <<= 2;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "",
+    " >>= 3;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "",
+    " =-1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g3",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "",
+    "=2;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "",
+    "==3;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "",
+    " = 4;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g3",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "",
+    " [0] = 6;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "",
+    " = ",
+    " = ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g3",
+     true
+    ],
+    [
+     " ",
+     "g1",
+     true
+    ],
+    [
+     " ",
+     "g2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 17,
+   "fragments": [
+    "",
+    " -= ",
+    " *= ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     true
+    ],
+    [
+     " ",
+     "g2",
+     true
+    ],
+    [
+     " ",
+     "g3",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "",
+    " & = 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "",
+    " &= 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g3",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 20,
+   "fragments": [
+    "",
+    " != 2;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "",
+    " <= 3;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 22,
+   "fragments": [
+    "",
+    " < < = 4;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g3",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 23,
+   "fragments": [
+    "",
+    " ="
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 25,
+   "fragments": [
+    "if (",
+    " = 7) ",
+    " = 8;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     true
+    ],
+    [
+     " ",
+     "g3",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 26,
+   "fragments": [
+    "",
+    " ^= ",
+    " |= ",
+    " %= 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     true
+    ],
+    [
+     " ",
+     "g2",
+     true
+    ],
+    [
+     " ",
+     "g3",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 27,
+   "fragments": [
+    "",
+    " else = 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 28,
+   "fragments": [
+    "",
+    " extern = 2;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g3",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 29,
+   "fragments": [
+    "",
+    " enum = 3;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 30,
+   "fragments": [
+    "",
+    " int = 4;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 31,
+   "fragments": [
+    "",
+    " =",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g3",
+     true
+    ],
+    [
+     " ",
+     "t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 32,
+   "fragments": [
+    "",
+    " = ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g1",
+     true
+    ],
+    [
+     " ",
+     "t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 33,
+   "fragments": [
+    "",
+    " =",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g2",
+     true
+    ],
+    [
+     " ",
+     "e",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 34,
+   "fragments": [
+    "",
+    " ==",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g3",
+     false
+    ],
+    [
+     " ",
+     "t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 35,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 36,
+   "fragments": [
+    "#define ",
+    " ",
+    " else = 1"
+   ],
+   "symbols": [
+    [
+     "#",
+     "M",
+     false
+    ],
+    [
+     " ",
+     "x",
+     true
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 37,
+   "fragments": [
+    "int ",
+    "(void ) { return ",
+    " = ",
+    "; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "h",
+     false
+    ],
+    [
+     " ",
+     "g1",
+     true
+    ],
+    [
+     " ",
+     "g2",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

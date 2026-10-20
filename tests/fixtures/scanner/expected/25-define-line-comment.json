@@ -1,0 +1,106 @@
+{
+ "probe": "probes/25-define-line-comment.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#if ! ",
+    "(",
+    ")"
+   ],
+   "symbols": [
+    [
+     " ",
+     "defined",
+     false
+    ],
+    [
+     " ",
+     "STATIC_X",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "#if ",
+    "(",
+    ")"
+   ],
+   "symbols": [
+    [
+     " ",
+     "defined",
+     false
+    ],
+    [
+     " ",
+     "TESTING",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "#define ",
+    ""
+   ],
+   "symbols": [
+    [
+     "#",
+     "STATIC_X",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "#else"
+   ],
+   "symbols": [],
+   "define_end": true
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "#define ",
+    " static "
+   ],
+   "symbols": [
+    [
+     "#",
+     "STATIC_X",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "after_directives",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

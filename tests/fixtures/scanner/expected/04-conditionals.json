@@ -1,0 +1,302 @@
+{
+ "probe": "probes/04-conditionals.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "CONFIG_A",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    "(void ) {"
+   ],
+   "symbols": [
+    [
+     "$",
+     "first",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "int ",
+    "(void ) {"
+   ],
+   "symbols": [
+    [
+     "$",
+     "second",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "();"
+   ],
+   "symbols": [
+    [
+     "`",
+     "call_in_body",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "CONFIG_B",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "static int ",
+    " = 1;"
+   ],
+   "symbols": [
+    [
+     "g",
+     "guarded",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "A",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "int ",
+    "(void ) {"
+   ],
+   "symbols": [
+    [
+     "$",
+     "f",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "B",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "int ",
+    "(void ) {"
+   ],
+   "symbols": [
+    [
+     "$",
+     "g",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 17,
+   "fragments": [
+    "",
+    "();"
+   ],
+   "symbols": [
+    [
+     "`",
+     "a",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "after",
+     false
+    ],
+    [
+     "`",
+     "b",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 20,
+   "fragments": [
+    "#if(",
+    ")"
+   ],
+   "symbols": [
+    [
+     " ",
+     "C",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "unspaced",
+     false
+    ],
+    [
+     "`",
+     "c",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 23,
+   "fragments": [
+    "int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "tail",
+     false
+    ],
+    [
+     "`",
+     "d",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

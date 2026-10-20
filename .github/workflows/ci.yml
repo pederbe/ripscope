@@ -1,0 +1,85 @@
+name: CI
+
+# In a private repository, push and pull-request runs are skipped unless the repository
+# variable CI_ON_PUSH is "true", which saves runner minutes. Manual and weekly runs always
+# execute, and a public repository runs everything.
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - "book.toml"
+      - ".github/ISSUE_TEMPLATE/**"
+  pull_request:
+    paths-ignore:
+      - "docs/**"
+      - "**.md"
+      - "book.toml"
+  schedule:
+    - cron: "17 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+  CARGO_INCREMENTAL: 0
+
+jobs:
+  check:
+    name: ${{ matrix.os }}
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event_name == 'schedule' ||
+      !github.event.repository.private ||
+      vars.CI_ON_PUSH == 'true'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+
+      # Pinned so new Clippy lints cannot break CI unannounced; bump deliberately.
+      - uses: dtolnay/rust-toolchain@7e38f4b43b4db5c8dd498af069a4f6196df1d067
+        with:
+          toolchain: "1.98.1"
+          components: rustfmt, clippy
+
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+
+      - name: Format
+        if: runner.os == 'Linux'
+        run: cargo fmt --all --check
+
+      - name: Clippy
+        run: cargo clippy --locked --all-targets -- -D warnings
+
+      - name: Test
+        run: cargo test --locked
+
+      - name: Session diagnostics
+        run: cargo test --locked --features session-profile --test session_profile
+
+      - name: Latency tooling
+        # Runs only in a checkout that includes the latency tool.
+        if: runner.os == 'Linux' && hashFiles('tools/latency/Cargo.toml') != ''
+        run: |
+          cargo fmt --manifest-path tools/latency/Cargo.toml --check
+          cargo clippy --locked --all-targets --manifest-path tools/latency/Cargo.toml -- -D warnings
+          cargo test --locked --all-targets --manifest-path tools/latency/Cargo.toml
+
+      - name: Release tooling
+        run: |
+          cargo fmt --manifest-path tools/release/Cargo.toml --check
+          cargo clippy --locked --all-targets --manifest-path tools/release/Cargo.toml -- -D warnings
+          cargo test --locked --manifest-path tools/release/Cargo.toml

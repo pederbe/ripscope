@@ -1,0 +1,32 @@
+{
+  "name": "isolated-confirmations",
+  "sampling": "Small confirmations of the initial finite matrix's failures. Separate phase and denominator; these labels do not replace the initial matrix or project sample.",
+  "whole_files": true,
+  "files": ["atomic.c", "generic.c", "alignment.c", "dereferenced.c", "nested.c"],
+  "definitions": [
+    ["atomic.c",1,"atomic_probe","atomic specifier"],
+    ["atomic.c",2,"qualified_probe","atomic qualifier control"],
+    ["atomic.c",3,"after_atomic_probe","neighbor controls"],
+    ["generic.c",1,"generic_target","ordinary functions"],
+    ["generic.c",2,"generic_probe","ordinary functions"],
+    ["generic.c",5,"after_generic_probe","neighbor controls"],
+    ["alignment.c",1,"alignment_probe","ordinary functions"],
+    ["alignment.c",2,"alignment_neighbor","neighbor controls"],
+    ["dereferenced.c",1,"pointer_callback","function pointers"],
+    ["dereferenced.c",2,"dereferenced_probe","ordinary functions"],
+    ["dereferenced.c",3,"direct_probe","ordinary functions"],
+    ["dereferenced.c",4,"pointer_neighbor","neighbor controls"],
+    ["nested.c",1,"nested_probe","nested declarator limit"],
+    ["nested.c",2,"simple_probe","function pointers"],
+    ["nested.c",3,"nested_neighbor","neighbor controls"]
+  ],
+  "calls": [
+    ["generic.c",3,"generic_probe","generic_target","generic selection"],
+    ["generic.c",5,"after_generic_probe","generic_target","neighbor controls"],
+    ["dereferenced.c",2,"dereferenced_probe","pointer_callback","dereferenced call"],
+    ["dereferenced.c",3,"direct_probe","pointer_callback","named indirect control"],
+    ["dereferenced.c",4,"pointer_neighbor","direct_probe","neighbor controls"]
+  ],
+  "controls": [[3,"_Generic","language keyword"],[3,"_Alignof","language keyword"],[2,"alignment_probe","empty callee control"]],
+  "unresolved": []
+}

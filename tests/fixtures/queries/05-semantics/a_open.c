@@ -1,0 +1,2 @@
+void opened(void) {
+	go();

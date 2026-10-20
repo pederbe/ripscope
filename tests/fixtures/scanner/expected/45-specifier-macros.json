@@ -1,0 +1,452 @@
+{
+ "probe": "probes/45-specifier-macros.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "extern int ",
+    "(int ",
+    ");"
+   ],
+   "symbols": [
+    [
+     " ",
+     "ext_decl",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "",
+    "(long ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     "g",
+     "ref_total",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "(const struct ",
+    " *) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "frozen",
+     false
+    ],
+    [
+     "g",
+     "frozen_modules",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "",
+    "(int ) ",
+    "[];"
+   ],
+   "symbols": [
+    [
+     " ",
+     "API_DATA",
+     false
+    ],
+    [
+     "g",
+     "digit_values",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "",
+    " ",
+    "(",
+    ") ",
+    " ",
+    "[1];"
+   ],
+   "symbols": [
+    [
+     " ",
+     "EXPORT_C",
+     false
+    ],
+    [
+     " ",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "selectany",
+     false
+    ],
+    [
+     " ",
+     "ulong_t",
+     false
+    ],
+    [
+     "g",
+     "enable_bits",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "",
+    "(int ) ",
+    "(int ",
+    ");"
+   ],
+   "symbols": [
+    [
+     " ",
+     "API_FUNC",
+     false
+    ],
+    [
+     " ",
+     "api_function",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "char *",
+    "(int ",
+    ") ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "attributed",
+     false
+    ],
+    [
+     " ",
+     "n",
+     false
+    ],
+    [
+     "g",
+     "FAST_ATTR",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "",
+    "(int ",
+    ") ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "implicit",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ],
+    [
+     "g",
+     "ATTR2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "M",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     " ",
+     "name_attr",
+     false
+    ],
+    [
+     "g",
+     "ATTR4",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "",
+    "(",
+    ") struct ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "M",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ],
+    [
+     "g",
+     "tagfwd",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    "(",
+    ") ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "A",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ],
+    [
+     " ",
+     "B",
+     false
+    ],
+    [
+     " ",
+     "y",
+     false
+    ],
+    [
+     "g",
+     "twomac",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "static ",
+    "(",
+    ") struct ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "thread",
+     false
+    ],
+    [
+     " ",
+     "state",
+     false
+    ],
+    [
+     " ",
+     "tls_state",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    " *",
+    ";"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "selectany",
+     false
+    ],
+    [
+     " ",
+     "handle_t",
+     false
+    ],
+    [
+     " ",
+     "global_handle",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 20,
+   "fragments": [
+    "",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "$",
+     "API_DATA",
+     false
+    ],
+    [
+     " ",
+     "outside_block",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "last",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

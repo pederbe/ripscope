@@ -1,0 +1,114 @@
+{
+ "decision": "T in a T (*name)(parameters) reading may be a struct, union or enum tag word. union_pointer_return keeps the typedef-name reading, where the return-type word is not defined.",
+ "reference": "tests/fixtures/written-tagged-function-pointer-typedefs-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "enum_return": {
+   "0": {
+    "cb_next": "case.c <global> 1 typedef enum cb_next (*cb_iter)(struct cb_node *, void *arg);\n",
+    "cb_iter": "case.c <global> 1 typedef enum cb_next (*cb_iter)(struct cb_node *, void *arg);\n",
+    "cb_node": "case.c <global> 1 typedef enum cb_next (*cb_iter)(struct cb_node *, void *arg);\n",
+    "arg": "case.c <global> 1 typedef enum cb_next (*cb_iter)(struct cb_node *, void *arg);\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "cb_next": "",
+    "cb_node": "",
+    "arg": "",
+    "after": "case.c after 2 int after;\n"
+   },
+   "3": {
+    "h": "case.c g 3 void g(void ) { h(); }\n"
+   }
+  },
+  "struct_return": {
+   "0": {
+    "after": "case.c <global> 2 int after;\n",
+    "s": "case.c <global> 1 typedef struct s (*fp)(int );\n",
+    "fp": "case.c <global> 1 typedef struct s (*fp)(int );\n"
+   },
+   "1": {
+    "after": "case.c after 2 int after;\n",
+    "s": ""
+   }
+  },
+  "union_pointer_return": {
+   "1": {
+    "u": "",
+    "x": ""
+   }
+  },
+  "object": {
+   "0": {
+    "cb_next": "case.c <global> 1 enum cb_next (*handler)(struct cb_node *);\n",
+    "cb_node": "case.c <global> 1 enum cb_next (*handler)(struct cb_node *);\n",
+    "after": "case.c <global> 2 int after;\n",
+    "handler": "case.c <global> 1 enum cb_next (*handler)(struct cb_node *);\n"
+   },
+   "1": {
+    "cb_next": "",
+    "after": "case.c after 2 int after;\n",
+    "handler": "case.c handler 1 enum cb_next (*handler)(struct cb_node *);\n"
+   }
+  },
+  "static_object": {
+   "0": {
+    "after": "case.c <global> 2 int after;\n",
+    "s": "case.c <global> 1 static struct s (*handler)(int ) = impl;\n",
+    "handler": "case.c <global> 1 static struct s (*handler)(int ) = impl;\n",
+    "impl": "case.c <global> 1 static struct s (*handler)(int ) = impl;\n"
+   },
+   "1": {
+    "after": "case.c after 2 int after;\n",
+    "s": "",
+    "handler": "case.c handler 1 static struct s (*handler)(int ) = impl;\n"
+   }
+  },
+  "extern_object": {
+   "0": {
+    "after": "case.c <global> 2 int after;\n",
+    "u": "case.c <global> 1 extern union u (*handler)(int );\n",
+    "handler": "case.c <global> 1 extern union u (*handler)(int );\n"
+   },
+   "1": {
+    "after": "case.c after 2 int after;\n",
+    "u": ""
+   }
+  },
+  "typedef_multiple": {
+   "0": {
+    "after": "case.c <global> 2 int after;\n",
+    "s": "case.c <global> 1 typedef struct s (*a)(int ), (*b)(int );\n",
+    "a": "case.c <global> 1 typedef struct s (*a)(int ), (*b)(int );\n",
+    "b": "case.c <global> 1 typedef struct s (*a)(int ), (*b)(int );\n"
+   },
+   "1": {
+    "after": "case.c after 2 int after;\n",
+    "s": ""
+   }
+  },
+  "linkage": {
+   "1": {
+    "after": "case.c after 4 int after;\n"
+   }
+  },
+  "revision_h": {
+   "0": {
+    "after": "case.c <global> 2 int after;\n",
+    "rewrite_result": "case.c <global> 1 typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);\n",
+    "rewrite_parent_fn_t": "case.c <global> 1 typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);\n",
+    "rev_info": "case.c <global> 1 typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);\n",
+    "revs": "case.c <global> 1 typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);\n",
+    "commit": "case.c <global> 1 typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);\n",
+    "pp": "case.c <global> 1 typedef enum rewrite_result (*rewrite_parent_fn_t)(struct rev_info *revs, struct commit **pp);\n"
+   },
+   "1": {
+    "after": "case.c after 2 int after;\n",
+    "rewrite_result": "",
+    "rev_info": "",
+    "revs": "",
+    "commit": "",
+    "pp": ""
+   }
+  }
+ }
+}

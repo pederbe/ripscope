@@ -1,0 +1,131 @@
+{
+ "probe": "probes/19-if-lookahead.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    "(int ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "looks",
+     false
+    ],
+    [
+     " ",
+     "a",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "if (",
+    ") ",
+    "();"
+   ],
+   "symbols": [
+    [
+     " ",
+     "a",
+     false
+    ],
+    [
+     "`",
+     "f1",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "if(",
+    ") ",
+    "();"
+   ],
+   "symbols": [
+    [
+     " ",
+     "a",
+     false
+    ],
+    [
+     "`",
+     "f2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "(",
+    ") ",
+    "();"
+   ],
+   "symbols": [
+    [
+     " ",
+     "a",
+     false
+    ],
+    [
+     "`",
+     "f3",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "return ",
+    "(",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "g",
+     false
+    ],
+    [
+     " ",
+     "a",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

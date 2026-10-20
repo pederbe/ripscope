@@ -1,0 +1,948 @@
+{
+  "version": 1,
+  "metadata": [
+    "evidence/README.md",
+    "evidence/claims.json",
+    "evidence/CSCOPE-NOTICE.txt",
+    "evidence/performance-20261019.json",
+    "evidence/performance-answers-20261016.json"
+  ],
+  "mappings": [
+    {
+      "source": "tests/fixtures/navigation/c11.c",
+      "destination": "evidence/captures/navigation/c11.c"
+    },
+    {
+      "source": "tests/fixtures/navigation/c89.c",
+      "destination": "evidence/captures/navigation/c89.c"
+    },
+    {
+      "source": "tests/fixtures/navigation/c99.c",
+      "destination": "evidence/captures/navigation/c99.c"
+    },
+    {
+      "source": "tests/fixtures/navigation/matrix.json",
+      "destination": "evidence/captures/navigation/matrix.json"
+    },
+    {
+      "source": "tests/fixtures/navigation/policy.c",
+      "destination": "evidence/captures/navigation/policy.c"
+    },
+    {
+      "source": "tests/fixtures/navigation/reductions/alignment.c",
+      "destination": "evidence/captures/navigation/reductions/alignment.c"
+    },
+    {
+      "source": "tests/fixtures/navigation/reductions/atomic.c",
+      "destination": "evidence/captures/navigation/reductions/atomic.c"
+    },
+    {
+      "source": "tests/fixtures/navigation/reductions/dereferenced.c",
+      "destination": "evidence/captures/navigation/reductions/dereferenced.c"
+    },
+    {
+      "source": "tests/fixtures/navigation/reductions/generic.c",
+      "destination": "evidence/captures/navigation/reductions/generic.c"
+    },
+    {
+      "source": "tests/fixtures/navigation/reductions/matrix.json",
+      "destination": "evidence/captures/navigation/reductions/matrix.json"
+    },
+    {
+      "source": "tests/fixtures/navigation/reductions/nested.c",
+      "destination": "evidence/captures/navigation/reductions/nested.c"
+    },
+    {
+      "source": "tests/fixtures/queries/01-contexts/a.c",
+      "destination": "evidence/captures/queries/01-contexts/a.c"
+    },
+    {
+      "source": "tests/fixtures/queries/01-contexts/b.c",
+      "destination": "evidence/captures/queries/01-contexts/b.c"
+    },
+    {
+      "source": "tests/fixtures/queries/01-contexts/c.c",
+      "destination": "evidence/captures/queries/01-contexts/c.c"
+    },
+    {
+      "source": "tests/fixtures/queries/01-contexts/expected.json",
+      "destination": "evidence/captures/queries/01-contexts/expected.json"
+    },
+    {
+      "source": "tests/fixtures/queries/01-contexts/queries.txt",
+      "destination": "evidence/captures/queries/01-contexts/queries.txt"
+    },
+    {
+      "source": "tests/fixtures/queries/02-lines/expected.json",
+      "destination": "evidence/captures/queries/02-lines/expected.json"
+    },
+    {
+      "source": "tests/fixtures/queries/02-lines/lines.c",
+      "destination": "evidence/captures/queries/02-lines/lines.c"
+    },
+    {
+      "source": "tests/fixtures/queries/02-lines/queries.txt",
+      "destination": "evidence/captures/queries/02-lines/queries.txt"
+    },
+    {
+      "source": "tests/fixtures/queries/03-calls/calls.c",
+      "destination": "evidence/captures/queries/03-calls/calls.c"
+    },
+    {
+      "source": "tests/fixtures/queries/03-calls/d.c",
+      "destination": "evidence/captures/queries/03-calls/d.c"
+    },
+    {
+      "source": "tests/fixtures/queries/03-calls/e.c",
+      "destination": "evidence/captures/queries/03-calls/e.c"
+    },
+    {
+      "source": "tests/fixtures/queries/03-calls/expected.json",
+      "destination": "evidence/captures/queries/03-calls/expected.json"
+    },
+    {
+      "source": "tests/fixtures/queries/03-calls/queries.txt",
+      "destination": "evidence/captures/queries/03-calls/queries.txt"
+    },
+    {
+      "source": "tests/fixtures/queries/04-names/Second.c",
+      "destination": "evidence/captures/queries/04-names/Second.c"
+    },
+    {
+      "source": "tests/fixtures/queries/04-names/expected.json",
+      "destination": "evidence/captures/queries/04-names/expected.json"
+    },
+    {
+      "source": "tests/fixtures/queries/04-names/names.c",
+      "destination": "evidence/captures/queries/04-names/names.c"
+    },
+    {
+      "source": "tests/fixtures/queries/04-names/queries.txt",
+      "destination": "evidence/captures/queries/04-names/queries.txt"
+    },
+    {
+      "source": "tests/fixtures/queries/05-semantics/a_open.c",
+      "destination": "evidence/captures/queries/05-semantics/a_open.c"
+    },
+    {
+      "source": "tests/fixtures/queries/05-semantics/body.inc",
+      "destination": "evidence/captures/queries/05-semantics/body.inc"
+    },
+    {
+      "source": "tests/fixtures/queries/05-semantics/expected.json",
+      "destination": "evidence/captures/queries/05-semantics/expected.json"
+    },
+    {
+      "source": "tests/fixtures/queries/05-semantics/p1.c",
+      "destination": "evidence/captures/queries/05-semantics/p1.c"
+    },
+    {
+      "source": "tests/fixtures/queries/05-semantics/queries.txt",
+      "destination": "evidence/captures/queries/05-semantics/queries.txt"
+    },
+    {
+      "source": "tests/fixtures/real-header-approved.json",
+      "destination": "evidence/captures/real-header-approved.json"
+    },
+    {
+      "source": "tests/fixtures/reference/README.md",
+      "destination": "evidence/captures/reference/README.md"
+    },
+    {
+      "source": "tests/fixtures/reference/cscope-baseline.json",
+      "destination": "evidence/captures/reference/cscope-baseline.json"
+    },
+    {
+      "source": "tests/fixtures/reference/selection-oracle.json",
+      "destination": "evidence/captures/reference/selection-oracle.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/01-basics.json",
+      "destination": "evidence/captures/scanner/expected/01-basics.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/02-kr.json",
+      "destination": "evidence/captures/scanner/expected/02-kr.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/03-function-pointer-params.json",
+      "destination": "evidence/captures/scanner/expected/03-function-pointer-params.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/04-conditionals.json",
+      "destination": "evidence/captures/scanner/expected/04-conditionals.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/05-banner-comment.json",
+      "destination": "evidence/captures/scanner/expected/05-banner-comment.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/06-macros.json",
+      "destination": "evidence/captures/scanner/expected/06-macros.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/07-literals.json",
+      "destination": "evidence/captures/scanner/expected/07-literals.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/08-comments.json",
+      "destination": "evidence/captures/scanner/expected/08-comments.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/09-display.json",
+      "destination": "evidence/captures/scanner/expected/09-display.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/10-extern-typedef.json",
+      "destination": "evidence/captures/scanner/expected/10-extern-typedef.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/11-initializers.json",
+      "destination": "evidence/captures/scanner/expected/11-initializers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/12-dedup.json",
+      "destination": "evidence/captures/scanner/expected/12-dedup.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/13-structs.json",
+      "destination": "evidence/captures/scanner/expected/13-structs.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/14-edge-identifiers.json",
+      "destination": "evidence/captures/scanner/expected/14-edge-identifiers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/15-crlf.json",
+      "destination": "evidence/captures/scanner/expected/15-crlf.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/16-no-final-newline.json",
+      "destination": "evidence/captures/scanner/expected/16-no-final-newline.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/17-control-whitespace.json",
+      "destination": "evidence/captures/scanner/expected/17-control-whitespace.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/18-unbalanced.json",
+      "destination": "evidence/captures/scanner/expected/18-unbalanced.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/19-if-lookahead.json",
+      "destination": "evidence/captures/scanner/expected/19-if-lookahead.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/20-lex.json",
+      "destination": "evidence/captures/scanner/expected/20-lex.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/21-yacc.json",
+      "destination": "evidence/captures/scanner/expected/21-yacc.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/22-nested-parameters.json",
+      "destination": "evidence/captures/scanner/expected/22-nested-parameters.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/23-nested-parameters-blanks.json",
+      "destination": "evidence/captures/scanner/expected/23-nested-parameters-blanks.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/24-include-operands.json",
+      "destination": "evidence/captures/scanner/expected/24-include-operands.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/25-define-line-comment.json",
+      "destination": "evidence/captures/scanner/expected/25-define-line-comment.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/26-assignments.json",
+      "destination": "evidence/captures/scanner/expected/26-assignments.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/27-define-after-name.json",
+      "destination": "evidence/captures/scanner/expected/27-define-after-name.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/28-class.json",
+      "destination": "evidence/captures/scanner/expected/28-class.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/29-elif-pseudo.json",
+      "destination": "evidence/captures/scanner/expected/29-elif-pseudo.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/30-sections-in-c.json",
+      "destination": "evidence/captures/scanner/expected/30-sections-in-c.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/31-hash-lines.json",
+      "destination": "evidence/captures/scanner/expected/31-hash-lines.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/32-forms.json",
+      "destination": "evidence/captures/scanner/expected/32-forms.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/33-linkage-blocks.json",
+      "destination": "evidence/captures/scanner/expected/33-linkage-blocks.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/34-crlf-continuations.json",
+      "destination": "evidence/captures/scanner/expected/34-crlf-continuations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/35-unspaced-conditionals.json",
+      "destination": "evidence/captures/scanner/expected/35-unspaced-conditionals.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/36-macro-state.json",
+      "destination": "evidence/captures/scanner/expected/36-macro-state.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/37-directive-continuations.json",
+      "destination": "evidence/captures/scanner/expected/37-directive-continuations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/38-two-includes.json",
+      "destination": "evidence/captures/scanner/expected/38-two-includes.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/39-directive-rest.json",
+      "destination": "evidence/captures/scanner/expected/39-directive-rest.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/40-long-symbols.json",
+      "destination": "evidence/captures/scanner/expected/40-long-symbols.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/41-pointer-declarators.json",
+      "destination": "evidence/captures/scanner/expected/41-pointer-declarators.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/42-parenthesised-typedefs.json",
+      "destination": "evidence/captures/scanner/expected/42-parenthesised-typedefs.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/43-typedef-qualifiers.json",
+      "destination": "evidence/captures/scanner/expected/43-typedef-qualifiers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/44-extern-definitions.json",
+      "destination": "evidence/captures/scanner/expected/44-extern-definitions.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/45-specifier-macros.json",
+      "destination": "evidence/captures/scanner/expected/45-specifier-macros.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/46-linkage-declarations.json",
+      "destination": "evidence/captures/scanner/expected/46-linkage-declarations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/47-attributed-bodies.json",
+      "destination": "evidence/captures/scanner/expected/47-attributed-bodies.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/48-typedef-parameters.json",
+      "destination": "evidence/captures/scanner/expected/48-typedef-parameters.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/49-decorated-pointers.json",
+      "destination": "evidence/captures/scanner/expected/49-decorated-pointers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/50-split-pointers.json",
+      "destination": "evidence/captures/scanner/expected/50-split-pointers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/51-head-roles.json",
+      "destination": "evidence/captures/scanner/expected/51-head-roles.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/52-attribute-expressions.json",
+      "destination": "evidence/captures/scanner/expected/52-attribute-expressions.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/53-conditional-comments.json",
+      "destination": "evidence/captures/scanner/expected/53-conditional-comments.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/54-keyword-macros.json",
+      "destination": "evidence/captures/scanner/expected/54-keyword-macros.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/55-lex-class.json",
+      "destination": "evidence/captures/scanner/expected/55-lex-class.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/56-typedef-forms.json",
+      "destination": "evidence/captures/scanner/expected/56-typedef-forms.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/57-pointer-trivia.json",
+      "destination": "evidence/captures/scanner/expected/57-pointer-trivia.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/58-declaration-tails.json",
+      "destination": "evidence/captures/scanner/expected/58-declaration-tails.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/59-opaque-boundaries.json",
+      "destination": "evidence/captures/scanner/expected/59-opaque-boundaries.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/60-numeric-prefixes.json",
+      "destination": "evidence/captures/scanner/expected/60-numeric-prefixes.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/61-annotation-chains.json",
+      "destination": "evidence/captures/scanner/expected/61-annotation-chains.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/62-macro-quoted-newlines.json",
+      "destination": "evidence/captures/scanner/expected/62-macro-quoted-newlines.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/63-attribute-comment-gaps.json",
+      "destination": "evidence/captures/scanner/expected/63-attribute-comment-gaps.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/64-typedef-decorations.json",
+      "destination": "evidence/captures/scanner/expected/64-typedef-decorations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/65-dereferenced-calls.json",
+      "destination": "evidence/captures/scanner/expected/65-dereferenced-calls.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/66-c11-expression-keywords.json",
+      "destination": "evidence/captures/scanner/expected/66-c11-expression-keywords.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/67-atomic-types.json",
+      "destination": "evidence/captures/scanner/expected/67-atomic-types.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/68-preprocessor-defined.json",
+      "destination": "evidence/captures/scanner/expected/68-preprocessor-defined.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/69-macro-function-heads.json",
+      "destination": "evidence/captures/scanner/expected/69-macro-function-heads.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/70-return-type-wrappers.json",
+      "destination": "evidence/captures/scanner/expected/70-return-type-wrappers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/71-subscript-assignments.json",
+      "destination": "evidence/captures/scanner/expected/71-subscript-assignments.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/72-named-mutations.json",
+      "destination": "evidence/captures/scanner/expected/72-named-mutations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/expected/73-macro-constructor-heads.json",
+      "destination": "evidence/captures/scanner/expected/73-macro-constructor-heads.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/03-function-pointer-params.json",
+      "destination": "evidence/captures/scanner/intended/03-function-pointer-params.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/09-display.json",
+      "destination": "evidence/captures/scanner/intended/09-display.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/10-extern-typedef.json",
+      "destination": "evidence/captures/scanner/intended/10-extern-typedef.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/11-initializers.json",
+      "destination": "evidence/captures/scanner/intended/11-initializers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/22-nested-parameters.json",
+      "destination": "evidence/captures/scanner/intended/22-nested-parameters.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/23-nested-parameters-blanks.json",
+      "destination": "evidence/captures/scanner/intended/23-nested-parameters-blanks.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/24-include-operands.json",
+      "destination": "evidence/captures/scanner/intended/24-include-operands.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/25-define-line-comment.json",
+      "destination": "evidence/captures/scanner/intended/25-define-line-comment.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/26-assignments.json",
+      "destination": "evidence/captures/scanner/intended/26-assignments.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/32-forms.json",
+      "destination": "evidence/captures/scanner/intended/32-forms.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/33-linkage-blocks.json",
+      "destination": "evidence/captures/scanner/intended/33-linkage-blocks.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/34-crlf-continuations.json",
+      "destination": "evidence/captures/scanner/intended/34-crlf-continuations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/35-unspaced-conditionals.json",
+      "destination": "evidence/captures/scanner/intended/35-unspaced-conditionals.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/36-macro-state.json",
+      "destination": "evidence/captures/scanner/intended/36-macro-state.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/37-directive-continuations.json",
+      "destination": "evidence/captures/scanner/intended/37-directive-continuations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/39-directive-rest.json",
+      "destination": "evidence/captures/scanner/intended/39-directive-rest.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/41-pointer-declarators.json",
+      "destination": "evidence/captures/scanner/intended/41-pointer-declarators.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/42-parenthesised-typedefs.json",
+      "destination": "evidence/captures/scanner/intended/42-parenthesised-typedefs.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/43-typedef-qualifiers.json",
+      "destination": "evidence/captures/scanner/intended/43-typedef-qualifiers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/44-extern-definitions.json",
+      "destination": "evidence/captures/scanner/intended/44-extern-definitions.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/45-specifier-macros.json",
+      "destination": "evidence/captures/scanner/intended/45-specifier-macros.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/46-linkage-declarations.json",
+      "destination": "evidence/captures/scanner/intended/46-linkage-declarations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/47-attributed-bodies.json",
+      "destination": "evidence/captures/scanner/intended/47-attributed-bodies.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/48-typedef-parameters.json",
+      "destination": "evidence/captures/scanner/intended/48-typedef-parameters.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/49-decorated-pointers.json",
+      "destination": "evidence/captures/scanner/intended/49-decorated-pointers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/50-split-pointers.json",
+      "destination": "evidence/captures/scanner/intended/50-split-pointers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/51-head-roles.json",
+      "destination": "evidence/captures/scanner/intended/51-head-roles.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/52-attribute-expressions.json",
+      "destination": "evidence/captures/scanner/intended/52-attribute-expressions.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/53-conditional-comments.json",
+      "destination": "evidence/captures/scanner/intended/53-conditional-comments.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/54-keyword-macros.json",
+      "destination": "evidence/captures/scanner/intended/54-keyword-macros.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/56-typedef-forms.json",
+      "destination": "evidence/captures/scanner/intended/56-typedef-forms.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/57-pointer-trivia.json",
+      "destination": "evidence/captures/scanner/intended/57-pointer-trivia.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/58-declaration-tails.json",
+      "destination": "evidence/captures/scanner/intended/58-declaration-tails.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/59-opaque-boundaries.json",
+      "destination": "evidence/captures/scanner/intended/59-opaque-boundaries.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/60-numeric-prefixes.json",
+      "destination": "evidence/captures/scanner/intended/60-numeric-prefixes.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/61-annotation-chains.json",
+      "destination": "evidence/captures/scanner/intended/61-annotation-chains.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/62-macro-quoted-newlines.json",
+      "destination": "evidence/captures/scanner/intended/62-macro-quoted-newlines.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/63-attribute-comment-gaps.json",
+      "destination": "evidence/captures/scanner/intended/63-attribute-comment-gaps.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/64-typedef-decorations.json",
+      "destination": "evidence/captures/scanner/intended/64-typedef-decorations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/65-dereferenced-calls.json",
+      "destination": "evidence/captures/scanner/intended/65-dereferenced-calls.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/66-c11-expression-keywords.json",
+      "destination": "evidence/captures/scanner/intended/66-c11-expression-keywords.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/67-atomic-types.json",
+      "destination": "evidence/captures/scanner/intended/67-atomic-types.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/68-preprocessor-defined.json",
+      "destination": "evidence/captures/scanner/intended/68-preprocessor-defined.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/69-macro-function-heads.json",
+      "destination": "evidence/captures/scanner/intended/69-macro-function-heads.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/70-return-type-wrappers.json",
+      "destination": "evidence/captures/scanner/intended/70-return-type-wrappers.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/71-subscript-assignments.json",
+      "destination": "evidence/captures/scanner/intended/71-subscript-assignments.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/72-named-mutations.json",
+      "destination": "evidence/captures/scanner/intended/72-named-mutations.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/intended/73-macro-constructor-heads.json",
+      "destination": "evidence/captures/scanner/intended/73-macro-constructor-heads.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/open/expected/long-define-names.json",
+      "destination": "evidence/captures/scanner/open/expected/long-define-names.json"
+    },
+    {
+      "source": "tests/fixtures/scanner/open/probes/long-define-names.c",
+      "destination": "evidence/captures/scanner/open/probes/long-define-names.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/01-basics.c",
+      "destination": "evidence/captures/scanner/probes/01-basics.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/02-kr.c",
+      "destination": "evidence/captures/scanner/probes/02-kr.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/03-function-pointer-params.c",
+      "destination": "evidence/captures/scanner/probes/03-function-pointer-params.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/04-conditionals.c",
+      "destination": "evidence/captures/scanner/probes/04-conditionals.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/05-banner-comment.c",
+      "destination": "evidence/captures/scanner/probes/05-banner-comment.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/06-macros.c",
+      "destination": "evidence/captures/scanner/probes/06-macros.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/07-literals.c",
+      "destination": "evidence/captures/scanner/probes/07-literals.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/08-comments.c",
+      "destination": "evidence/captures/scanner/probes/08-comments.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/09-display.c",
+      "destination": "evidence/captures/scanner/probes/09-display.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/10-extern-typedef.c",
+      "destination": "evidence/captures/scanner/probes/10-extern-typedef.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/11-initializers.c",
+      "destination": "evidence/captures/scanner/probes/11-initializers.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/12-dedup.c",
+      "destination": "evidence/captures/scanner/probes/12-dedup.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/13-structs.c",
+      "destination": "evidence/captures/scanner/probes/13-structs.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/14-edge-identifiers.c",
+      "destination": "evidence/captures/scanner/probes/14-edge-identifiers.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/15-crlf.c",
+      "destination": "evidence/captures/scanner/probes/15-crlf.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/16-no-final-newline.c",
+      "destination": "evidence/captures/scanner/probes/16-no-final-newline.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/17-control-whitespace.c",
+      "destination": "evidence/captures/scanner/probes/17-control-whitespace.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/18-unbalanced.c",
+      "destination": "evidence/captures/scanner/probes/18-unbalanced.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/19-if-lookahead.c",
+      "destination": "evidence/captures/scanner/probes/19-if-lookahead.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/20-lex.l",
+      "destination": "evidence/captures/scanner/probes/20-lex.l"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/21-yacc.y",
+      "destination": "evidence/captures/scanner/probes/21-yacc.y"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/22-nested-parameters.c",
+      "destination": "evidence/captures/scanner/probes/22-nested-parameters.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/23-nested-parameters-blanks.c",
+      "destination": "evidence/captures/scanner/probes/23-nested-parameters-blanks.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/24-include-operands.c",
+      "destination": "evidence/captures/scanner/probes/24-include-operands.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/25-define-line-comment.c",
+      "destination": "evidence/captures/scanner/probes/25-define-line-comment.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/26-assignments.c",
+      "destination": "evidence/captures/scanner/probes/26-assignments.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/27-define-after-name.c",
+      "destination": "evidence/captures/scanner/probes/27-define-after-name.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/28-class.c",
+      "destination": "evidence/captures/scanner/probes/28-class.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/29-elif-pseudo.c",
+      "destination": "evidence/captures/scanner/probes/29-elif-pseudo.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/30-sections-in-c.c",
+      "destination": "evidence/captures/scanner/probes/30-sections-in-c.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/31-hash-lines.c",
+      "destination": "evidence/captures/scanner/probes/31-hash-lines.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/32-forms.c",
+      "destination": "evidence/captures/scanner/probes/32-forms.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/33-linkage-blocks.c",
+      "destination": "evidence/captures/scanner/probes/33-linkage-blocks.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/34-crlf-continuations.c",
+      "destination": "evidence/captures/scanner/probes/34-crlf-continuations.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/35-unspaced-conditionals.c",
+      "destination": "evidence/captures/scanner/probes/35-unspaced-conditionals.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/36-macro-state.c",
+      "destination": "evidence/captures/scanner/probes/36-macro-state.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/37-directive-continuations.c",
+      "destination": "evidence/captures/scanner/probes/37-directive-continuations.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/38-two-includes.c",
+      "destination": "evidence/captures/scanner/probes/38-two-includes.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/39-directive-rest.c",
+      "destination": "evidence/captures/scanner/probes/39-directive-rest.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/40-long-symbols.c",
+      "destination": "evidence/captures/scanner/probes/40-long-symbols.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/41-pointer-declarators.c",
+      "destination": "evidence/captures/scanner/probes/41-pointer-declarators.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/42-parenthesised-typedefs.c",
+      "destination": "evidence/captures/scanner/probes/42-parenthesised-typedefs.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/43-typedef-qualifiers.c",
+      "destination": "evidence/captures/scanner/probes/43-typedef-qualifiers.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/44-extern-definitions.c",
+      "destination": "evidence/captures/scanner/probes/44-extern-definitions.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/45-specifier-macros.c",
+      "destination": "evidence/captures/scanner/probes/45-specifier-macros.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/46-linkage-declarations.c",
+      "destination": "evidence/captures/scanner/probes/46-linkage-declarations.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/47-attributed-bodies.c",
+      "destination": "evidence/captures/scanner/probes/47-attributed-bodies.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/48-typedef-parameters.c",
+      "destination": "evidence/captures/scanner/probes/48-typedef-parameters.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/49-decorated-pointers.c",
+      "destination": "evidence/captures/scanner/probes/49-decorated-pointers.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/50-split-pointers.c",
+      "destination": "evidence/captures/scanner/probes/50-split-pointers.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/51-head-roles.c",
+      "destination": "evidence/captures/scanner/probes/51-head-roles.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/52-attribute-expressions.c",
+      "destination": "evidence/captures/scanner/probes/52-attribute-expressions.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/53-conditional-comments.c",
+      "destination": "evidence/captures/scanner/probes/53-conditional-comments.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/54-keyword-macros.c",
+      "destination": "evidence/captures/scanner/probes/54-keyword-macros.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/55-lex-class.l",
+      "destination": "evidence/captures/scanner/probes/55-lex-class.l"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/56-typedef-forms.c",
+      "destination": "evidence/captures/scanner/probes/56-typedef-forms.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/57-pointer-trivia.c",
+      "destination": "evidence/captures/scanner/probes/57-pointer-trivia.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/58-declaration-tails.c",
+      "destination": "evidence/captures/scanner/probes/58-declaration-tails.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/59-opaque-boundaries.c",
+      "destination": "evidence/captures/scanner/probes/59-opaque-boundaries.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/60-numeric-prefixes.c",
+      "destination": "evidence/captures/scanner/probes/60-numeric-prefixes.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/61-annotation-chains.c",
+      "destination": "evidence/captures/scanner/probes/61-annotation-chains.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/62-macro-quoted-newlines.c",
+      "destination": "evidence/captures/scanner/probes/62-macro-quoted-newlines.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/63-attribute-comment-gaps.c",
+      "destination": "evidence/captures/scanner/probes/63-attribute-comment-gaps.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/64-typedef-decorations.c",
+      "destination": "evidence/captures/scanner/probes/64-typedef-decorations.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/65-dereferenced-calls.c",
+      "destination": "evidence/captures/scanner/probes/65-dereferenced-calls.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/66-c11-expression-keywords.c",
+      "destination": "evidence/captures/scanner/probes/66-c11-expression-keywords.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/67-atomic-types.c",
+      "destination": "evidence/captures/scanner/probes/67-atomic-types.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/68-preprocessor-defined.c",
+      "destination": "evidence/captures/scanner/probes/68-preprocessor-defined.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/69-macro-function-heads.c",
+      "destination": "evidence/captures/scanner/probes/69-macro-function-heads.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/70-return-type-wrappers.c",
+      "destination": "evidence/captures/scanner/probes/70-return-type-wrappers.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/71-subscript-assignments.c",
+      "destination": "evidence/captures/scanner/probes/71-subscript-assignments.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/72-named-mutations.c",
+      "destination": "evidence/captures/scanner/probes/72-named-mutations.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/probes/73-macro-constructor-heads.c",
+      "destination": "evidence/captures/scanner/probes/73-macro-constructor-heads.c"
+    },
+    {
+      "source": "tests/fixtures/scanner/proposed/70-return-type-wrappers.json",
+      "destination": "evidence/captures/scanner/proposed/70-return-type-wrappers.json"
+    }
+  ]
+}

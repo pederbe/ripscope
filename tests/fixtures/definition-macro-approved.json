@@ -1,0 +1,598 @@
+{
+  "approval": "Intended definition and macro readings where Ripscope's differs from the reference's, with the corrected field 0 context.",
+  "reference_sha256": "a3f9ff403305a2e901961207d8096d26f89f021aa76b1d3b7696df82c7e27d89",
+  "reference": {
+    "continued-condition": {
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "defined"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c defined 2 !defined(NO_ATOMICS)\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "once_s"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once_s 3 typedef struct once_s {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "begun"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "done"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "ONCE_INIT"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 \n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "defined"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c defined 2 !defined(NO_ATOMICS)\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "once_s"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once_s 3 typedef struct once_s {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "begun"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "done"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "ONCE_INIT"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 \n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if defined(FEATURE) && \\\n !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "ONCE_INIT"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c defined 7 #define ONCE_INIT { 0, 0 \n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "ONCE_INIT"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 \n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if defined(FEATURE) && \\\n !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "flat-condition": {
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "defined"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "once_s"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once_s 2 typedef struct once_s {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "begun"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c begun 3 int begun;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "done"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c done 4 int done;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "ONCE_INIT"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "defined"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "once_s"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once_s 2 typedef struct once_s {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "begun"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c begun 3 int begun;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "done"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c done 4 int done;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "ONCE_INIT"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if defined(FEATURE) && !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "ONCE_INIT"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 6 #define ONCE_INIT { 0, 0 }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "ONCE_INIT"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if defined(FEATURE) && !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    }
+  },
+  "cases": {
+    "continued-condition": {
+      "source": "#if defined(FEATURE) && \\\n !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n",
+      "queries": [
+        {
+          "field": "1",
+          "pattern": "defined",
+          "caseless": false,
+          "reference": "case.c defined 2 !defined(NO_ATOMICS)\n",
+          "approved": ""
+        },
+        {
+          "field": "1",
+          "pattern": "once_s",
+          "caseless": false,
+          "reference": "case.c once_s 3 typedef struct once_s {\n",
+          "approved": "case.c once_s 3 typedef struct once_s {\n"
+        },
+        {
+          "field": "1",
+          "pattern": "begun",
+          "caseless": false,
+          "reference": "",
+          "approved": "case.c begun 4 int begun;\n"
+        },
+        {
+          "field": "1",
+          "pattern": "done",
+          "caseless": false,
+          "reference": "",
+          "approved": "case.c done 5 int done;\n"
+        },
+        {
+          "field": "1",
+          "pattern": "ONCE_INIT",
+          "caseless": false,
+          "reference": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 \n",
+          "approved": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 }\n"
+        },
+        {
+          "field": "1",
+          "pattern": "defined",
+          "caseless": true,
+          "reference": "case.c defined 2 !defined(NO_ATOMICS)\n",
+          "approved": ""
+        },
+        {
+          "field": "1",
+          "pattern": "once_s",
+          "caseless": true,
+          "reference": "case.c once_s 3 typedef struct once_s {\n",
+          "approved": "case.c once_s 3 typedef struct once_s {\n"
+        },
+        {
+          "field": "1",
+          "pattern": "begun",
+          "caseless": true,
+          "reference": "",
+          "approved": "case.c begun 4 int begun;\n"
+        },
+        {
+          "field": "1",
+          "pattern": "done",
+          "caseless": true,
+          "reference": "",
+          "approved": "case.c done 5 int done;\n"
+        },
+        {
+          "field": "1",
+          "pattern": "ONCE_INIT",
+          "caseless": true,
+          "reference": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 \n",
+          "approved": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 }\n"
+        },
+        {
+          "field": "0",
+          "pattern": "ONCE_INIT",
+          "caseless": false,
+          "reference": "case.c defined 7 #define ONCE_INIT { 0, 0 \n",
+          "approved": "case.c <global> 7 #define ONCE_INIT { 0, 0 }\n"
+        },
+        {
+          "field": "0",
+          "pattern": "ONCE_INIT",
+          "caseless": true,
+          "reference": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 \n",
+          "approved": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 }\n"
+        }
+      ]
+    },
+    "flat-condition": {
+      "source": "#if defined(FEATURE) && !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n",
+      "queries": [
+        {
+          "field": "1",
+          "pattern": "defined",
+          "caseless": false,
+          "reference": "",
+          "approved": ""
+        },
+        {
+          "field": "1",
+          "pattern": "once_s",
+          "caseless": false,
+          "reference": "case.c once_s 2 typedef struct once_s {\n",
+          "approved": "case.c once_s 2 typedef struct once_s {\n"
+        },
+        {
+          "field": "1",
+          "pattern": "begun",
+          "caseless": false,
+          "reference": "case.c begun 3 int begun;\n",
+          "approved": "case.c begun 3 int begun;\n"
+        },
+        {
+          "field": "1",
+          "pattern": "done",
+          "caseless": false,
+          "reference": "case.c done 4 int done;\n",
+          "approved": "case.c done 4 int done;\n"
+        },
+        {
+          "field": "1",
+          "pattern": "ONCE_INIT",
+          "caseless": false,
+          "reference": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n",
+          "approved": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n"
+        },
+        {
+          "field": "1",
+          "pattern": "defined",
+          "caseless": true,
+          "reference": "",
+          "approved": ""
+        },
+        {
+          "field": "1",
+          "pattern": "once_s",
+          "caseless": true,
+          "reference": "case.c once_s 2 typedef struct once_s {\n",
+          "approved": "case.c once_s 2 typedef struct once_s {\n"
+        },
+        {
+          "field": "1",
+          "pattern": "begun",
+          "caseless": true,
+          "reference": "case.c begun 3 int begun;\n",
+          "approved": "case.c begun 3 int begun;\n"
+        },
+        {
+          "field": "1",
+          "pattern": "done",
+          "caseless": true,
+          "reference": "case.c done 4 int done;\n",
+          "approved": "case.c done 4 int done;\n"
+        },
+        {
+          "field": "1",
+          "pattern": "ONCE_INIT",
+          "caseless": true,
+          "reference": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n",
+          "approved": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n"
+        },
+        {
+          "field": "0",
+          "pattern": "ONCE_INIT",
+          "caseless": false,
+          "reference": "case.c <global> 6 #define ONCE_INIT { 0, 0 }\n",
+          "approved": "case.c <global> 6 #define ONCE_INIT { 0, 0 }\n"
+        },
+        {
+          "field": "0",
+          "pattern": "ONCE_INIT",
+          "caseless": true,
+          "reference": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n",
+          "approved": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n"
+        }
+      ]
+    }
+  }
+}

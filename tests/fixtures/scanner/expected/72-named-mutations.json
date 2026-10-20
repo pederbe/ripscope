@@ -1,0 +1,932 @@
+{
+ "probe": "probes/72-named-mutations.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "unsigned ",
+    " = 0;"
+   ],
+   "symbols": [
+    [
+     "g",
+     "counter",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "#define ",
+    " ++",
+    ""
+   ],
+   "symbols": [
+    [
+     "#",
+     "STEP",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "#define ",
+    "(",
+    ") ",
+    "value"
+   ],
+   "symbols": [
+    [
+     "#",
+     "WRAPPER",
+     false
+    ],
+    [
+     " ",
+     "value",
+     false
+    ],
+    [
+     ")",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "void ",
+    "(void ) {"
+   ],
+   "symbols": [
+    [
+     "$",
+     "step",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "",
+    "++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "--;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "++",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "--",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "++(",
+    ");"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "((",
+    "))--;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "",
+    "++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "pointer",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "*",
+    "++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "pointer",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "++*",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "pointer",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "(*",
+    ")++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "pointer",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "",
+    ".",
+    "++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "object",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "",
+    "->",
+    "++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "pointer",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 17,
+   "fragments": [
+    "",
+    "[",
+    "]++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "slots",
+     false
+    ],
+    [
+     " ",
+     "index",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "++",
+    ".",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "object",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "++",
+    "->",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "pointer",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 20,
+   "fragments": [
+    "++",
+    "[",
+    "];"
+   ],
+   "symbols": [
+    [
+     " ",
+     "slots",
+     false
+    ],
+    [
+     " ",
+     "index",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "((int )",
+    ")++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 22,
+   "fragments": [
+    "",
+    "[",
+    "++] = ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "slots",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ],
+    [
+     " ",
+     "value",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 23,
+   "fragments": [
+    "sizeof(",
+    "++);"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 24,
+   "fragments": [
+    "",
+    "(--",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "WRAPPER",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 25,
+   "fragments": [
+    "for (; ",
+    " < ",
+    "; ++counter) ",
+    "();"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ],
+    [
+     " ",
+     "limit",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 26,
+   "fragments": [
+    "if (",
+    "-- < ",
+    ") ",
+    "(counter);"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ],
+    [
+     " ",
+     "limit",
+     false
+    ],
+    [
+     "`",
+     "use",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 27,
+   "fragments": [
+    "",
+    "(++",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "sink",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 28,
+   "fragments": [
+    "(void )",
+    "++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 29,
+   "fragments": [
+    "(int )(",
+    "++);"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 30,
+   "fragments": [
+    "",
+    "(",
+    "); counter++;"
+   ],
+   "symbols": [
+    [
+     "`",
+     "read",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 31,
+   "fragments": [
+    "",
+    "++; ++counter;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 32,
+   "fragments": [
+    "",
+    "++; ",
+    "--;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "left",
+     false
+    ],
+    [
+     " ",
+     "right",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 33,
+   "fragments": [
+    "",
+    "+++",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "other",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 34,
+   "fragments": [
+    "",
+    "---",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "other",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 35,
+   "fragments": [
+    "",
+    " + +",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ],
+    [
+     " ",
+     "other",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 36,
+   "fragments": [
+    "",
+    " - -",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ],
+    [
+     " ",
+     "other",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 38,
+   "fragments": [
+    "+",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 39,
+   "fragments": [
+    "",
+    "+\\"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 41,
+   "fragments": [
+    "",
+    "-\\"
+   ],
+   "symbols": [
+    [
+     " ",
+     "object",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 42,
+   "fragments": [
+    ">",
+    "++;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 43,
+   "fragments": [
+    "",
+    " == 1; counter != 1; counter <= 1; counter >= 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 44,
+   "fragments": [
+    "",
+    "; counter + 1; +counter; -counter; sizeof(counter);"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 46,
+   "fragments": [
+    "",
+    " += 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 47,
+   "fragments": [
+    "",
+    " = counter + 1;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "counter",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 48,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 49,
+   "fragments": [
+    "void ",
+    "(void ) { ",
+    "(",
+    "); ",
+    "} ",
+    "++;"
+   ],
+   "symbols": [
+    [
+     "$",
+     "first",
+     false
+    ],
+    [
+     "`",
+     "read",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ],
+    [
+     "g",
+     "counter",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 50,
+   "fragments": [
+    "#define ",
+    "(void ) { ",
+    "(",
+    "); #define ",
+    " ++",
+    "counter"
+   ],
+   "symbols": [
+    [
+     "$",
+     "second",
+     false
+    ],
+    [
+     "`",
+     "read",
+     false
+    ],
+    [
+     " ",
+     "counter",
+     false
+    ],
+    [
+     "#",
+     "INNER",
+     false
+    ],
+    [
+     ")",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 51,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 52,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "after",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

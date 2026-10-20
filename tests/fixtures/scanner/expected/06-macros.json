@@ -1,0 +1,220 @@
+{
+ "probe": "probes/06-macros.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#define ",
+    ""
+   ],
+   "symbols": [
+    [
+     "#",
+     "EMPTY",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "#define ",
+    " 42"
+   ],
+   "symbols": [
+    [
+     "#",
+     "VALUE",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "#define ",
+    "(",
+    ") ",
+    "(x); ",
+    "(x)"
+   ],
+   "symbols": [
+    [
+     "#",
+     "CALLS",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ],
+    [
+     "`",
+     "first",
+     false
+    ],
+    [
+     "`",
+     "second",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "#define ",
+    "(",
+    ", ",
+    ") \\"
+   ],
+   "symbols": [
+    [
+     "#",
+     "MULTI",
+     false
+    ],
+    [
+     " ",
+     "a",
+     false
+    ],
+    [
+     " ",
+     "b",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "(",
+    "); \\"
+   ],
+   "symbols": [
+    [
+     "`",
+     "inner",
+     false
+    ],
+    [
+     " ",
+     "a",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "",
+    "(",
+    "); \\"
+   ],
+   "symbols": [
+    [
+     "`",
+     "other",
+     false
+    ],
+    [
+     " ",
+     "b",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "} while (0)"
+   ],
+   "symbols": [],
+   "define_end": true
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "#define ",
+    " { ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     "#",
+     "BRACE",
+     false
+    ],
+    [
+     "`",
+     "open",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "#undef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "VALUE",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "int ",
+    "(void ) { return ",
+    "(1) + ",
+    "(2, 3); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "user",
+     false
+    ],
+    [
+     "`",
+     "CALLS",
+     false
+    ],
+    [
+     "`",
+     "MULTI",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

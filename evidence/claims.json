@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "reference": {
+    "package": "Ubuntu cscope 15.9-2build1 amd64",
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "locale": "C",
+    "identity_policy": "docs/adr/0001-pinned-reference-cscope.md"
+  },
+  "limits": "Each claim covers the finite inputs it names.",
+  "claims": [
+    {
+      "claim": "The baseline scanner has reference observations for each probe, and the Corrections have separate paired expectations.",
+      "documentation": "docs/architecture/reading-c.md",
+      "inputs": "evidence/captures/scanner/probes/",
+      "reference_captures": "evidence/captures/scanner/expected/",
+      "intended_readings": "evidence/captures/scanner/intended/",
+      "retained_limit": "evidence/captures/scanner/open/",
+      "disabled_candidate": "evidence/captures/scanner/proposed/70-return-type-wrappers.json",
+      "checks": ["src/scanner/tests.rs", "examples/scanner-probes.rs"],
+      "scope": "73 synthetic scanner probes, plus the separate long-name reference observation. Each expected capture names its input and the reference executable. Intended and proposed readings are Ripscope's, not cscope output."
+    },
+    {
+      "claim": "Stored query context follows Ripscope's own query semantics, and cscope's sequential and inverted-index answers are kept beside it.",
+      "documentation": "docs/architecture/answering-queries.md",
+      "inputs_and_captures": "evidence/captures/queries/",
+      "checks": ["src/engine/tests.rs", "tests/intended/mod.rs", "examples/support/query_semantics.rs", "examples/intended-answers.rs"],
+      "scope": "Five synthetic query-project groups. Source files, patterns, reference rows, diagnostics and exit statuses stay together."
+    },
+    {
+      "claim": "Assignment search includes subscript stores, and increments and decrements of a named variable.",
+      "documentation": "docs/adr/0012-written-assignment-search.md",
+      "inputs": ["evidence/captures/scanner/probes/71-subscript-assignments.c", "evidence/captures/scanner/probes/72-named-mutations.c"],
+      "checks": ["tests/assignment_cli.rs", "src/scanner/tests.rs"],
+      "scope": "Paired reference and intended captures for these two inputs, plus bounded command-line checks."
+    },
+    {
+      "claim": "Independent labels from written source give the expected definitions, calls and recognition limits.",
+      "documentation": "scripts/navigation-assessment.md",
+      "inputs_and_labels": "evidence/captures/navigation/",
+      "checks": ["examples/assess-navigation.rs"],
+      "scope": "A handwritten C89, C99, C11 and policy inventory, with a separate reductions inventory."
+    },
+    {
+      "claim": "A real zlib header fixture keeps its source identity and bounded reference evidence.",
+      "inputs_and_captures": "evidence/captures/real-header-approved.json",
+      "source": "zlib v1.3.1 at 51b7f2abdade71cd9bb0e7a373ef2610ec6f9daf",
+      "scope": "The fixture records the product revision it was made with and its expectations. It embeds the complete source bytes and zlib's notice."
+    },
+    {
+      "claim": "Refresh, source removal and concurrent publication follow the tested index lifecycle.",
+      "documentation": "docs/architecture/storage.md",
+      "checks": ["tests/freshness_cli.rs", "tests/persistent_cli.rs", "tests/pipeline_session_cli.rs", "tests/pipeline_selection_cli.rs", "src/store/tests.rs", "src/refresh/tests.rs"],
+      "scope": "Behaviour tests in the source tree."
+    },
+    {
+      "claim": "The benchmark page's search times and win counts come from the 0.1.0 release candidate measurement, and its answer judgments from the source-backed answer audit.",
+      "documentation": "docs/reference/benchmarks.md",
+      "measurements": "evidence/performance-20261019.json",
+      "answer_audit": "evidence/performance-answers-20261016.json",
+      "scope": "50 queries over the named Linux kernel selection, Redis and zlib, on Linux and Windows."
+    }
+  ]
+}

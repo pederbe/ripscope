@@ -1,0 +1,817 @@
+{
+  "approval": "Intended contexts where Ripscope's reading differs from the reference's.",
+  "reference_sha256": "2735630c617326e6291a194b5863832d7021ad8acce9b26bd4bbc641843fb300",
+  "reference": {
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "cases": {
+      "continued-condition": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "begun"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c defined 4 int begun;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "state"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\ncase.c once 9 if (!state->done) {\ncase.c once 11 state->done = 1;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "once"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "local"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "(local|state)"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 9 if (!state->done) {\ncase.c <global> 11 state->done = 1;\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "begun"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c defined 4 int begun;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "state"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\ncase.c once 9 if (!state->done) {\ncase.c once 11 state->done = 1;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "once"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "local"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "(local|state)"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 9 if (!state->done) {\ncase.c <global> 11 state->done = 1;\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if defined(FEATURE) && \\\n !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "flat-condition": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "begun"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 3 int begun;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "state"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\ncase.c once 8 if (!state->done) {\ncase.c once 10 state->done = 1;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "once"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "local"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "(local|state)"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 8 if (!state->done) {\ncase.c <global> 10 state->done = 1;\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "begun"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 3 int begun;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "state"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\ncase.c once 8 if (!state->done) {\ncase.c once 10 state->done = 1;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "once"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "local"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "(local|state)"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 8 if (!state->done) {\ncase.c <global> 10 state->done = 1;\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#if defined(FEATURE) && !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "assignment": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c _tr_align 2 compressed_len += 10;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "compressed_len"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c _tr_align 2 compressed_len += 10;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "ZLIB_INTERNAL"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "s"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c _tr_align 2 compressed_len += 10;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "compressed_len"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c _tr_align 2 compressed_len += 10;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "ZLIB_INTERNAL"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "s"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void ZLIB_INTERNAL _tr_align(int *s) {\n compressed_len += 10;\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "assignment-shift": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c _tr_align 3 compressed_len += 10;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "compressed_len"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c _tr_align 3 compressed_len += 10;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "ZLIB_INTERNAL"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "s"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c _tr_align 3 compressed_len += 10;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "compressed_len"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c _tr_align 3 compressed_len += 10;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "ZLIB_INTERNAL"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "s"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int unrelated;\nvoid ZLIB_INTERNAL _tr_align(int *s) {\n compressed_len += 10;\n}\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    }
+  },
+  "cases": {
+    "continued-condition": {
+      "source": "#if defined(FEATURE) && \\\n !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n",
+      "queries": [
+        {
+          "field": "0",
+          "pattern": "begun",
+          "caseless": false,
+          "reference": "case.c defined 4 int begun;\n",
+          "approved": "case.c <global> 4 int begun;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "state",
+          "caseless": false,
+          "reference": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\ncase.c once 9 if (!state->done) {\ncase.c once 11 state->done = 1;\n",
+          "approved": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\ncase.c once 9 if (!state->done) {\ncase.c once 11 state->done = 1;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "once",
+          "caseless": false,
+          "reference": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\n",
+          "approved": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\n"
+        },
+        {
+          "field": "0",
+          "pattern": "local",
+          "caseless": false,
+          "reference": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\n",
+          "approved": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\n"
+        },
+        {
+          "field": "0",
+          "pattern": "(local|state)",
+          "caseless": false,
+          "reference": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 9 if (!state->done) {\ncase.c <global> 11 state->done = 1;\n",
+          "approved": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 9 if (!state->done) {\ncase.c <global> 11 state->done = 1;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "begun",
+          "caseless": true,
+          "reference": "case.c defined 4 int begun;\n",
+          "approved": "case.c <global> 4 int begun;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "state",
+          "caseless": true,
+          "reference": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\ncase.c once 9 if (!state->done) {\ncase.c once 11 state->done = 1;\n",
+          "approved": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\ncase.c once 9 if (!state->done) {\ncase.c once 11 state->done = 1;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "once",
+          "caseless": true,
+          "reference": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\n",
+          "approved": "case.c once 8 local void once(once_t *state, void (*init)(void )) {\n"
+        },
+        {
+          "field": "0",
+          "pattern": "local",
+          "caseless": true,
+          "reference": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\n",
+          "approved": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\n"
+        },
+        {
+          "field": "0",
+          "pattern": "(local|state)",
+          "caseless": true,
+          "reference": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 9 if (!state->done) {\ncase.c <global> 11 state->done = 1;\n",
+          "approved": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 9 if (!state->done) {\ncase.c <global> 11 state->done = 1;\n"
+        }
+      ]
+    },
+    "flat-condition": {
+      "source": "#if defined(FEATURE) && !defined(NO_ATOMICS)\ntypedef struct once_s {\n int begun;\n int done;\n} once_t;\n#define ONCE_INIT { 0, 0 }\nlocal void once(once_t *state, void (*init)(void)) {\n if (!state->done) {\n  init();\n  state->done = 1;\n }\n}\n#endif\n",
+      "queries": [
+        {
+          "field": "0",
+          "pattern": "begun",
+          "caseless": false,
+          "reference": "case.c <global> 3 int begun;\n",
+          "approved": "case.c <global> 3 int begun;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "state",
+          "caseless": false,
+          "reference": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\ncase.c once 8 if (!state->done) {\ncase.c once 10 state->done = 1;\n",
+          "approved": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\ncase.c once 8 if (!state->done) {\ncase.c once 10 state->done = 1;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "once",
+          "caseless": false,
+          "reference": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\n",
+          "approved": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\n"
+        },
+        {
+          "field": "0",
+          "pattern": "local",
+          "caseless": false,
+          "reference": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\n",
+          "approved": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\n"
+        },
+        {
+          "field": "0",
+          "pattern": "(local|state)",
+          "caseless": false,
+          "reference": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 8 if (!state->done) {\ncase.c <global> 10 state->done = 1;\n",
+          "approved": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 8 if (!state->done) {\ncase.c <global> 10 state->done = 1;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "begun",
+          "caseless": true,
+          "reference": "case.c <global> 3 int begun;\n",
+          "approved": "case.c <global> 3 int begun;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "state",
+          "caseless": true,
+          "reference": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\ncase.c once 8 if (!state->done) {\ncase.c once 10 state->done = 1;\n",
+          "approved": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\ncase.c once 8 if (!state->done) {\ncase.c once 10 state->done = 1;\n"
+        },
+        {
+          "field": "0",
+          "pattern": "once",
+          "caseless": true,
+          "reference": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\n",
+          "approved": "case.c once 7 local void once(once_t *state, void (*init)(void )) {\n"
+        },
+        {
+          "field": "0",
+          "pattern": "local",
+          "caseless": true,
+          "reference": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\n",
+          "approved": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\n"
+        },
+        {
+          "field": "0",
+          "pattern": "(local|state)",
+          "caseless": true,
+          "reference": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 8 if (!state->done) {\ncase.c <global> 10 state->done = 1;\n",
+          "approved": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 8 if (!state->done) {\ncase.c <global> 10 state->done = 1;\n"
+        }
+      ]
+    },
+    "assignment": {
+      "source": "void ZLIB_INTERNAL _tr_align(int *s) {\n compressed_len += 10;\n}\n",
+      "queries": [
+        {
+          "field": "9",
+          "pattern": ".*",
+          "caseless": false,
+          "reference": "case.c _tr_align 2 compressed_len += 10;\n",
+          "approved": "case.c _tr_align 2 compressed_len += 10;\n"
+        },
+        {
+          "field": "9",
+          "pattern": "compressed_len",
+          "caseless": false,
+          "reference": "case.c _tr_align 2 compressed_len += 10;\n",
+          "approved": "case.c _tr_align 2 compressed_len += 10;\n"
+        },
+        {
+          "field": "9",
+          "pattern": "ZLIB_INTERNAL",
+          "caseless": false,
+          "reference": "",
+          "approved": ""
+        },
+        {
+          "field": "9",
+          "pattern": "s",
+          "caseless": false,
+          "reference": "",
+          "approved": ""
+        },
+        {
+          "field": "9",
+          "pattern": ".*",
+          "caseless": true,
+          "reference": "case.c _tr_align 2 compressed_len += 10;\n",
+          "approved": "case.c _tr_align 2 compressed_len += 10;\n"
+        },
+        {
+          "field": "9",
+          "pattern": "compressed_len",
+          "caseless": true,
+          "reference": "case.c _tr_align 2 compressed_len += 10;\n",
+          "approved": "case.c _tr_align 2 compressed_len += 10;\n"
+        },
+        {
+          "field": "9",
+          "pattern": "ZLIB_INTERNAL",
+          "caseless": true,
+          "reference": "",
+          "approved": ""
+        },
+        {
+          "field": "9",
+          "pattern": "s",
+          "caseless": true,
+          "reference": "",
+          "approved": ""
+        }
+      ]
+    },
+    "assignment-shift": {
+      "source": "int unrelated;\nvoid ZLIB_INTERNAL _tr_align(int *s) {\n compressed_len += 10;\n}\n",
+      "queries": [
+        {
+          "field": "9",
+          "pattern": ".*",
+          "caseless": false,
+          "reference": "case.c _tr_align 3 compressed_len += 10;\n",
+          "approved": "case.c _tr_align 3 compressed_len += 10;\n"
+        },
+        {
+          "field": "9",
+          "pattern": "compressed_len",
+          "caseless": false,
+          "reference": "case.c _tr_align 3 compressed_len += 10;\n",
+          "approved": "case.c _tr_align 3 compressed_len += 10;\n"
+        },
+        {
+          "field": "9",
+          "pattern": "ZLIB_INTERNAL",
+          "caseless": false,
+          "reference": "",
+          "approved": ""
+        },
+        {
+          "field": "9",
+          "pattern": "s",
+          "caseless": false,
+          "reference": "",
+          "approved": ""
+        },
+        {
+          "field": "9",
+          "pattern": ".*",
+          "caseless": true,
+          "reference": "case.c _tr_align 3 compressed_len += 10;\n",
+          "approved": "case.c _tr_align 3 compressed_len += 10;\n"
+        },
+        {
+          "field": "9",
+          "pattern": "compressed_len",
+          "caseless": true,
+          "reference": "case.c _tr_align 3 compressed_len += 10;\n",
+          "approved": "case.c _tr_align 3 compressed_len += 10;\n"
+        },
+        {
+          "field": "9",
+          "pattern": "ZLIB_INTERNAL",
+          "caseless": true,
+          "reference": "",
+          "approved": ""
+        },
+        {
+          "field": "9",
+          "pattern": "s",
+          "caseless": true,
+          "reference": "",
+          "approved": ""
+        }
+      ]
+    }
+  }
+}

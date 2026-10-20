@@ -1,0 +1,77 @@
+{
+ "probe": "probes/38-two-includes.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#include ",
+    "\" #include \"b.h\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"a.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "#include ",
+    "> #include <b.h>"
+   ],
+   "symbols": [
+    [
+     "~",
+     "<a.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "#include ",
+    "\" #include \"d.h\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"abcdef.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "#include *",
+    " = ",
+    "\" #include \"b.h\""
+   ],
+   "symbols": [
+    [
+     "g",
+     "s",
+     true
+    ],
+    [
+     "~",
+     "\"q\"; #include \"a.h",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

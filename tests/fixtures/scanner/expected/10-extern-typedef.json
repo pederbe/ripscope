@@ -1,0 +1,185 @@
+{
+ "probe": "probes/10-extern-typedef.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "extern int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "ext_var",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "extern int ",
+    "(int );"
+   ],
+   "symbols": [
+    [
+     " ",
+     "ext_func",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "defined_after_extern",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "typedef int (*",
+    ")(void *",
+    ");"
+   ],
+   "symbols": [
+    [
+     "t",
+     "callback_t",
+     false
+    ],
+    [
+     "t",
+     "ctx",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "typedef struct ",
+    " { struct ",
+    " *",
+    "; int ",
+    "; } ",
+    ", *",
+    ";"
+   ],
+   "symbols": [
+    [
+     "s",
+     "node",
+     false
+    ],
+    [
+     " ",
+     "node",
+     false
+    ],
+    [
+     " ",
+     "next",
+     false
+    ],
+    [
+     " ",
+     "key",
+     false
+    ],
+    [
+     "t",
+     "node_t",
+     false
+    ],
+    [
+     "t",
+     "node_ptr",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "typedef enum { ",
+    ", ",
+    " } ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "OFF",
+     false
+    ],
+    [
+     " ",
+     "ON",
+     false
+    ],
+    [
+     "t",
+     "state_t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "typedef unsigned char ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "byte",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "",
+    " ",
+    "[16];"
+   ],
+   "symbols": [
+    [
+     " ",
+     "byte",
+     false
+    ],
+    [
+     " ",
+     "buffer",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

@@ -1,0 +1,503 @@
+{
+  "source_commit": "612a539b585ccdb70a1261652954f579ccedb270",
+  "cases": {
+    "enum": {
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 typedef enum { HEAD = 16180, FLAGS } inflate_mode;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 typedef enum { HEAD = 16180, FLAGS } inflate_mode;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "typedef enum { HEAD = 16180, FLAGS } inflate_mode;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "struct": {
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 typedef struct state { int member; } State, *StatePtr;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 typedef struct state { int member; } State, *StatePtr;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "typedef struct state { int member; } State, *StatePtr;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "union": {
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 typedef union { int member; char byte; } Value;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 typedef union { int member; char byte; } Value;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "typedef union { int member; char byte; } Value;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "nested": {
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 struct outer { struct { int member; } inner; };\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 struct outer { struct { int member; } inner; };\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "struct outer { struct { int member; } inner; };\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "ordinary": {
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 struct state { int member; } instance, array[2];\ncase.c .* 2 extern struct ext { int field; } outside;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 struct state { int member; } instance, array[2];\ncase.c .* 2 extern struct ext { int field; } outside;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "struct state { int member; } instance, array[2];\nextern struct ext { int field; } outside;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "conditional": {
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 3 int left;\ncase.c .* 5 int right;\ncase.c .* 7 } State;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 3 int left;\ncase.c .* 5 int right;\ncase.c .* 7 } State;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "missing_control"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "typedef struct {\n#if FLAG\nint left;\n#else\nint right;\n#endif\n} State;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    }
+  }
+}

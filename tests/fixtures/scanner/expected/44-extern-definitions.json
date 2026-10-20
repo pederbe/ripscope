@@ -1,0 +1,236 @@
+{
+ "probe": "probes/44-extern-definitions.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "extern void ",
+    "(int ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "first",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "",
+    "(",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "use",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "#define ",
+    " int ",
+    " = 0; (void )",
+    "y"
+   ],
+   "symbols": [
+    [
+     "#",
+     "LOCAL",
+     false
+    ],
+    [
+     " ",
+     "y",
+     true
+    ],
+    [
+     ")",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "const char * ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "m",
+     "start",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "const char * ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "m",
+     "end",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "} ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "span",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "after",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "extern int ",
+    "(void ) { return 0; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "second",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "lost_by_cscope",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "kept",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "extern int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "declared",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "defined_after_declaration",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

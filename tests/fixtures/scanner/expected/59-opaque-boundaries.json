@@ -1,0 +1,611 @@
+{
+ "probe": "probes/59-opaque-boundaries.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "A",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     "g",
+     "OPAQUE",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "global",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "struct ",
+    " {"
+   ],
+   "symbols": [
+    [
+     "s",
+     "s",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "m",
+     "member",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     "m",
+     "TAIL",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "typedef int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "T",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "A",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "",
+    " ",
+    " ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "_Atomic",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     "g",
+     "atomic_global",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 17,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "A",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "",
+    " ",
+    " ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "_Thread_local",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     "g",
+     "thread_global",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "A",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 22,
+   "fragments": [
+    "",
+    " ",
+    " ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__thread",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     "g",
+     "gnu_thread_global",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 25,
+   "fragments": [
+    "struct ",
+    " {"
+   ],
+   "symbols": [
+    [
+     "s",
+     "AtomicMember",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 26,
+   "fragments": [
+    "",
+    " ",
+    " ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "_Atomic",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     "m",
+     "atomic_member",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 28,
+   "fragments": [
+    "struct ",
+    " {"
+   ],
+   "symbols": [
+    [
+     "s",
+     "AttributeMember",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 29,
+   "fragments": [
+    "",
+    "((",
+    "(16))) ",
+    " ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__attribute__",
+     false
+    ],
+    [
+     " ",
+     "aligned",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     "m",
+     "attributed_member",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 31,
+   "fragments": [
+    "struct ",
+    " {"
+   ],
+   "symbols": [
+    [
+     "s",
+     "AtomicFormMember",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 32,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "_Atomic",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     "m",
+     "atomic_form_member",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 35,
+   "fragments": [
+    "",
+    " ",
+    " ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "EXTERN",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     "g",
+     "macro_qualified_global",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 36,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "A",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 37,
+   "fragments": [
+    "",
+    "(0);"
+   ],
+   "symbols": [
+    [
+     " ",
+     "INIT",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 39,
+   "fragments": [
+    "",
+    "(1);"
+   ],
+   "symbols": [
+    [
+     " ",
+     "INIT",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 41,
+   "fragments": [
+    "struct ",
+    " {"
+   ],
+   "symbols": [
+    [
+     "s",
+     "MacroType",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 42,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "TYPEOF",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     "m",
+     "typed_member",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 44,
+   "fragments": [
+    "struct ",
+    " {"
+   ],
+   "symbols": [
+    [
+     "s",
+     "MacroQualifier",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 45,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "EXTERN",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 46,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "T",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 47,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     "m",
+     "qualified_member",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 51,
+   "fragments": [
+    "#define ",
+    "(",
+    ") ",
+    "(x)"
+   ],
+   "symbols": [
+    [
+     "#",
+     "TYPE_FROM",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ],
+    [
+     "`",
+     "__typeof__",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 52,
+   "fragments": [
+    "struct ",
+    " {"
+   ],
+   "symbols": [
+    [
+     "s",
+     "NumericMacroType",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 53,
+   "fragments": [
+    "",
+    "(0) ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "TYPE_FROM",
+     false
+    ],
+    [
+     "m",
+     "macro_type_member",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

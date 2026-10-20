@@ -1,0 +1,107 @@
+{
+ "probe": "probes/34-crlf-continuations.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#define ",
+    "(",
+    ") \\"
+   ],
+   "symbols": [
+    [
+     "#",
+     "X",
+     false
+    ],
+    [
+     " ",
+     "a",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "do { ",
+    "; } while (0)"
+   ],
+   "symbols": [
+    [
+     "g",
+     "a",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "char *",
+    " = \"a \\extern "
+   ],
+   "symbols": [
+    [
+     " ",
+     "s",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "",
+    "\";extern "
+   ],
+   "symbols": [
+    [
+     " ",
+     "b",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "h",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

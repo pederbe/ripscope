@@ -1,0 +1,647 @@
+{
+ "probe": "probes/69-macro-function-heads.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    "(void ) { return 1; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "helper",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "#define ",
+    "(",
+    ") \\"
+   ],
+   "symbols": [
+    [
+     "#",
+     "GENERATED_FUNCTION",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "static int ",
+    "(void ) { return ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     "`",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "#define ",
+    "(",
+    ") ",
+    "()"
+   ],
+   "symbols": [
+    [
+     "#",
+     "INVOKE_PARAMETER",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "NAME",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "int ",
+    "(void ) { return ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "ordinary",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "int ",
+    "(void );"
+   ],
+   "symbols": [
+    [
+     " ",
+     "prototype",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "#define ",
+    "(",
+    ") \\"
+   ],
+   "symbols": [
+    [
+     "#",
+     "LONG_HEAD",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "static void ",
+    "(const unsigned char * ",
+    " ",
+    ", \\"
+   ],
+   "symbols": [
+    [
+     "`",
+     "NAME",
+     false
+    ],
+    [
+     " ",
+     "restrict",
+     false
+    ],
+    [
+     " ",
+     "first",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "const unsigned char * ",
+    " ",
+    ", \\"
+   ],
+   "symbols": [
+    [
+     " ",
+     "restrict",
+     false
+    ],
+    [
+     " ",
+     "second",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "const unsigned char * ",
+    " ",
+    ", \\"
+   ],
+   "symbols": [
+    [
+     " ",
+     "restrict",
+     false
+    ],
+    [
+     " ",
+     "third",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "unsigned char * ",
+    " ",
+    ", \\"
+   ],
+   "symbols": [
+    [
+     " ",
+     "restrict",
+     false
+    ],
+    [
+     " ",
+     "output",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "int ",
+    ") { ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     " ",
+     "length",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "#define ",
+    "(",
+    ") static int NAME (void )  { return ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     "#",
+     "COMMENT_HEAD",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "#define ",
+    "(",
+    ") static int NAME \\"
+   ],
+   "symbols": [
+    [
+     "#",
+     "SPLICE_HEAD",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "{ return ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 17,
+   "fragments": [
+    "#define ",
+    "(",
+    ") \\"
+   ],
+   "symbols": [
+    [
+     "#",
+     "CALLBACK_HEAD",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "static int ",
+    "(int (*",
+    ")(void ), int ",
+    ") { return ",
+    "() + ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     "`",
+     "NAME",
+     false
+    ],
+    [
+     " ",
+     "callback",
+     false
+    ],
+    [
+     " ",
+     "value",
+     false
+    ],
+    [
+     "`",
+     "callback",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "#define ",
+    "(",
+    ") static int ",
+    "(void );"
+   ],
+   "symbols": [
+    [
+     "#",
+     "GENERATED_PROTOTYPE",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "NAME",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 20,
+   "fragments": [
+    "#define ",
+    "(",
+    ") ",
+    "(1) { ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     "#",
+     "INVOKE_BLOCK",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "#define ",
+    "(",
+    ") do { int ",
+    " = ",
+    "(); ",
+    "(); } while (0)"
+   ],
+   "symbols": [
+    [
+     "#",
+     "LOCAL_CALLS",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ],
+    [
+     " ",
+     "value",
+     true
+    ],
+    [
+     "`",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 22,
+   "fragments": [
+    "#define ",
+    "(",
+    ") static int ",
+    "(void ) ",
+    " { return ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     "#",
+     "ANNOTATED_HEAD",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "NAME",
+     false
+    ],
+    [
+     " ",
+     "SUFFIX",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 23,
+   "fragments": [
+    "#define ",
+    "(",
+    ") static int \\"
+   ],
+   "symbols": [
+    [
+     "#",
+     "SPLIT_PREFIX",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 24,
+   "fragments": [
+    "",
+    "(void ) { return ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     "`",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 25,
+   "fragments": [
+    "#define ",
+    "(",
+    ") static int ",
+    "(void )"
+   ],
+   "symbols": [
+    [
+     "#",
+     "UNFINISHED_HEAD",
+     false
+    ],
+    [
+     " ",
+     "NAME",
+     false
+    ],
+    [
+     "`",
+     "NAME",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 26,
+   "fragments": [
+    "{ ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     " ",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 27,
+   "fragments": [
+    "int ",
+    "(void ) { return ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "after_macros",
+     false
+    ],
+    [
+     "`",
+     "helper",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

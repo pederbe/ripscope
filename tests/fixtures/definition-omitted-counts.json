@@ -1,0 +1,115 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "source": "int a;\nint aa;\nint aaa;\nint aaaa;\nint ab;\nint abab;\nint b;\nint bb;\nint A;\nint AA;\nint AAA;\nint ABAB;\n",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{,0}b"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{,0}b 7 int b;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{,0002}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{,0002} 1 int a;\ncase.c a{,0002} 2 int aa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{,32768}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a{,}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{,} 1 int a;\ncase.c a{,} 2 int aa;\ncase.c a{,} 3 int aaa;\ncase.c a{,} 4 int aaaa;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{,0}b"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{,0}b 7 int b;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{,0002}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{,0002} 1 int a;\ncase.c a{,0002} 2 int aa;\ncase.c a{,0002} 9 int A;\ncase.c a{,0002} 10 int AA;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{,32768}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a{,}"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a{,} 1 int a;\ncase.c a{,} 2 int aa;\ncase.c a{,} 3 int aaa;\ncase.c a{,} 4 int aaaa;\ncase.c a{,} 9 int A;\ncase.c a{,} 10 int AA;\ncase.c a{,} 11 int AAA;\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "build": {
+    "args": [
+      "-bk",
+      "case.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

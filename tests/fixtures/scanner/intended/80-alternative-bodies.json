@@ -1,0 +1,270 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/80-alternative-bodies.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        " (int ",
+        ")"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "$",
+          "residual",
+          false
+        ],
+        [
+          " ",
+          "n",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        ""
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          " ",
+          "SLOW",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        ");"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "`",
+          "slow_loop",
+          false
+        ],
+        [
+          " ",
+          "n",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#elif ",
+        ""
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          " ",
+          "MEDIUM",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        ");"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "`",
+          "medium_loop",
+          false
+        ],
+        [
+          " ",
+          "n",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          " ",
+          "unrolled",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        ");"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          "`",
+          "fast_loop",
+          false
+        ],
+        [
+          " ",
+          "n",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#ifdef ",
+        ""
+      ],
+      "line": 20,
+      "symbols": [
+        [
+          " ",
+          "BOTH",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        " (void )"
+      ],
+      "line": 21,
+      "symbols": [
+        [
+          "$",
+          "first",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "return ",
+        " ();"
+      ],
+      "line": 23,
+      "symbols": [
+        [
+          "`",
+          "one",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 24,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 26,
+      "symbols": [
+        [
+          "g",
+          "second",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        " (void )"
+      ],
+      "line": 29,
+      "symbols": [
+        [
+          "$",
+          "after",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "return ",
+        " ();"
+      ],
+      "line": 31,
+      "symbols": [
+        [
+          "`",
+          "tail_call",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 32,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    }
+  ]
+}

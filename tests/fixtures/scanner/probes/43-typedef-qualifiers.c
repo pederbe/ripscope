@@ -1,0 +1,13 @@
+typedef const foo_t bar_t;
+typedef volatile uint32_t reg_t;
+typedef const struct tag *tag_ptr;
+typedef volatile struct vtag { int a; } vtag_t;
+typedef const char *cstr;
+typedef const volatile unsigned long cvul;
+typedef foo_t const *after_ptr;
+typedef const foo_t *const cptr_t, arr_t[4];
+typedef const enum mode mode_t;
+typedef unsigned __int64 u64;
+typedef int API api_t;
+typedef const x_t;
+int last;

@@ -1,0 +1,569 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "sources": [
+    {
+      "path": "experiments/definition-isolation/results.json",
+      "sha256": "5bccbe8f345df0f80676238a2dc876e382d9a8a6415ed914f163234b375b5113"
+    },
+    {
+      "path": "research/definition-output-evidence.json",
+      "sha256": "b7902664b816c69a68924f7fba28c834f1417866246ff5f216007d638a9f5451"
+    }
+  ],
+  "cases": {
+    "isolated-01": {
+      "source": "typedef int Count;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Count"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Count 1 typedef int Count;\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "isolated-02": {
+      "source": "typedef void (*Callback)(int);\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Callback"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Callback 1 typedef void (*Callback)(int );\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "isolated-03": {
+      "source": "struct Item { int value; Callback run; };\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 1 struct Item { int value; Callback run; };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 struct Item { int value; Callback run; };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "run"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c run 1 struct Item { int value; Callback run; };\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "isolated-04": {
+      "source": "union Storage { int number; char byte; };\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Storage"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Storage 1 union Storage { int number; char byte; };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "number"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c number 1 union Storage { int number; char byte; };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "byte"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c byte 1 union Storage { int number; char byte; };\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "isolated-05": {
+      "source": "enum Mode { IDLE, BUSY = 2 };\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Mode"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Mode 1 enum Mode { IDLE, BUSY = 2 };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "IDLE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c IDLE 1 enum Mode { IDLE, BUSY = 2 };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "BUSY"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c BUSY 1 enum Mode { IDLE, BUSY = 2 };\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "isolated-06": {
+      "source": "int global = 1;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "global"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c global 1 int global = 1;\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "isolated-07": {
+      "source": "extern int external;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "external"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "isolated-08": {
+      "source": "void declared(int);\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "declared"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "isolated-09": {
+      "source": "void (*factory(void))(int) { return 0; }\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "factory"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c factory 1 void (*factory(void ))(int ) { return 0; }\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "isolated-10": {
+      "source": "void ordinary(void) { int local = 0; local += global; }\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ordinary"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ordinary 1 void ordinary(void ) { int local = 0; local += global; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-isolation"
+    },
+    "extern-initialized": {
+      "source": "extern int initialized = 1;\nextern int declared;\nint ordinary;\n",
+      "build": {
+        "args": [
+          "cscope",
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "initialized"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "declared"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "ordinary"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ordinary 3 int ordinary;\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-output-evidence"
+    },
+    "local-kinds": {
+      "source": "void host(void) {\n typedef int LocalType;\n struct LocalTag { int member; };\n enum LocalEnum { LOCAL_ITEM };\n int local = 1;\n}\n",
+      "build": {
+        "args": [
+          "cscope",
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "host"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c host 1 void host(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "LocalType"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c LocalType 2 typedef int LocalType;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "LocalTag"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c LocalTag 3 struct LocalTag { int member; };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "LocalEnum"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c LocalEnum 4 enum LocalEnum { LOCAL_ITEM };\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "LOCAL_ITEM"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-output-evidence"
+    },
+    "same-line-global": {
+      "source": "int repeated; int repeated;\n",
+      "build": {
+        "args": [
+          "cscope",
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "repeated"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c repeated 1 int repeated; int repeated;\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-output-evidence"
+    },
+    "same-line-functions": {
+      "source": "void repeated(void) {} void repeated(void) {}\n",
+      "build": {
+        "args": [
+          "cscope",
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "repeated"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c repeated 1 void repeated(void ) {} void repeated(void ) {}\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-output-evidence"
+    },
+    "function-typedef-declaration": {
+      "source": "typedef int Func(void);\nFunc declared;\n",
+      "build": {
+        "args": [
+          "cscope",
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "Func"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Func 1 typedef int Func(void );\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "cscope",
+            "-dL",
+            "-1",
+            "declared"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c declared 2 Func declared;\n",
+          "stderr": ""
+        }
+      ],
+      "origin": "definition-output-evidence"
+    }
+  }
+}

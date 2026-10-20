@@ -1,0 +1,3996 @@
+{
+  "source_commit": "612a539b585ccdb70a1261652954f579ccedb270",
+  "cases": {
+    "unnamed": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T);\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T);\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "decorated": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "crc32_combine_gen64"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "z_off_t"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "ZEXTERN uLong ZEXPORT crc32_combine_gen64(z_off_t);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "named": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T value);\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int f(T value);\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "parenthesized_variable": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int (value);\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int (value);\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 int (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c value 1 int (value);\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 int (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c value 1 int (value);\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "decorated_variable": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int DEC (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int DEC (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int DEC (value);\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int DEC (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int DEC (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 int DEC (value);\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "macro_variable": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #define DEC\ncase.c <global> 2 int DEC (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 #define DEC\ncase.c <global> 2 int DEC (value);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 2 int DEC (value);\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 2 int DEC (value);\ncase.c DEC 1 #define DEC\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 2 int DEC (value);\ncase.c DEC 1 #define DEC\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 2 int DEC (value);\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#define DEC\nint DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 #define DEC\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c DEC 1 #define DEC\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 #define DEC\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c DEC 1 #define DEC\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#define DEC\nint DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#define DEC\nint DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#define DEC\nint DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "DEC"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "value"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "#define DEC\nint DEC (value);\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "definition": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T) { target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T) { target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T) { target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 int f(T) { target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T) { target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "int f(T) { target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "local": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { int f(T); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { int f(T); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 void outer(void ) { int f(T); target(); }\ncase.c target 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c f 1 void outer(void ) { int f(T); target(); }\ncase.c target 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { int f(T); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\ncase.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\ncase.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { int f(T); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { int f(T); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "f"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "T"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { int f(T); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    }
+  }
+}

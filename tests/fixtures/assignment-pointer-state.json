@@ -1,0 +1,123 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "x"
+          ],
+          "exit_code": 0,
+          "stdout": "plain.c <global> 1 int (*x); int a=(x=1);\nreset.c <global> 3 int a=(x=1);\nsplit.c <global> 2 (void ); int a=(x=1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "a"
+          ],
+          "exit_code": 0,
+          "stdout": "comment.c <global> 1 int (*x) (void ); int a=(x=1);\nfollowing.c <global> 1 int (*fp)(void ); int x; int a=(x=1);\nnext.c <global> 2 int x; int a=(x=1);\nplain.c <global> 1 int (*x); int a=(x=1);\npointer.c <global> 1 int (*x)(void ); int a=(x=1);\nreset.c <global> 3 int a=(x=1);\nsplit.c <global> 2 (void ); int a=(x=1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "comment.c <global> 1 int (*x) (void ); int a=(x=1);\nfollowing.c <global> 1 int (*fp)(void ); int x; int a=(x=1);\nnext.c <global> 2 int x; int a=(x=1);\nplain.c <global> 1 int (*x); int a=(x=1);\npointer.c <global> 1 int (*x)(void ); int a=(x=1);\nreset.c <global> 3 int a=(x=1);\nsplit.c <global> 2 (void ); int a=(x=1);\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "x"
+          ],
+          "exit_code": 0,
+          "stdout": "plain.c <global> 1 int (*x); int a=(x=1);\nreset.c <global> 3 int a=(x=1);\nsplit.c <global> 2 (void ); int a=(x=1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "a"
+          ],
+          "exit_code": 0,
+          "stdout": "comment.c <global> 1 int (*x) (void ); int a=(x=1);\nfollowing.c <global> 1 int (*fp)(void ); int x; int a=(x=1);\nnext.c <global> 2 int x; int a=(x=1);\nplain.c <global> 1 int (*x); int a=(x=1);\npointer.c <global> 1 int (*x)(void ); int a=(x=1);\nreset.c <global> 3 int a=(x=1);\nsplit.c <global> 2 (void ); int a=(x=1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "comment.c <global> 1 int (*x) (void ); int a=(x=1);\nfollowing.c <global> 1 int (*fp)(void ); int x; int a=(x=1);\nnext.c <global> 2 int x; int a=(x=1);\nplain.c <global> 1 int (*x); int a=(x=1);\npointer.c <global> 1 int (*x)(void ); int a=(x=1);\nreset.c <global> 3 int a=(x=1);\nsplit.c <global> 2 (void ); int a=(x=1);\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "pointer.c": "int (*x)(void); int a=(x=1);\n",
+    "following.c": "int (*fp)(void); int x; int a=(x=1);\n",
+    "next.c": "int (*fp)(void);\nint x; int a=(x=1);\n",
+    "reset.c": "int (*fp)(void);\nint x;\nint a=(x=1);\n",
+    "plain.c": "int (*x); int a=(x=1);\n",
+    "split.c": "int (*x)\n(void); int a=(x=1);\n",
+    "body.c": "int (*fp)(void);\nint f(void) { x; x=1; }\n",
+    "comment.c": "int (*x)/*gap*/(void); int a=(x=1);\n"
+  },
+  "seeds": [
+    "pointer.c",
+    "following.c",
+    "next.c",
+    "reset.c",
+    "plain.c",
+    "split.c",
+    "body.c",
+    "comment.c"
+  ],
+  "field": "9",
+  "build": {
+    "args": [
+      "-bk",
+      "pointer.c",
+      "following.c",
+      "next.c",
+      "reset.c",
+      "plain.c",
+      "split.c",
+      "body.c",
+      "comment.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sources_deleted_before_queries": true,
+  "unreadable": []
+}

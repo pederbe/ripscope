@@ -1,0 +1,101 @@
+{
+ "decision": "File-scope invocation lines without ; that match the definition pattern are opaque statements: global occurrences, nothing defined, and following declarations kept.",
+ "reference": "tests/fixtures/written-unterminated-invocations-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "consecutive": {
+   "0": {
+    "KHASH_INIT": "case.c <global> 1 KHASH_INIT(oid_set, struct object_id, int , 0, hf, ef)\ncase.c <global> 3 KHASH_INIT(oid_map, struct object_id, void *, 1, hf, ef)\n",
+    "oid_set": "case.c <global> 1 KHASH_INIT(oid_set, struct object_id, int , 0, hf, ef)\n",
+    "object_id": "case.c <global> 1 KHASH_INIT(oid_set, struct object_id, int , 0, hf, ef)\ncase.c <global> 3 KHASH_INIT(oid_map, struct object_id, void *, 1, hf, ef)\n",
+    "hf": "case.c <global> 1 KHASH_INIT(oid_set, struct object_id, int , 0, hf, ef)\ncase.c <global> 3 KHASH_INIT(oid_map, struct object_id, void *, 1, hf, ef)\n",
+    "ef": "case.c <global> 1 KHASH_INIT(oid_set, struct object_id, int , 0, hf, ef)\ncase.c <global> 3 KHASH_INIT(oid_map, struct object_id, void *, 1, hf, ef)\n",
+    "oid_map": "case.c <global> 3 KHASH_INIT(oid_map, struct object_id, void *, 1, hf, ef)\n",
+    "after": "case.c <global> 5 int after;\n"
+   },
+   "1": {
+    "KHASH_INIT": "",
+    "after": "case.c after 5 int after;\n"
+   },
+   "2": {
+    "KHASH_INIT": ""
+   },
+   "3": {
+    "h": "case.c g 6 void g(void ) { h(); }\n"
+   }
+  },
+  "guarded": {
+   "0": {
+    "KHASH_INIT": "case.c <global> 3 KHASH_INIT(s, int , int , 0, hf, ef)\n",
+    "hf": "case.c <global> 3 KHASH_INIT(s, int , int , 0, hf, ef)\n",
+    "ef": "case.c <global> 3 KHASH_INIT(s, int , int , 0, hf, ef)\n",
+    "after": "case.c <global> 5 int after;\n",
+    "s": "case.c <global> 3 KHASH_INIT(s, int , int , 0, hf, ef)\n"
+   },
+   "1": {
+    "KHASH_INIT": "",
+    "after": "case.c after 5 int after;\n"
+   },
+   "2": {
+    "KHASH_INIT": ""
+   },
+   "3": {
+    "h": "case.c g 6 void g(void ) { h(); }\n"
+   }
+  },
+  "before_declaration": {
+   "0": {
+    "KHASH_INIT": "case.c <global> 1 KHASH_INIT(str, const char *, void *, 1, kh_str_hash_func, kh_str_hash_equal)\n",
+    "after": "case.c <global> 4 int after;\n",
+    "str": "case.c <global> 1 KHASH_INIT(str, const char *, void *, 1, kh_str_hash_func, kh_str_hash_equal)\n",
+    "kh_str_hash_func": "case.c <global> 1 KHASH_INIT(str, const char *, void *, 1, kh_str_hash_func, kh_str_hash_equal)\n",
+    "kh_str_hash_equal": "case.c <global> 1 KHASH_INIT(str, const char *, void *, 1, kh_str_hash_func, kh_str_hash_equal)\n",
+    "kh_oid_map_t": "case.c <global> 3 static kh_oid_map_t *island_marks;\n",
+    "island_marks": "case.c <global> 3 static kh_oid_map_t *island_marks;\n"
+   },
+   "1": {
+    "KHASH_INIT": "",
+    "after": "case.c after 4 int after;\n",
+    "island_marks": "case.c island_marks 3 static kh_oid_map_t *island_marks;\n"
+   }
+  },
+  "static_prefix": {
+   "0": {
+    "KHASH_INIT": "case.c <global> 1 static KHASH_INIT(s, int , 0)\n",
+    "after": "case.c <global> 2 int after;\n",
+    "s": "case.c <global> 1 static KHASH_INIT(s, int , 0)\n"
+   },
+   "1": {
+    "KHASH_INIT": "",
+    "after": "case.c after 2 int after;\n"
+   },
+   "2": {
+    "KHASH_INIT": ""
+   },
+   "3": {
+    "h": "case.c g 3 void g(void ) { h(); }\n"
+   }
+  },
+  "linkage_end": {
+   "1": {
+    "after": "case.c after 4 int after;\n"
+   }
+  },
+  "arm_before_else": {
+   "0": {
+    "KHASH_INIT": "case.c <global> 2 KHASH_INIT(s, int , 0)\n",
+    "after": "case.c <global> 4 int after;\n",
+    "s": "case.c <global> 2 KHASH_INIT(s, int , 0)\n"
+   },
+   "1": {
+    "KHASH_INIT": "",
+    "after": "case.c after 4 int after;\n"
+   },
+   "2": {
+    "KHASH_INIT": ""
+   },
+   "3": {
+    "h": "case.c g 6 void g(void ) { h(); }\n"
+   }
+  }
+ }
+}

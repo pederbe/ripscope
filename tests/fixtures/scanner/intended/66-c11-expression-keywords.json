@@ -1,0 +1,693 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/66-c11-expression-keywords.c",
+  "records": [
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        "(",
+        ") ",
+        "((x), int : ",
+        "(), default: ",
+        "())"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "#",
+          "CHOOSE",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ],
+        [
+          " ",
+          "_Generic",
+          false
+        ],
+        [
+          "`",
+          "macro_one",
+          false
+        ],
+        [
+          "`",
+          "macro_two",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " ",
+        "(int )"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "#",
+          "ALIGN_VALUE",
+          false
+        ],
+        [
+          " ",
+          "_Alignof",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(int ",
+        ") {"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "$",
+          "expressions",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "`",
+          "before",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        "(),"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          " ",
+          "_Generic",
+          false
+        ],
+        [
+          "`",
+          "control",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int : ",
+        "(),"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "`",
+          "chosen",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "default: ",
+        "(",
+        ", int : ",
+        "(), default: ",
+        "()));"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          " ",
+          "_Generic",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ],
+        [
+          "`",
+          "alternate",
+          false
+        ],
+        [
+          "`",
+          "fallback",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          "`",
+          "after",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(void ) {"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "$",
+          "alignment",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        "(int ));"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          "`",
+          "use",
+          false
+        ],
+        [
+          " ",
+          "_Alignof",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        "(int [",
+        "()]));"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          "`",
+          "use",
+          false
+        ],
+        [
+          " ",
+          "_Alignof",
+          false
+        ],
+        [
+          "`",
+          "bound",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(int (*)(void ));"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          " ",
+          "_Alignof",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(struct ",
+        ");"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          " ",
+          "_Alignof",
+          false
+        ],
+        [
+          " ",
+          "S",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(void ) {"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          "$",
+          "empty",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(0, int : 1, default: 2);"
+      ],
+      "line": 17,
+      "symbols": [
+        [
+          " ",
+          "_Generic",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(int );"
+      ],
+      "line": 18,
+      "symbols": [
+        [
+          " ",
+          "_Alignof",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 19,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(void ) {"
+      ],
+      "line": 20,
+      "symbols": [
+        [
+          "$",
+          "conditional",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        ""
+      ],
+      "line": 21,
+      "symbols": [
+        [
+          " ",
+          "SELECT",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(0, int : ",
+        "(), default: 0);"
+      ],
+      "line": 22,
+      "symbols": [
+        [
+          " ",
+          "_Generic",
+          false
+        ],
+        [
+          "`",
+          "arm_one",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(int [",
+        "()]);"
+      ],
+      "line": 24,
+      "symbols": [
+        [
+          " ",
+          "_Alignof",
+          false
+        ],
+        [
+          "`",
+          "arm_two",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 26,
+      "symbols": [
+        [
+          "`",
+          "neighbor",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 27,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(void ) {"
+      ],
+      "line": 28,
+      "symbols": [
+        [
+          "$",
+          "attributes",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "((",
+        "(",
+        "(int [",
+        "()])))) int ",
+        ";"
+      ],
+      "line": 29,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "aligned",
+          false
+        ],
+        [
+          " ",
+          "_Alignof",
+          false
+        ],
+        [
+          "`",
+          "attribute_bound",
+          false
+        ],
+        [
+          " ",
+          "object",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "((",
+        "(",
+        "(0, int : ",
+        "(), default: ",
+        "())))) int ",
+        ";"
+      ],
+      "line": 30,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "annotate",
+          false
+        ],
+        [
+          " ",
+          "_Generic",
+          false
+        ],
+        [
+          "`",
+          "attr_one",
+          false
+        ],
+        [
+          "`",
+          "attr_two",
+          false
+        ],
+        [
+          " ",
+          "other",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 31,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(void ) {"
+      ],
+      "line": 32,
+      "symbols": [
+        [
+          "$",
+          "spellings",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(); ",
+        "();"
+      ],
+      "line": 33,
+      "symbols": [
+        [
+          "`",
+          "_Generic_helper",
+          false
+        ],
+        [
+          "`",
+          "_Alignof_helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (0, int : ",
+        "(), default: 0);"
+      ],
+      "line": 34,
+      "symbols": [
+        [
+          " ",
+          "_Generic",
+          false
+        ],
+        [
+          "`",
+          "gap_call",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        ""
+      ],
+      "line": 35,
+      "symbols": [
+        [
+          " ",
+          "_Alignof",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "(int [",
+        "()]);"
+      ],
+      "line": 36,
+      "symbols": [
+        [
+          "`",
+          "split_bound",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 37,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    }
+  ]
+}

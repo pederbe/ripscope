@@ -1,0 +1,668 @@
+{
+  "name": "standard-and-written-policy",
+  "sampling": "Finite hand-written C89, C99 and C11 construct inventory; expectations from written C and ADRs 0003 and 0010. Complete file scopes for every selected exact query. No product or reference result used to generate labels.",
+  "whole_files": true,
+  "files": [
+    "c89.c",
+    "c99.c",
+    "c11.c",
+    "policy.c"
+  ],
+  "definitions": [
+    [
+      "c89.c",
+      1,
+      "ordinary_object",
+      "ordinary objects"
+    ],
+    [
+      "c89.c",
+      2,
+      "internal_object",
+      "ordinary objects"
+    ],
+    [
+      "c89.c",
+      3,
+      "qualified_object",
+      "qualifiers"
+    ],
+    [
+      "c89.c",
+      4,
+      "object_pointer",
+      "pointers and arrays"
+    ],
+    [
+      "c89.c",
+      5,
+      "object_array",
+      "pointers and arrays"
+    ],
+    [
+      "c89.c",
+      6,
+      "array_pointer",
+      "pointers and arrays"
+    ],
+    [
+      "c89.c",
+      7,
+      "callback_object",
+      "function pointers"
+    ],
+    [
+      "c89.c",
+      8,
+      "callback_array",
+      "nested declarators"
+    ],
+    [
+      "c89.c",
+      9,
+      "nested_callback",
+      "nested declarators"
+    ],
+    [
+      "c89.c",
+      10,
+      "count_alias",
+      "typedefs"
+    ],
+    [
+      "c89.c",
+      11,
+      "function_alias",
+      "typedefs"
+    ],
+    [
+      "c89.c",
+      12,
+      "callback_alias",
+      "typedefs"
+    ],
+    [
+      "c89.c",
+      13,
+      "array_alias",
+      "typedefs"
+    ],
+    [
+      "c89.c",
+      14,
+      "record_tag",
+      "aggregates"
+    ],
+    [
+      "c89.c",
+      15,
+      "ordinary_member",
+      "aggregates"
+    ],
+    [
+      "c89.c",
+      16,
+      "callback_member",
+      "function pointers"
+    ],
+    [
+      "c89.c",
+      17,
+      "array_member",
+      "pointers and arrays"
+    ],
+    [
+      "c89.c",
+      19,
+      "choice_tag",
+      "aggregates"
+    ],
+    [
+      "c89.c",
+      19,
+      "choice_member",
+      "aggregates"
+    ],
+    [
+      "c89.c",
+      19,
+      "real_member",
+      "aggregates"
+    ],
+    [
+      "c89.c",
+      20,
+      "color_tag",
+      "aggregates"
+    ],
+    [
+      "c89.c",
+      23,
+      "leaf",
+      "ordinary functions"
+    ],
+    [
+      "c89.c",
+      24,
+      "direct_call",
+      "ordinary functions"
+    ],
+    [
+      "c89.c",
+      25,
+      "repeated_call",
+      "ordinary functions"
+    ],
+    [
+      "c89.c",
+      26,
+      "recursive_call",
+      "ordinary functions"
+    ],
+    [
+      "c89.c",
+      27,
+      "callback_call",
+      "callback parameters"
+    ],
+    [
+      "c89.c",
+      30,
+      "dereferenced_call",
+      "ordinary functions"
+    ],
+    [
+      "c89.c",
+      31,
+      "member_call",
+      "ordinary functions"
+    ],
+    [
+      "c89.c",
+      32,
+      "old_style",
+      "old-style functions"
+    ],
+    [
+      "c89.c",
+      35,
+      "return_callback",
+      "nested declarators"
+    ],
+    [
+      "c89.c",
+      36,
+      "following_function",
+      "neighbor controls"
+    ],
+    [
+      "c89.c",
+      37,
+      "keyword_controls",
+      "neighbor controls"
+    ],
+    [
+      "c99.c",
+      1,
+      "boolean_alias",
+      "C99 types and qualifiers"
+    ],
+    [
+      "c99.c",
+      2,
+      "boolean_object",
+      "C99 types and qualifiers"
+    ],
+    [
+      "c99.c",
+      3,
+      "complex_object",
+      "C99 types and qualifiers"
+    ],
+    [
+      "c99.c",
+      4,
+      "restricted_object",
+      "C99 types and qualifiers"
+    ],
+    [
+      "c99.c",
+      5,
+      "flexible_tag",
+      "C99 aggregates"
+    ],
+    [
+      "c99.c",
+      6,
+      "bit_member",
+      "C99 aggregates"
+    ],
+    [
+      "c99.c",
+      7,
+      "length_member",
+      "C99 aggregates"
+    ],
+    [
+      "c99.c",
+      8,
+      "flexible_member",
+      "C99 aggregates"
+    ],
+    [
+      "c99.c",
+      10,
+      "pair_tag",
+      "C99 aggregates"
+    ],
+    [
+      "c99.c",
+      10,
+      "x_member",
+      "C99 aggregates"
+    ],
+    [
+      "c99.c",
+      10,
+      "y_member",
+      "C99 aggregates"
+    ],
+    [
+      "c99.c",
+      11,
+      "designated_object",
+      "C99 initialization"
+    ],
+    [
+      "c99.c",
+      12,
+      "inline_function",
+      "C99 functions"
+    ],
+    [
+      "c99.c",
+      13,
+      "c99_leaf",
+      "C99 functions"
+    ],
+    [
+      "c99.c",
+      14,
+      "vla_function",
+      "C99 arrays"
+    ],
+    [
+      "c99.c",
+      19,
+      "compound_call",
+      "C99 initialization"
+    ],
+    [
+      "c99.c",
+      23,
+      "after_c99",
+      "neighbor controls"
+    ],
+    [
+      "c11.c",
+      1,
+      "atomic_counter",
+      "C11 atomic specifier"
+    ],
+    [
+      "c11.c",
+      2,
+      "alternate_counter",
+      "C11 atomic qualifier"
+    ],
+    [
+      "c11.c",
+      3,
+      "following_counter",
+      "neighbor controls"
+    ],
+    [
+      "c11.c",
+      4,
+      "thread_counter",
+      "C11 thread storage"
+    ],
+    [
+      "c11.c",
+      5,
+      "aligned_counter",
+      "C11 alignment"
+    ],
+    [
+      "c11.c",
+      6,
+      "atomic_alias",
+      "C11 atomic typedef"
+    ],
+    [
+      "c11.c",
+      7,
+      "anonymous_tag",
+      "C11 anonymous aggregates"
+    ],
+    [
+      "c11.c",
+      8,
+      "anonymous_member",
+      "C11 anonymous aggregates"
+    ],
+    [
+      "c11.c",
+      8,
+      "anonymous_real",
+      "C11 anonymous aggregates"
+    ],
+    [
+      "c11.c",
+      11,
+      "target",
+      "ordinary functions"
+    ],
+    [
+      "c11.c",
+      12,
+      "choose",
+      "C11 generic selection"
+    ],
+    [
+      "c11.c",
+      15,
+      "alignment_control",
+      "C11 alignment"
+    ],
+    [
+      "c11.c",
+      16,
+      "never_returns",
+      "C11 noreturn"
+    ],
+    [
+      "c11.c",
+      17,
+      "after_c11",
+      "neighbor controls"
+    ],
+    [
+      "policy.c",
+      1,
+      "WRITTEN_CALL",
+      "written macro definitions"
+    ],
+    [
+      "policy.c",
+      2,
+      "MAKE_NAME",
+      "written macro definitions"
+    ],
+    [
+      "policy.c",
+      5,
+      "conditional_first",
+      "all conditional branches"
+    ],
+    [
+      "policy.c",
+      7,
+      "conditional_second",
+      "all conditional branches"
+    ],
+    [
+      "policy.c",
+      9,
+      "policy_leaf",
+      "ordinary functions"
+    ],
+    [
+      "policy.c",
+      10,
+      "policy_caller",
+      "written macro invocations"
+    ],
+    [
+      "policy.c",
+      11,
+      "policy_after",
+      "neighbor controls"
+    ],
+    [
+      "c89.c",
+      20,
+      "red_value",
+      "enumerators"
+    ],
+    [
+      "c89.c",
+      20,
+      "blue_value",
+      "enumerators"
+    ]
+  ],
+  "calls": [
+    [
+      "c89.c",
+      24,
+      "direct_call",
+      "leaf",
+      "direct calls"
+    ],
+    [
+      "c89.c",
+      25,
+      "repeated_call",
+      "leaf",
+      "same-line grouping"
+    ],
+    [
+      "c89.c",
+      26,
+      "recursive_call",
+      "recursive_call",
+      "recursion"
+    ],
+    [
+      "c89.c",
+      28,
+      "callback_call",
+      "parameter_callback",
+      "named indirect calls"
+    ],
+    [
+      "c89.c",
+      30,
+      "dereferenced_call",
+      "callback_object",
+      "dereferenced indirect calls"
+    ],
+    [
+      "c89.c",
+      31,
+      "member_call",
+      "callback_member",
+      "member indirect calls"
+    ],
+    [
+      "c89.c",
+      34,
+      "old_style",
+      "leaf",
+      "old-style calls"
+    ],
+    [
+      "c89.c",
+      36,
+      "following_function",
+      "leaf",
+      "neighbor controls"
+    ],
+    [
+      "c99.c",
+      17,
+      "vla_function",
+      "c99_leaf",
+      "C99 arrays"
+    ],
+    [
+      "c99.c",
+      20,
+      "compound_call",
+      "c99_leaf",
+      "C99 initialization"
+    ],
+    [
+      "c99.c",
+      21,
+      "compound_call",
+      "c99_leaf",
+      "C99 initialization"
+    ],
+    [
+      "c99.c",
+      23,
+      "after_c99",
+      "c99_leaf",
+      "neighbor controls"
+    ],
+    [
+      "c11.c",
+      13,
+      "choose",
+      "target",
+      "C11 generic selection"
+    ],
+    [
+      "c11.c",
+      17,
+      "after_c11",
+      "target",
+      "neighbor controls"
+    ],
+    [
+      "policy.c",
+      1,
+      "WRITTEN_CALL",
+      "policy_leaf",
+      "written macro body"
+    ],
+    [
+      "policy.c",
+      10,
+      "policy_caller",
+      "WRITTEN_CALL",
+      "written macro invocations"
+    ],
+    [
+      "policy.c",
+      11,
+      "policy_after",
+      "policy_leaf",
+      "neighbor controls"
+    ]
+  ],
+  "controls": [
+    [
+      1,
+      "external_object",
+      "extern declaration"
+    ],
+    [
+      1,
+      "prototype_only",
+      "prototype"
+    ],
+    [
+      1,
+      "prototype_parameter",
+      "prototype parameter"
+    ],
+    [
+      1,
+      "callback_parameter",
+      "prototype parameter"
+    ],
+    [
+      1,
+      "member_parameter",
+      "prototype parameter"
+    ],
+    [
+      1,
+      "prototype_name",
+      "prototype parameter"
+    ],
+    [
+      1,
+      "parameter_callback",
+      "function parameter"
+    ],
+    [
+      1,
+      "local_array",
+      "local variable"
+    ],
+    [
+      1,
+      "expanded_only",
+      "no macro expansion"
+    ],
+    [
+      3,
+      "_Generic",
+      "C11 language keyword"
+    ],
+    [
+      3,
+      "_Alignof",
+      "C11 language keyword"
+    ],
+    [
+      3,
+      "_Atomic",
+      "C11 language keyword"
+    ],
+    [
+      3,
+      "_Alignas",
+      "C11 language keyword"
+    ],
+    [
+      3,
+      "_Static_assert",
+      "C11 language keyword"
+    ],
+    [
+      3,
+      "sizeof",
+      "language keyword"
+    ],
+    [
+      3,
+      "if",
+      "language keyword"
+    ],
+    [
+      3,
+      "while",
+      "language keyword"
+    ],
+    [
+      3,
+      "for",
+      "language keyword"
+    ],
+    [
+      3,
+      "switch",
+      "language keyword"
+    ]
+  ],
+  "unresolved": [],
+  "notes": [
+    "An exact query for each member on a shared line has its own expected row. Repeated same-name invocations on one line are one labelled navigation location; the written repeated_call has two evaluations.",
+    "This does not assess compiler-resolved callees, macro expansion, runtime branch selection, assignments or symbol binding."
+  ]
+}

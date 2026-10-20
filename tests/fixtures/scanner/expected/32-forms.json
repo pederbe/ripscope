@@ -1,0 +1,152 @@
+{
+ "probe": "probes/32-forms.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "$",
+     "FOO",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "",
+    " (",
+    ", ",
+    ") int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "$",
+     "BAR",
+     false
+    ],
+    [
+     " ",
+     "a",
+     false
+    ],
+    [
+     " ",
+     "b",
+     false
+    ],
+    [
+     " ",
+     "y",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "",
+    "(",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "DECLARE",
+     false
+    ],
+    [
+     " ",
+     "z",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "w",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "static int (*",
+    ")(int );"
+   ],
+   "symbols": [
+    [
+     " ",
+     "handler",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "(",
+    ") = 3;"
+   ],
+   "symbols": [
+    [
+     "`",
+     "MACRO",
+     false
+    ],
+    [
+     " ",
+     "q",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "v",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

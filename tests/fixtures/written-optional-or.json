@@ -1,0 +1,258 @@
+{
+  "provenance": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "note": "Unmodified self-checked cscope observations, source deleted, both case modes."
+  },
+  "cases": {
+    "flag_sequence": {
+      "source": "void f(void) {\n oflag =\n#ifdef LARGE\n (large()) |\n#endif\n#ifdef BINARY\n (binary()) |\n#endif\n#ifdef CLOEXEC\n (cloexec ? closeflag() : 0) |\n#endif\n (mode == READ ? rd() : (wr() | create() |\n#ifdef EXCLUSIVE\n (exclusive ? only() : 0) |\n#endif\n (mode == WRITE ? truncflag() : appendflag())));\n after();\n}\n",
+      "source_sha256": "6a00789221f45842a4465115ef590814fa94f8c6c2706b66cec0fb58ca7068ed",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c large 4 (large()) |\ncase.c binary 7 (binary()) |\ncase.c closeflag 10 (cloexec ? closeflag() : 0) |\ncase.c rd 12 (mode == READ ? rd() : (wr() | create() |\ncase.c wr 12 (mode == READ ? rd() : (wr() | create() |\ncase.c create 12 (mode == READ ? rd() : (wr() | create() |\ncase.c only 14 (exclusive ? only() : 0) |\ncase.c truncflag 16 (mode == WRITE ? truncflag() : appendflag())));\ncase.c appendflag 16 (mode == WRITE ? truncflag() : appendflag())));\ncase.c after 17 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "large"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 (large()) |\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "only"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 14 (exclusive ? only() : 0) |\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 17 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "oflag"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 oflag =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "O_EXCL"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "oflag"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 oflag =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "original_flags": {
+      "source": "void f(void) {\n oflag =\n#ifdef O_LARGEFILE\n O_LARGEFILE |\n#endif\n#ifdef O_BINARY\n O_BINARY |\n#endif\n#ifdef O_CLOEXEC\n (cloexec ? O_CLOEXEC : 0) |\n#endif\n (state->mode == GZ_READ ? O_RDONLY : (O_WRONLY | O_CREAT |\n#ifdef O_EXCL\n (exclusive ? O_EXCL : 0) |\n#endif\n (state->mode == GZ_WRITE ? O_TRUNC : O_APPEND)));\n after();\n}\n",
+      "source_sha256": "6176219f4483fca116c0d3907391d4b2e3ac8f6285abf65ceb118f4af6d2c0f4",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 17 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "large"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "only"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 17 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "oflag"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 oflag =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "O_EXCL"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 13 #ifdef O_EXCL\ncase.c f 14 (exclusive ? O_EXCL : 0) |\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "oflag"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 oflag =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "plain_flags": {
+      "source": "void f(void) { oflag = large() | binary() | rd(); after(); }\n",
+      "source_sha256": "24dce4ff1a29636cc146d25f05c32f35f667253ff06a4eaef47029ddecf6bb1b",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c large 1 void f(void ) { oflag = large() | binary() | rd(); after(); }\ncase.c binary 1 void f(void ) { oflag = large() | binary() | rd(); after(); }\ncase.c rd 1 void f(void ) { oflag = large() | binary() | rd(); after(); }\ncase.c after 1 void f(void ) { oflag = large() | binary() | rd(); after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "large"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { oflag = large() | binary() | rd(); after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "only"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { oflag = large() | binary() | rd(); after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "oflag"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { oflag = large() | binary() | rd(); after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "O_EXCL"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "oflag"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { oflag = large() | binary() | rd(); after(); }\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

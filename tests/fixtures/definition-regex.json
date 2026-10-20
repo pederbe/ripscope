@@ -1,0 +1,220 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "source": "int a;\nint aa;\nint ab;\nint ad;\nint a1;\nint d;\nint ddd;\nint _;\nint Alpha;\nint alpha;\nint ALPHA;\nint w;\nint WWW;\n",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(a)\\1"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (a)\\1 2 int aa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(\\d+)"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (\\d+) 6 int d;\ncase.c (\\d+) 7 int ddd;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a\\d+"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a\\d+ 4 int ad;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "a[[:digit:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a[[:digit:]] 5 int a1;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "([[:upper:]]+)"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ([[:upper:]]+) 11 int ALPHA;\ncase.c ([[:upper:]]+) 13 int WWW;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(\\W+)"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(?i:alpha)"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(?:alpha)"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "(a|aa)"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (a|aa) 1 int a;\ncase.c (a|aa) 2 int aa;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(a)\\1"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (a)\\1 2 int aa;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(\\d+)"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (\\d+) 6 int d;\ncase.c (\\d+) 7 int ddd;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a\\d+"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a\\d+ 4 int ad;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "a[[:digit:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c a[[:digit:]] 5 int a1;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "([[:upper:]]+)"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(\\W+)"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (\\W+) 1 int a;\ncase.c (\\W+) 2 int aa;\ncase.c (\\W+) 3 int ab;\ncase.c (\\W+) 4 int ad;\ncase.c (\\W+) 5 int a1;\ncase.c (\\W+) 6 int d;\ncase.c (\\W+) 7 int ddd;\ncase.c (\\W+) 8 int _;\ncase.c (\\W+) 9 int Alpha;\ncase.c (\\W+) 10 int alpha;\ncase.c (\\W+) 11 int ALPHA;\ncase.c (\\W+) 12 int w;\ncase.c (\\W+) 13 int WWW;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(?i:alpha)"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(?:alpha)"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-1",
+            "(a|aa)"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c (a|aa) 1 int a;\ncase.c (a|aa) 2 int aa;\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "build": {
+    "args": [
+      "-bk",
+      "case.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

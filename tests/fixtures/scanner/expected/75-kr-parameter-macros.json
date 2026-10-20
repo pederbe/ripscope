@@ -1,0 +1,419 @@
+{
+ "probe": "probes/75-kr-parameter-macros.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 4,
+   "fragments": [
+    "",
+    " (",
+    ", ",
+    ", ",
+    " ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "lower_copy",
+     false
+    ],
+    [
+     " ",
+     "dest",
+     false
+    ],
+    [
+     " ",
+     "src",
+     false
+    ],
+    [
+     " ",
+     "len",
+     false
+    ],
+    [
+     " ",
+     "EXTRA_PARAM",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "char *",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "dest",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "const char *",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "src",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "len",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "EXTRA_PARAM_DECL",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "while (",
+    "-- > 0)"
+   ],
+   "symbols": [
+    [
+     " ",
+     "len",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "",
+    "[",
+    "] = ",
+    " (",
+    "[len]);"
+   ],
+   "symbols": [
+    [
+     " ",
+     "dest",
+     false
+    ],
+    [
+     " ",
+     "len",
+     false
+    ],
+    [
+     "`",
+     "to_lower",
+     false
+    ],
+    [
+     " ",
+     "src",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "return ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "dest",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "",
+    " (",
+    ", ",
+    " ",
+    " ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "count_items",
+     false
+    ],
+    [
+     " ",
+     "list",
+     false
+    ],
+    [
+     " ",
+     "n",
+     false
+    ],
+    [
+     " ",
+     "extra_argument",
+     false
+    ],
+    [
+     " ",
+     "EXTRA_PARAM",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 17,
+   "fragments": [
+    "struct ",
+    " *",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "item",
+     false
+    ],
+    [
+     " ",
+     "list",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "n",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "extra_argument_spec",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "return ",
+    " (",
+    ", ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "walk_items",
+     false
+    ],
+    [
+     " ",
+     "list",
+     false
+    ],
+    [
+     " ",
+     "n",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 22,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 25,
+   "fragments": [
+    "int ",
+    " (",
+    " ",
+    ");"
+   ],
+   "symbols": [
+    [
+     " ",
+     "declared_only",
+     false
+    ],
+    [
+     " ",
+     "size_t",
+     false
+    ],
+    [
+     " ",
+     "n",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 26,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "EXTRA_PARAM_DECL",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 28,
+   "fragments": [
+    "int ",
+    " (int ",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "after_all",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 30,
+   "fragments": [
+    "return ",
+    " (",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "helper",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 31,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

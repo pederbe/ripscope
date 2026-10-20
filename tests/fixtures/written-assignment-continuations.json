@@ -1,0 +1,452 @@
+{
+  "provenance": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "note": "Unmodified reference output for assignment RHS continuation, captured both case modes after source deletion."
+  },
+  "cases": {
+    "original_pair": {
+      "source": "void f(void) {\n s->status =\n#ifdef GZIP\n s->wrap == 2 ? GZIP_STATE :\n#endif\n INIT_STATE;\n strm->adler =\n#ifdef GZIP\n s->wrap == 2 ? crc32(0L, Z_NULL, 0) :\n#endif\n adler32(0L, Z_NULL, 0);\n}\n",
+      "source_sha256": "09b6b1c7afcb30bcfebbd79a6c512a1e0c8f75b79caac2c53663469fbe985798",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "GZIP_STATE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 s->wrap == 2 ? GZIP_STATE :\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c crc32 9 s->wrap == 2 ? crc32(0L, Z_NULL, 0) :\ncase.c adler32 11 adler32(0L, Z_NULL, 0);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "crc32"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 9 s->wrap == 2 ? crc32(0L, Z_NULL, 0) :\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "status"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 s->status =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "adler"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 7 strm->adler =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "optional_member": {
+      "source": "void f(void) {\n obj.status =\n#if X\n condition() ? active() :\n#endif\n shared();\n after();\n}\n",
+      "source_sha256": "52c5df8c4fbdca3905060cf1069954fee1d819aa8c14a39a665416ac78c99c70",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "active"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 condition() ? active() :\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c condition 4 condition() ? active() :\ncase.c active 4 condition() ? active() :\ncase.c shared 6 shared();\ncase.c after 7 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "shared"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 6 shared();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "status"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 obj.status =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "alternative_scalar": {
+      "source": "void f(void) {\n value =\n#if X\n condition() ? active() :\n#else\n other() ? alternate() :\n#endif\n shared();\n after();\n}\n",
+      "source_sha256": "5e681f95093bdf7c0342371ca06b0a1138a7c90495b692a7f66e28c892064782",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "active"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 condition() ? active() :\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c condition 4 condition() ? active() :\ncase.c active 4 condition() ? active() :\ncase.c other 6 other() ? alternate() :\ncase.c alternate 6 other() ? alternate() :\ncase.c shared 8 shared();\ncase.c after 9 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "shared"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 8 shared();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 value =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "arithmetic": {
+      "source": "void f(void) {\n value =\n#if X\n active() +\n#endif\n shared();\n after();\n}\n",
+      "source_sha256": "f093419bc347ac69acc55a85b97ae72ff9f68735054d8f83b0c5eba846cf6d37",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "active"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 active() +\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c active 4 active() +\ncase.c shared 6 shared();\ncase.c after 7 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "shared"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 6 shared();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 value =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "parenthesized": {
+      "source": "void f(void) {\n value =\n#if X\n (active() +\n#else\n (alternate() +\n#endif\n shared());\n after();\n}\n",
+      "source_sha256": "4769fb66f51effa237e90a567a9c45cb49fc2c334026a7daded7f0aa827b3208",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "active"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 (active() +\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c active 4 (active() +\ncase.c alternate 6 (alternate() +\ncase.c shared 8 shared());\ncase.c after 9 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "shared"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 8 shared());\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 value =\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "complete_alternatives": {
+      "source": "void f(void) { value =\n#if A\ninner()\n#else\nother()\n#endif\n; after(); }",
+      "source_sha256": "c4680b9f0c8aab87fb258a1679ae175eebe1c901056ac61434197c06a265f212",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "active"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { value =\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c inner 3 inner()\ncase.c other 5 other()\ncase.c after 7 ; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "shared"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { value =\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

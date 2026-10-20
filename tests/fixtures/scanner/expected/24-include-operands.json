@@ -1,0 +1,227 @@
+{
+ "probe": "probes/24-include-operands.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"local.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"dir/double.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"b.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "#include ",
+    ">"
+   ],
+   "symbols": [
+    [
+     "~",
+     "<sys/angled.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"../up.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"c.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"/'SYS1.SAMPLIB(CSRSIC)'",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"twice.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"dir",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\".",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"../../deep/x.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "#include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"b.h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "#include ",
+    "\" int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "~",
+     "\"plain.h",
+     false
+    ],
+    [
+     "g",
+     "after_include",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

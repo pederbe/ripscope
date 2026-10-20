@@ -1,0 +1,387 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "TARGET"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c alpha 7 TARGET();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "fp"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c caller 9 fp(1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "caller"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c caller 20 return caller(fp, p);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "BODY"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c caller 18 BODY(8);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "PARAM"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 18 BODY(8);\nz.c caller 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "^target$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "tar"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "target|fp"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "target "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            " target"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "TARGET"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "fp"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c caller 9 fp(1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "caller"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c caller 20 return caller(fp, p);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "BODY"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c caller 18 BODY(8);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "PARAM"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 18 BODY(8);\nz.c caller 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "^target$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "tar"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "target|fp"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "target "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            " target"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "z.c": "int target(int);\nint global = target(1);\n#define BODY(x) target(x)\n#define INDIRECT(x) (*target)(x)\n#define PARAM(target) target(1)\nstruct Ops { int (*target)(int); };\nint caller(int (*fp)(int), struct Ops *p) {\n target(1); target(2);\n fp(1);\n (*fp)(2);\n (target)(3);\n p->target(4);\n p->target /* gap */ (5);\n target\n (6);\n int target(int);\n int local = target(7);\n BODY(8);\n sizeof(target(9));\n return caller(fp, p);\n}\nint after = target(10);\nint other(void) { return target(11); }\n",
+    "a.c": "int TARGET(void);\nint alpha(void) {\n#define INNER target()\n#if FLAG\n target();\n#else\n TARGET();\n#endif\n return target();\n}\nint first(void) { target(); } int second(void) { target(); }\nint last(void) { target(); }\n"
+  },
+  "seeds": [
+    "z.c",
+    "a.c"
+  ],
+  "field": "3",
+  "build": {
+    "args": [
+      "-bk",
+      "z.c",
+      "a.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sources_deleted_before_queries": true,
+  "unreadable": [],
+  "persistent_input": "3target\n3[\n3missing\nc\n3target\nq\n",
+  "persistent": {
+    "args": [
+      "-dl"
+    ],
+    "exit_code": 0,
+    "stdout": ">> cscope: 14 lines\na.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n>> Unable to search database\n>> Unable to search database\n>> >> cscope: 15 lines\na.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n>> ",
+    "stderr": ""
+  }
+}

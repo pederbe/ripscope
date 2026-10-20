@@ -1,0 +1,480 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/52-attribute-expressions.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "((",
+        "(",
+        "()))) int ",
+        "(void ) {"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "annotate",
+          false
+        ],
+        [
+          " ",
+          "payload",
+          false
+        ],
+        [
+          "$",
+          "prefix",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "((",
+        "(",
+        "()))) ",
+        ";"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "annotate",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        "(",
+        "())) int ",
+        ";"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          " ",
+          "__declspec",
+          false
+        ],
+        [
+          " ",
+          "align",
+          false
+        ],
+        [
+          "`",
+          "bound",
+          false
+        ],
+        [
+          " ",
+          "other",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) ",
+        "((",
+        "(",
+        "()))) { ",
+        "(); ",
+        "}"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "$",
+          "suffix",
+          false
+        ],
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "aligned",
+          false
+        ],
+        [
+          "`",
+          "bound",
+          false
+        ],
+        [
+          "`",
+          "target",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef struct ",
+        "((",
+        "(64))) ",
+        " {"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "aligned",
+          false
+        ],
+        [
+          "s",
+          "state",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "unsigned long ",
+        ";"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "m",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "} ",
+        ";"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          "t",
+          "state",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        "((",
+        ")) { int ",
+        "; } ",
+        ";"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "packed",
+          false
+        ],
+        [
+          "m",
+          "value",
+          false
+        ],
+        [
+          "g",
+          "anonymous",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "enum ",
+        "((",
+        ")) ",
+        " { ",
+        ", ",
+        " };"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "packed",
+          false
+        ],
+        [
+          "e",
+          "items",
+          false
+        ],
+        [
+          "m",
+          "FIRST",
+          false
+        ],
+        [
+          "m",
+          "SECOND",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "union ",
+        "(",
+        "(16)) ",
+        " { int ",
+        "; double ",
+        "; };"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          " ",
+          "__declspec",
+          false
+        ],
+        [
+          " ",
+          "align",
+          false
+        ],
+        [
+          "u",
+          "value",
+          false
+        ],
+        [
+          "m",
+          "i",
+          false
+        ],
+        [
+          "m",
+          "d",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        "((",
+        "(\"label\"))) __attribute__((",
+        ")) ",
+        " { int ",
+        "; };"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "annotate",
+          false
+        ],
+        [
+          " ",
+          "packed",
+          false
+        ],
+        [
+          "s",
+          "named",
+          false
+        ],
+        [
+          "m",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        "((",
+        ")) ",
+        " *",
+        ";"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "packed",
+          false
+        ],
+        [
+          " ",
+          "forward",
+          false
+        ],
+        [
+          "g",
+          "pointer",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " ",
+        "((",
+        "(",
+        "())))"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          "#",
+          "DECL",
+          false
+        ],
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "annotate",
+          false
+        ],
+        [
+          "`",
+          "helper",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          "g",
+          "after",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef void (",
+        "((",
+        ")) *",
+        ")(void );"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          " ",
+          "__attribute__",
+          false
+        ],
+        [
+          " ",
+          "nocf_check",
+          false
+        ],
+        [
+          "t",
+          "trigger_t",
+          false
+        ]
+      ]
+    }
+  ]
+}

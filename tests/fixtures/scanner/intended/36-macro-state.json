@@ -1,0 +1,195 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/36-macro-state.c",
+  "records": [
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        "(",
+        ") typedef int ",
+        "[(c)?1:-1]"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "#",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "c",
+          false
+        ],
+        [
+          "t",
+          "t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " 1"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "#",
+          "N",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "g",
+          "g",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " {"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "#",
+          "BEGIN",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) { return ",
+        "(); ",
+        "}"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "$",
+          "f",
+          false
+        ],
+        [
+          "`",
+          "h",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "g",
+          "g2",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) {"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "$",
+          "k",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " }"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          "#",
+          "END",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "`",
+          "m",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          "g",
+          "g3",
+          false
+        ]
+      ]
+    }
+  ]
+}

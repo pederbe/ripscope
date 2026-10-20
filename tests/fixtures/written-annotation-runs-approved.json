@@ -1,0 +1,81 @@
+{
+ "decision": "Intended reading of runs of annotation words in declarations, and of member parameter names.",
+ "reference": "tests/fixtures/written-annotation-runs-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "devres_alloc_size": {
+   "0": {
+    "__alloc_size": "case.c <global> 1 void * __alloc_size(2)\n",
+    "devm_kmalloc": "case.c <global> 2 devm_kmalloc(struct device *dev, size_t size);\n",
+    "dev": "case.c <global> 2 devm_kmalloc(struct device *dev, size_t size);\n",
+    "size": "case.c <global> 2 devm_kmalloc(struct device *dev, size_t size);\n",
+    "after": "case.c <global> 3 int after;\n"
+   },
+   "1": {
+    "__alloc_size": "",
+    "after": "case.c after 3 int after;\n"
+   },
+   "2": {
+    "__alloc_size": ""
+   },
+   "3": {
+    "h": "case.c g 4 void g(void ) { h(); }\n"
+   }
+  },
+  "devres_realloc": {
+   "0": {
+    "size": "case.c <global> 1 void *__must_check __realloc_size(3) devm_krealloc(void *ptr, size_t size);\n",
+    "__realloc_size": "case.c <global> 1 void *__must_check __realloc_size(3) devm_krealloc(void *ptr, size_t size);\n",
+    "devm_krealloc": "case.c <global> 1 void *__must_check __realloc_size(3) devm_krealloc(void *ptr, size_t size);\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "__realloc_size": "",
+    "after": "case.c after 2 int after;\n"
+   }
+  },
+  "devres_printf": {
+   "0": {
+    "__printf": "case.c <global> 1 char * __printf(3, 0) __malloc devm_kvasprintf(int gfp, const char *fmt, int ap);\n",
+    "__malloc": "case.c <global> 1 char * __printf(3, 0) __malloc devm_kvasprintf(int gfp, const char *fmt, int ap);\n",
+    "devm_kvasprintf": "case.c <global> 1 char * __printf(3, 0) __malloc devm_kvasprintf(int gfp, const char *fmt, int ap);\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "__printf": "",
+    "after": "case.c after 2 int after;\n"
+   }
+  },
+  "tmux_printflike": {
+   "0": {
+    "printflike": "case.c <global> 1 void printflike(1, 2) cmdq_error(struct cmdq_item *, const char *, ...);\n",
+    "cmdq_error": "case.c <global> 1 void printflike(1, 2) cmdq_error(struct cmdq_item *, const char *, ...);\n",
+    "cmdq_item": "case.c <global> 1 void printflike(1, 2) cmdq_error(struct cmdq_item *, const char *, ...);\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "printflike": "",
+    "after": "case.c after 2 int after;\n"
+   },
+   "2": {
+    "printflike": ""
+   },
+   "3": {
+    "h": "case.c g 3 void g(void ) { h(); }\n"
+   }
+  },
+  "tmux_member": {
+   "1": {
+    "cmdq_item": "",
+    "exec": "case.c exec 2 enum cmd_retval (*exec)(struct cmd *, struct cmdq_item *);\n",
+    "cmd": ""
+   }
+  },
+  "tagged_member_named": {
+   "1": {
+    "m": "case.c m 1 struct s { struct r (*m)(struct m *mgr, int n); int k; };\n",
+    "mgr": "",
+    "n": ""
+   }
+  }
+ }
+}

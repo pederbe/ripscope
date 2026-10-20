@@ -1,0 +1,186 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "attribute.c f 3 return target();\nnested.c callback 3 return target();\npointer.c f 3 return target();\nreturn.c f 3 target(); return 0;\nsimple.c f 3 return target();\ntwo.c b 3 return target();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "callback.c callback 2 return callback(1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "__attribute__"
+          ],
+          "exit_code": 0,
+          "stdout": "attribute.c f 2 int f(void ) __attribute__((noinline)) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            "noinline"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "attribute.c f 2 int f(void ) __attribute__((noinline)) {\nattribute.c f 3 return target();\ncallback.c callback 2 return callback(1);\nnested.c callback 3 return target();\npointer.c f 3 return target();\nreturn.c f 3 target(); return 0;\nsimple.c f 3 return target();\ntwo.c b 3 return target();\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "attribute.c f 3 return target();\nnested.c callback 3 return target();\npointer.c f 3 return target();\nreturn.c f 3 target(); return 0;\nsimple.c f 3 return target();\ntwo.c b 3 return target();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "callback.c callback 2 return callback(1);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "__attribute__"
+          ],
+          "exit_code": 0,
+          "stdout": "attribute.c f 2 int f(void ) __attribute__((noinline)) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            "noinline"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-3",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "attribute.c f 2 int f(void ) __attribute__((noinline)) {\nattribute.c f 3 return target();\ncallback.c callback 2 return callback(1);\nnested.c callback 3 return target();\npointer.c f 3 return target();\nreturn.c f 3 target(); return 0;\nsimple.c f 3 return target();\ntwo.c b 3 return target();\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "nested.c": "int target(void);\nint f(int callback(int)) {\n return target();\n}\n",
+    "pointer.c": "int target(void);\nint f(int (*callback)(int)) {\n return target();\n}\n",
+    "simple.c": "int target(void);\nint f(int value) {\n return target();\n}\n",
+    "callback.c": "int f(int callback(int)) {\n return callback(1);\n}\n",
+    "two.c": "int target(void);\nint f(int a(int), int b(int)) {\n return target();\n}\n",
+    "vla.c": "int target(void);\nint f(int n, int a[target()]) {\n return target();\n}\n",
+    "return.c": "int target(void);\nint (*f(void))(int) {\n target(); return 0;\n}\n",
+    "attribute.c": "int target(void);\nint f(void) __attribute__((noinline)) {\n return target();\n}\n"
+  },
+  "seeds": [
+    "nested.c",
+    "pointer.c",
+    "simple.c",
+    "callback.c",
+    "two.c",
+    "vla.c",
+    "return.c",
+    "attribute.c"
+  ],
+  "field": "3",
+  "build": {
+    "args": [
+      "-bk",
+      "nested.c",
+      "pointer.c",
+      "simple.c",
+      "callback.c",
+      "two.c",
+      "vla.c",
+      "return.c",
+      "attribute.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sources_deleted_before_queries": true,
+  "unreadable": []
+}

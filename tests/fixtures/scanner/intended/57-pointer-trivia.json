@@ -1,0 +1,324 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/57-pointer-trivia.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "int *(*",
+        ")(int ",
+        ") ",
+        ", (*",
+        ")(int ",
+        ") ",
+        ";"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "g",
+          "first",
+          false
+        ],
+        [
+          " ",
+          "a",
+          false
+        ],
+        [
+          " ",
+          "ATTR",
+          false
+        ],
+        [
+          "g",
+          "second",
+          false
+        ],
+        [
+          " ",
+          "b",
+          false
+        ],
+        [
+          " ",
+          "OTHER",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "g",
+          "after",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        " {"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "s",
+          "ops",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void (*",
+        ")"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "m",
+          "reset",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "(",
+        " *);"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          " ",
+          "fsm",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int (*",
+        ")  (",
+        " *, int *",
+        ") ",
+        ";"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "m",
+          "next",
+          false
+        ],
+        [
+          " ",
+          "fsm",
+          false
+        ],
+        [
+          " ",
+          "code",
+          false
+        ],
+        [
+          " ",
+          "ATTR",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int (*",
+        ") (void ); int ",
+        "=(",
+        "=1);"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          "g",
+          "x",
+          false
+        ],
+        [
+          "g",
+          "count",
+          true
+        ],
+        [
+          " ",
+          "x",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (*",
+        ")  (",
+        ");"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "opaque",
+          false
+        ],
+        [
+          " ",
+          "Alias",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (*",
+        ")  (struct ",
+        " { int ",
+        "; } ",
+        ");"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "aggregate",
+          false
+        ],
+        [
+          "s",
+          "S",
+          false
+        ],
+        [
+          "m",
+          "field",
+          false
+        ],
+        [
+          "g",
+          "arg",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          "g",
+          "following",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " void * (*",
+        ")(",
+        " ",
+        ") ",
+        ";"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          " ",
+          "API",
+          false
+        ],
+        [
+          "g",
+          "Alloc",
+          false
+        ],
+        [
+          " ",
+          "size_t",
+          false
+        ],
+        [
+          " ",
+          "bytes",
+          false
+        ],
+        [
+          " ",
+          "ATTR",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(*",
+        ")  (",
+        " *",
+        ");"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          " ",
+          "TYPEOF",
+          false
+        ],
+        [
+          " ",
+          "ptr",
+          false
+        ],
+        [
+          " ",
+          "DECOR",
+          false
+        ],
+        [
+          " ",
+          "global_alias",
+          false
+        ]
+      ]
+    }
+  ]
+}

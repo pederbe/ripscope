@@ -1,0 +1,539 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\na.c <global> 3 #include \"inside.h\"\nz.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\nz.c <global> 11 #include \"missing.h\"\ndir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "^dir/Alpha\\.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "^Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "^\\./"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "\\.\\./"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "\""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "<"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 11 #include \"missing.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "inactive|other"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "inside"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 3 #include \"inside.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "nested"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "unselected"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "[A-Z]"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "[[:upper:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "missing.h "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 11 #include \"missing.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            " missing.h"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            " "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\na.c <global> 3 #include \"inside.h\"\nz.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\nz.c <global> 11 #include \"missing.h\"\ndir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "^"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\na.c <global> 3 #include \"inside.h\"\nz.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\nz.c <global> 11 #include \"missing.h\"\ndir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-8",
+            "$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\na.c <global> 3 #include \"inside.h\"\nz.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\nz.c <global> 11 #include \"missing.h\"\ndir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\na.c <global> 3 #include \"inside.h\"\nz.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\nz.c <global> 11 #include \"missing.h\"\ndir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "^dir/Alpha\\.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "^Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "^\\./"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "\\.\\./"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "\""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "<"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 11 #include \"missing.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "inactive|other"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "inside"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 3 #include \"inside.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "nested"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "unselected"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "[A-Z]"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\na.c <global> 3 #include \"inside.h\"\nz.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\nz.c <global> 11 #include \"missing.h\"\ndir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "[[:upper:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "missing.h "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 11 #include \"missing.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            " missing.h"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            " "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\na.c <global> 3 #include \"inside.h\"\nz.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\nz.c <global> 11 #include \"missing.h\"\ndir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "^"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\na.c <global> 3 #include \"inside.h\"\nz.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\nz.c <global> 11 #include \"missing.h\"\ndir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-8",
+            "$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 #include \"missing.h\"\na.c <global> 3 #include \"inside.h\"\nz.c <global> 1 #include \"dir/Alpha.h\"\nz.c <global> 2 #include <dir/Alpha.h>\nz.c <global> 3 #include \"dir/Alpha.h\"\nz.c <global> 4 #include \"dir/Alpha.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 7 #include \"inactive.h\"\nz.c <global> 9 #include <other.h>\nz.c <global> 11 #include \"missing.h\"\ndir/Alpha.h <global> 1 #include \"nested.h\"\n",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "z.c": "#include \"dir/Alpha.h\"\n#include <dir/Alpha.h>\n#include \"./dir/Alpha.h\"\n#include \"dir/../dir/Alpha.h\"\n#include \"missing.h\"\n#if 0\n#  include \"inactive.h\"\n#else\n#include <other.h>\n#endif\n#include \"missing.h\" // again\n",
+    "a.c": " # include \"missing.h\" /* after */\nint f(void) {\n#include \"inside.h\"\nreturn 0;\n}\n",
+    "dir/Alpha.h": "#include \"nested.h\"\n",
+    "nested.h": "int nested;\n",
+    "unused.c": "#include \"unselected.h\"\n"
+  },
+  "seeds": [
+    "z.c",
+    "a.c",
+    "z.c"
+  ],
+  "field": "8",
+  "build": {
+    "args": [
+      "-bk",
+      "z.c",
+      "a.c",
+      "z.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sources_deleted_before_queries": true,
+  "unreadable": [],
+  "persistent_input": "8missing\n8[\n8inactive\nq\n",
+  "persistent": {
+    "args": [
+      "-dl"
+    ],
+    "exit_code": 0,
+    "stdout": ">> cscope: 3 lines\na.c <global> 1 #include \"missing.h\"\nz.c <global> 5 #include \"missing.h\"\nz.c <global> 11 #include \"missing.h\"\n>> Unable to search database\n>> cscope: 1 lines\nz.c <global> 7 #include \"inactive.h\"\n>> ",
+    "stderr": ""
+  }
+}

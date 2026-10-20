@@ -1,0 +1,153 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/54-keyword-macros.c",
+  "records": [
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        ""
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "#",
+          "const",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " ",
+        ""
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "#",
+          "inline",
+          false
+        ],
+        [
+          " ",
+          "__inline__",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " (",
+        ") ",
+        "(x)"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "#",
+          "struct",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ],
+        [
+          "`",
+          "replacement",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " long "
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "#",
+          "int",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " ",
+        "()"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "#",
+          "return",
+          false
+        ],
+        [
+          "`",
+          "target",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " (",
+        ", ...) if ( ",
+        "(!!(cond, ## ",
+        ")) )"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "#",
+          "if",
+          false
+        ],
+        [
+          " ",
+          "cond",
+          false
+        ],
+        [
+          "`",
+          "__trace_if_var",
+          false
+        ],
+        [
+          " ",
+          "__VA_ARGS__",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          "g",
+          "after",
+          false
+        ]
+      ]
+    }
+  ]
+}

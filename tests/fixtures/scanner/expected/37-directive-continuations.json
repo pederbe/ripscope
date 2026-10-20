@@ -1,0 +1,140 @@
+{
+ "probe": "probes/37-directive-continuations.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#if ",
+    "(",
+    ") || \\"
+   ],
+   "symbols": [
+    [
+     " ",
+     "defined",
+     false
+    ],
+    [
+     " ",
+     "A",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "(",
+    " < 5)"
+   ],
+   "symbols": [
+    [
+     "g",
+     "X",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    "(void ) { return 0; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "f",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "#if ",
+    "(",
+    ") && \\"
+   ],
+   "symbols": [
+    [
+     " ",
+     "defined",
+     false
+    ],
+    [
+     " ",
+     "B",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "(",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "defined",
+     false
+    ],
+    [
+     " ",
+     "C",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "g",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "after",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

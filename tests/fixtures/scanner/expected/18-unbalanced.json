@@ -1,0 +1,95 @@
+{
+ "probe": "probes/18-unbalanced.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "after_stray_close",
+     false
+    ],
+    [
+     "`",
+     "x",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "another",
+     false
+    ],
+    [
+     "`",
+     "y",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "int ",
+    "(void ) {"
+   ],
+   "symbols": [
+    [
+     "$",
+     "unclosed",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "();"
+   ],
+   "symbols": [
+    [
+     "`",
+     "z",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

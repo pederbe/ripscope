@@ -1,0 +1,118 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "binary": "Ubuntu cscope 15.9-2build1"
+  },
+  "cases": [
+    {
+      "name": "exact",
+      "source": "local void write_table(FILE *out, const z_crc_t FAR *table, int k) {}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 local void write_table(FILE *out, const z_crc_t FAR *table, int k) {}\ncase.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "marker"], "exit": 0, "stdout": "case.c marker 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "case.c write_table 1 local void write_table(FILE *out, const z_crc_t FAR *table, int k) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "local"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "word32",
+      "source": "local void write_table32hi(FILE *out, const z_word_t FAR *table, int k) {}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 local void write_table32hi(FILE *out, const z_word_t FAR *table, int k) {}\ncase.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table32hi"], "exit": 0, "stdout": "case.c write_table32hi 1 local void write_table32hi(FILE *out, const z_word_t FAR *table, int k) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "word64",
+      "source": "local void write_table64(FILE *out, const z_word_t FAR *table, int k) {}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 local void write_table64(FILE *out, const z_word_t FAR *table, int k) {}\ncase.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table64"], "exit": 0, "stdout": "case.c write_table64 1 local void write_table64(FILE *out, const z_word_t FAR *table, int k) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "combined",
+      "source": "local void write_table(FILE *out, const z_crc_t FAR *table, int k) {}\nlocal void write_table32hi(FILE *out, const z_word_t FAR *table, int k) {}\nlocal void write_table64(FILE *out, const z_word_t FAR *table, int k) {}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 local void write_table(FILE *out, const z_crc_t FAR *table, int k) {}\ncase.c .* 2 local void write_table32hi(FILE *out, const z_word_t FAR *table, int k) {}\ncase.c .* 3 local void write_table64(FILE *out, const z_word_t FAR *table, int k) {}\ncase.c .* 4 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "marker"], "exit": 0, "stdout": "case.c marker 4 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "case.c write_table 1 local void write_table(FILE *out, const z_crc_t FAR *table, int k) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table32hi"], "exit": 0, "stdout": "case.c write_table32hi 2 local void write_table32hi(FILE *out, const z_word_t FAR *table, int k) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table64"], "exit": 0, "stdout": "case.c write_table64 3 local void write_table64(FILE *out, const z_word_t FAR *table, int k) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "parameter-only",
+      "source": "void write_table(FILE *out, const z_crc_t FAR *table, int k) {}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 void write_table(FILE *out, const z_crc_t FAR *table, int k) {}\ncase.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "case.c write_table 1 void write_table(FILE *out, const z_crc_t FAR *table, int k) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "unqualified",
+      "source": "void write_table(FILE *out, z_crc_t FAR *table, int k) {}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 void write_table(FILE *out, z_crc_t FAR *table, int k) {}\ncase.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "case.c write_table 1 void write_table(FILE *out, z_crc_t FAR *table, int k) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "ordinary",
+      "source": "void write_table(FILE *out, const z_crc_t *table, int k) {}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 void write_table(FILE *out, const z_crc_t *table, int k) {}\ncase.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "case.c write_table 1 void write_table(FILE *out, const z_crc_t *table, int k) {}\n", "stderr": "" }
+      ]
+    },
+    {
+      "name": "leading-control",
+      "source": "local void write_table(int k) {}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 local void write_table(int k) {}\ncase.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "case.c write_table 1 local void write_table(int k) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "local"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "prototype-control",
+      "source": "local void write_table(FILE *out, const z_crc_t FAR *table, int k);\nint marker;\n",
+      "ripscope_accept": false,
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "two-decorated",
+      "source": "void write_table(z_crc_t FAR *left, z_crc_t FAR *right) {}\nint marker;\n",
+      "ripscope_accept": false,
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 1 void write_table(z_crc_t FAR *left, z_crc_t FAR *right) {}\ncase.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "case.c write_table 1 void write_table(z_crc_t FAR *left, z_crc_t FAR *right) {}\n", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    }
+  ]
+}

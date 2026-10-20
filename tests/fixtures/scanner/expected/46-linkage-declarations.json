@@ -1,0 +1,434 @@
+{
+ "probe": "probes/46-linkage-declarations.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "PyAPI_DATA",
+     false
+    ],
+    [
+     " ",
+     "first",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "#if ",
+    "(",
+    ")"
+   ],
+   "symbols": [
+    [
+     " ",
+     "defined",
+     false
+    ],
+    [
+     " ",
+     "WITH_THREADS",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "PyAPI_DATA",
+     false
+    ],
+    [
+     " ",
+     "after_if",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "static ",
+    " int ",
+    "(void ) { return 0; }"
+   ],
+   "symbols": [
+    [
+     " ",
+     "inline",
+     false
+    ],
+    [
+     " ",
+     "helper",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "PyAPI_DATA",
+     false
+    ],
+    [
+     " ",
+     "after_body",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    " = {0};"
+   ],
+   "symbols": [
+    [
+     " ",
+     "DECLARE",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     " ",
+     "initialised",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "PyAPI_DATA",
+     false
+    ],
+    [
+     " ",
+     "after_init",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "between",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "extern int ",
+    "(int ",
+    ");"
+   ],
+   "symbols": [
+    [
+     " ",
+     "inner",
+     false
+    ],
+    [
+     " ",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 20,
+   "fragments": [
+    "",
+    "(int ) ",
+    ", ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "PyAPI_DATA",
+     false
+    ],
+    [
+     "g",
+     "listed",
+     false
+    ],
+    [
+     "g",
+     "second",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "",
+    "(int )  ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "PyAPI_DATA",
+     false
+    ],
+    [
+     "g",
+     "commented",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 22,
+   "fragments": [
+    "",
+    "(int )"
+   ],
+   "symbols": [
+    [
+     " ",
+     "PyAPI_DATA",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 23,
+   "fragments": [
+    "",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "wrapped",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 24,
+   "fragments": [
+    "static ",
+    "(int ) ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "PyAPI_DATA",
+     false
+    ],
+    [
+     "g",
+     "kept_static",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 25,
+   "fragments": [
+    "",
+    "(int ) ",
+    " ;"
+   ],
+   "symbols": [
+    [
+     " ",
+     "PyAPI_DATA",
+     false
+    ],
+    [
+     "g",
+     "trailing",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 26,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    " ",
+    ", ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "selectany",
+     false
+    ],
+    [
+     " ",
+     "handle_t",
+     false
+    ],
+    [
+     "g",
+     "t5",
+     false
+    ],
+    [
+     "g",
+     "t6",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 27,
+   "fragments": [
+    "#ifdef ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "__cplusplus",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 30,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "last",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

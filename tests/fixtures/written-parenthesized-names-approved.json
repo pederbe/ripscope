@@ -1,0 +1,60 @@
+{
+ "decision": "Intended reading of parenthesized function declarators after a typedef-name type.",
+ "reference": "tests/fixtures/written-parenthesized-names-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "typedef_alias": {
+   "0": {
+    "sds": "case.c <global> 1 typedef sds (aux_value_getter) (clusterNode* n, sds s);\n",
+    "aux_value_getter": "case.c <global> 1 typedef sds (aux_value_getter) (clusterNode* n, sds s);\n",
+    "clusterNode": "case.c <global> 1 typedef sds (aux_value_getter) (clusterNode* n, sds s);\ncase.c <global> 2 typedef int (aux_value_present) (clusterNode* n);\n",
+    "n": "case.c <global> 1 typedef sds (aux_value_getter) (clusterNode* n, sds s);\ncase.c <global> 2 typedef int (aux_value_present) (clusterNode* n);\n",
+    "s": "case.c <global> 1 typedef sds (aux_value_getter) (clusterNode* n, sds s);\n",
+    "aux_value_present": "case.c <global> 2 typedef int (aux_value_present) (clusterNode* n);\n",
+    "after": "case.c <global> 3 int after;\n"
+   },
+   "1": {
+    "sds": "",
+    "clusterNode": "",
+    "n": "",
+    "s": "",
+    "after": "case.c after 3 int after;\n"
+   }
+  },
+  "prefixed_prototype": {
+   "0": {
+    "after": "case.c <global> 2 int after;\n",
+    "lua_CFunction": "case.c <global> 1 LUA_API lua_CFunction (lua_atpanic) (lua_State *L, lua_CFunction panicf);\n",
+    "lua_atpanic": "case.c <global> 1 LUA_API lua_CFunction (lua_atpanic) (lua_State *L, lua_CFunction panicf);\n",
+    "lua_State": "case.c <global> 1 LUA_API lua_CFunction (lua_atpanic) (lua_State *L, lua_CFunction panicf);\n",
+    "L": "case.c <global> 1 LUA_API lua_CFunction (lua_atpanic) (lua_State *L, lua_CFunction panicf);\n",
+    "panicf": "case.c <global> 1 LUA_API lua_CFunction (lua_atpanic) (lua_State *L, lua_CFunction panicf);\n"
+   },
+   "1": {
+    "after": "case.c after 2 int after;\n",
+    "lua_CFunction": ""
+   },
+   "2": {
+    "lua_CFunction": ""
+   },
+   "3": {
+    "h": "case.c g 3 void g(void ) { h(); }\n"
+   }
+  },
+  "typedef_pair": {
+   "0": {
+    "after": "case.c <global> 2 int after;\n",
+    "T": "case.c <global> 1 typedef T (a)(int x), (b)(int y);\n",
+    "a": "case.c <global> 1 typedef T (a)(int x), (b)(int y);\n",
+    "b": "case.c <global> 1 typedef T (a)(int x), (b)(int y);\n",
+    "x": "case.c <global> 1 typedef T (a)(int x), (b)(int y);\n",
+    "y": "case.c <global> 1 typedef T (a)(int x), (b)(int y);\n"
+   },
+   "1": {
+    "after": "case.c after 2 int after;\n",
+    "T": "",
+    "x": "",
+    "y": ""
+   }
+  }
+ }
+}

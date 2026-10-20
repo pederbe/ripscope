@@ -1,0 +1,553 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nz.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/alpha-extra.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "dir/"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "^Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "^dir/Alpha\\.c$"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "\\.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "a.h"
+          ],
+          "exit_code": 0,
+          "stdout": "a.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "Alpha|nested"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "[A-Z]"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "[[:upper:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "alpha(-extra)?"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/alpha-extra.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "a{1,2}"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "Alpha "
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            " Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "unselected"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            " "
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nz.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "^"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nz.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "$"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nz.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "a\\.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-7",
+            "\\$"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nz.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "dir/"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "^Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "^dir/Alpha\\.c$"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "\\.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "a.h"
+          ],
+          "exit_code": 0,
+          "stdout": "a.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "Alpha|nested"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "[A-Z]"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nz.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "[[:upper:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "alpha(-extra)?"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "a{1,2}"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "Alpha "
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            " Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "unselected"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            " "
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nz.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "^"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nz.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "$"
+          ],
+          "exit_code": 0,
+          "stdout": "dir/Alpha.c <unknown> 1 <unknown>\ndir/alpha-extra.c <unknown> 1 <unknown>\nz.c <unknown> 1 <unknown>\na.h <unknown> 1 <unknown>\nnested.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "a\\.h$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-7",
+            "\\$"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "z.c": "#include \"a.h\"\nint z;\n",
+    "dir/Alpha.c": "int Alpha;\n",
+    "dir/alpha-extra.c": "int alpha;\n",
+    "a.h": "#include \"nested.h\"\nint header;\n",
+    "nested.h": "int nested;\n",
+    "unselected.c": "int absent;\n"
+  },
+  "seeds": [
+    "z.c",
+    "./dir/Alpha.c",
+    "dir/alpha-extra.c",
+    "z.c"
+  ],
+  "field": "7",
+  "build": {
+    "args": [
+      "-bk",
+      "z.c",
+      "./dir/Alpha.c",
+      "dir/alpha-extra.c",
+      "z.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sources_deleted_before_queries": true
+}

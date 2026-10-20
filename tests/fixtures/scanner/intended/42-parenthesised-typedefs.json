@@ -1,0 +1,330 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/42-parenthesised-typedefs.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef void (*",
+        ")();"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "t",
+          "f",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int (",
+        ")();"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "t",
+          "name",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int (*",
+        ")[4];"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "t",
+          "A",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int ((*",
+        ") (",
+        ", int ));"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "t",
+          "e",
+          false
+        ],
+        [
+          " ",
+          "F",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int (*",
+        ")( );"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "t",
+          "cb",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef void (^",
+        ")();"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "t",
+          "blk",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int (*",
+        "[4])();"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "t",
+          "arr",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef void (*",
+        ")(), (*",
+        ")();"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          "t",
+          "two",
+          false
+        ],
+        [
+          "t",
+          "three",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int (",
+        ");"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "t",
+          "x",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef void (* const ",
+        ")();"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "t",
+          "k",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef void ( ",
+        " ",
+        " * ",
+        " )();"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          " ",
+          "__interrupt",
+          false
+        ],
+        [
+          " ",
+          "__far",
+          false
+        ],
+        [
+          "t",
+          "isr",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef void (",
+        " *",
+        ")();"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          " ",
+          "__stdcall",
+          false
+        ],
+        [
+          "t",
+          "conv",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        ")();"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          "g",
+          "split",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int (*",
+        "(int ))();"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          " ",
+          "nested",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          "g",
+          "g",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef void (",
+        "(",
+        "))(",
+        " **",
+        ");"
+      ],
+      "line": 17,
+      "symbols": [
+        [
+          " ",
+          "RENAME",
+          false
+        ],
+        [
+          "t",
+          "mix",
+          false
+        ],
+        [
+          "t",
+          "S",
+          false
+        ],
+        [
+          "t",
+          "out",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef void (*",
+        ")(int ",
+        ");"
+      ],
+      "line": 18,
+      "symbols": [
+        [
+          "t",
+          "withparams",
+          false
+        ],
+        [
+          " ",
+          "n",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 19,
+      "symbols": [
+        [
+          "g",
+          "last",
+          false
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+ "probe": "probes/17-control-whitespace.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "form",
+     false
+    ],
+    [
+     "g",
+     "feed",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "vertical",
+     false
+    ],
+    [
+     "g",
+     "tab",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "nul_follows",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

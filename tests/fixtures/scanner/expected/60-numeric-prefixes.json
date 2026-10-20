@@ -1,0 +1,380 @@
+{
+ "probe": "probes/60-numeric-prefixes.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "static ",
+    "(2, 3) void ",
+    "(",
+    " *",
+    ", const char *",
+    ", ...)"
+   ],
+   "symbols": [
+    [
+     "$",
+     "FORMAT",
+     false
+    ],
+    [
+     "$",
+     "logging",
+     false
+    ],
+    [
+     " ",
+     "Context",
+     false
+    ],
+    [
+     " ",
+     "ctx",
+     false
+    ],
+    [
+     " ",
+     "fmt",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "",
+    "(",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "send",
+     false
+    ],
+    [
+     " ",
+     "ctx",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "",
+    "(1)"
+   ],
+   "symbols": [
+    [
+     "$",
+     "PREFIX",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "annotated",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "int ",
+    "(int ",
+    ") { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "ordinary",
+     false
+    ],
+    [
+     " ",
+     "value",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "",
+    "(",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "old_style",
+     false
+    ],
+    [
+     " ",
+     "value",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "value",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "{ ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "",
+    "(1) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "DIRECT",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "",
+    "(",
+    ") int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "PLAIN_NAMES",
+     false
+    ],
+    [
+     " ",
+     "value",
+     false
+    ],
+    [
+     "$",
+     "following",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "",
+    "(1) ",
+    " ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "TYPE_NAME",
+     false
+    ],
+    [
+     " ",
+     "Result",
+     false
+    ],
+    [
+     "$",
+     "alias_result",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "",
+    "(1)"
+   ],
+   "symbols": [
+    [
+     "$",
+     "CONDITIONAL",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "ENABLED",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 17,
+   "fragments": [
+    "int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "conditional",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

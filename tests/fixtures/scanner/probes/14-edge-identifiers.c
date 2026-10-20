@@ -1,0 +1,4 @@
+int $dollar;
+int with$dollar = 0x1F$;
+int very_long_identifier_name_that_keeps_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_and_going_end;
+int after_long;

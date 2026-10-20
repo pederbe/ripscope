@@ -1,0 +1,47 @@
+{
+ "decision": "One calling-convention word between a function-pointer declarator's ( and * is an opaque occurrence, and the declaration reads as T (*name)(parameters).",
+ "reference": "tests/fixtures/written-calling-conventions-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "typedef_keyword": {
+   "1": {
+    "__cdecl": "",
+    "after": "case.c after 2 int after;\n"
+   }
+  },
+  "typedef_words": {
+   "1": {
+    "WINAPI": "",
+    "after": "case.c after 2 int after;\n"
+   }
+  },
+  "static_object": {
+   "1": {
+    "handler": "case.c handler 1 static void (__cdecl *handler)(int );\n",
+    "after": "case.c after 2 int after;\n"
+   }
+  },
+  "typedef_name_object": {
+   "0": {
+    "CC": "case.c <global> 1 T (CC *name)(int );\n",
+    "name": "case.c <global> 1 T (CC *name)(int );\n",
+    "T": "case.c <global> 1 T (CC *name)(int );\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "name": "case.c name 1 T (CC *name)(int );\n",
+    "T": "",
+    "after": "case.c after 2 int after;\n"
+   }
+  },
+  "extern_object": {
+   "1": {
+    "after": "case.c after 2 int after;\n"
+   }
+  },
+  "linkage": {
+   "1": {
+    "after": "case.c after 4 int after;\n"
+   }
+  }
+ }
+}

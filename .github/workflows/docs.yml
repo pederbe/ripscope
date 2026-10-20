@@ -1,0 +1,62 @@
+name: Website verification
+
+# Manual verification only. Visibility changes, pushes and release creation do not
+# deploy anything. The separate website-deploy workflow requires a manual approval.
+on:
+  workflow_dispatch:
+    inputs:
+      check_external:
+        description: Check remote link responses as well as internal links
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: website-verification-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
+      - name: Select Rust
+        run: |
+          rustup toolchain install 1.98.1 --profile minimal --component rustfmt,clippy
+          rustup default 1.98.1
+      - uses: taiki-e/install-action@f7e5d7c961414b23f5b25b2da9294395d08513ad # v2
+        with:
+          tool: mdbook@0.5.4,lychee@0.24.2
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '24'
+      - name: Check site tooling
+        run: |
+          cargo fmt --manifest-path tools/site/Cargo.toml --check
+          cargo clippy --locked --all-targets --manifest-path tools/site/Cargo.toml -- -D warnings
+          cargo test --locked --manifest-path tools/site/Cargo.toml
+      - name: Build and check links
+        env:
+          CHECK_EXTERNAL: ${{ inputs.check_external }}
+        run: |
+          set -euo pipefail
+          args=(--dev)
+          if [ "$CHECK_EXTERNAL" = true ]; then args+=(--check-external); fi
+          scripts/build-site.sh "${args[@]}"
+      - name: Validate static hosting without deploying
+        env:
+          WRANGLER_SEND_METRICS: 'false'
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund --prefix tools/site
+          node tools/site/node_modules/wrangler/bin/wrangler.js deploy --dry-run --config wrangler.jsonc --outdir "$RUNNER_TEMP/site-dry-run"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: website-verification-${{ github.sha }}
+          path: target/site
+          if-no-files-found: error
+          retention-days: 7

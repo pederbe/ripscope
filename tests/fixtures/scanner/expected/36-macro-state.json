@@ -1,0 +1,179 @@
+{
+ "probe": "probes/36-macro-state.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "#define ",
+    "(",
+    ") typedef int ",
+    "[(c)?1:-1]"
+   ],
+   "symbols": [
+    [
+     "#",
+     "T",
+     false
+    ],
+    [
+     " ",
+     "c",
+     false
+    ],
+    [
+     "t",
+     "t",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "#define ",
+    " 1"
+   ],
+   "symbols": [
+    [
+     "t",
+     "N",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "g",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "#define ",
+    " {"
+   ],
+   "symbols": [
+    [
+     "#",
+     "BEGIN",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "int ",
+    "(void ) { return ",
+    "(); }"
+   ],
+   "symbols": [
+    [
+     " ",
+     "f",
+     false
+    ],
+    [
+     " ",
+     "h",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "g2",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "int ",
+    "(void ) {"
+   ],
+   "symbols": [
+    [
+     " ",
+     "k",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "#define ",
+    " }"
+   ],
+   "symbols": [
+    [
+     "#",
+     "END",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "",
+    "();"
+   ],
+   "symbols": [
+    [
+     " ",
+     "m",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "g3",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

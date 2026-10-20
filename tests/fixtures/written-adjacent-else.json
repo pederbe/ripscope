@@ -1,0 +1,226 @@
+{
+  "provenance": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "note": "Self-checked reference output, both case modes, sources deleted before queries. The preprocessor-defined Correction removes conditional operator calls under ADR 0002; changed queries retain reference_stdout."
+  },
+  "cases": {
+    "adjacent": {
+      "source": "void f(void) {\n#if WIDE\nif (flag) first(); else\n#endif\n#if FORMAT\nformatted();\n#else\ncopied();\n#endif\nafter();\n}\n",
+      "source_sha256": "a1ade82ceac461acd545c4391b4048d1898df369de4d5f24dd2e139df070326f",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c first 3 if (flag) first(); else \ncase.c formatted 6 formatted();\ncase.c copied 8 copied();\ncase.c after 10 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "formatted"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 6 formatted();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "snprintf"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 10 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "FORMAT"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 5 #if FORMAT\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "NO_snprintf"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "plain_control": {
+      "source": "void f(void) {\n#if WIDE\nif (flag) first(); else\n#endif\nformatted();\nafter();\n}\n",
+      "source_sha256": "31a848a6d11a12f6050ac54c9ee26638a986870a1d0d32eb65d0bb06c0b5e6ec",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c first 3 if (flag) first(); else \ncase.c formatted 5 formatted();\ncase.c after 6 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "formatted"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 5 formatted();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "snprintf"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 6 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "FORMAT"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "NO_snprintf"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "original_shape": {
+      "source": "void f(void) {\n#ifdef WIDECHAR\n if (fd == -2)\n  if (len) wcstombs(state->path, path, len + 1);\n  else *(state->path) = 0;\n else\n#endif\n#if !defined(NO_snprintf) && !defined(NO_vsnprintf)\n (void)snprintf(state->path, len + 1, \"%s\", (const char *)path);\n#else\n strcpy(state->path, path);\n#endif\n after();\n}\n",
+      "source_sha256": "0294365ccbcb2c21ed13bcacd200f4f15229066f42076a9bff833cd9d1f0b2d4",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "reference_stdout": "case.c wcstombs 4 if (len) wcstombs(state->path, path, len + 1);\ncase.c defined 8 #if !defined(NO_snprintf) && !defined(NO_vsnprintf)\ncase.c snprintf 9 (void )snprintf(state->path, len + 1, \"%s\", (const char *)path);\ncase.c strcpy 11 strcpy(state->path, path);\ncase.c after 13 after();\n",
+          "stdout": "case.c wcstombs 4 if (len) wcstombs(state->path, path, len + 1);\ncase.c snprintf 9 (void )snprintf(state->path, len + 1, \"%s\", (const char *)path);\ncase.c strcpy 11 strcpy(state->path, path);\ncase.c after 13 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "formatted"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "snprintf"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 9 (void )snprintf(state->path, len + 1, \"%s\", (const char *)path);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 13 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "FORMAT"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "NO_snprintf"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 8 #if !defined(NO_snprintf) && !defined(NO_vsnprintf)\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

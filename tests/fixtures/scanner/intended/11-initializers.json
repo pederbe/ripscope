@@ -1,0 +1,147 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/11-initializers.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "[4] = { 1, 2, ",
+        "(3), 4 };"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "g",
+          "table",
+          true
+        ],
+        [
+          " ",
+          "compute",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        " { int ",
+        "; int ",
+        " : 4; } ",
+        " = { .",
+        " = 80, .",
+        " = 3 };"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "s",
+          "config",
+          false
+        ],
+        [
+          "m",
+          "width",
+          false
+        ],
+        [
+          "m",
+          "height",
+          false
+        ],
+        [
+          "g",
+          "defaults",
+          true
+        ],
+        [
+          " ",
+          "width",
+          true
+        ],
+        [
+          " ",
+          "height",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "[",
+        "][",
+        "];"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "g",
+          "matrix",
+          false
+        ],
+        [
+          " ",
+          "ROWS",
+          false
+        ],
+        [
+          " ",
+          "COLS",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "static const char *",
+        "[] = { \"a\", \"b\", ",
+        " };"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "g",
+          "names",
+          true
+        ],
+        [
+          " ",
+          "NULL",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        " = 1, ",
+        " = 2, ",
+        ";"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "g",
+          "x",
+          true
+        ],
+        [
+          "g",
+          "y",
+          true
+        ],
+        [
+          "g",
+          "z",
+          false
+        ]
+      ]
+    }
+  ]
+}

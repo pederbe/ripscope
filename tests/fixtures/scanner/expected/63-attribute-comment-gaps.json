@@ -1,0 +1,425 @@
+{
+ "probe": "probes/63-attribute-comment-gaps.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    "(void ) ",
+    " ((",
+    ")) { ",
+    "(); return 0; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "annotated",
+     false
+    ],
+    [
+     " ",
+     "__attribute__",
+     false
+    ],
+    [
+     " ",
+     "unused",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    "(void ) ",
+    " ((",
+    "(",
+    "()))) { ",
+    "(); return 0; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "expression",
+     false
+    ],
+    [
+     " ",
+     "__attribute__",
+     false
+    ],
+    [
+     "`",
+     "annotate",
+     false
+    ],
+    [
+     "$",
+     "helper",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "struct ",
+    " ((",
+    "(8))) ",
+    " { int ",
+    "; ",
+    "};"
+   ],
+   "symbols": [
+    [
+     "g",
+     "__attribute__",
+     false
+    ],
+    [
+     "$",
+     "aligned",
+     false
+    ],
+    [
+     " ",
+     "item",
+     false
+    ],
+    [
+     " ",
+     "member",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "",
+    " (",
+    "(8)) int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "__declspec",
+     false
+    ],
+    [
+     "$",
+     "align",
+     false
+    ],
+    [
+     " ",
+     "global",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "after",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "int ",
+    "(void ) ",
+    " ((",
+    ")) { ",
+    "(); return 0; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "synonym",
+     false
+    ],
+    [
+     " ",
+     "__attribute",
+     false
+    ],
+    [
+     " ",
+     "unused",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "struct ",
+    " ((",
+    ")) ",
+    " { int ",
+    "; };"
+   ],
+   "symbols": [
+    [
+     "g",
+     "__attribute__",
+     false
+    ],
+    [
+     "g",
+     "packed",
+     false
+    ],
+    [
+     "g",
+     "chained",
+     false
+    ],
+    [
+     "g",
+     "member",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "int ",
+    "(void ) ",
+    " ((",
+    "));"
+   ],
+   "symbols": [
+    [
+     "$",
+     "prototype",
+     false
+    ],
+    [
+     " ",
+     "__attribute__",
+     false
+    ],
+    [
+     " ",
+     "unused",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "#define ",
+    " ",
+    " ((",
+    "(",
+    "())))"
+   ],
+   "symbols": [
+    [
+     "#",
+     "EXPR",
+     false
+    ],
+    [
+     " ",
+     "__attribute__",
+     false
+    ],
+    [
+     "`",
+     "annotate",
+     false
+    ],
+    [
+     "`",
+     "macro_helper",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "int ",
+    "(void ) ",
+    ""
+   ],
+   "symbols": [
+    [
+     "$",
+     "closed",
+     false
+    ],
+    [
+     " ",
+     "__attribute__",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    " ((",
+    ")) { ",
+    "(); return 0; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     " ",
+     "unused",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "int ",
+    "(void ) ",
+    ""
+   ],
+   "symbols": [
+    [
+     "$",
+     "spliced",
+     false
+    ],
+    [
+     " ",
+     "__attribute__",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    " ((",
+    ")) { ",
+    "(); return 0; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     " ",
+     "unused",
+     false
+    ],
+    [
+     "`",
+     "target",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "int ",
+    "(void ) ",
+    ""
+   ],
+   "symbols": [
+    [
+     "$",
+     "unterminated",
+     false
+    ],
+    [
+     " ",
+     "__attribute__",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

@@ -1,0 +1,23 @@
+{
+  "name": "ripscope-site-tools",
+  "private": true,
+  "license": "MIT OR Apache-2.0",
+  "description": "Build-time tools for static diagrams and staged website hosting.",
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "12.0.0",
+    "@tailwindcss/cli": "4.3.3",
+    "daisyui": "5.7.50",
+    "tailwindcss": "4.3.3",
+    "wrangler": "4.141.0"
+  },
+  "overrides": {
+    "katex": "0.18.2",
+    "miniflare": {
+      "sharp": "0.35.5",
+      "undici": "7.29.1"
+    }
+  },
+  "scripts": {
+    "build:landing": "tailwindcss -i landing.css -o ../../site/landing.css --minify"
+  }
+}

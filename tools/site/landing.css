@@ -1,0 +1,46 @@
+@import "tailwindcss" source("../../site");
+
+@plugin "daisyui" {
+  themes: false;
+  include: button, steps, stat, tab, card, aura;
+  logs: false;
+}
+@plugin "daisyui/theme" {
+  name: "ripscope";
+  default: true;
+  prefersdark: false;
+  color-scheme: dark;
+  --color-base-100: #0e1621;
+  --color-base-200: #152233;
+  --color-base-300: #304257;
+  --color-base-content: #e4ecf3;
+  --color-primary: #ffd24a;
+  --color-primary-content: #211507;
+  --color-secondary: #8ccbe4;
+  --color-secondary-content: #0e1621;
+  --color-accent: #ffdc65;
+  --color-accent-content: #211507;
+  --color-neutral: #0a111a;
+  --color-neutral-content: #e4ecf3;
+  --color-info: #8ccbe4;
+  --color-info-content: #0e1621;
+  --color-success: #b3d4a2;
+  --color-success-content: #0e1621;
+  --color-warning: #ffdc65;
+  --color-warning-content: #211507;
+  --color-error: #f0a35e;
+  --color-error-content: #211507;
+  --radius-selector: .25rem;
+  --radius-field: .25rem;
+  --radius-box: .75rem;
+  --size-selector: .25rem;
+  --size-field: .25rem;
+  --border: 1px;
+  --depth: 0;
+  --noise: 0;
+}
+
+@theme {
+  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "Cascadia Code", "Source Code Pro", Menlo, Consolas, monospace;
+}

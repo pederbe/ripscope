@@ -1,0 +1,47 @@
+{
+ "decision": "Intended reading of trailing annotations after word-only prefixes.",
+ "reference": "tests/fixtures/written-typedef-return-annotations-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "typedef_return": {
+   "0": {
+    "Curl_dyn_addn": "case.c <global> 1 CURLcode Curl_dyn_addn(struct dynbuf *s, const void *mem, size_t len)\n",
+    "dynbuf": "case.c <global> 1 CURLcode Curl_dyn_addn(struct dynbuf *s, const void *mem, size_t len)\n",
+    "s": "case.c <global> 1 CURLcode Curl_dyn_addn(struct dynbuf *s, const void *mem, size_t len)\n",
+    "mem": "case.c <global> 1 CURLcode Curl_dyn_addn(struct dynbuf *s, const void *mem, size_t len)\n",
+    "len": "case.c <global> 1 CURLcode Curl_dyn_addn(struct dynbuf *s, const void *mem, size_t len)\n",
+    "WARN_UNUSED_RESULT": "case.c <global> 2 WARN_UNUSED_RESULT;\n",
+    "after": "case.c <global> 3 int after;\n"
+   },
+   "1": {
+    "Curl_dyn_addn": "",
+    "after": "case.c after 3 int after;\n"
+   },
+   "2": {
+    "Curl_dyn_addn": ""
+   },
+   "3": {
+    "h": "case.c g 4 int g(void ) { return h(); }\n"
+   }
+  },
+  "prefixed_typedef_return": {
+   "0": {
+    "after": "case.c <global> 3 int after;\n",
+    "curl_msnprintf": "case.c <global> 1 CURL_EXTERN CURLcode curl_msnprintf(char *buf, size_t n,\n",
+    "buf": "case.c <global> 1 CURL_EXTERN CURLcode curl_msnprintf(char *buf, size_t n,\n",
+    "n": "case.c <global> 1 CURL_EXTERN CURLcode curl_msnprintf(char *buf, size_t n,\n",
+    "fmt": "case.c <global> 2 const char *fmt, ...) CURL_PRINTF(3, 4);\n",
+    "CURL_PRINTF": "case.c <global> 2 const char *fmt, ...) CURL_PRINTF(3, 4);\n"
+   },
+   "1": {
+    "after": "case.c after 3 int after;\n",
+    "curl_msnprintf": ""
+   },
+   "2": {
+    "curl_msnprintf": ""
+   },
+   "3": {
+    "CURL_PRINTF": ""
+   }
+  }
+ }
+}

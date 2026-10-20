@@ -1,0 +1,846 @@
+{
+  "provenance": {
+    "retained_reference_sha256": "b8ed32bd6963877892e7ee2545af1f3d1429ad994d7c78cf2bf867d0dff6e4e4",
+    "new_reference_profile": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+      "locale": "C",
+      "version": {
+        "args": [
+          "--version"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": "cscope: version 15.9\n"
+      }
+    }
+  },
+  "cases": {
+    "empty_loop_assignment": {
+      "source": "void f(void) { for (i = 0; i < 2; i++) {} }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (i = 0; i < 2; i++) {} }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { for (i = 0; i < 2; i++) {} }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (i = 0; i < 2; i++) {} }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "empty_loop_no_assignment": {
+      "source": "void f(void) { for (; i < 2; i++) {} }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (; i < 2; i++) {} }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { for (; i < 2; i++) {} }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (; i < 2; i++) {} }\n",
+          "stderr": "",
+          "reference_stdout": ""
+        }
+      ]
+    },
+    "loop_then_empty_statement": {
+      "source": "void f(void) { for (i = 0; i < 2; i++) {} ; }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (i = 0; i < 2; i++) {} ; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { for (i = 0; i < 2; i++) {} ; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (i = 0; i < 2; i++) {} ; }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "loop_then_call": {
+      "source": "void f(void) { for (i = 0; i < 2; i++) { target(); } after(); }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (i = 0; i < 2; i++) { target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { for (i = 0; i < 2; i++) { target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void f(void ) { for (i = 0; i < 2; i++) { target(); } after(); }\ncase.c after 1 void f(void ) { for (i = 0; i < 2; i++) { target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (i = 0; i < 2; i++) { target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (i = 0; i < 2; i++) { target(); } after(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "nested_scope_assignment": {
+      "source": "void f(void) { { for (i = 0; i < 2; i++) { target(); } } after(); }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { { for (i = 0; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { { for (i = 0; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void f(void ) { { for (i = 0; i < 2; i++) { target(); } } after(); }\ncase.c after 1 void f(void ) { { for (i = 0; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { { for (i = 0; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { { for (i = 0; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "nested_scope_no_assignment": {
+      "source": "void f(void) { { for (; i < 2; i++) { target(); } } after(); }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { { for (; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { { for (; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void f(void ) { { for (; i < 2; i++) { target(); } } after(); }\ncase.c after 1 void f(void ) { { for (; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { { for (; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { { for (; i < 2; i++) { target(); } } after(); }\n",
+          "stderr": "",
+          "reference_stdout": ""
+        }
+      ]
+    },
+    "if_assignment": {
+      "source": "void f(void) { if ((i = 1)) { target(); } }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { if ((i = 1)) { target(); } }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { if ((i = 1)) { target(); } }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void f(void ) { if ((i = 1)) { target(); } }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { if ((i = 1)) { target(); } }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { if ((i = 1)) { target(); } }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "braced_initializer_scope": {
+      "source": "void f(void) { int a[2] = {1,2}; { target(); } after(); }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int a[2] = {1,2}; { target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { int a[2] = {1,2}; { target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void f(void ) { int a[2] = {1,2}; { target(); } after(); }\ncase.c after 1 void f(void ) { int a[2] = {1,2}; { target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int a[2] = {1,2}; { target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "while_assignment": {
+      "source": "void f(void) { while ((i = next())) { int local; local = 1; target(); } after(); }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { while ((i = next())) { int local; local = 1; target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { while ((i = next())) { int local; local = 1; target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c next 1 void f(void ) { while ((i = next())) { int local; local = 1; target(); } after(); }\ncase.c target 1 void f(void ) { while ((i = next())) { int local; local = 1; target(); } after(); }\ncase.c after 1 void f(void ) { while ((i = next())) { int local; local = 1; target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { while ((i = next())) { int local; local = 1; target(); } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { while ((i = next())) { int local; local = 1; target(); } after(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "branch_local_declarations": {
+      "source": "void f(void) { for (i = 0; i < 2; i++) {\n#if FLAG\nint left; left = 1; target();\n#else\nint right; right = 2; target();\n#endif\n} after(); }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (i = 0; i < 2; i++) {\ncase.c f 2 #if FLAG\ncase.c f 3 int left; left = 1; target();\ncase.c f 5 int right; right = 2; target();\ncase.c f 7 } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { for (i = 0; i < 2; i++) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 3 int left; left = 1; target();\ncase.c target 5 int right; right = 2; target();\ncase.c after 7 } after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 int left; left = 1; target();\ncase.c f 5 int right; right = 2; target();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (i = 0; i < 2; i++) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "left"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 int left; left = 1; target();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "right"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 5 int right; right = 2; target();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "left"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "right"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "renamed_nested": {
+      "source": "void f(void) { for (counter = 0; counter < 2; counter++) { if ((flag = 1)) { int local; target(); } } }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (counter = 0; counter < 2; counter++) { if ((flag = 1)) { int local; target(); } } }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { for (counter = 0; counter < 2; counter++) { if ((flag = 1)) { int local; target(); } } }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void f(void ) { for (counter = 0; counter < 2; counter++) { if ((flag = 1)) { int local; target(); } } }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { for (counter = 0; counter < 2; counter++) { if ((flag = 1)) { int local; target(); } } }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "array_bound_initializer": {
+      "source": "void f(void) { int values[(i = 2)] = {1,2}; target(); }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int values[(i = 2)] = {1,2}; target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { int values[(i = 2)] = {1,2}; target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void f(void ) { int values[(i = 2)] = {1,2}; target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int values[(i = 2)] = {1,2}; target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int values[(i = 2)] = {1,2}; target(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "compound_initializer": {
+      "source": "void f(void) { T x = (T){1}; target(); }\n",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { T x = (T){1}; target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c .* 1 void f(void ) { T x = (T){1}; target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void f(void ) { T x = (T){1}; target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { T x = (T){1}; target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "i"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+ "probe": "probes/11-initializers.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    "[4] = { 1, 2, ",
+    "(3), 4 };"
+   ],
+   "symbols": [
+    [
+     "g",
+     "table",
+     false
+    ],
+    [
+     " ",
+     "compute",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "struct ",
+    " { int ",
+    "; int ",
+    " : 4; } ",
+    " = { .",
+    " = 80, .",
+    " = 3 };"
+   ],
+   "symbols": [
+    [
+     "s",
+     "config",
+     false
+    ],
+    [
+     "m",
+     "width",
+     false
+    ],
+    [
+     "m",
+     "height",
+     false
+    ],
+    [
+     "g",
+     "defaults",
+     true
+    ],
+    [
+     " ",
+     "width",
+     true
+    ],
+    [
+     "g",
+     "height",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "int ",
+    "[",
+    "][",
+    "];"
+   ],
+   "symbols": [
+    [
+     "g",
+     "matrix",
+     false
+    ],
+    [
+     " ",
+     "ROWS",
+     false
+    ],
+    [
+     " ",
+     "COLS",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "static const char *",
+    "[] = { \"a\", \"b\", ",
+    " };"
+   ],
+   "symbols": [
+    [
+     "g",
+     "names",
+     false
+    ],
+    [
+     " ",
+     "NULL",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "int ",
+    " = 1, ",
+    " = 2, ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "x",
+     true
+    ],
+    [
+     "g",
+     "y",
+     true
+    ],
+    [
+     "g",
+     "z",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

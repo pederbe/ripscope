@@ -1,0 +1,330 @@
+{
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "commands": [
+   "cscope -bk <files>",
+   "cscope -dL [-C] -<field> <pattern>"
+  ],
+  "inverted_index": "rowsq/statusq/stderrq: the same queries on `cscope -bqk -f qscope.out <files>`",
+  "rows": "each byte one character (Latin-1)"
+ },
+ "files": [
+  "lines.c"
+ ],
+ "queries": [
+  {
+   "field": "0",
+   "pattern": "x",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c <global> 1 int x, y;",
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c <global> 1 int x, y;",
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "y",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c <global> 1 int x, y;",
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c <global> 1 int x, y;",
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "s",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c <global> 3 struct s { int s; } s;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c <global> 3 struct s { int s; } s;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c <global> 1 int x, y;",
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c g 3 struct s { int s; } s;",
+    "lines.c f 4 int f(void ) { return f2(); } int h(void ) { return h2(); }",
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }",
+    "lines.c k 6 int a = 1, b = 2, c;",
+    "lines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c <global> 1 int x, y;",
+    "lines.c <global> 3 struct s { int s; } s;",
+    "lines.c <global> 6 int a = 1, b = 2, c;",
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c f 4 int f(void ) { return f2(); } int h(void ) { return h2(); }",
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }",
+    "lines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "1",
+   "pattern": "s",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c s 3 struct s { int s; } s;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c s 3 struct s { int s; } s;",
+    "lines.c s 3 struct s { int s; } s;",
+    "lines.c s 3 struct s { int s; } s;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "1",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c .* 1 int x, y;",
+    "lines.c .* 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c .* 3 struct s { int s; } s;",
+    "lines.c .* 4 int f(void ) { return f2(); } int h(void ) { return h2(); }",
+    "lines.c .* 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }",
+    "lines.c .* 6 int a = 1, b = 2, c;",
+    "lines.c .* 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c .* 1 int x, y;",
+    "lines.c .* 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c .* 3 struct s { int s; } s;",
+    "lines.c .* 3 struct s { int s; } s;",
+    "lines.c .* 3 struct s { int s; } s;",
+    "lines.c .* 4 int f(void ) { return f2(); } int h(void ) { return h2(); }",
+    "lines.c .* 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }",
+    "lines.c .* 6 int a = 1, b = 2, c;",
+    "lines.c .* 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "1",
+   "pattern": "^[ab]$",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c [ab] 6 int a = 1, b = 2, c;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c [ab] 6 int a = 1, b = 2, c;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "f2",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c f 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c f 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "h2",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c h 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c h 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "h",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c h 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c f 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": "x",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": "y",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": "a",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c <global> 6 int a = 1, b = 2, c;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c <global> 6 int a = 1, b = 2, c;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": "b",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c <global> 6 int a = 1, b = 2, c;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c <global> 6 int a = 1, b = 2, c;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": "c",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }",
+    "lines.c k 6 int a = 1, b = 2, c;",
+    "lines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c g 2 void g(void ) { x = x + y; y = 1; }",
+    "lines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }",
+    "lines.c k 6 int a = 1, b = 2, c;",
+    "lines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c f2 4 int f(void ) { return f2(); } int h(void ) { return h2(); }",
+    "lines.c h2 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c f2 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "lines.c f 4 int f(void ) { return f2(); } int h(void ) { return h2(); }",
+    "lines.c h 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "lines.c f 4 int f(void ) { return f2(); } int h(void ) { return h2(); }"
+   ],
+   "stderrq": ""
+  }
+ ]
+}

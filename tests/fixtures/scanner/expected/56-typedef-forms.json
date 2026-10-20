@@ -1,0 +1,653 @@
+{
+ "probe": "probes/56-typedef-forms.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "typedef void (",
+    " *",
+    ")(int );"
+   ],
+   "symbols": [
+    [
+     "t",
+     "__cdecl",
+     false
+    ],
+    [
+     "t",
+     "sig_handler_t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "typedef unsigned int (",
+    " *",
+    ")(const char *);"
+   ],
+   "symbols": [
+    [
+     "t",
+     "WINAPI",
+     false
+    ],
+    [
+     "t",
+     "IF_NAMETOINDEX_FN",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "typedef ",
+    " (",
+    ") (",
+    "* ",
+    ", ",
+    " ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "sds",
+     false
+    ],
+    [
+     "t",
+     "aux_value_getter",
+     false
+    ],
+    [
+     "t",
+     "clusterNode",
+     false
+    ],
+    [
+     "t",
+     "n",
+     false
+    ],
+    [
+     "t",
+     "sds",
+     false
+    ],
+    [
+     "t",
+     "s",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "typedef int (",
+    ") (",
+    "* ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "t",
+     "aux_value_present",
+     false
+    ],
+    [
+     "t",
+     "clusterNode",
+     false
+    ],
+    [
+     "t",
+     "n",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "typedef ",
+    " (",
+    ")(int ",
+    "), (",
+    ")(int ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "T",
+     false
+    ],
+    [
+     "t",
+     "a",
+     false
+    ],
+    [
+     "t",
+     "x",
+     false
+    ],
+    [
+     "t",
+     "b",
+     false
+    ],
+    [
+     "t",
+     "y",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "typedef enum ",
+    " (*",
+    ")(struct ",
+    " *, void *",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "cb_next",
+     false
+    ],
+    [
+     "t",
+     "cb_iter",
+     false
+    ],
+    [
+     "t",
+     "cb_node",
+     false
+    ],
+    [
+     "t",
+     "arg",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "typedef enum ",
+    " (*",
+    ")(struct ",
+    " *",
+    ", struct ",
+    " **",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "rewrite_result",
+     false
+    ],
+    [
+     "t",
+     "rewrite_parent_fn_t",
+     false
+    ],
+    [
+     "t",
+     "rev_info",
+     false
+    ],
+    [
+     "t",
+     "revs",
+     false
+    ],
+    [
+     "t",
+     "commit",
+     false
+    ],
+    [
+     "t",
+     "pp",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "typedef union ",
+    " *(*",
+    ")(int ",
+    ");"
+   ],
+   "symbols": [
+    [
+     " ",
+     "u",
+     false
+    ],
+    [
+     "t",
+     "fp",
+     false
+    ],
+    [
+     "t",
+     "x",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "typedef ",
+    " (*",
+    ")(int ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "T",
+     false
+    ],
+    [
+     "t",
+     "unknown",
+     false
+    ],
+    [
+     "t",
+     "arg",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "typedef void (",
+    " ",
+    " *",
+    ")(const ",
+    " *",
+    ");"
+   ],
+   "symbols": [
+    [
+     "t",
+     "API",
+     false
+    ],
+    [
+     "t",
+     "CALL",
+     false
+    ],
+    [
+     "t",
+     "decorated",
+     false
+    ],
+    [
+     "t",
+     "T",
+     false
+    ],
+    [
+     "t",
+     "arg",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "typedef int (*",
+    "(int ",
+    "))(int ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "t",
+     "nested",
+     false
+    ],
+    [
+     "t",
+     "input",
+     false
+    ],
+    [
+     "t",
+     "output",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "typedef ",
+    "(",
+    " *",
+    ") (",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "TYPEOF",
+     false
+    ],
+    [
+     "t",
+     "left",
+     false
+    ],
+    [
+     "t",
+     "right",
+     false
+    ],
+    [
+     "t",
+     "alias",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "typedef ",
+    "(*",
+    ") (*",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "TYPEOF",
+     false
+    ],
+    [
+     "t",
+     "ptr",
+     false
+    ],
+    [
+     "t",
+     "pointer_alias",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "typedef ",
+    " (*",
+    ")(",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "T",
+     false
+    ],
+    [
+     "t",
+     "opaque",
+     false
+    ],
+    [
+     "t",
+     "Other",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "typedef ",
+    " (*",
+    ")( int ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "T",
+     false
+    ],
+    [
+     "t",
+     "commented",
+     false
+    ],
+    [
+     "t",
+     "arg",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "typedef ",
+    " (*",
+    ")(struct ",
+    " { int ",
+    "; } ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "T",
+     false
+    ],
+    [
+     "t",
+     "aggregate",
+     false
+    ],
+    [
+     "s",
+     "S",
+     false
+    ],
+    [
+     " ",
+     "member",
+     false
+    ],
+    [
+     "t",
+     "arg",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 17,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "after",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "ENABLE_TAG",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "typedef struct ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "ConditionalTag",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 23,
+   "fragments": [
+    "{ int ",
+    "; ",
+    "} ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "member",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ],
+    [
+     "t",
+     "ConditionalAlias",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 24,
+   "fragments": [
+    "typedef ",
+    "(*",
+    ") (",
+    " ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "TYPEOF",
+     false
+    ],
+    [
+     "t",
+     "ptr",
+     false
+    ],
+    [
+     "t",
+     "API",
+     false
+    ],
+    [
+     "t",
+     "decorated_alias",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 25,
+   "fragments": [
+    "typedef ",
+    "(*",
+    ") (",
+    " *",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "TYPEOF",
+     false
+    ],
+    [
+     "t",
+     "ptr",
+     false
+    ],
+    [
+     "t",
+     "API",
+     false
+    ],
+    [
+     "t",
+     "decorated_pointer_alias",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

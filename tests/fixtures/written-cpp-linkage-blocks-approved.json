@@ -1,0 +1,21 @@
+{
+ "decision": "Intended reading of declarations inside C++ linkage blocks.",
+ "reference": "tests/fixtures/written-cpp-linkage-blocks-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "libuv_inline": {
+   "1": {
+    "after": "case.c after 12 int after;\n"
+   }
+  },
+  "if_defined_guard": {
+   "1": {
+    "after": "case.c after 4 int after;\n"
+   }
+  },
+  "empty_block": {
+   "1": {
+    "after": "case.c after 5 int after;\n"
+   }
+  }
+ }
+}

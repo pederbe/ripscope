@@ -1,0 +1,119 @@
+{
+ "probe": "probes/27-define-after-name.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "",
+    "(1); #define ",
+    " ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "#define oo",
+     false
+    ],
+    [
+     "#",
+     "X",
+     false
+    ],
+    [
+     " ",
+     "foo",
+     false
+    ]
+   ],
+   "define_end": true
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "",
+    " = 2; #define ",
+    " ",
+    " + ",
+    "bar"
+   ],
+   "symbols": [
+    [
+     "g",
+     "#define ar",
+     true
+    ],
+    [
+     "#",
+     "Y",
+     false
+    ],
+    [
+     " ",
+     "bar",
+     false
+    ],
+    [
+     ")",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "#include ",
+    "; #include ",
+    "\""
+   ],
+   "symbols": [
+    [
+     "g",
+     "baz",
+     false
+    ],
+    [
+     "~",
+     "\"baz",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "",
+    "(qux); #define ",
+    " ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "#define ux",
+     false
+    ],
+    [
+     "#",
+     "Z",
+     false
+    ],
+    [
+     " ",
+     "qux",
+     false
+    ]
+   ],
+   "define_end": true
+  }
+ ]
+}

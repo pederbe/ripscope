@@ -1,0 +1,1076 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C"
+  },
+  "cases": {
+    "whitespace": {
+      "source": " \tstatic\t int   value = 1; \t\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 static int value = 1;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "keywords": {
+      "source": "void run(void) { if(1) return; else{ while(0) break; } }\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "run"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c run 1 void run(void ) { if(1) return; else { while (0) break; } }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "uncompressed-keywords": {
+      "source": "const signed int value = sizeof(int);\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 const signed int value = sizeof(int );\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "inline-comment": {
+      "source": "int/* gap */value/* tail */= 1; // ignored\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value = 1;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "leading-comment": {
+      "source": "/* heading */int value;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1  int value;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "comment-lines": {
+      "source": "int before; /* ignored\n ignored */ int after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "before"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c before 1 int before;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 2  int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "comment-only-lines": {
+      "source": "/* ignored\n ignored */\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 3 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "comment-keywords": {
+      "source": "void run(void) { if /* gap */ (1) return; }\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "run"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c run 1 void run(void ) { if  (1) return; }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literals": {
+      "source": "char *value = \"int  void\\t\\\" /* text */ // text\";\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"int void\\t\\\" /* text */ // text\";\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-tab": {
+      "source": "char *value = \"a\tb\";\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"a b\";\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "character": {
+      "source": "int value = '\\'';\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value = '\\'';\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "multiline-signature": {
+      "source": "static void\nrun(\n void\n)\n{\n}\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "run"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c run 2 run(\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "multiline-tag": {
+      "source": "struct Item {\n int member;\n};\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 1 struct Item {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c member 2 int member;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "same-line": {
+      "source": "int repeated; int repeated;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "repeated"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c repeated 1 int repeated; int repeated;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-struct": {
+      "source": "typedef struct{int member;} Item;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 1 typedef struct{int member;} Item;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c member 1 typedef struct{int member;} Item;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-union": {
+      "source": "typedef union{int member;} Item;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 1 typedef union{int member;} Item;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c member 1 typedef union{int member;} Item;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-enum": {
+      "source": "typedef enum{ITEM} Kind;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Kind"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Kind 1 typedef enum{ITEM} Kind;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ITEM"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ITEM 1 typedef enum{ITEM} Kind;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-spaced": {
+      "source": "typedef struct  {int member;} Item;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 1 typedef struct {int member;} Item;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c member 1 typedef struct {int member;} Item;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-newline": {
+      "source": "typedef struct\n{int member;} Item;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 2 {int member;} Item;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c member 2 {int member;} Item;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-comment": {
+      "source": "typedef struct/*gap*/{int member;} Item;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 1 typedef struct {int member;} Item;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c member 1 typedef struct {int member;} Item;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-comment-newline": {
+      "source": "int value; typedef struct/* gap\n*/{int member;} Item;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value; typedef struct\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 2  {int member;} Item;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c member 2  {int member;} Item;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-line-comment": {
+      "source": "int value; typedef struct // gap\n{int member;} Item;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value; typedef struct\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 2 {int member;} Item;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c member 2 {int member;} Item;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-union-comment": {
+      "source": "int value; typedef union/* gap\n*/{int member;} Item;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value; typedef union\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Item"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Item 2  {int member;} Item;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "member"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c member 2  {int member;} Item;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "anonymous-enum-comment": {
+      "source": "int value; typedef enum/* gap\n*/{ITEM} Kind;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value; typedef enum\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Kind"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c Kind 2  {ITEM} Kind;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ITEM"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ITEM 2  {ITEM} Kind;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "numeric-else": {
+      "source": "int value = 1else;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value = 1else;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "numeric-char": {
+      "source": "int value = 1char;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value = 1char;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "numeric-if": {
+      "source": "int value = 0xif;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value = 0xif (;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "numeric-ordinary": {
+      "source": "double value = .25e+1; int hex = 0xFULL;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 double value = .25e+1; int hex = 0xFULL;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "hex"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c hex 1 double value = .25e+1; int hex = 0xFULL;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "keyword-eof": {
+      "source": "int value; int",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value; int\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "keyword-before-lf": {
+      "source": "int value; int\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value; int \n",
+          "stderr": ""
+        }
+      ]
+    },
+    "crlf": {
+      "source": "\tint first;\r\n int second;\r\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "first"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c first 1 int first;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "second"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c second 2 int second;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "no-final-newline": {
+      "source": "int value;",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "line-comment-eof": {
+      "source": "int value; // comment",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "macro": {
+      "source": "#  define VALUE(x) ((int)(x))\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE(x) ((int )(x))\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "macro-comment-lines": {
+      "source": "#define VALUE /* comment\n more */ 1\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE 1\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal-continuation": {
+      "source": "char *value = \"first\\\nsecond\";\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"first\\\";\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "macro-continuation": {
+      "source": "#define VALUE \\\n ((int)1)\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \\\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

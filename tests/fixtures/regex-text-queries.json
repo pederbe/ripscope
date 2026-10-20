@@ -1,0 +1,1234 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 2 Alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "^alpha$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "alpha$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "$alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 4 alpha \nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "alpha^"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "^$"
+          ],
+          "exit_code": 0,
+          "stdout": "File does not have expected format\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "^^"
+          ],
+          "exit_code": 0,
+          "stdout": "File does not have expected format\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "$^"
+          ],
+          "exit_code": 0,
+          "stdout": "File does not have expected format\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "^"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "tail$"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "tail"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 20 tail",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "alpha "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 4 alpha \n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            " alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 5  alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            " "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 4 alpha \na.c <unknown> 5  alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "\t"
+          ],
+          "exit_code": 0,
+          "stdout": "File does not have expected format\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "\r"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 19 last\r\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "a{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 7 a{2}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "(ab){2}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "a+"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "a?"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "a*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "a**"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "a+?"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "(alpha|b)"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 8 abab\na.c <unknown> 9 b\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "|alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "alpha|"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "a||b"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "()"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "[a-z]+"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "[A-Z]+"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "[[:upper:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 13 upper:]\na.c <unknown> 14 :]\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "[[:digit:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 13 upper:]\na.c <unknown> 14 :]\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "[^a]"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "[^a]$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 19 last\r\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "\\w"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 11 w\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "\\s"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 12 s\na.c <unknown> 19 last\r\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "\\1"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 10 1\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "\\b"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 8 abab\na.c <unknown> 9 b\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "\\$\\^"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 15 $^\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "\\"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "[a-]"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "[]a]"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-6",
+            "[z-a]"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "Alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "^alpha$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "alpha$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "$alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "alpha^"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "^$"
+          ],
+          "exit_code": 0,
+          "stdout": "File does not have expected format\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "^^"
+          ],
+          "exit_code": 0,
+          "stdout": "File does not have expected format\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "$^"
+          ],
+          "exit_code": 0,
+          "stdout": "File does not have expected format\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "^"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "tail$"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "tail"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 20 tail",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "alpha "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 4 alpha \n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            " alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 5  alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            " "
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 4 alpha \na.c <unknown> 5  alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "\t"
+          ],
+          "exit_code": 0,
+          "stdout": "File does not have expected format\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "\r"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 19 last\r\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "a{2}"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 7 a{2}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "(ab){2}"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "a+"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "a?"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "a*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "a**"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "a+?"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "(alpha|b)"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 8 abab\na.c <unknown> 9 b\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "|alpha"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "alpha|"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\nz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "a||b"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "()"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "[a-z]+"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "[A-Z]+"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "[[:upper:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 13 upper:]\na.c <unknown> 14 :]\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "[[:digit:]]"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 13 upper:]\na.c <unknown> 14 :]\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "[^a]"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "[^a]$"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 4 alpha \na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 19 last\r\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "."
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 9 b\na.c <unknown> 10 1\na.c <unknown> 11 w\na.c <unknown> 12 s\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 15 $^\na.c <unknown> 16 \\\na.c <unknown> 17 \t\na.c <unknown> 18 \na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "\\w"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 11 w\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "\\s"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 12 s\na.c <unknown> 19 last\r\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "\\1"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 10 1\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "\\b"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 8 abab\na.c <unknown> 9 b\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "\\$\\^"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 15 $^\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "\\"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "[a-]"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "[]a]"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <unknown> 1 alpha\na.c <unknown> 2 Alpha\na.c <unknown> 3 ALPHA\na.c <unknown> 4 alpha \na.c <unknown> 5  alpha\na.c <unknown> 6 aaa\na.c <unknown> 7 a{2}\na.c <unknown> 8 abab\na.c <unknown> 13 upper:]\na.c <unknown> 14 :]\na.c <unknown> 19 last\r\na.c <unknown> 20 tailz.c <unknown> 1 alpha\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-6",
+            "[z-a]"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "a.c": "int before;\n",
+    "z.c": "int old;\n"
+  },
+  "seeds": [
+    "z.c",
+    "a.c"
+  ],
+  "field": "6",
+  "build": {
+    "args": [
+      "-bk",
+      "z.c",
+      "a.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "live_files": {
+    "a.c": "alpha\nAlpha\nALPHA\nalpha \n alpha\naaa\na{2}\nabab\nb\n1\nw\ns\nupper:]\n:]\n$^\n\\\n\t\n\nlast\r\ntail",
+    "z.c": "alpha\n"
+  },
+  "unreadable": [],
+  "persistent_input": "6^alpha$\nc\n6^Alpha$\n6[\n6alpha \n6tail\nq\n",
+  "persistent": {
+    "args": [
+      "-dl"
+    ],
+    "exit_code": 0,
+    "stdout": ">> cscope: 2 lines\na.c <unknown> 1 alpha\nz.c <unknown> 1 alpha\n>> >> Unable to search database\n>> Unable to search database\n>> cscope: 1 lines\na.c <unknown> 4 alpha \n>> cscope: 1 lines\na.c <unknown> 20 tail>> ",
+    "stderr": ""
+  },
+  "reference_profile": {
+    "package": "cscope 15.9-2build1",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "source_commit": "612a539b585ccdb70a1261652954f579ccedb270"
+  },
+  "mixed_anchor": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "HOME": "<isolated case directory>",
+      "inherit_other_variables": false
+    },
+    "profiles": [
+      {
+        "caseless": false,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-6",
+              "(.a|$z)"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 1 a\na.c <unknown> 2 z\na.c <unknown> 3 ba\na.c <unknown> 4 xa\na.c <unknown> 5 a",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-6",
+              "([^x]a|$z)"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 1 a\na.c <unknown> 2 z\na.c <unknown> 3 ba\na.c <unknown> 5 a",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-6",
+              ".a"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 3 ba\na.c <unknown> 4 xa\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-6",
+              "[^x]a"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 3 ba\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-6",
+              "$z"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 2 z\n",
+            "stderr": ""
+          }
+        ]
+      },
+      {
+        "caseless": true,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-6",
+              "(.a|$z)"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 1 a\na.c <unknown> 2 z\na.c <unknown> 3 ba\na.c <unknown> 4 xa\na.c <unknown> 5 a",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-6",
+              "([^x]a|$z)"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 1 a\na.c <unknown> 2 z\na.c <unknown> 3 ba\na.c <unknown> 5 a",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-6",
+              ".a"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 3 ba\na.c <unknown> 4 xa\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-6",
+              "[^x]a"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 3 ba\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-6",
+              "$z"
+            ],
+            "exit_code": 0,
+            "stdout": "a.c <unknown> 2 z\n",
+            "stderr": ""
+          }
+        ]
+      }
+    ],
+    "files": {
+      "a.c": "int a;\n"
+    },
+    "seeds": [
+      "a.c"
+    ],
+    "field": "6",
+    "build": {
+      "args": [
+        "-bk",
+        "a.c"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "live_files": {
+      "a.c": "a\nz\nba\nxa\na"
+    },
+    "unreadable": []
+  }
+}

@@ -1,0 +1,416 @@
+{
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "commands": [
+   "cscope -bk <files>",
+   "cscope -dL [-C] -<field> <pattern>"
+  ],
+  "inverted_index": "rowsq/statusq/stderrq: the same queries on `cscope -bqk -f qscope.out <files>`",
+  "rows": "each byte one character (Latin-1)"
+ },
+ "files": [
+  "Second.c",
+  "names.c"
+ ],
+ "queries": [
+  {
+   "field": "8",
+   "pattern": "types",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 1 #include <sys/types.h>"
+   ],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": "sys/types.h",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 1 #include <sys/types.h>"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 1 #include <sys/types.h>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": "^sys",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 1 #include <sys/types.h>"
+   ],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": "h$",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 1 #include <sys/types.h>",
+    "names.c <global> 2 #include \"dir/sub.h\""
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 1 #include <sys/types.h>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": "sub",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 2 #include \"dir/sub.h\""
+   ],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": "upper",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 3 #include \"Upper.H\""
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 3 #include \"Upper.H\""
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": "Upper",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 3 #include \"Upper.H\""
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 3 #include \"Upper.H\""
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 1 #include <sys/types.h>",
+    "names.c <global> 2 #include \"dir/sub.h\"",
+    "names.c <global> 3 #include \"Upper.H\""
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 1 #include <sys/types.h>",
+    "names.c <global> 2 #include \"dir/sub.h\"",
+    "names.c <global> 3 #include \"Upper.H\""
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "7",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "Second.c <unknown> 1 <unknown>",
+    "names.c <unknown> 1 <unknown>"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "Second.c <unknown> 1 <unknown>",
+    "names.c <unknown> 1 <unknown>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "7",
+   "pattern": "^n",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <unknown> 1 <unknown>"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <unknown> 1 <unknown>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "7",
+   "pattern": "c$",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "Second.c <unknown> 1 <unknown>",
+    "names.c <unknown> 1 <unknown>"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "Second.c <unknown> 1 <unknown>",
+    "names.c <unknown> 1 <unknown>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "7",
+   "pattern": "second",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "Second.c <unknown> 1 <unknown>"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "Second.c <unknown> 1 <unknown>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "7",
+   "pattern": "Second",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "Second.c <unknown> 1 <unknown>"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "Second.c <unknown> 1 <unknown>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "Second.c <global> 1 int Other;",
+    "names.c <global> 4 int $dollar = 1;",
+    "names.c <global> 5 int Mixed_Case;",
+    "names.c <global> 6 int _under;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "Second.c <global> 1 int Other;",
+    "names.c <global> 4 int $dollar = 1;",
+    "names.c <global> 5 int Mixed_Case;",
+    "names.c <global> 6 int _under;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "$dollar",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "_under",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 6 int _under;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 6 int _under;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "mixed_case",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "mixed_case",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 5 int Mixed_Case;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 5 int Mixed_Case;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": ".*case",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 5 int Mixed_Case;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 5 int Mixed_Case;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "_.*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 6 int _under;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 6 int _under;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "[$].*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 4 int $dollar = 1;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 4 int $dollar = 1;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "1",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "Second.c .* 1 int Other;",
+    "names.c .* 4 int $dollar = 1;",
+    "names.c .* 5 int Mixed_Case;",
+    "names.c .* 6 int _under;",
+    "names.c .* 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "Second.c .* 1 int Other;",
+    "names.c .* 4 int $dollar = 1;",
+    "names.c .* 5 int Mixed_Case;",
+    "names.c .* 6 int _under;",
+    "names.c .* 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "1",
+   "pattern": "MIXED.*",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c MIXED.* 5 int Mixed_Case;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c MIXED.* 5 int Mixed_Case;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 4 int $dollar = 1;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 4 int $dollar = 1;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "M.*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "names.c <global> 5 int Mixed_Case;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "names.c <global> 5 int Mixed_Case;",
+    "names.c use 7 void use(void ) { Mixed_Case = $dollar + _under; }"
+   ],
+   "stderrq": ""
+  }
+ ]
+}

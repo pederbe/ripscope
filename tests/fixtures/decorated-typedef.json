@@ -1,0 +1,509 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "cases": [
+    {
+      "name": "scalar",
+      "source": "typedef int API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef int API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef int API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "aliased",
+      "source": "typedef Type API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef Type API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef Type API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "pointer",
+      "source": "typedef int * API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef int * API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef int * API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "before-pointer",
+      "source": "typedef int API *x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef int API *x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef int API *x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "array",
+      "source": "typedef int API x[3];\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef int API x[3];\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef int API x[3];\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "struct",
+      "source": "typedef struct S { int p; } API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef struct S { int p; } API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "case.c p 1 typedef struct S { int p; } API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef struct S { int p; } API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "case.c S 1 typedef struct S { int p; } API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "anonymous",
+      "source": "typedef struct { int p; } API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef struct { int p; } API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "case.c p 1 typedef struct { int p; } API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef struct { int p; } API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "ordinary",
+      "source": "typedef int x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "mixed",
+      "source": "typedef int API x, p;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef int API x, p;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "case.c p 1 typedef int API x, p;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef int API x, p;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "function-pointer",
+      "source": "typedef int API (*x)(void);\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 typedef int API (*x)(void );\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 typedef int API (*x)(void );\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "macro-defined",
+      "source": "#define API\ntypedef int API x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 #define API\ncase.c API 2 typedef int API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 2 typedef int API x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "local",
+      "source": "void f(void) { typedef int API x; }\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "case.c API 1 void f(void ) { typedef int API x; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 void f(void ) { typedef int API x; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 1 void f(void ) { typedef int API x; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "S",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}

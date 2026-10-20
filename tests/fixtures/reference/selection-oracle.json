@@ -1,0 +1,402 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "cases": [
+    {
+      "name": "quoted-root",
+      "workspace": "/var/tmp/ripscope-selection-48qm5mbl",
+      "files": {
+        "sub/a.c": "#include \"x.h\"\nint seed = 1;\n",
+        "x.h": "#include \"sub/a.c\"\nint root_choice = 1;\n",
+        "sub/x.h": "int sub_choice = 1;\n",
+        "one/x.h": "int first_choice = 1;\n",
+        "two/x.h": "int second_choice = 1;\n"
+      },
+      "runs": [
+        {
+          "args": [
+            "-bk",
+            "-f",
+            "index",
+            "sub/a.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-7",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "sub/a.c <unknown> 1 <unknown>\nx.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-1",
+            ".*choice"
+          ],
+          "exit": 0,
+          "stdout": "x.h .*choice 2 int root_choice = 1;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "angle-ordered",
+      "workspace": "/var/tmp/ripscope-selection-0ro0a4fb",
+      "files": {
+        "sub/a.c": "#include <x.h>\nint seed = 1;\n",
+        "x.h": "#include \"sub/a.c\"\nint root_choice = 1;\n",
+        "sub/x.h": "int sub_choice = 1;\n",
+        "one/x.h": "int first_choice = 1;\n",
+        "two/x.h": "int second_choice = 1;\n"
+      },
+      "runs": [
+        {
+          "args": [
+            "-bk",
+            "-f",
+            "index",
+            "-I",
+            "one",
+            "-I",
+            "two",
+            "sub/a.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-7",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "sub/a.c <unknown> 1 <unknown>\none/x.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-1",
+            ".*choice"
+          ],
+          "exit": 0,
+          "stdout": "one/x.h .*choice 1 int first_choice = 1;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "angle-reversed",
+      "workspace": "/var/tmp/ripscope-selection-mszni1hd",
+      "files": {
+        "sub/a.c": "#include <x.h>\nint seed = 1;\n",
+        "x.h": "#include \"sub/a.c\"\nint root_choice = 1;\n",
+        "sub/x.h": "int sub_choice = 1;\n",
+        "one/x.h": "int first_choice = 1;\n",
+        "two/x.h": "int second_choice = 1;\n"
+      },
+      "runs": [
+        {
+          "args": [
+            "-bk",
+            "-f",
+            "index",
+            "-I",
+            "two",
+            "-I",
+            "one",
+            "sub/a.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-7",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "sub/a.c <unknown> 1 <unknown>\ntwo/x.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-1",
+            ".*choice"
+          ],
+          "exit": 0,
+          "stdout": "two/x.h .*choice 1 int second_choice = 1;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "angle-selected",
+      "workspace": "/var/tmp/ripscope-selection-atp9_2rj",
+      "files": {
+        "sub/a.c": "#include <x.h>\nint seed = 1;\n",
+        "x.h": "#include \"sub/a.c\"\nint root_choice = 1;\n",
+        "sub/x.h": "int sub_choice = 1;\n",
+        "one/x.h": "int first_choice = 1;\n",
+        "two/x.h": "int second_choice = 1;\n"
+      },
+      "runs": [
+        {
+          "args": [
+            "-bk",
+            "-f",
+            "index",
+            "x.h",
+            "sub/a.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-7",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "sub/a.c <unknown> 1 <unknown>\nx.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-1",
+            ".*choice"
+          ],
+          "exit": 0,
+          "stdout": "x.h .*choice 2 int root_choice = 1;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "duplicate-seeds",
+      "workspace": "/var/tmp/ripscope-selection-jzrop90g",
+      "files": {
+        "sub/a.c": "#include \"x.h\"\nint seed = 1;\n",
+        "x.h": "#include \"sub/a.c\"\nint root_choice = 1;\n",
+        "sub/x.h": "int sub_choice = 1;\n",
+        "one/x.h": "int first_choice = 1;\n",
+        "two/x.h": "int second_choice = 1;\n"
+      },
+      "runs": [
+        {
+          "args": [
+            "-bk",
+            "-f",
+            "index",
+            "x.h",
+            "x.h",
+            "./x.h",
+            "sub/../x.h",
+            "sub/a.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-7",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "sub/a.c <unknown> 1 <unknown>\nx.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-1",
+            ".*choice"
+          ],
+          "exit": 0,
+          "stdout": "x.h .*choice 2 int root_choice = 1;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "missing",
+      "workspace": "/var/tmp/ripscope-selection-ocst8rwd",
+      "files": {
+        "sub/a.c": "#include \"absent.h\"\nint seed = 1;\n",
+        "x.h": "#include \"sub/a.c\"\nint root_choice = 1;\n",
+        "sub/x.h": "int sub_choice = 1;\n",
+        "one/x.h": "int first_choice = 1;\n",
+        "two/x.h": "int second_choice = 1;\n"
+      },
+      "runs": [
+        {
+          "args": [
+            "-bk",
+            "-f",
+            "index",
+            "sub/a.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-7",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "sub/a.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-1",
+            ".*choice"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "inactive-cycle",
+      "workspace": "/var/tmp/ripscope-selection-v1448jiq",
+      "files": {
+        "sub/a.c": "#if 0\n#include \"x.h\"\n#endif\nint seed = 1;\n",
+        "x.h": "#include \"sub/a.c\"\nint root_choice = 1;\n",
+        "sub/x.h": "int sub_choice = 1;\n",
+        "one/x.h": "int first_choice = 1;\n",
+        "two/x.h": "int second_choice = 1;\n"
+      },
+      "runs": [
+        {
+          "args": [
+            "-bk",
+            "-f",
+            "index",
+            "sub/a.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-7",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "sub/a.c <unknown> 1 <unknown>\nx.h <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-1",
+            ".*choice"
+          ],
+          "exit": 0,
+          "stdout": "x.h .*choice 2 int root_choice = 1;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "nonliteral",
+      "workspace": "/var/tmp/ripscope-selection-4f1g_czy",
+      "files": {
+        "sub/a.c": "#define HEADER \"x.h\"\n#include HEADER\nint seed = 1;\n",
+        "x.h": "#include \"sub/a.c\"\nint root_choice = 1;\n",
+        "sub/x.h": "int sub_choice = 1;\n",
+        "one/x.h": "int first_choice = 1;\n",
+        "two/x.h": "int second_choice = 1;\n"
+      },
+      "runs": [
+        {
+          "args": [
+            "-bk",
+            "-f",
+            "index",
+            "sub/a.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-7",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "sub/a.c <unknown> 1 <unknown>\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-f",
+            "index",
+            "-1",
+            ".*choice"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}

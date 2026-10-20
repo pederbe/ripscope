@@ -1,0 +1,91 @@
+{
+ "decision": "Intended reading of trailing opaque annotations and of prefixed typedef-name function pointers.",
+ "reference": "tests/fixtures/written-declaration-annotations-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "pointer_suffix": {
+   "1": {
+    "Free": "case.c Free 2 API void (*Free)(void *p) ATTR;\n",
+    "ATTR": "",
+    "bytes": "",
+    "after": "case.c after 3 int after;\n"
+   }
+  },
+  "suffix_order": {
+   "1": {
+    "Log": "case.c Log 1 API void (*Log)(const char *fmt, ...) ATTR PRINTF(3,4);\n",
+    "after": "case.c after 2 int after;\n"
+   }
+  },
+  "prototype_suffix": {
+   "0": {
+    "Helper": "case.c <global> 1 static int Helper(int x) ATTR;\n",
+    "ATTR": "case.c <global> 1 static int Helper(int x) ATTR;\n",
+    "x": "case.c <global> 1 static int Helper(int x) ATTR;\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "Helper": "",
+    "after": "case.c after 2 int after;\n"
+   },
+   "2": {
+    "Helper": ""
+   },
+   "3": {
+    "h": "case.c g 3 int g(void ) { return h(); }\n"
+   }
+  },
+  "suffix_arguments": {
+   "0": {
+    "f": "case.c <global> 1 int f(int x) ATTR(g(1));\ncase.c h 2 void h(void ) { f(2); }\n",
+    "g": "case.c <global> 1 int f(int x) ATTR(g(1));\n",
+    "ATTR": "case.c <global> 1 int f(int x) ATTR(g(1));\n",
+    "x": "case.c <global> 1 int f(int x) ATTR(g(1));\n"
+   },
+   "1": {
+    "f": ""
+   },
+   "2": {
+    "f": ""
+   },
+   "3": {
+    "ATTR": "",
+    "g": "",
+    "f": "case.c h 2 void h(void ) { f(2); }\n"
+   }
+  },
+  "composed": {
+   "0": {
+    "ValueLength": "case.c <global> 1 API size_t (*ValueLength)(Key *kp) ATTR;\n",
+    "ATTR": "case.c <global> 1 API size_t (*ValueLength)(Key *kp) ATTR;\n",
+    "size_t": "case.c <global> 1 API size_t (*ValueLength)(Key *kp) ATTR;\n",
+    "kp": "case.c <global> 1 API size_t (*ValueLength)(Key *kp) ATTR;\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "ValueLength": "case.c ValueLength 1 API size_t (*ValueLength)(Key *kp) ATTR;\n",
+    "size_t": "",
+    "after": "case.c after 2 int after;\n"
+   }
+  },
+  "prefixed_pointers": {
+   "0": {
+    "getMonotonicUs": "case.c <global> 1 extern monotime (*getMonotonicUs)(void );\n",
+    "p": "case.c <global> 2 extern T (*p)(int ) = init;\n",
+    "s": "case.c <global> 3 static T (*s)(int );\n",
+    "c": "case.c <global> 4 const T (*c)(int );\n",
+    "a": "case.c <global> 5 A T (*a)(int );\n",
+    "T": "case.c <global> 2 extern T (*p)(int ) = init;\ncase.c <global> 3 static T (*s)(int );\ncase.c <global> 4 const T (*c)(int );\ncase.c <global> 5 A T (*a)(int );\n",
+    "monotime": "case.c <global> 1 extern monotime (*getMonotonicUs)(void );\n",
+    "after": "case.c <global> 6 int after;\n"
+   },
+   "1": {
+    "s": "case.c s 3 static T (*s)(int );\n",
+    "c": "case.c c 4 const T (*c)(int );\n",
+    "a": "case.c a 5 A T (*a)(int );\n",
+    "T": "",
+    "monotime": "",
+    "after": "case.c after 6 int after;\n"
+   }
+  }
+ }
+}

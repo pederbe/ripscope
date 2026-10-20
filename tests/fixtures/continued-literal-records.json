@@ -1,0 +1,371 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "cases": {
+    "ordinary-lf": {
+      "source": "char *value = \"first\\\n second\"; int after;\nint final;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"first\\\"; int after;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 1 char *value = \"first\\\"; int after;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "final"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c final 3 int final;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "ordinary-crlf": {
+      "source": "char *value = \"first\\\r\n second\"; int after;\r\nint final;\r\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"first\\extern \n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "final"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "macro-lf": {
+      "source": "#define VALUE \"first\\\n second\"\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \"first\\\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 3 int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "macro-crlf": {
+      "source": "#define VALUE \"first\\\r\n second\"\r\nint after;\r\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \"first\\extern \n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "multiple-lf": {
+      "source": "char *value = \"a  \\\n\tb\\\nc\"; int after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"a  \\\\\"; int after;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 1 char *value = \"a  \\\\\"; int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "character-lf": {
+      "source": "int value = '\\\na'; int after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 int value = '\\'; int after;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 1 int value = '\\'; int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "two-backslashes": {
+      "source": "char *value = \"a\\\\\nb\"; int after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"a\\\\\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "adjacent-physical-lines": {
+      "source": "char *value = \"first\"\n \"second\"; int after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"first\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 2 \"second\"; int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "no-final-lf": {
+      "source": "char *value = \"first\\\n second\"; int after;",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c value 1 char *value = \"first\\\"; int after;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 1 char *value = \"first\\\"; int after;\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "macro-then-comment": {
+      "source": "#define VALUE \"first\\\n second\" /*one\ntwo*/\nint after;\n",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "VALUE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c VALUE 1 #define VALUE \"first\\\"\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 4 int after;\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1741 @@
+{
+  "ordinary-payload": {
+    "0": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) { sink(int (*)(int hidden(int))); }\n"
+      },
+      "seeds": null,
+      "field": "0",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    },
+    "1": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c .* 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c .* 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) { sink(int (*)(int hidden(int))); }\n"
+      },
+      "seeds": null,
+      "field": "1",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    },
+    "2": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c sink 1 void f(void ) { sink(int (*)(int hidden(int ))); }\ncase.c hidden 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c sink 1 void f(void ) { sink(int (*)(int hidden(int ))); }\ncase.c hidden 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c sink 1 void f(void ) { sink(int (*)(int hidden(int ))); }\ncase.c hidden 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c sink 1 void f(void ) { sink(int (*)(int hidden(int ))); }\ncase.c hidden 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) { sink(int (*)(int hidden(int))); }\n"
+      },
+      "seeds": null,
+      "field": "2",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    },
+    "3": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\ncase.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\ncase.c f 1 void f(void ) { sink(int (*)(int hidden(int ))); }\n",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) { sink(int (*)(int hidden(int))); }\n"
+      },
+      "seeds": null,
+      "field": "3",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    },
+    "9": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "callback"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "local"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "bound"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) { sink(int (*)(int hidden(int))); }\n"
+      },
+      "seeds": null,
+      "field": "9",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    }
+  },
+  "simple-region": {
+    "0": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) {\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 5 after(); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-0",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) {\ncase.c f 2 #if A\ncase.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c f 5 after(); }\n",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) {\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 5 after(); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-0",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) {\ncase.c f 2 #if A\ncase.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c f 5 after(); }\n",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) {\n#if A\nCall sink(int (*)(int hidden(int))) COUNT-3 more times\n#endif\nafter(); }\n"
+      },
+      "seeds": null,
+      "field": "0",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    },
+    "1": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) {\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-1",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c .* 1 void f(void ) {\n",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 1 void f(void ) {\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-1",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c .* 1 void f(void ) {\n",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) {\n#if A\nCall sink(int (*)(int hidden(int))) COUNT-3 more times\n#endif\nafter(); }\n"
+      },
+      "seeds": null,
+      "field": "1",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    },
+    "2": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c sink 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c hidden 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c after 5 after(); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-2",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c sink 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c hidden 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c after 5 after(); }\n",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c sink 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c hidden 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c after 5 after(); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-2",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c sink 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c hidden 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c after 5 after(); }\n",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) {\n#if A\nCall sink(int (*)(int hidden(int))) COUNT-3 more times\n#endif\nafter(); }\n"
+      },
+      "seeds": null,
+      "field": "2",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    },
+    "3": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 5 after(); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-3",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c f 5 after(); }\n",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 5 after(); }\n",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-3",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "case.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c f 3 Call sink(int (*)(int hidden(int ))) COUNT-3 more times\ncase.c f 5 after(); }\n",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) {\n#if A\nCall sink(int (*)(int hidden(int))) COUNT-3 more times\n#endif\nafter(); }\n"
+      },
+      "seeds": null,
+      "field": "3",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    },
+    "9": {
+      "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+      "environment": {
+        "LC_ALL": "C",
+        "PATH": "/usr/bin:/bin",
+        "HOME": "<isolated case directory>",
+        "inherit_other_variables": false
+      },
+      "profiles": [
+        {
+          "caseless": false,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-9",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            }
+          ]
+        },
+        {
+          "caseless": true,
+          "queries": [
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "f"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "hidden"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "sink"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                "after"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            },
+            {
+              "args": [
+                "-dL",
+                "-C",
+                "-9",
+                ".*"
+              ],
+              "exit_code": 0,
+              "stdout": "",
+              "stderr": ""
+            }
+          ]
+        }
+      ],
+      "files": {
+        "case.c": "void f(void) {\n#if A\nCall sink(int (*)(int hidden(int))) COUNT-3 more times\n#endif\nafter(); }\n"
+      },
+      "seeds": null,
+      "field": "9",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sources_deleted_before_queries": true,
+      "unreadable": []
+    }
+  }
+}

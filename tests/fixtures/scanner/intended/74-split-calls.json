@@ -1,0 +1,225 @@
+{
+  "probe": "probes/74-split-calls.c",
+  "records": [
+    {
+      "line": 1,
+      "fragments": [
+        "static int ",
+        "(int ",
+        ") { return value; ",
+        "}"
+      ],
+      "symbols": [
+        [
+          "$",
+          "leaf",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 2,
+      "fragments": [
+        "int ",
+        "(void ) { return ",
+        "(1); ",
+        "}"
+      ],
+      "symbols": [
+        [
+          "$",
+          "ordinary",
+          false
+        ],
+        [
+          "`",
+          "leaf",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 3,
+      "fragments": [
+        "int ",
+        "(void ) { return (",
+        "(1)); ",
+        "}"
+      ],
+      "symbols": [
+        [
+          "$",
+          "grouped",
+          false
+        ],
+        [
+          "`",
+          "leaf",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 4,
+      "fragments": [
+        "int ",
+        "(void ) {"
+      ],
+      "symbols": [
+        [
+          "$",
+          "split",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 5,
+      "fragments": [
+        "return (",
+        ""
+      ],
+      "symbols": [
+        [
+          "`",
+          "leaf",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 7,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 8,
+      "fragments": [
+        "int ",
+        "(int ",
+        ") {"
+      ],
+      "symbols": [
+        [
+          "$",
+          "assigned",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 9,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "symbols": [
+        [
+          " ",
+          "result",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 10,
+      "fragments": [
+        "if ((",
+        " = (",
+        ""
+      ],
+      "symbols": [
+        [
+          " ",
+          "result",
+          true
+        ],
+        [
+          "`",
+          "leaf",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 11,
+      "fragments": [
+        "(",
+        ")))) return ",
+        ";"
+      ],
+      "symbols": [
+        [
+          " ",
+          "value",
+          false
+        ],
+        [
+          " ",
+          "result",
+          false
+        ]
+      ],
+      "define_end": false
+    },
+    {
+      "line": 13,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ],
+      "define_end": false
+    }
+  ],
+  "note": "The split-calls Correction records ordinary function-body expression calls across a bounded line-ending gap; the reference and disabled readings omit leaf at lines 5 and 10. All other records and displayed text are unchanged."
+}

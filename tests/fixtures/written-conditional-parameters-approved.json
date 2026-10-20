@@ -1,0 +1,135 @@
+{
+ "decision": "Conditional parameters in function heads: definitions define the function and own their body calls. Calls on #if and #elif lines inside a definition's parameter list are calls from that function.",
+ "reference": "tests/fixtures/written-conditional-parameters-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "definition": {
+   "0": {
+    "g": "case.c lzf_compress 9 g(in_data);\n",
+    "lzf_compress": "case.c lzf_compress 2 lzf_compress (const void *const in_data, unsigned int in_len,\n",
+    "in_data": "case.c lzf_compress 2 lzf_compress (const void *const in_data, unsigned int in_len,\ncase.c lzf_compress 9 g(in_data);\n",
+    "in_len": "case.c lzf_compress 2 lzf_compress (const void *const in_data, unsigned int in_len,\n",
+    "out_data": "case.c lzf_compress 3 void *out_data, unsigned int out_len\n",
+    "out_len": "case.c lzf_compress 3 void *out_data, unsigned int out_len\n",
+    "LZF_STATE": "case.c lzf_compress 5 , LZF_STATE htab\n",
+    "htab": "case.c lzf_compress 5 , LZF_STATE htab\n",
+    "LZF_STATE_ARG": "case.c lzf_compress 4 #if LZF_STATE_ARG\n"
+   },
+   "1": {
+    "lzf_compress": "case.c lzf_compress 2 lzf_compress (const void *const in_data, unsigned int in_len,\n"
+   },
+   "2": {
+    "lzf_compress": "case.c g 9 g(in_data);\n"
+   },
+   "3": {
+    "g": "case.c lzf_compress 9 g(in_data);\n"
+   }
+  },
+  "defined_in_parameters": {
+   "0": {
+    "Curl_conncontrol": "case.c Curl_conncontrol 1 void Curl_conncontrol(struct connectdata *conn, int ctrl\n",
+    "connectdata": "case.c Curl_conncontrol 1 void Curl_conncontrol(struct connectdata *conn, int ctrl\n",
+    "conn": "case.c Curl_conncontrol 1 void Curl_conncontrol(struct connectdata *conn, int ctrl\ncase.c Curl_conncontrol 7 g(conn);\n",
+    "reason": "case.c Curl_conncontrol 3 , const char *reason\n",
+    "g": "case.c Curl_conncontrol 7 g(conn);\n",
+    "DEBUGBUILD": "case.c Curl_conncontrol 2 #if defined(DEBUGBUILD) && !defined(CURL_DISABLE_VERBOSE_STRINGS)\n",
+    "defined": "case.c Curl_conncontrol 2 #if defined(DEBUGBUILD) && !defined(CURL_DISABLE_VERBOSE_STRINGS)\n",
+    "ctrl": "case.c Curl_conncontrol 1 void Curl_conncontrol(struct connectdata *conn, int ctrl\n"
+   },
+   "1": {
+    "Curl_conncontrol": "case.c Curl_conncontrol 1 void Curl_conncontrol(struct connectdata *conn, int ctrl\n"
+   },
+   "2": {
+    "Curl_conncontrol": "case.c defined 2 #if defined(DEBUGBUILD) && !defined(CURL_DISABLE_VERBOSE_STRINGS)\ncase.c g 7 g(conn);\n"
+   },
+   "3": {
+    "g": "case.c Curl_conncontrol 7 g(conn);\n",
+    "defined": "case.c Curl_conncontrol 2 #if defined(DEBUGBUILD) && !defined(CURL_DISABLE_VERBOSE_STRINGS)\n"
+   }
+  },
+  "nested_defined": {
+   "0": {
+    "g": "case.c f 8 { g(a); }\n",
+    "f": "case.c f 1 void f(int a\n",
+    "a": "case.c f 1 void f(int a\ncase.c f 8 { g(a); }\n",
+    "b": "case.c f 4 , int b\n",
+    "defined": "case.c f 2 #if defined(A)\ncase.c f 3 #if defined(B)\n",
+    "A": "case.c f 2 #if defined(A)\n",
+    "B": "case.c f 3 #if defined(B)\n"
+   },
+   "1": {
+    "f": "case.c f 1 void f(int a\n"
+   },
+   "2": {
+    "f": "case.c defined 2 #if defined(A)\ncase.c defined 3 #if defined(B)\ncase.c g 8 { g(a); }\n"
+   },
+   "3": {
+    "g": "case.c f 8 { g(a); }\n",
+    "defined": "case.c f 2 #if defined(A)\ncase.c f 3 #if defined(B)\n"
+   },
+   "caseless": {
+    "0": {
+     "a": "case.c f 1 void f(int a\ncase.c f 2 #if defined(A)\ncase.c f 8 { g(a); }\n",
+     "b": "case.c f 3 #if defined(B)\ncase.c f 4 , int b\n",
+     "A": "case.c f 1 void f(int a\ncase.c f 2 #if defined(A)\ncase.c f 8 { g(a); }\n",
+     "B": "case.c f 3 #if defined(B)\ncase.c f 4 , int b\n"
+    }
+   }
+  },
+  "elif_defined": {
+   "0": {
+    "g": "case.c f 7 { g(a); }\n",
+    "f": "case.c f 1 void f(int a\n",
+    "a": "case.c f 1 void f(int a\ncase.c f 7 { g(a); }\n",
+    "b": "case.c f 4 , int b\n",
+    "defined": "case.c f 3 #elif defined(B)\n",
+    "A": "case.c f 2 #if A\n",
+    "B": "case.c f 3 #elif defined(B)\n"
+   },
+   "1": {
+    "f": "case.c f 1 void f(int a\n"
+   },
+   "2": {
+    "f": "case.c defined 3 #elif defined(B)\ncase.c g 7 { g(a); }\n"
+   },
+   "3": {
+    "g": "case.c f 7 { g(a); }\n",
+    "defined": "case.c f 3 #elif defined(B)\n"
+   },
+   "caseless": {
+    "0": {
+     "a": "case.c f 1 void f(int a\ncase.c f 2 #if A\ncase.c f 7 { g(a); }\n",
+     "b": "case.c f 3 #elif defined(B)\ncase.c f 4 , int b\n",
+     "A": "case.c f 1 void f(int a\ncase.c f 2 #if A\ncase.c f 7 { g(a); }\n",
+     "B": "case.c f 3 #elif defined(B)\ncase.c f 4 , int b\n"
+    }
+   }
+  },
+  "invocation_condition": {
+   "0": {
+    "g": "case.c f 7 { g(a); }\n",
+    "f": "case.c f 1 void f(int a\n",
+    "a": "case.c f 1 void f(int a\ncase.c f 7 { g(a); }\n",
+    "b": "case.c f 3 , int b\n",
+    "CHECK": "case.c f 2 #if CHECK(D)\n",
+    "D": "case.c f 2 #if CHECK(D)\n"
+   },
+   "1": {
+    "f": "case.c f 1 void f(int a\n"
+   },
+   "2": {
+    "f": "case.c CHECK 2 #if CHECK(D)\ncase.c g 7 { g(a); }\n"
+   },
+   "3": {
+    "g": "case.c f 7 { g(a); }\n",
+    "CHECK": "case.c f 2 #if CHECK(D)\n"
+   },
+   "caseless": {
+    "0": {
+     "d": "case.c f 2 #if CHECK(D)\n",
+     "A": "case.c f 1 void f(int a\ncase.c f 7 { g(a); }\n",
+     "B": "case.c f 3 , int b\n"
+    }
+   }
+  }
+ }
+}

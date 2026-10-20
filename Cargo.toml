@@ -1,0 +1,137 @@
+[package]
+name = "ripscope"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.98"
+description = "Cscope-compatible code navigation for C with content-aware, atomic index updates"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/pederbe/ripscope"
+homepage = "https://ripscope.com"
+documentation = "https://ripscope.com/docs"
+readme = "README.md"
+keywords = ["cscope", "c", "code-navigation", "cross-reference", "vim"]
+categories = ["command-line-utilities", "development-tools"]
+include = ["/src", "/README.md", "/CHANGELOG.md", "/LICENSE-MIT", "/LICENSE-APACHE"]
+
+[features]
+session-profile = []
+
+# Keep release optimization and inlining, with matching Rust and bundled-C symbols.
+[profile.profiling]
+inherits = "release"
+debug = 2
+strip = false
+
+[dependencies]
+blake3 = "=1.8.7"
+foldhash = "=0.2.0"
+memchr = "=2.8.3"
+regex-syntax = "=0.8.11"
+regex = "=1.13.1"
+rusqlite = { version = "=0.40.2", features = ["bundled"] }
+serde_json = "=1.0.151"
+sha2 = "=0.10.9"
+tempfile = "=3.27.0"
+
+[target.'cfg(unix)'.dependencies]
+rustix = { version = "=1.1.4", features = ["fs"] }
+
+[target.'cfg(windows)'.dependencies]
+# 9.0 reports a ReadDirectoryChangesW overflow as a rescan; 8.2 drops it silently.
+notify = { version = "=9.0.0-rc.5", default-features = false }
+winx = "=0.36.4"
+
+[target.'cfg(unix)'.dev-dependencies]
+rustix = { version = "=1.1.4", features = ["process"] }
+
+[target.'cfg(windows)'.dev-dependencies]
+process-wrap = { version = "=10.0.1", default-features = false, features = ["std", "job-object"] }
+win32job = "=2.0.3"
+
+[[example]]
+name = "check-emacs"
+path = "tests/editor/check_emacs.rs"
+test = true
+
+[[example]]
+name = "check-vim"
+path = "tests/editor/check_vim.rs"
+test = true
+
+[[example]]
+name = "check-neovim"
+path = "tests/editor/check_neovim.rs"
+test = true
+
+[[example]]
+name = "check-editor-setup"
+path = "tests/editor/check_setup.rs"
+test = true
+
+[[example]]
+name = "assess-navigation"
+path = "examples/assess-navigation.rs"
+test = true
+
+[[example]]
+name = "coverage-campaign"
+path = "examples/coverage-campaign.rs"
+test = true
+
+[[example]]
+name = "assess-challenges"
+path = "examples/assess-challenges.rs"
+test = true
+
+[[example]]
+name = "report-coverage"
+path = "examples/report-coverage.rs"
+test = true
+
+[[example]]
+name = "stress-readers"
+path = "examples/stress-readers.rs"
+test = true
+
+[[example]]
+name = "conditional-heads"
+path = "examples/conditional-heads.rs"
+test = true
+
+[[example]]
+name = "assess-workflows"
+path = "examples/assess-workflows.rs"
+test = true
+
+[[example]]
+name = "compass-scale"
+path = "examples/compass-scale.rs"
+test = true
+
+[[example]]
+name = "scanner-probes"
+path = "examples/scanner-probes.rs"
+test = true
+
+[[example]]
+name = "query-probes"
+path = "examples/query-probes.rs"
+test = true
+
+[[example]]
+name = "query-semantics"
+path = "examples/query-semantics.rs"
+test = true
+
+[[example]]
+name = "intended-answers"
+path = "examples/intended-answers.rs"
+test = true
+
+[[example]]
+name = "workflow-fixture"
+path = "tests/support/workflow_fixture.rs"
+test = false
+
+[lints.rust]
+unsafe_code = "forbid"

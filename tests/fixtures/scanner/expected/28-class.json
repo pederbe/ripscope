@@ -1,0 +1,194 @@
+{
+ "probe": "probes/28-class.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "class ",
+    " { int ",
+    "; } ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "c",
+     "Foo",
+     false
+    ],
+    [
+     "m",
+     "x",
+     false
+    ],
+    [
+     "g",
+     "foo",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "class ",
+    " ",
+    "{ int ",
+    "; };"
+   ],
+   "symbols": [
+    [
+     "g",
+     "class",
+     false
+    ],
+    [
+     "c",
+     "",
+     false
+    ],
+    [
+     "m",
+     "y",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "struct ",
+    " ",
+    "{ int ",
+    "; };"
+   ],
+   "symbols": [
+    [
+     "g",
+     "class",
+     false
+    ],
+    [
+     "s",
+     "",
+     false
+    ],
+    [
+     "m",
+     "z",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "class ",
+    " : ",
+    " ",
+    " { void ",
+    "(void ) { ",
+    "(); } ",
+    "};"
+   ],
+   "symbols": [
+    [
+     "c",
+     "Bar",
+     false
+    ],
+    [
+     " ",
+     "public",
+     false
+    ],
+    [
+     " ",
+     "Base",
+     false
+    ],
+    [
+     "$",
+     "method",
+     false
+    ],
+    [
+     "`",
+     "run",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "class",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "class",
+     false
+    ],
+    [
+     "g",
+     "Later",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "struct int ",
+    "{ int ",
+    "; };"
+   ],
+   "symbols": [
+    [
+     "s",
+     "",
+     false
+    ],
+    [
+     "m",
+     "w",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

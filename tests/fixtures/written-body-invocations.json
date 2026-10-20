@@ -1,0 +1,557 @@
+{
+  "provenance": {
+    "note": "Original observations reused from earlier attribution captures, with their source hashes verified. No expected output edits.",
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "platform": "WSL Ubuntu",
+    "locale": "C",
+    "version": "cscope 15.9"
+  },
+  "cases": {
+    "abstract_callback": {
+      "source_sha256": "ba7d00f7228287beacc3c540a92315b04391e626a7858550ad03c2ffd9a20fd6",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { sink(int (*)(int callback(int ))); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c sink 1 void f(void ) { sink(int (*)(int callback(int ))); }\ncase.c callback 1 void f(void ) { sink(int (*)(int callback(int ))); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { sink(int (*)(int callback(int ))); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "bound"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { sink(int (*)(int callback(int))); }\n",
+      "retained_from": "argument-role-attribution.json"
+    },
+    "nested_empty_call": {
+      "source_sha256": "aef149c3939a7334de0ca817f66e28addf9a79ceac22cf1c8cf5ddf953c0e691",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { gz_error(state, Z_ERRNO, zstrerror()); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c gz_error 1 void f(void ) { gz_error(state, Z_ERRNO, zstrerror()); }\ncase.c zstrerror 1 void f(void ) { gz_error(state, Z_ERRNO, zstrerror()); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "bound"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { gz_error(state, Z_ERRNO, zstrerror()); }\n",
+      "retained_from": "argument-role-attribution.json"
+    },
+    "nested_numeric_call": {
+      "source_sha256": "21774d17a5d1cd7e2001ea63c66a8bb7da3d2575dc884d342f6cf09baaf5fc73",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { gz_error(state, Z_ERRNO, zstrerror(1)); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c gz_error 1 void f(void ) { gz_error(state, Z_ERRNO, zstrerror(1)); }\ncase.c zstrerror 1 void f(void ) { gz_error(state, Z_ERRNO, zstrerror(1)); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "bound"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { gz_error(state, Z_ERRNO, zstrerror(1)); }\n",
+      "retained_from": "argument-role-attribution.json"
+    },
+    "macro_nested_empty": {
+      "source_sha256": "b19634a51d8de117513bdb16dc20c9b60ca5632af6ae535f01066544cc090a19",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 void f(void ) { gz_error(state, Z_ERRNO, zstrerror()); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c gz_error 2 void f(void ) { gz_error(state, Z_ERRNO, zstrerror()); }\ncase.c zstrerror 2 void f(void ) { gz_error(state, Z_ERRNO, zstrerror()); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "bound"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "source": "#define zstrerror() \"error\"\nvoid f(void) { gz_error(state, Z_ERRNO, zstrerror()); }\n",
+      "retained_from": "argument-role-attribution.json"
+    },
+    "cast_nested": {
+      "source_sha256": "ff22e5a31f0b0dfbe12e63272895b3a84dba545ce18d4e9ad107ea432ee75783",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { sink((int )inner()); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c sink 1 void f(void ) { sink((int )inner()); }\ncase.c inner 1 void f(void ) { sink((int )inner()); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "bound"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { sink((int)inner()); }\n",
+      "retained_from": "argument-role-attribution.json"
+    },
+    "vla_bound": {
+      "source_sha256": "2d88f36ff851267f4b07e0fbfb4c44da3cf6248b8d0edaa58d9ae94408848b94",
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { sink(int (*)[bound()]); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c sink 1 void f(void ) { sink(int (*)[bound()]); }\ncase.c bound 1 void f(void ) { sink(int (*)[bound()]); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "callback"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "bound"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { sink(int (*)[bound()]); }\n",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { sink(int (*)[bound()]); }\n",
+      "retained_from": "argument-role-attribution.json"
+    },
+    "nested": {
+      "source_sha256": "dca708ee32391591200ef85bce996e3c8daa00e2fbda42a6894c54d635f166b6",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c f 1 void f(void ) { setnilvalue(s2v(level)); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 void f(void ) { setnilvalue(s2v(level)); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit": 0,
+          "stdout": "case.c setnilvalue 1 void f(void ) { setnilvalue(s2v(level)); }\ncase.c s2v 1 void f(void ) { setnilvalue(s2v(level)); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-8",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { setnilvalue(s2v(level)); }\n",
+      "retained_from": "lua-refusal-attribution.json"
+    },
+    "nested_renamed": {
+      "source_sha256": "b4b89ce84d1a447a84fd8b34c535394cbb1fa6b537f6c2fc089a07b710e0b81c",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c f 1 void f(void ) { outer(inner(value)); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 void f(void ) { outer(inner(value)); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit": 0,
+          "stdout": "case.c outer 1 void f(void ) { outer(inner(value)); }\ncase.c inner 1 void f(void ) { outer(inner(value)); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-8",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { outer(inner(value)); }\n",
+      "retained_from": "lua-refusal-attribution.json"
+    },
+    "operator_argument": {
+      "source_sha256": "76ec8e65c9d78715bd0f18f4790e193aba6a0597d87c0931785946f365a9f98b",
+      "build": {
+        "args": [
+          "-bk",
+          "case.c"
+        ],
+        "exit": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c f 1 void f(void ) { intop(+, a, b); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 void f(void ) { intop(+, a, b); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit": 0,
+          "stdout": "case.c intop 1 void f(void ) { intop(+, a, b); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-8",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "source": "void f(void) { intop(+, a, b); }\n",
+      "retained_from": "lua-refusal-attribution.json"
+    }
+  }
+}

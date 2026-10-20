@@ -1,0 +1,135 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/37-directive-continuations.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        "(",
+        ") || \\"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "A",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "(",
+        " < 5)"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          " ",
+          "X",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) { return 0; ",
+        "}"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "$",
+          "f",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        "(",
+        ") && \\"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "B",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        ")"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "C",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "g",
+          "g",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "g",
+          "after",
+          false
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "locale": "C",
+  "cases": [
+    {
+      "name": "minimized",
+      "source": "const z_crc_t FAR * ZEXPORT get_crc_table(void) {\n    return (const z_crc_t FAR *)crc_table;\n}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "get_crc_table"], "exit": 0, "stdout": "case.c get_crc_table 1 const z_crc_t FAR * ZEXPORT get_crc_table(void ) {\n", "stderr": "" },
+        { "args": ["-dL", "-1", "marker"], "exit": 0, "stdout": "case.c marker 4 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "ZEXPORT"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "z_crc_t"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "crc_table"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "exact-zlib-body",
+      "source": "const z_crc_t FAR * ZEXPORT get_crc_table(void) {\n#ifdef DYNAMIC_CRC_TABLE\n    once(&made, make_crc_table);\n#endif /* DYNAMIC_CRC_TABLE */\n    return (const z_crc_t FAR *)crc_table;\n}\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "get_crc_table"], "exit": 0, "stdout": "case.c get_crc_table 1 const z_crc_t FAR * ZEXPORT get_crc_table(void ) {\n", "stderr": "" },
+        { "args": ["-dL", "-1", "marker"], "exit": 0, "stdout": "case.c marker 7 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "ZEXPORT"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "z_crc_t"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "crc_table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "once"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "made"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "make_crc_table"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    }
+  ]
+}

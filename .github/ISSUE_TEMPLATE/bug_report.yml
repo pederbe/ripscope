@@ -1,0 +1,46 @@
+name: Bug report
+description: Ripscope crashed, refused valid input, or returned wrong results.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. If the problem is a difference from cscope's output,
+        use the **Compatibility difference** template instead.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you ran, what you expected and what you got. Paste exact output, including any error message.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction
+      description: The smallest source file(s) and commands that reproduce the problem.
+      render: shell
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Ripscope version or commit
+      placeholder: "0.1.0, or the output of git rev-parse HEAD"
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - Linux x86-64
+        - Windows x86-64
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: editor
+    attributes:
+      label: Editor integration (if any)
+      placeholder: "Vim 9.1, Neovim 0.11, Emacs 29 + xcscope, none"

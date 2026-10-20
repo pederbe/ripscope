@@ -1,0 +1,2565 @@
+{
+  "source_commit": "612a539b585ccdb70a1261652954f579ccedb270",
+  "cases": {
+    "prototype": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 void *_Cdecl farmalloc(unsigned long nbytes);\ncase.c <global> 2 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 void *_Cdecl farmalloc(unsigned long nbytes);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 void *_Cdecl farmalloc(unsigned long nbytes);\ncase.c <global> 2 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 void *_Cdecl farmalloc(unsigned long nbytes);\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes);\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 2 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 2 int after;\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes);\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes);\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes);\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes);\nint after;\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "definition": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *_Cdecl farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "renamed": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c <global> 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *OTHER farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "plain": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c target 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void *farmalloc(unsigned long nbytes) { target(); return 0; }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void *farmalloc(unsigned long nbytes) { target(); return 0; }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    },
+    "local": {
+      "0": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-0",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "0",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "1": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c .* 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-1",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "1",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "2": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\ncase.c target 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c farmalloc 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\ncase.c target 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-2",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "2",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "3": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\ncase.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\ncase.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-3",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "case.c outer 1 void outer(void ) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "3",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      },
+      "9": {
+        "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+        "environment": {
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin",
+          "HOME": "<isolated case directory>",
+          "inherit_other_variables": false
+        },
+        "profiles": [
+          {
+            "caseless": false,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          },
+          {
+            "caseless": true,
+            "queries": [
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  ".*"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "farmalloc"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              },
+              {
+                "args": [
+                  "-dL",
+                  "-C",
+                  "-9",
+                  "target"
+                ],
+                "exit_code": 0,
+                "stdout": "",
+                "stderr": ""
+              }
+            ]
+          }
+        ],
+        "files": {
+          "case.c": "void outer(void) { void *OTHER farmalloc(unsigned long nbytes); target(); }\n"
+        },
+        "seeds": [
+          "case.c"
+        ],
+        "field": "9",
+        "build": {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "sources_deleted_before_queries": true,
+        "unreadable": []
+      }
+    }
+  }
+}

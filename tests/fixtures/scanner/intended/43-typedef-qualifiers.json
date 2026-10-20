@@ -1,0 +1,267 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/43-typedef-qualifiers.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef const ",
+        " ",
+        ";"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          " ",
+          "foo_t",
+          false
+        ],
+        [
+          "t",
+          "bar_t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef volatile ",
+        " ",
+        ";"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          " ",
+          "uint32_t",
+          false
+        ],
+        [
+          "t",
+          "reg_t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef const struct ",
+        " *",
+        ";"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          " ",
+          "tag",
+          false
+        ],
+        [
+          "t",
+          "tag_ptr",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef volatile struct ",
+        " { int ",
+        "; } ",
+        ";"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "s",
+          "vtag",
+          false
+        ],
+        [
+          "m",
+          "a",
+          false
+        ],
+        [
+          "t",
+          "vtag_t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef const char *",
+        ";"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "t",
+          "cstr",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef const volatile unsigned long ",
+        ";"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "t",
+          "cvul",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef ",
+        " const *",
+        ";"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          " ",
+          "foo_t",
+          false
+        ],
+        [
+          "t",
+          "after_ptr",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef const ",
+        " *const ",
+        ", ",
+        "[4];"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "foo_t",
+          false
+        ],
+        [
+          "t",
+          "cptr_t",
+          false
+        ],
+        [
+          "t",
+          "arr_t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef const enum ",
+        " ",
+        ";"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          " ",
+          "mode",
+          false
+        ],
+        [
+          "t",
+          "mode_t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef unsigned ",
+        " ",
+        ";"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          " ",
+          "__int64",
+          false
+        ],
+        [
+          "t",
+          "u64",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int ",
+        " ",
+        ";"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          " ",
+          "API",
+          false
+        ],
+        [
+          "t",
+          "api_t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef const ",
+        ";"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          "t",
+          "x_t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          "g",
+          "last",
+          false
+        ]
+      ]
+    }
+  ]
+}

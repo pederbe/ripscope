@@ -1,0 +1,618 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/26-assignments.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ", ",
+        ", ",
+        ";"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "g",
+          "g1",
+          false
+        ],
+        [
+          "g",
+          "g2",
+          false
+        ],
+        [
+          "g",
+          "g3",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(void )"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "$",
+          "f",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " = 1;"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " == 1;"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " += 1;"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          " ",
+          "g3",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " <<= 2;"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " >>= 3;"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " =-1;"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          " ",
+          "g3",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "=2;"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "==3;"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " = 4;"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          " ",
+          "g3",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        ""
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " [0] = 6;"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " = ",
+        " = ",
+        ";"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          " ",
+          "g3",
+          true
+        ],
+        [
+          " ",
+          "g1",
+          true
+        ],
+        [
+          " ",
+          "g2",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " -= ",
+        " *= ",
+        ";"
+      ],
+      "line": 17,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          true
+        ],
+        [
+          " ",
+          "g2",
+          true
+        ],
+        [
+          " ",
+          "g3",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " & = 1;"
+      ],
+      "line": 18,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " &= 1;"
+      ],
+      "line": 19,
+      "symbols": [
+        [
+          " ",
+          "g3",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " != 2;"
+      ],
+      "line": 20,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " <= 3;"
+      ],
+      "line": 21,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " < < = 4;"
+      ],
+      "line": 22,
+      "symbols": [
+        [
+          " ",
+          "g3",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " ="
+      ],
+      "line": 23,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "if (",
+        " = 7) ",
+        " = 8;"
+      ],
+      "line": 25,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          true
+        ],
+        [
+          " ",
+          "g3",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " ^= ",
+        " |= ",
+        " %= 1;"
+      ],
+      "line": 26,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          true
+        ],
+        [
+          " ",
+          "g2",
+          true
+        ],
+        [
+          " ",
+          "g3",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " else = 1;"
+      ],
+      "line": 27,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " extern = 2;"
+      ],
+      "line": 28,
+      "symbols": [
+        [
+          " ",
+          "g3",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " enum = 3;"
+      ],
+      "line": 29,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " int = 4;"
+      ],
+      "line": 30,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " =",
+        ";"
+      ],
+      "line": 31,
+      "symbols": [
+        [
+          " ",
+          "g3",
+          true
+        ],
+        [
+          " ",
+          "t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " = ",
+        ";"
+      ],
+      "line": 32,
+      "symbols": [
+        [
+          " ",
+          "g1",
+          true
+        ],
+        [
+          " ",
+          "t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " =",
+        ";"
+      ],
+      "line": 33,
+      "symbols": [
+        [
+          " ",
+          "g2",
+          true
+        ],
+        [
+          " ",
+          "e",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " ==",
+        ";"
+      ],
+      "line": 34,
+      "symbols": [
+        [
+          " ",
+          "g3",
+          false
+        ],
+        [
+          " ",
+          "t",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 35,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " ",
+        " else = 1"
+      ],
+      "line": 36,
+      "symbols": [
+        [
+          "#",
+          "M",
+          false
+        ],
+        [
+          " ",
+          "x",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) { return ",
+        " = ",
+        "; ",
+        "}"
+      ],
+      "line": 37,
+      "symbols": [
+        [
+          "$",
+          "h",
+          false
+        ],
+        [
+          " ",
+          "g1",
+          true
+        ],
+        [
+          " ",
+          "g2",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    }
+  ]
+}

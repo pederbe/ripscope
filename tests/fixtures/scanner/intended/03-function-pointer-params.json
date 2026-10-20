@@ -1,0 +1,156 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/03-function-pointer-params.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(int (*",
+        ")(int ",
+        "), int ",
+        ") { return ",
+        "(arg); ",
+        "}"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "$",
+          "apply",
+          false
+        ],
+        [
+          " ",
+          "fn",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ],
+        [
+          " ",
+          "arg",
+          false
+        ],
+        [
+          "`",
+          "fn",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(int (*",
+        ")(int (*",
+        ")(int )), int ",
+        ") { return ",
+        "(0) + y; ",
+        "}"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "$",
+          "twice",
+          false
+        ],
+        [
+          " ",
+          "outer",
+          false
+        ],
+        [
+          " ",
+          "inner",
+          false
+        ],
+        [
+          " ",
+          "y",
+          false
+        ],
+        [
+          "`",
+          "outer",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void (*",
+        "(int ",
+        ", void (*",
+        ")(int )))(int ) { return handler; ",
+        "}"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "$",
+          "signal_like",
+          false
+        ],
+        [
+          " ",
+          "sig",
+          false
+        ],
+        [
+          " ",
+          "handler",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(int ",
+        ") { return x; ",
+        "}"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "$",
+          "plain",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,215 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "cases": [
+    {
+      "name": "comment-continuation",
+      "source": "#define MAC(a) \\\n do { /* comment */ \\\n a; \\\n } while (0)\nint x;\n",
+      "queries": [
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 5 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "MAC",
+          "stdout": "case.c MAC 1 #define MAC(a) \\\n",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "no-comment",
+      "source": "#define MAC(a) \\\n do { \\\n a; \\\n } while (0)\nint x;\n",
+      "queries": [
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 5 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "MAC",
+          "stdout": "case.c MAC 1 #define MAC(a) \\\n",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "one-line",
+      "source": "#define MAC(a) do { /* comment */ a; } while (0)\nint x;\n",
+      "queries": [
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 2 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "MAC",
+          "stdout": "case.c MAC 1 #define MAC(a) do { a; } while (0)\n",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "tiny",
+      "source": "#define MAC(a) x /* c */ \\\n y\nint x;\n",
+      "queries": [
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 3 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "MAC",
+          "stdout": "case.c MAC 1 #define MAC(a) x \\\n",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "comment-first",
+      "source": "#define MAC(a) /* c */ \\\n y\nint x;\n",
+      "queries": [
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 3 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "MAC",
+          "stdout": "case.c MAC 1 #define MAC(a) \\\n",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "object",
+      "source": "#define MAC x /* c */ \\\n y\nint x;\n",
+      "queries": [
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 3 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "MAC",
+          "stdout": "case.c MAC 1 #define MAC x \\\n",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "blank-comment",
+      "source": "#define MAC(a) x /**/ \\\n y\nint x;\n",
+      "queries": [
+        {
+          "pattern": "f",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "p",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 3 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "MAC",
+          "stdout": "case.c MAC 1 #define MAC(a) x \\\n",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}

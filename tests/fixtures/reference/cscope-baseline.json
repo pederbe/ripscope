@@ -1,0 +1,448 @@
+{
+  "package": "Ubuntu cscope 15.9-2build1 amd64",
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "version": {
+    "args": [
+      "--version"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": "cscope: version 15.9\n"
+  },
+  "cases": {
+    "duplicates": {
+      "files": {
+        "a.c": "static void reset(void) {}\nvoid first(void) { reset(); }\n",
+        "b.c": "static void reset(void) {}\nvoid second(void) { reset(); }\n"
+      },
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "a.c",
+          "b.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "reset"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c reset 1 static void reset(void ) {}\na.c first 2 void first(void ) { reset(); }\nb.c reset 1 static void reset(void ) {}\nb.c second 2 void second(void ) { reset(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "reset"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c reset 1 static void reset(void ) {}\nb.c reset 1 static void reset(void ) {}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "first"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c reset 2 void first(void ) { reset(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "reset"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c first 2 void first(void ) { reset(); }\nb.c second 2 void second(void ) { reset(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "conditionals": {
+      "files": {
+        "case.c": "#if 0\nvoid disabled(void) { target(); }\n#else\nvoid enabled(void) { target(); }\n#endif\n#ifdef UNKNOWN\nvoid alternative(void) { target(); }\n#endif\n"
+      },
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "disabled"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c disabled 2 void disabled(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "enabled"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c enabled 4 void enabled(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "alternative"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c alternative 7 void alternative(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c disabled 2 void disabled(void ) { target(); }\ncase.c enabled 4 void enabled(void ) { target(); }\ncase.c alternative 7 void alternative(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "macros": {
+      "files": {
+        "case.c": "#define WRAP() target()\n#define ALIAS target\n#define CAT(a,b) a ## b\n#define MAKE(name) void name(void) { target(); }\nvoid target(void) {}\nMAKE(generated)\nvoid caller(void) { WRAP(); ALIAS(); CAT(tar,get)(); }\n"
+      },
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c WRAP 1 #define WRAP() target()\ncase.c ALIAS 2 #define ALIAS target\ncase.c MAKE 4 #define MAKE(name) void name(void ) { target(); }\ncase.c target 5 void target(void ) {}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "WRAP"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c WRAP 1 #define WRAP() target()\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "ALIAS"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c ALIAS 2 #define ALIAS target\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "generated"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "name"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "WRAP"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 #define WRAP() target()\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "MAKE"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c name 4 #define MAKE(name) void name(void ) { target(); }\ncase.c target 4 #define MAKE(name) void name(void ) { target(); }\ncase.c WRAP 7 void caller(void ) { WRAP(); ALIAS(); CAT(tar,get)(); }\ncase.c ALIAS 7 void caller(void ) { WRAP(); ALIAS(); CAT(tar,get)(); }\ncase.c CAT 7 void caller(void ) { WRAP(); ALIAS(); CAT(tar,get)(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "caller"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c WRAP 7 void caller(void ) { WRAP(); ALIAS(); CAT(tar,get)(); }\ncase.c ALIAS 7 void caller(void ) { WRAP(); ALIAS(); CAT(tar,get)(); }\ncase.c CAT 7 void caller(void ) { WRAP(); ALIAS(); CAT(tar,get)(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c WRAP 1 #define WRAP() target()\ncase.c MAKE 4 #define MAKE(name) void name(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "WRAP"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c MAKE 7 void caller(void ) { WRAP(); ALIAS(); CAT(tar,get)(); }\ncase.c caller 7 void caller(void ) { WRAP(); ALIAS(); CAT(tar,get)(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "indirect": {
+      "files": {
+        "case.c": "void target(void) {}\nvoid sink(void (*callback)(void)) {}\nstruct Ops { void (*run)(void); };\nvoid caller(void (*fp)(void), struct Ops *ops) {\n    target();\n    (target)();\n    fp();\n    (*fp)();\n    ops->run();\n    sink(target);\n}\n"
+      },
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "caller"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 5 target();\ncase.c fp 7 fp();\ncase.c run 9 ops->run();\ncase.c sink 10 sink(target);\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c caller 5 target();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "fp"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c caller 7 fp();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "run"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c caller 9 ops->run();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c target 1 void target(void ) {}\ncase.c caller 5 target();\ncase.c caller 6 (target)();\ncase.c caller 10 sink(target);\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "missing_include": {
+      "files": {
+        "case.c": "#include \"absent_generated.h\"\nvoid before(void) { target(); }\nUNKNOWN_TYPE object;\nvoid after(void) { target(); }\n"
+      },
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "before"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c before 2 void before(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c after 4 void after(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c before 2 void before(void ) { target(); }\ncase.c after 4 void after(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "broken_brace": {
+      "files": {
+        "case.c": "void before(void) { target(); }\nvoid broken(void) {\n    target();\nvoid after(void) { target(); }\n"
+      },
+      "build": {
+        "args": [
+          "-b",
+          "-k",
+          "case.c"
+        ],
+        "exit_code": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "before"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c before 1 void before(void ) { target(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "broken"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c broken 2 void broken(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "target"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c before 1 void before(void ) { target(); }\ncase.c broken 3 target();\ncase.c broken 4 void after(void ) { target(); }\n",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

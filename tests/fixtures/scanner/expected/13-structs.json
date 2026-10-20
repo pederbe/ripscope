@@ -1,0 +1,200 @@
+{
+ "probe": "probes/13-structs.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "struct ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "tagged",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "struct ",
+    " *",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "tagged",
+     false
+    ],
+    [
+     "g",
+     "pointer",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "struct ",
+    " { int ",
+    "; };"
+   ],
+   "symbols": [
+    [
+     "s",
+     "tagged",
+     false
+    ],
+    [
+     "m",
+     "member",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "struct { int ",
+    "; } ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "m",
+     "anonymous_member",
+     false
+    ],
+    [
+     "g",
+     "anonymous_var",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "struct ",
+    " { struct ",
+    " { int ",
+    "; } ",
+    "; int ",
+    "; };"
+   ],
+   "symbols": [
+    [
+     "s",
+     "outer",
+     false
+    ],
+    [
+     "s",
+     "inner",
+     false
+    ],
+    [
+     "m",
+     "deep",
+     false
+    ],
+    [
+     "m",
+     "nested",
+     false
+    ],
+    [
+     "m",
+     "shallow",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "enum { ",
+    ", ",
+    " };"
+   ],
+   "symbols": [
+    [
+     "m",
+     "UNNAMED_A",
+     false
+    ],
+    [
+     "m",
+     "UNNAMED_B",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "union ",
+    " { int ",
+    "; };"
+   ],
+   "symbols": [
+    [
+     "u",
+     "commented",
+     false
+    ],
+    [
+     "m",
+     "c",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "struct ",
+    ""
+   ],
+   "symbols": [
+    [
+     "s",
+     "later",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "m",
+     "on_next_line",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

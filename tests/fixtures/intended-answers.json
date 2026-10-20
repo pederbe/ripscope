@@ -1,0 +1,2910 @@
+{
+ "semantics": "ripscope's own query semantics (ADR 0010)",
+ "fixtures": {
+  "assignment-boundaries.json": {
+   "-dL -9 .*": {
+    "recorded": "edges.c <global> 2 int x = x = 1;\nedges.c <global> 3 enum E { A = 1, B = A };\nedges.c SAME 5 #define SAME SAME = 1\nedges.c g 9 x(); x = 1;\nedges.c g 12 x = 1; x == 1;\nedges.c g 13 x =x;\nedges.c g 14 x = x;\nedges.c g 15 x = 1;\nedges.c g 16 x = 1;\nedges.c g 17 x += 1;\nedges.c second 21 int first(void ) { x; } int second(void ) { x = 1; }\nedges.c second 22 struct tag { int a; }; int t = (tag=1);\nedges.c second 23 union uni { int a; }; int u = (uni=1);\nedges.c second 24 enum en { VAL }; int e = (en=1);\nedges.c second 25 extern int ext; int z = (ext=1);\nedges.c localtag 27 int localtag(void ) { struct tag { int a; }; tag=1; }\nedges.c localtypedef 28 int localtypedef(void ) { typedef int alias; alias=1; }\nedges.c proto 29 int proto(void ) { int callback(void ); callback=4; }\nedges.c spaces 31 int spaces(void ) { callback (); callback=6; }\n",
+    "intended": "edges.c <global> 2 int x = x = 1;\nedges.c <global> 3 enum E { A = 1, B = A };\nedges.c <global> 22 struct tag { int a; }; int t = (tag=1);\nedges.c <global> 23 union uni { int a; }; int u = (uni=1);\nedges.c <global> 24 enum en { VAL }; int e = (en=1);\nedges.c <global> 25 extern int ext; int z = (ext=1);\nedges.c SAME 5 #define SAME SAME = 1\nedges.c g 9 x(); x = 1;\nedges.c g 12 x = 1; x == 1;\nedges.c g 13 x =x;\nedges.c g 14 x = x;\nedges.c g 15 x = 1;\nedges.c g 16 x = 1;\nedges.c g 17 x += 1;\nedges.c second 21 int first(void ) { x; } int second(void ) { x = 1; }\nedges.c localtag 27 int localtag(void ) { struct tag { int a; }; tag=1; }\nedges.c localtypedef 28 int localtypedef(void ) { typedef int alias; alias=1; }\nedges.c proto 29 int proto(void ) { int callback(void ); callback=4; }\nedges.c spaces 31 int spaces(void ) { callback (); callback=6; }\n",
+    "changes": [
+     {
+      "row": "edges.c <global> 22 struct tag { int a; }; int t = (tag=1);",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c <global> 23 union uni { int a; }; int u = (uni=1);",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c <global> 24 enum en { VAL }; int e = (en=1);",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c <global> 25 extern int ext; int z = (ext=1);",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c second 22 struct tag { int a; }; int t = (tag=1);",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c second 23 union uni { int a; }; int u = (uni=1);",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c second 24 enum en { VAL }; int e = (en=1);",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c second 25 extern int ext; int z = (ext=1);",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 .*": {
+    "recorded": "edges.c <global> 2 int x = x = 1;\nedges.c <global> 3 enum E { A = 1, B = A };\nedges.c SAME 5 #define SAME SAME = 1\nedges.c g 9 x(); x = 1;\nedges.c g 12 x = 1; x == 1;\nedges.c g 13 x =x;\nedges.c g 14 x = x;\nedges.c g 15 x = 1;\nedges.c g 16 x = 1;\nedges.c g 17 x += 1;\nedges.c second 21 int first(void ) { x; } int second(void ) { x = 1; }\nedges.c second 22 struct tag { int a; }; int t = (tag=1);\nedges.c second 23 union uni { int a; }; int u = (uni=1);\nedges.c second 24 enum en { VAL }; int e = (en=1);\nedges.c second 25 extern int ext; int z = (ext=1);\nedges.c localtag 27 int localtag(void ) { struct tag { int a; }; tag=1; }\nedges.c localtypedef 28 int localtypedef(void ) { typedef int alias; alias=1; }\nedges.c proto 29 int proto(void ) { int callback(void ); callback=4; }\nedges.c spaces 31 int spaces(void ) { callback (); callback=6; }\n",
+    "intended": "edges.c <global> 2 int x = x = 1;\nedges.c <global> 3 enum E { A = 1, B = A };\nedges.c <global> 22 struct tag { int a; }; int t = (tag=1);\nedges.c <global> 23 union uni { int a; }; int u = (uni=1);\nedges.c <global> 24 enum en { VAL }; int e = (en=1);\nedges.c <global> 25 extern int ext; int z = (ext=1);\nedges.c SAME 5 #define SAME SAME = 1\nedges.c g 9 x(); x = 1;\nedges.c g 12 x = 1; x == 1;\nedges.c g 13 x =x;\nedges.c g 14 x = x;\nedges.c g 15 x = 1;\nedges.c g 16 x = 1;\nedges.c g 17 x += 1;\nedges.c second 21 int first(void ) { x; } int second(void ) { x = 1; }\nedges.c localtag 27 int localtag(void ) { struct tag { int a; }; tag=1; }\nedges.c localtypedef 28 int localtypedef(void ) { typedef int alias; alias=1; }\nedges.c proto 29 int proto(void ) { int callback(void ); callback=4; }\nedges.c spaces 31 int spaces(void ) { callback (); callback=6; }\n",
+    "changes": [
+     {
+      "row": "edges.c <global> 22 struct tag { int a; }; int t = (tag=1);",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c <global> 23 union uni { int a; }; int u = (uni=1);",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c <global> 24 enum en { VAL }; int e = (en=1);",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c <global> 25 extern int ext; int z = (ext=1);",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c second 22 struct tag { int a; }; int t = (tag=1);",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c second 23 union uni { int a; }; int u = (uni=1);",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c second 24 enum en { VAL }; int e = (en=1);",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "edges.c second 25 extern int ext; int z = (ext=1);",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   }
+  },
+  "assignment-queries.json": {
+   "-dL -9 .*": {
+    "recorded": "a.c <global> 1 int other = 1;\nz.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\nz.c <global> 25 int after = 1;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c f 22 int local = x;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\nz.c g 27 int final = 3;\n",
+    "intended": "a.c <global> 1 int other = 1;\nz.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\nz.c <global> 25 int after = 1;\nz.c <global> 27 int final = 3;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c f 22 int local = x;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c <global> 27 int final = 3;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     },
+     {
+      "row": "z.c g 27 int final = 3;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -9 ^x$": {
+    "recorded": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "intended": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     }
+    ]
+   },
+   "-dL -9 a": {
+    "recorded": "",
+    "intended": "z.c f 14 *x = 1; (x) = 1; a[x] = 1;\n",
+    "changes": [
+     {
+      "row": "z.c f 14 *x = 1; (x) = 1; a[x] = 1;",
+      "change": "added",
+      "rules": [
+       "correction:subscript-assignments"
+      ]
+     }
+    ]
+   },
+   "-dL -9 x": {
+    "recorded": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "intended": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     }
+    ]
+   },
+   "-dL -9 x ": {
+    "recorded": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "intended": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     }
+    ]
+   },
+   "-dL -9 x|y": {
+    "recorded": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "intended": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 .*": {
+    "recorded": "a.c <global> 1 int other = 1;\nz.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\nz.c <global> 25 int after = 1;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c f 22 int local = x;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\nz.c g 27 int final = 3;\n",
+    "intended": "a.c <global> 1 int other = 1;\nz.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\nz.c <global> 25 int after = 1;\nz.c <global> 27 int final = 3;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c f 22 int local = x;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c <global> 27 int final = 3;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     },
+     {
+      "row": "z.c g 27 int final = 3;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 X": {
+    "recorded": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "intended": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 ^x$": {
+    "recorded": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "intended": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 a": {
+    "recorded": "",
+    "intended": "z.c f 14 *x = 1; (x) = 1; a[x] = 1;\n",
+    "changes": [
+     {
+      "row": "z.c f 14 *x = 1; (x) = 1; a[x] = 1;",
+      "change": "added",
+      "rules": [
+       "correction:subscript-assignments"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 x": {
+    "recorded": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "intended": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 x ": {
+    "recorded": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "intended": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 x|y": {
+    "recorded": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "intended": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 13 x++; ++x; x--; --x;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+    "changes": [
+     {
+      "row": "z.c f 13 x++; ++x; x--; --x;",
+      "change": "added",
+      "rules": [
+       "correction:named-mutations"
+      ]
+     }
+    ]
+   }
+  },
+  "callee-queries.json": {
+   "-dL -2 .*": {
+    "recorded": "a.c target 5 target();\na.c TARGET 7 TARGET();\na.c target 9 return target();\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 12 int last(void ) { target(); }\nedges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\nedges.c one 2 #define MAC(x) one(x) + two(x)\nedges.c two 2 #define MAC(x) one(x) + two(x)\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\nedges.c one 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c two 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c upper 10 int AFTER(void ) { upper(); }\nz.c target 3 #define BODY(x) target(x)\nz.c target 5 #define PARAM(target) target(1)\nz.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c target 12 p->target(4);\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c target 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c target 3 #define INNER target()\na.c target 5 target();\na.c TARGET 7 TARGET();\na.c target 9 return target();\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 12 int last(void ) { target(); }\nedges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\nedges.c one 2 #define MAC(x) one(x) + two(x)\nedges.c two 2 #define MAC(x) one(x) + two(x)\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c hidden 5 #define LOCAL(x) hidden(x)\nedges.c three 6 three();\nedges.c one 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c two 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c upper 10 int AFTER(void ) { upper(); }\nz.c target 3 #define BODY(x) target(x)\nz.c target 4 #define INDIRECT(x) (*target)(x)\nz.c target 5 #define PARAM(target) target(1)\nz.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c fp 10 (*fp)(2);\nz.c target 12 p->target(4);\nz.c target 14 target\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c target 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "a.c target 3 #define INNER target()",
+      "change": "added",
+      "rules": [
+       "listing"
+      ]
+     },
+     {
+      "row": "edges.c hidden 5 #define LOCAL(x) hidden(x)",
+      "change": "added",
+      "rules": [
+       "listing"
+      ]
+     },
+     {
+      "row": "z.c target 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c fp 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c target 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -2 caller": {
+    "recorded": "z.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c target 12 p->target(4);\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\n",
+    "intended": "z.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c fp 10 (*fp)(2);\nz.c target 12 p->target(4);\nz.c target 14 target\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\n",
+    "changes": [
+     {
+      "row": "z.c fp 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c target 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -C -2 .*": {
+    "recorded": "a.c target 5 target();\na.c TARGET 7 TARGET();\na.c target 9 return target();\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 12 int last(void ) { target(); }\nedges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\nedges.c one 2 #define MAC(x) one(x) + two(x)\nedges.c two 2 #define MAC(x) one(x) + two(x)\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c three 6 three();\nedges.c one 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c two 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c upper 10 int AFTER(void ) { upper(); }\nz.c target 3 #define BODY(x) target(x)\nz.c target 5 #define PARAM(target) target(1)\nz.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c target 12 p->target(4);\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c target 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c target 3 #define INNER target()\na.c target 5 target();\na.c TARGET 7 TARGET();\na.c target 9 return target();\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 11 int first(void ) { target(); } int second(void ) { target(); }\na.c target 12 int last(void ) { target(); }\nedges.c one 1 int before(void ) { one(); two(); one(); }\nedges.c two 1 int before(void ) { one(); two(); one(); }\nedges.c one 2 #define MAC(x) one(x) + two(x)\nedges.c two 2 #define MAC(x) one(x) + two(x)\nedges.c one 4 one(); two();\nedges.c two 4 one(); two();\nedges.c hidden 5 #define LOCAL(x) hidden(x)\nedges.c three 6 three();\nedges.c one 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c two 8 int same(void ) { one(); } int same2(void ) { two(); }\nedges.c upper 10 int AFTER(void ) { upper(); }\nz.c target 3 #define BODY(x) target(x)\nz.c target 4 #define INDIRECT(x) (*target)(x)\nz.c target 5 #define PARAM(target) target(1)\nz.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c fp 10 (*fp)(2);\nz.c target 12 p->target(4);\nz.c target 14 target\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c target 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "a.c target 3 #define INNER target()",
+      "change": "added",
+      "rules": [
+       "listing"
+      ]
+     },
+     {
+      "row": "edges.c hidden 5 #define LOCAL(x) hidden(x)",
+      "change": "added",
+      "rules": [
+       "listing"
+      ]
+     },
+     {
+      "row": "z.c target 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c fp 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c target 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -C -2 caller": {
+    "recorded": "z.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c target 12 p->target(4);\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\n",
+    "intended": "z.c target 8 target(1); target(2);\nz.c fp 9 fp(1);\nz.c fp 10 (*fp)(2);\nz.c target 12 p->target(4);\nz.c target 14 target\nz.c target 16 int target(int );\nz.c target 17 int local = target(7);\nz.c BODY 18 BODY(8);\nz.c target 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\n",
+    "changes": [
+     {
+      "row": "z.c fp 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c target 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   }
+  },
+  "caller-queries.json": {
+   "-dL -3 .*": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 18 BODY(8);\nz.c caller 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 10 (*fp)(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 18 BODY(8);\nz.c caller 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -3 ^target$": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -3 fp": {
+    "recorded": "z.c caller 9 fp(1);\n",
+    "intended": "z.c caller 9 fp(1);\nz.c caller 10 (*fp)(2);\n",
+    "changes": [
+     {
+      "row": "z.c caller 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -3 target": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -3 target ": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -3 target|fp": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 10 (*fp)(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -C -3 .*": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 18 BODY(8);\nz.c caller 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 10 (*fp)(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 18 BODY(8);\nz.c caller 19 sizeof(target(9));\nz.c caller 20 return caller(fp, p);\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -C -3 TARGET": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -C -3 ^target$": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -C -3 fp": {
+    "recorded": "z.c caller 9 fp(1);\n",
+    "intended": "z.c caller 9 fp(1);\nz.c caller 10 (*fp)(2);\n",
+    "changes": [
+     {
+      "row": "z.c caller 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -C -3 target": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -C -3 target ": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   },
+   "-dL -C -3 target|fp": {
+    "recorded": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 12 p->target(4);\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "intended": "a.c INNER 3 #define INNER target()\na.c alpha 5 target();\na.c alpha 7 TARGET();\na.c alpha 9 return target();\na.c first 11 int first(void ) { target(); } int second(void ) { target(); }\na.c second 11 int first(void ) { target(); } int second(void ) { target(); }\na.c last 12 int last(void ) { target(); }\nz.c BODY 3 #define BODY(x) target(x)\nz.c INDIRECT 4 #define INDIRECT(x) (*target)(x)\nz.c PARAM 5 #define PARAM(target) target(1)\nz.c caller 8 target(1); target(2);\nz.c caller 9 fp(1);\nz.c caller 10 (*fp)(2);\nz.c caller 12 p->target(4);\nz.c caller 14 target\nz.c caller 16 int target(int );\nz.c caller 17 int local = target(7);\nz.c caller 19 sizeof(target(9));\nz.c other 23 int other(void ) { return target(11); }\n",
+    "changes": [
+     {
+      "row": "z.c INDIRECT 4 #define INDIRECT(x) (*target)(x)",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 10 (*fp)(2);",
+      "change": "added",
+      "rules": [
+       "correction:dereferenced-calls"
+      ]
+     },
+     {
+      "row": "z.c caller 14 target",
+      "change": "added",
+      "rules": [
+       "correction:split-calls"
+      ]
+     }
+    ]
+   }
+  },
+  "context-approved.json": {
+   "continued-condition -C 0(local|state)": {
+    "recorded": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 9 if (!state->done) {\ncase.c <global> 11 state->done = 1;\n",
+    "intended": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c once 9 if (!state->done) {\ncase.c once 11 state->done = 1;\n",
+    "changes": [
+     {
+      "row": "case.c once 9 if (!state->done) {",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c once 11 state->done = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c <global> 9 if (!state->done) {",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c <global> 11 state->done = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "continued-condition 0(local|state)": {
+    "recorded": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 9 if (!state->done) {\ncase.c <global> 11 state->done = 1;\n",
+    "intended": "case.c <global> 8 local void once(once_t *state, void (*init)(void )) {\ncase.c once 9 if (!state->done) {\ncase.c once 11 state->done = 1;\n",
+    "changes": [
+     {
+      "row": "case.c once 9 if (!state->done) {",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c once 11 state->done = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c <global> 9 if (!state->done) {",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c <global> 11 state->done = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "flat-condition -C 0(local|state)": {
+    "recorded": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 8 if (!state->done) {\ncase.c <global> 10 state->done = 1;\n",
+    "intended": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c once 8 if (!state->done) {\ncase.c once 10 state->done = 1;\n",
+    "changes": [
+     {
+      "row": "case.c once 8 if (!state->done) {",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c once 10 state->done = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c <global> 8 if (!state->done) {",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c <global> 10 state->done = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "flat-condition 0(local|state)": {
+    "recorded": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c <global> 8 if (!state->done) {\ncase.c <global> 10 state->done = 1;\n",
+    "intended": "case.c <global> 7 local void once(once_t *state, void (*init)(void )) {\ncase.c once 8 if (!state->done) {\ncase.c once 10 state->done = 1;\n",
+    "changes": [
+     {
+      "row": "case.c once 8 if (!state->done) {",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c once 10 state->done = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c <global> 8 if (!state->done) {",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c <global> 10 state->done = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   }
+  },
+  "definition-macro-approved.json": {
+   "continued-condition -C 0ONCE_INIT": {
+    "recorded": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 }\n",
+    "intended": "case.c <global> 7 #define ONCE_INIT { 0, 0 }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 7 #define ONCE_INIT { 0, 0 }",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c ONCE_INIT 7 #define ONCE_INIT { 0, 0 }",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "flat-condition -C 0ONCE_INIT": {
+    "recorded": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }\n",
+    "intended": "case.c <global> 6 #define ONCE_INIT { 0, 0 }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 6 #define ONCE_INIT { 0, 0 }",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c ONCE_INIT 6 #define ONCE_INIT { 0, 0 }",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   }
+  },
+  "multiline-conditional-comments.json": {},
+  "multiline-macro-comments.json": {
+   "crlf-splice -dL -C -0 .*": {
+    "recorded": "case.c <global> 4 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1 + 2\n",
+    "intended": "case.c <global> 1 #define VALUE 1 + 2\ncase.c <global> 4 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1 + 2",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1 + 2",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "crlf-splice -dL -C -0 VALUE": {
+    "recorded": "case.c <global> 4 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1 + 2\n",
+    "intended": "case.c <global> 1 #define VALUE 1 + 2\ncase.c <global> 4 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1 + 2",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1 + 2",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "crlf-splice -dL -C -0 value": {
+    "recorded": "case.c <global> 4 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1 + 2\n",
+    "intended": "case.c <global> 1 #define VALUE 1 + 2\ncase.c <global> 4 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1 + 2",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1 + 2",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "eof -dL -C -0 .*": {
+    "recorded": "case.c VALUE 1 #define VALUE 1\n",
+    "intended": "case.c <global> 1 #define VALUE 1\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "eof -dL -C -0 VALUE": {
+    "recorded": "case.c VALUE 1 #define VALUE 1\n",
+    "intended": "case.c <global> 1 #define VALUE 1\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "eof -dL -C -0 value": {
+    "recorded": "case.c VALUE 1 #define VALUE 1\n",
+    "intended": "case.c <global> 1 #define VALUE 1\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "fake-directives -dL -C -0 .*": {
+    "recorded": "case.c <global> 6 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1\n",
+    "intended": "case.c <global> 1 #define VALUE 1\ncase.c <global> 6 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "fake-directives -dL -C -0 VALUE": {
+    "recorded": "case.c <global> 6 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1\n",
+    "intended": "case.c <global> 1 #define VALUE 1\ncase.c <global> 6 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "fake-directives -dL -C -0 value": {
+    "recorded": "case.c <global> 6 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1\n",
+    "intended": "case.c <global> 1 #define VALUE 1\ncase.c <global> 6 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "line-comment-blank -dL -C -0 .*": {
+    "recorded": "case.c <global> 3 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1\n",
+    "intended": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "line-comment-blank -dL -C -0 VALUE": {
+    "recorded": "case.c <global> 3 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1\n",
+    "intended": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "line-comment-blank -dL -C -0 value": {
+    "recorded": "case.c <global> 3 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1\n",
+    "intended": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "literal-markers -dL -C -0 .*": {
+    "recorded": "case.c <global> 2 const char *message = MESSAGE;\ncase.c MESSAGE 1 #define MESSAGE \"/* not a comment */\"\n",
+    "intended": "case.c <global> 1 #define MESSAGE \"/* not a comment */\"\ncase.c <global> 2 const char *message = MESSAGE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define MESSAGE \"/* not a comment */\"",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c MESSAGE 1 #define MESSAGE \"/* not a comment */\"",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "parameters -dL -C -0 .*": {
+    "recorded": "case.c SUM 1 #define SUM(a , b) ((a)+(b))\ncase.c function 3 void function(void ){ sink(SUM(1,2)); }\n",
+    "intended": "case.c <global> 1 #define SUM(a , b) ((a)+(b))\ncase.c function 3 void function(void ){ sink(SUM(1,2)); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define SUM(a , b) ((a)+(b))",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c SUM 1 #define SUM(a , b) ((a)+(b))",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "parameters -dL -C -0 SUM": {
+    "recorded": "case.c SUM 1 #define SUM(a , b) ((a)+(b))\ncase.c function 3 void function(void ){ sink(SUM(1,2)); }\n",
+    "intended": "case.c <global> 1 #define SUM(a , b) ((a)+(b))\ncase.c function 3 void function(void ){ sink(SUM(1,2)); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define SUM(a , b) ((a)+(b))",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c SUM 1 #define SUM(a , b) ((a)+(b))",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "repeated -dL -C -0 .*": {
+    "recorded": "case.c <global> 4 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1 + 2 + 3\n",
+    "intended": "case.c <global> 1 #define VALUE 1 + 2 + 3\ncase.c <global> 4 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1 + 2 + 3",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1 + 2 + 3",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "repeated -dL -C -0 VALUE": {
+    "recorded": "case.c <global> 4 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1 + 2 + 3\n",
+    "intended": "case.c <global> 1 #define VALUE 1 + 2 + 3\ncase.c <global> 4 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1 + 2 + 3",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1 + 2 + 3",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "repeated -dL -C -0 value": {
+    "recorded": "case.c <global> 4 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1 + 2 + 3\n",
+    "intended": "case.c <global> 1 #define VALUE 1 + 2 + 3\ncase.c <global> 4 int value = VALUE;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1 + 2 + 3",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1 + 2 + 3",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "replacement -dL -C -0 .*": {
+    "recorded": "case.c EXPR 1 #define EXPR(x) ((x)  + nested(1))\ncase.c function 3 void function(void ){ sink(EXPR(value)); }\n",
+    "intended": "case.c <global> 1 #define EXPR(x) ((x)  + nested(1))\ncase.c function 3 void function(void ){ sink(EXPR(value)); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define EXPR(x) ((x)  + nested(1))",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c EXPR 1 #define EXPR(x) ((x)  + nested(1))",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "replacement -dL -C -0 EXPR": {
+    "recorded": "case.c EXPR 1 #define EXPR(x) ((x)  + nested(1))\ncase.c function 3 void function(void ){ sink(EXPR(value)); }\n",
+    "intended": "case.c <global> 1 #define EXPR(x) ((x)  + nested(1))\ncase.c function 3 void function(void ){ sink(EXPR(value)); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define EXPR(x) ((x)  + nested(1))",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c EXPR 1 #define EXPR(x) ((x)  + nested(1))",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-controls -dL -0 .*": {
+    "recorded": "case.c <global> 1 #define VALUE a b + a b + a b + a b + a b\ncase.c VALUE 2 int value = 1;\n",
+    "intended": "case.c <global> 1 #define VALUE a b + a b + a b + a b + a b\ncase.c <global> 2 int value = 1;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 2 int value = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c VALUE 2 int value = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "spacing-controls -dL -C -0 .*": {
+    "recorded": "case.c VALUE 1 #define VALUE a b + a b + a b + a b + a b\ncase.c VALUE 2 int value = 1;\n",
+    "intended": "case.c <global> 1 #define VALUE a b + a b + a b + a b + a b\ncase.c <global> 2 int value = 1;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE a b + a b + a b + a b + a b",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c <global> 2 int value = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE a b + a b + a b + a b + a b",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 2 int value = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "spacing-controls -dL -C -0 VALUE": {
+    "recorded": "case.c VALUE 1 #define VALUE a b + a b + a b + a b + a b\ncase.c VALUE 2 int value = 1;\n",
+    "intended": "case.c <global> 1 #define VALUE a b + a b + a b + a b + a b\ncase.c <global> 2 int value = 1;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE a b + a b + a b + a b + a b",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c <global> 2 int value = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE a b + a b + a b + a b + a b",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 2 int value = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "spacing-controls -dL -C -0 value": {
+    "recorded": "case.c VALUE 1 #define VALUE a b + a b + a b + a b + a b\ncase.c VALUE 2 int value = 1;\n",
+    "intended": "case.c <global> 1 #define VALUE a b + a b + a b + a b + a b\ncase.c <global> 2 int value = 1;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE a b + a b + a b + a b + a b",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c <global> 2 int value = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE a b + a b + a b + a b + a b",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 2 int value = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "spacing-duplicate -dL -C -0 .*": {
+    "recorded": "case.c <global> 2 int value = 1;\ncase.c VALUE 1 #define VALUE a +a  b\n",
+    "intended": "case.c <global> 1 #define VALUE a +a  b\ncase.c <global> 2 int value = 1;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE a +a  b",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE a +a  b",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-duplicate -dL -C -0 VALUE": {
+    "recorded": "case.c <global> 2 int value = 1;\ncase.c VALUE 1 #define VALUE a +a  b\n",
+    "intended": "case.c <global> 1 #define VALUE a +a  b\ncase.c <global> 2 int value = 1;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE a +a  b",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE a +a  b",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-duplicate -dL -C -0 value": {
+    "recorded": "case.c <global> 2 int value = 1;\ncase.c VALUE 1 #define VALUE a +a  b\n",
+    "intended": "case.c <global> 1 #define VALUE a +a  b\ncase.c <global> 2 int value = 1;\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE a +a  b",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE a +a  b",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-eof -dL -C -0 .*": {
+    "recorded": "case.c VALUE 1 #define VALUE (1)\n",
+    "intended": "case.c <global> 1 #define VALUE (1)\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE (1)",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE (1)",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-eof -dL -C -0 VALUE": {
+    "recorded": "case.c VALUE 1 #define VALUE (1)\n",
+    "intended": "case.c <global> 1 #define VALUE (1)\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE (1)",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE (1)",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-eof -dL -C -0 value": {
+    "recorded": "case.c VALUE 1 #define VALUE (1)\n",
+    "intended": "case.c <global> 1 #define VALUE (1)\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE (1)",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE (1)",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-newline -dL -C -0 .*": {
+    "recorded": "case.c VALUE 1 #define VALUE (1) \n",
+    "intended": "case.c <global> 1 #define VALUE (1) \n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE (1) ",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE (1) ",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-newline -dL -C -0 VALUE": {
+    "recorded": "case.c VALUE 1 #define VALUE (1) \n",
+    "intended": "case.c <global> 1 #define VALUE (1) \n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE (1) ",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE (1) ",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-newline -dL -C -0 value": {
+    "recorded": "case.c VALUE 1 #define VALUE (1) \n",
+    "intended": "case.c <global> 1 #define VALUE (1) \n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE (1) ",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE (1) ",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-single -dL -C -0 .*": {
+    "recorded": "case.c EXPR 1 #define EXPR(x) ((x)  + nested(1))\ncase.c function 2 void function(void ){ sink(EXPR(value)); }\n",
+    "intended": "case.c <global> 1 #define EXPR(x) ((x)  + nested(1))\ncase.c function 2 void function(void ){ sink(EXPR(value)); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define EXPR(x) ((x)  + nested(1))",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c EXPR 1 #define EXPR(x) ((x)  + nested(1))",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "spacing-single -dL -C -0 EXPR": {
+    "recorded": "case.c EXPR 1 #define EXPR(x) ((x)  + nested(1))\ncase.c function 2 void function(void ){ sink(EXPR(value)); }\n",
+    "intended": "case.c <global> 1 #define EXPR(x) ((x)  + nested(1))\ncase.c function 2 void function(void ){ sink(EXPR(value)); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define EXPR(x) ((x)  + nested(1))",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c EXPR 1 #define EXPR(x) ((x)  + nested(1))",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "trailing -dL -C -0 .*": {
+    "recorded": "case.c <global> 3 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1\ncase.c function 4 void function(void ){ call(value); }\n",
+    "intended": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 int value = VALUE;\ncase.c function 4 void function(void ){ call(value); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "trailing -dL -C -0 VALUE": {
+    "recorded": "case.c <global> 3 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1\ncase.c function 4 void function(void ){ call(value); }\n",
+    "intended": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 int value = VALUE;\ncase.c function 4 void function(void ){ call(value); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "trailing -dL -C -0 value": {
+    "recorded": "case.c <global> 3 int value = VALUE;\ncase.c VALUE 1 #define VALUE 1\ncase.c function 4 void function(void ){ call(value); }\n",
+    "intended": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 int value = VALUE;\ncase.c function 4 void function(void ){ call(value); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 1 #define VALUE 1",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c VALUE 1 #define VALUE 1",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   }
+  },
+  "occurrence-context.json": {
+   "-dL -0 (TRAIL|trailing)": {
+    "recorded": "d.c <global> 1 #define TRAIL(arg) arg\nd.c TRAIL 2 int trailing = 6;\n",
+    "intended": "d.c <global> 1 #define TRAIL(arg) arg\nd.c <global> 2 int trailing = 6;\n",
+    "changes": [
+     {
+      "row": "d.c <global> 2 int trailing = 6;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "d.c TRAIL 2 int trailing = 6;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -0 (value|after_set|after_stop)": {
+    "recorded": "e.c <global> 4 int after_stop = 2;\nb.c INNER 3 #define INNER(value) value;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "intended": "e.c <global> 2 int after_set = 1;\ne.c <global> 4 int after_stop = 2;\nb.c INNER 3 #define INNER(value) value;\ne.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "changes": [
+     {
+      "row": "e.c <global> 2 int after_set = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c SET 2 int after_set = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -0 .*": {
+    "recorded": "a.c <global> 1 int before = 0;\na.c <global> 2 #define REPEAT(arg) arg\nc.c <global> 1 #define CLEAR extern \nc.c <global> 2 int cleared = 4;\nc.c <global> 3 #define UNIQUE(arg) different\nc.c <global> 4 int final = 5;\nd.c <global> 1 #define TRAIL(arg) arg\nd.c <global> 3 #define STOP(arg) arg;\nd.c <global> 4 int stopped = 7;\ne.c <global> 1 #define SET value = value\ne.c <global> 3 #define SET_STOP value = value;\ne.c <global> 4 int after_stop = 2;\ne.c <global> 5 #define LAST(arg) arg\na.c REPEAT 3 int after = 1;\nb.c REPEAT 1 int other = 2;\nb.c REPEAT 2 void function(void ) {\nb.c function 3 #define INNER(value) value;\nb.c function 4 other = 3;\nd.c TRAIL 2 int trailing = 6;\ne.c SET 2 int after_set = 1;\n",
+    "intended": "a.c <global> 1 int before = 0;\na.c <global> 2 #define REPEAT(arg) arg\na.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nc.c <global> 1 #define CLEAR extern \nc.c <global> 2 int cleared = 4;\nc.c <global> 3 #define UNIQUE(arg) different\nc.c <global> 4 int final = 5;\nd.c <global> 1 #define TRAIL(arg) arg\nd.c <global> 2 int trailing = 6;\nd.c <global> 3 #define STOP(arg) arg;\nd.c <global> 4 int stopped = 7;\ne.c <global> 1 #define SET value = value\ne.c <global> 2 int after_set = 1;\ne.c <global> 3 #define SET_STOP value = value;\ne.c <global> 4 int after_stop = 2;\ne.c <global> 5 #define LAST(arg) arg\nb.c function 2 void function(void ) {\nb.c function 3 #define INNER(value) value;\nb.c function 4 other = 3;\n",
+    "changes": [
+     {
+      "row": "a.c <global> 3 int after = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "b.c <global> 1 int other = 2;",
+      "change": "added",
+      "rules": [
+       "consumption+carry"
+      ]
+     },
+     {
+      "row": "d.c <global> 2 int trailing = 6;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c <global> 2 int after_set = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "b.c function 2 void function(void ) {",
+      "change": "added",
+      "rules": [
+       "consumption+carry"
+      ]
+     },
+     {
+      "row": "a.c REPEAT 3 int after = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "b.c REPEAT 1 int other = 2;",
+      "change": "removed",
+      "rules": [
+       "consumption+carry"
+      ]
+     },
+     {
+      "row": "b.c REPEAT 2 void function(void ) {",
+      "change": "removed",
+      "rules": [
+       "consumption+carry"
+      ]
+     },
+     {
+      "row": "d.c TRAIL 2 int trailing = 6;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c SET 2 int after_set = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -9 (value|after_set|after_stop)": {
+    "recorded": "e.c <global> 4 int after_stop = 2;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "intended": "e.c <global> 2 int after_set = 1;\ne.c <global> 4 int after_stop = 2;\ne.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "changes": [
+     {
+      "row": "e.c <global> 2 int after_set = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c SET 2 int after_set = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -9 .*": {
+    "recorded": "a.c <global> 1 int before = 0;\na.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nc.c <global> 2 int cleared = 4;\nc.c <global> 4 int final = 5;\nd.c <global> 2 int trailing = 6;\nd.c <global> 4 int stopped = 7;\ne.c <global> 4 int after_stop = 2;\nb.c function 4 other = 3;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "intended": "a.c <global> 1 int before = 0;\na.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nc.c <global> 2 int cleared = 4;\nc.c <global> 4 int final = 5;\nd.c <global> 2 int trailing = 6;\nd.c <global> 4 int stopped = 7;\ne.c <global> 2 int after_set = 1;\ne.c <global> 4 int after_stop = 2;\nb.c function 4 other = 3;\ne.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "changes": [
+     {
+      "row": "e.c <global> 2 int after_set = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c SET 2 int after_set = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -C -0 (STOP|stopped)": {
+    "recorded": "d.c <global> 4 int stopped = 7;\nd.c STOP 3 #define STOP(arg) arg;\n",
+    "intended": "d.c <global> 3 #define STOP(arg) arg;\nd.c <global> 4 int stopped = 7;\n",
+    "changes": [
+     {
+      "row": "d.c <global> 3 #define STOP(arg) arg;",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "d.c STOP 3 #define STOP(arg) arg;",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "-dL -C -0 (TRAIL|trailing)": {
+    "recorded": "d.c TRAIL 1 #define TRAIL(arg) arg\nd.c TRAIL 2 int trailing = 6;\n",
+    "intended": "d.c <global> 1 #define TRAIL(arg) arg\nd.c <global> 2 int trailing = 6;\n",
+    "changes": [
+     {
+      "row": "d.c <global> 1 #define TRAIL(arg) arg",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "d.c <global> 2 int trailing = 6;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "d.c TRAIL 1 #define TRAIL(arg) arg",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "d.c TRAIL 2 int trailing = 6;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -C -0 (function|INNER|other)": {
+    "recorded": "b.c <global> 1 int other = 2;\nb.c function 2 void function(void ) {\nb.c INNER 3 #define INNER(value) value;\nb.c function 4 other = 3;\n",
+    "intended": "b.c <global> 1 int other = 2;\nb.c function 2 void function(void ) {\nb.c function 3 #define INNER(value) value;\nb.c function 4 other = 3;\n",
+    "changes": [
+     {
+      "row": "b.c function 3 #define INNER(value) value;",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "b.c INNER 3 #define INNER(value) value;",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "-dL -C -0 (value|after_set|after_stop)": {
+    "recorded": "e.c <global> 4 int after_stop = 2;\nb.c INNER 3 #define INNER(value) value;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "intended": "e.c <global> 2 int after_set = 1;\ne.c <global> 4 int after_stop = 2;\nb.c INNER 3 #define INNER(value) value;\ne.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "changes": [
+     {
+      "row": "e.c <global> 2 int after_set = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c SET 2 int after_set = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -C -0 .*": {
+    "recorded": "a.c <global> 1 int before = 0;\nc.c <global> 2 int cleared = 4;\nc.c <global> 4 int final = 5;\nd.c <global> 4 int stopped = 7;\ne.c <global> 4 int after_stop = 2;\na.c REPEAT 2 #define REPEAT(arg) arg\na.c REPEAT 3 int after = 1;\nb.c REPEAT 1 int other = 2;\nb.c REPEAT 2 void function(void ) {\nb.c INNER 3 #define INNER(value) value;\nb.c function 4 other = 3;\nc.c CLEAR 1 #define CLEAR extern \nc.c UNIQUE 3 #define UNIQUE(arg) different\nd.c TRAIL 1 #define TRAIL(arg) arg\nd.c TRAIL 2 int trailing = 6;\nd.c STOP 3 #define STOP(arg) arg;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\ne.c LAST 5 #define LAST(arg) arg\n",
+    "intended": "a.c <global> 1 int before = 0;\na.c <global> 2 #define REPEAT(arg) arg\na.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nc.c <global> 1 #define CLEAR extern \nc.c <global> 2 int cleared = 4;\nc.c <global> 3 #define UNIQUE(arg) different\nc.c <global> 4 int final = 5;\nd.c <global> 1 #define TRAIL(arg) arg\nd.c <global> 2 int trailing = 6;\nd.c <global> 3 #define STOP(arg) arg;\nd.c <global> 4 int stopped = 7;\ne.c <global> 1 #define SET value = value\ne.c <global> 2 int after_set = 1;\ne.c <global> 3 #define SET_STOP value = value;\ne.c <global> 4 int after_stop = 2;\ne.c <global> 5 #define LAST(arg) arg\nb.c function 2 void function(void ) {\nb.c function 3 #define INNER(value) value;\nb.c function 4 other = 3;\n",
+    "changes": [
+     {
+      "row": "a.c <global> 2 #define REPEAT(arg) arg",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "a.c <global> 3 int after = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "b.c <global> 1 int other = 2;",
+      "change": "added",
+      "rules": [
+       "consumption+carry"
+      ]
+     },
+     {
+      "row": "c.c <global> 1 #define CLEAR extern ",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "c.c <global> 3 #define UNIQUE(arg) different",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "d.c <global> 1 #define TRAIL(arg) arg",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "d.c <global> 2 int trailing = 6;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "d.c <global> 3 #define STOP(arg) arg;",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "e.c <global> 1 #define SET value = value",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "e.c <global> 2 int after_set = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c <global> 3 #define SET_STOP value = value;",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "e.c <global> 5 #define LAST(arg) arg",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "b.c function 2 void function(void ) {",
+      "change": "added",
+      "rules": [
+       "consumption+carry"
+      ]
+     },
+     {
+      "row": "b.c function 3 #define INNER(value) value;",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "a.c REPEAT 2 #define REPEAT(arg) arg",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "a.c REPEAT 3 int after = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "b.c REPEAT 1 int other = 2;",
+      "change": "removed",
+      "rules": [
+       "consumption+carry"
+      ]
+     },
+     {
+      "row": "b.c REPEAT 2 void function(void ) {",
+      "change": "removed",
+      "rules": [
+       "consumption+carry"
+      ]
+     },
+     {
+      "row": "b.c INNER 3 #define INNER(value) value;",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "c.c CLEAR 1 #define CLEAR extern ",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "c.c UNIQUE 3 #define UNIQUE(arg) different",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "d.c TRAIL 1 #define TRAIL(arg) arg",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "d.c TRAIL 2 int trailing = 6;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "d.c STOP 3 #define STOP(arg) arg;",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "e.c SET 1 #define SET value = value",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "e.c SET 2 int after_set = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c SET_STOP 3 #define SET_STOP value = value;",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "e.c LAST 5 #define LAST(arg) arg",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "-dL -C -0 CLEAR": {
+    "recorded": "c.c CLEAR 1 #define CLEAR extern \n",
+    "intended": "c.c <global> 1 #define CLEAR extern \n",
+    "changes": [
+     {
+      "row": "c.c <global> 1 #define CLEAR extern ",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "c.c CLEAR 1 #define CLEAR extern ",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "-dL -C -0 INNER": {
+    "recorded": "b.c INNER 3 #define INNER(value) value;\n",
+    "intended": "b.c function 3 #define INNER(value) value;\n",
+    "changes": [
+     {
+      "row": "b.c function 3 #define INNER(value) value;",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "b.c INNER 3 #define INNER(value) value;",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "-dL -C -0 REPEAT": {
+    "recorded": "a.c REPEAT 2 #define REPEAT(arg) arg\n",
+    "intended": "a.c <global> 2 #define REPEAT(arg) arg\n",
+    "changes": [
+     {
+      "row": "a.c <global> 2 #define REPEAT(arg) arg",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "a.c REPEAT 2 #define REPEAT(arg) arg",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "-dL -C -0 ^REPEAT$": {
+    "recorded": "a.c REPEAT 2 #define REPEAT(arg) arg\n",
+    "intended": "a.c <global> 2 #define REPEAT(arg) arg\n",
+    "changes": [
+     {
+      "row": "a.c <global> 2 #define REPEAT(arg) arg",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "a.c REPEAT 2 #define REPEAT(arg) arg",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 (value|after_set|after_stop)": {
+    "recorded": "e.c <global> 4 int after_stop = 2;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "intended": "e.c <global> 2 int after_set = 1;\ne.c <global> 4 int after_stop = 2;\ne.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "changes": [
+     {
+      "row": "e.c <global> 2 int after_set = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c SET 2 int after_set = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "-dL -C -9 .*": {
+    "recorded": "a.c <global> 1 int before = 0;\na.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nc.c <global> 2 int cleared = 4;\nc.c <global> 4 int final = 5;\nd.c <global> 2 int trailing = 6;\nd.c <global> 4 int stopped = 7;\ne.c <global> 4 int after_stop = 2;\nb.c function 4 other = 3;\ne.c SET 1 #define SET value = value\ne.c SET 2 int after_set = 1;\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "intended": "a.c <global> 1 int before = 0;\na.c <global> 3 int after = 1;\nb.c <global> 1 int other = 2;\nc.c <global> 2 int cleared = 4;\nc.c <global> 4 int final = 5;\nd.c <global> 2 int trailing = 6;\nd.c <global> 4 int stopped = 7;\ne.c <global> 2 int after_set = 1;\ne.c <global> 4 int after_stop = 2;\nb.c function 4 other = 3;\ne.c SET 1 #define SET value = value\ne.c SET_STOP 3 #define SET_STOP value = value;\n",
+    "changes": [
+     {
+      "row": "e.c <global> 2 int after_set = 1;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "e.c SET 2 int after_set = 1;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   }
+  },
+  "queries": {
+   "01-contexts -C 0BUMP": {
+    "recorded": "a.c BUMP 4 #define BUMP(x) ((x) + counter)\na.c helper 8 return BUMP(value);\n",
+    "intended": "a.c <global> 4 #define BUMP(x) ((x) + counter)\na.c helper 8 return BUMP(value);\n",
+    "changes": [
+     {
+      "row": "a.c <global> 4 #define BUMP(x) ((x) + counter)",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "a.c BUMP 4 #define BUMP(x) ((x) + counter)",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "01-contexts 0.*": {
+    "recorded": "a.c <global> 3 int counter;\na.c <global> 4 #define BUMP(x) ((x) + counter)\nb.c <global> 1 extern int counter;\na.c helper 5 static int helper(int value)\na.c helper 7 counter = value;\na.c helper 8 return BUMP(value);\na.c main 10 int main(void )\na.c main 12 int local = helper(1);\na.c main 13 counter += local;\na.c main 14 if (counter == 2)\na.c main 15 printf(\"%d\\n\", counter);\nb.c reset 2 void reset(void ) { counter = 0; helper(2); }\nb.c f 3 int f(void ) { return seen; }\nb.c f 4 int later = 2;\nb.c f 5 #define LAST counter \\\nc.c LAST 1 int after = 1;\nc.c LAST 2 void more(void ) { reset(); }\n",
+    "intended": "a.c <global> 3 int counter;\na.c <global> 4 #define BUMP(x) ((x) + counter)\nb.c <global> 1 extern int counter;\nb.c <global> 4 int later = 2;\nb.c <global> 5 #define LAST counter \\\nc.c <global> 1 int after = 1;\na.c helper 5 static int helper(int value)\na.c helper 7 counter = value;\na.c helper 8 return BUMP(value);\na.c main 10 int main(void )\na.c main 12 int local = helper(1);\na.c main 13 counter += local;\na.c main 14 if (counter == 2)\na.c main 15 printf(\"%d\\n\", counter);\nb.c reset 2 void reset(void ) { counter = 0; helper(2); }\nb.c f 3 int f(void ) { return seen; }\nc.c more 2 void more(void ) { reset(); }\n",
+    "changes": [
+     {
+      "row": "b.c <global> 4 int later = 2;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "b.c <global> 5 #define LAST counter \\",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "c.c <global> 1 int after = 1;",
+      "change": "added",
+      "rules": [
+       "carry"
+      ]
+     },
+     {
+      "row": "c.c more 2 void more(void ) { reset(); }",
+      "change": "added",
+      "rules": [
+       "carry"
+      ]
+     },
+     {
+      "row": "b.c f 4 int later = 2;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "b.c f 5 #define LAST counter \\",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "c.c LAST 1 int after = 1;",
+      "change": "removed",
+      "rules": [
+       "carry"
+      ]
+     },
+     {
+      "row": "c.c LAST 2 void more(void ) { reset(); }",
+      "change": "removed",
+      "rules": [
+       "carry"
+      ]
+     }
+    ]
+   },
+   "01-contexts 2.*": {
+    "recorded": "a.c BUMP 8 return BUMP(value);\na.c helper 12 int local = helper(1);\na.c printf 15 printf(\"%d\\n\", counter);\nb.c helper 2 void reset(void ) { counter = 0; helper(2); }\nb.c reset 2 void more(void ) { reset(); }\n",
+    "intended": "a.c BUMP 8 return BUMP(value);\na.c helper 12 int local = helper(1);\na.c printf 15 printf(\"%d\\n\", counter);\nb.c helper 2 void reset(void ) { counter = 0; helper(2); }\nc.c reset 2 void more(void ) { reset(); }\n",
+    "changes": [
+     {
+      "row": "c.c reset 2 void more(void ) { reset(); }",
+      "change": "added",
+      "rules": [
+       "carry+listing"
+      ]
+     },
+     {
+      "row": "b.c reset 2 void more(void ) { reset(); }",
+      "change": "removed",
+      "rules": [
+       "carry+listing"
+      ]
+     }
+    ]
+   },
+   "01-contexts 3.*": {
+    "recorded": "a.c helper 8 return BUMP(value);\na.c main 12 int local = helper(1);\na.c main 15 printf(\"%d\\n\", counter);\nb.c reset 2 void reset(void ) { counter = 0; helper(2); }\nc.c LAST 2 void more(void ) { reset(); }\n",
+    "intended": "a.c helper 8 return BUMP(value);\na.c main 12 int local = helper(1);\na.c main 15 printf(\"%d\\n\", counter);\nb.c reset 2 void reset(void ) { counter = 0; helper(2); }\nc.c more 2 void more(void ) { reset(); }\n",
+    "changes": [
+     {
+      "row": "c.c more 2 void more(void ) { reset(); }",
+      "change": "added",
+      "rules": [
+       "carry"
+      ]
+     },
+     {
+      "row": "c.c LAST 2 void more(void ) { reset(); }",
+      "change": "removed",
+      "rules": [
+       "carry"
+      ]
+     }
+    ]
+   },
+   "01-contexts 3reset": {
+    "recorded": "c.c LAST 2 void more(void ) { reset(); }\n",
+    "intended": "c.c more 2 void more(void ) { reset(); }\n",
+    "changes": [
+     {
+      "row": "c.c more 2 void more(void ) { reset(); }",
+      "change": "added",
+      "rules": [
+       "carry"
+      ]
+     },
+     {
+      "row": "c.c LAST 2 void more(void ) { reset(); }",
+      "change": "removed",
+      "rules": [
+       "carry"
+      ]
+     }
+    ]
+   },
+   "01-contexts 9.*": {
+    "recorded": "b.c <global> 4 int later = 2;\na.c helper 7 counter = value;\na.c main 12 int local = helper(1);\na.c main 13 counter += local;\nb.c reset 2 void reset(void ) { counter = 0; helper(2); }\nc.c LAST 1 int after = 1;\n",
+    "intended": "b.c <global> 4 int later = 2;\nc.c <global> 1 int after = 1;\na.c helper 7 counter = value;\na.c main 12 int local = helper(1);\na.c main 13 counter += local;\nb.c reset 2 void reset(void ) { counter = 0; helper(2); }\n",
+    "changes": [
+     {
+      "row": "c.c <global> 1 int after = 1;",
+      "change": "added",
+      "rules": [
+       "carry"
+      ]
+     },
+     {
+      "row": "c.c LAST 1 int after = 1;",
+      "change": "removed",
+      "rules": [
+       "carry"
+      ]
+     }
+    ]
+   },
+   "02-lines 0.*": {
+    "recorded": "lines.c <global> 1 int x, y;\nlines.c g 2 void g(void ) { x = x + y; y = 1; }\nlines.c g 3 struct s { int s; } s;\nlines.c f 4 int f(void ) { return f2(); } int h(void ) { return h2(); }\nlines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }\nlines.c k 6 int a = 1, b = 2, c;\nlines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }\n",
+    "intended": "lines.c <global> 1 int x, y;\nlines.c <global> 3 struct s { int s; } s;\nlines.c <global> 6 int a = 1, b = 2, c;\nlines.c g 2 void g(void ) { x = x + y; y = 1; }\nlines.c f 4 int f(void ) { return f2(); } int h(void ) { return h2(); }\nlines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }\nlines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }\n",
+    "changes": [
+     {
+      "row": "lines.c <global> 3 struct s { int s; } s;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "lines.c <global> 6 int a = 1, b = 2, c;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "lines.c g 3 struct s { int s; } s;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "lines.c k 6 int a = 1, b = 2, c;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "02-lines 9.*": {
+    "recorded": "lines.c g 2 void g(void ) { x = x + y; y = 1; }\nlines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }\nlines.c k 6 int a = 1, b = 2, c;\nlines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }\n",
+    "intended": "lines.c <global> 6 int a = 1, b = 2, c;\nlines.c g 2 void g(void ) { x = x + y; y = 1; }\nlines.c k 5 void k(void ) { if (x) { x = 2; } else { y = 3; } }\nlines.c m 7 void m(void ) { a == b; a += 1; b <<= 2; c >>= 1; }\n",
+    "changes": [
+     {
+      "row": "lines.c <global> 6 int a = 1, b = 2, c;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "lines.c k 6 int a = 1, b = 2, c;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "03-calls 2.*": {
+    "recorded": "calls.c target 24 target();\ncalls.c target 27 #define WRAP(v) target(v)\ncalls.c first 30 first();\ncalls.c second 32 second();\ncalls.c third 34 void macros_after(void ) { third(); }\nd.c first_call 2 first_call();\nd.c second_call 1 void next_fn(void ) { second_call(); }\nd.c next_fn 2 int plain(void ) { return next_fn(); }\n",
+    "intended": "calls.c target 24 target();\ncalls.c target 27 #define WRAP(v) target(v)\ncalls.c first 30 first();\ncalls.c hidden 31 #define INNER(z) hidden(z)\ncalls.c second 32 second();\ncalls.c third 34 void macros_after(void ) { third(); }\nd.c first_call 2 first_call();\ne.c second_call 1 void next_fn(void ) { second_call(); }\ne.c next_fn 2 int plain(void ) { return next_fn(); }\n",
+    "changes": [
+     {
+      "row": "calls.c hidden 31 #define INNER(z) hidden(z)",
+      "change": "added",
+      "rules": [
+       "listing"
+      ]
+     },
+     {
+      "row": "e.c second_call 1 void next_fn(void ) { second_call(); }",
+      "change": "added",
+      "rules": [
+       "carry+listing"
+      ]
+     },
+     {
+      "row": "e.c next_fn 2 int plain(void ) { return next_fn(); }",
+      "change": "added",
+      "rules": [
+       "carry+listing"
+      ]
+     },
+     {
+      "row": "d.c second_call 1 void next_fn(void ) { second_call(); }",
+      "change": "removed",
+      "rules": [
+       "carry+listing"
+      ]
+     },
+     {
+      "row": "d.c next_fn 2 int plain(void ) { return next_fn(); }",
+      "change": "removed",
+      "rules": [
+       "carry+listing"
+      ]
+     }
+    ]
+   },
+   "03-calls 3.*": {
+    "recorded": "calls.c f1 24 target();\ncalls.c f2 24 target();\ncalls.c f3 24 target();\ncalls.c f4 24 target();\ncalls.c f5 24 target();\ncalls.c f6 24 target();\ncalls.c f7 24 target();\ncalls.c f8 24 target();\ncalls.c f9 24 target();\ncalls.c WRAP 27 #define WRAP(v) target(v)\ncalls.c body 30 first();\ncalls.c INNER 31 #define INNER(z) hidden(z)\ncalls.c body 32 second();\ncalls.c macros_after 34 void macros_after(void ) { third(); }\nd.c open_end 2 first_call();\ne.c open_end 1 void next_fn(void ) { second_call(); }\ne.c next_fn 1 void next_fn(void ) { second_call(); }\ne.c plain 2 int plain(void ) { return next_fn(); }\n",
+    "intended": "calls.c f11 24 target();\ncalls.c WRAP 27 #define WRAP(v) target(v)\ncalls.c body 30 first();\ncalls.c INNER 31 #define INNER(z) hidden(z)\ncalls.c body 32 second();\ncalls.c macros_after 34 void macros_after(void ) { third(); }\nd.c open_end 2 first_call();\ne.c next_fn 1 void next_fn(void ) { second_call(); }\ne.c plain 2 int plain(void ) { return next_fn(); }\n",
+    "changes": [
+     {
+      "row": "calls.c f11 24 target();",
+      "change": "added",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f1 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f2 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f3 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f4 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f5 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f6 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f7 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f8 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f9 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "e.c open_end 1 void next_fn(void ) { second_call(); }",
+      "change": "removed",
+      "rules": [
+       "carry+heads"
+      ]
+     }
+    ]
+   },
+   "03-calls 3second_call": {
+    "recorded": "e.c open_end 1 void next_fn(void ) { second_call(); }\ne.c next_fn 1 void next_fn(void ) { second_call(); }\n",
+    "intended": "e.c next_fn 1 void next_fn(void ) { second_call(); }\n",
+    "changes": [
+     {
+      "row": "e.c open_end 1 void next_fn(void ) { second_call(); }",
+      "change": "removed",
+      "rules": [
+       "carry+heads"
+      ]
+     }
+    ]
+   },
+   "03-calls 3target": {
+    "recorded": "calls.c f1 24 target();\ncalls.c f2 24 target();\ncalls.c f3 24 target();\ncalls.c f4 24 target();\ncalls.c f5 24 target();\ncalls.c f6 24 target();\ncalls.c f7 24 target();\ncalls.c f8 24 target();\ncalls.c f9 24 target();\ncalls.c WRAP 27 #define WRAP(v) target(v)\n",
+    "intended": "calls.c f11 24 target();\ncalls.c WRAP 27 #define WRAP(v) target(v)\n",
+    "changes": [
+     {
+      "row": "calls.c f11 24 target();",
+      "change": "added",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f1 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f2 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f3 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f4 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f5 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f6 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f7 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f8 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     },
+     {
+      "row": "calls.c f9 24 target();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     }
+    ]
+   },
+   "05-semantics -C 0INNER": {
+    "recorded": "p1.c INNER 18 #define INNER(x) inner_call(x)\np1.c outer 19 INNER(1);\n",
+    "intended": "p1.c outer 18 #define INNER(x) inner_call(x)\np1.c outer 19 INNER(1);\n",
+    "changes": [
+     {
+      "row": "p1.c outer 18 #define INNER(x) inner_call(x)",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "p1.c INNER 18 #define INNER(x) inner_call(x)",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   },
+   "05-semantics 0.*": {
+    "recorded": "body.inc <global> 1 int incl;\np1.c <global> 1 struct page *pop(void ) {\np1.c <global> 2 struct page *p = first();\np1.c <global> 3 return p;\np1.c <global> 10 #if A\na_open.c opened 1 void opened(void ) {\na_open.c opened 2 go();\np1.c g 5 void g(void )\np1.c g 8 helper();\np1.c left 11 void left(void ) {\np1.c right 13 void right(void ) {\np1.c right 15 after();\np1.c outer 17 void outer(void ) {\np1.c outer 18 #define INNER(x) inner_call(x)\np1.c outer 19 INNER(1);\n",
+    "intended": "body.inc <global> 1 int incl;\np1.c <global> 1 struct page *pop(void ) {\np1.c <global> 10 #if A\na_open.c opened 1 void opened(void ) {\na_open.c opened 2 go();\np1.c pop 2 struct page *p = first();\np1.c pop 3 return p;\np1.c g 5 void g(void )\np1.c g 8 helper();\np1.c left 11 void left(void ) {\np1.c right 13 void right(void ) {\np1.c right 15 after();\np1.c outer 17 void outer(void ) {\np1.c outer 18 #define INNER(x) inner_call(x)\np1.c outer 19 INNER(1);\n",
+    "changes": [
+     {
+      "row": "p1.c pop 2 struct page *p = first();",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "p1.c pop 3 return p;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "p1.c <global> 2 struct page *p = first();",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "p1.c <global> 3 return p;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "05-semantics 0page": {
+    "recorded": "p1.c <global> 1 struct page *pop(void ) {\np1.c <global> 2 struct page *p = first();\n",
+    "intended": "p1.c <global> 1 struct page *pop(void ) {\np1.c pop 2 struct page *p = first();\n",
+    "changes": [
+     {
+      "row": "p1.c pop 2 struct page *p = first();",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "p1.c <global> 2 struct page *p = first();",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "05-semantics 2.*": {
+    "recorded": "a_open.c go 2 go();\np1.c first 2 struct page *p = first();\np1.c helper 8 helper();\np1.c after 15 after();\np1.c INNER 19 INNER(1);\n",
+    "intended": "a_open.c go 2 go();\np1.c first 2 struct page *p = first();\np1.c helper 8 helper();\np1.c after 15 after();\np1.c inner_call 18 #define INNER(x) inner_call(x)\np1.c INNER 19 INNER(1);\n",
+    "changes": [
+     {
+      "row": "p1.c inner_call 18 #define INNER(x) inner_call(x)",
+      "change": "added",
+      "rules": [
+       "listing"
+      ]
+     }
+    ]
+   },
+   "05-semantics 2left": {
+    "recorded": "p1.c after 15 after();\n",
+    "intended": "",
+    "changes": [
+     {
+      "row": "p1.c after 15 after();",
+      "change": "removed",
+      "rules": [
+       "listing"
+      ]
+     }
+    ]
+   },
+   "05-semantics 3after": {
+    "recorded": "p1.c left 15 after();\np1.c right 15 after();\n",
+    "intended": "p1.c right 15 after();\n",
+    "changes": [
+     {
+      "row": "p1.c left 15 after();",
+      "change": "removed",
+      "rules": [
+       "heads"
+      ]
+     }
+    ]
+   },
+   "05-semantics 3first": {
+    "recorded": "p1.c opened 2 struct page *p = first();\np1.c pop 2 struct page *p = first();\n",
+    "intended": "p1.c pop 2 struct page *p = first();\n",
+    "changes": [
+     {
+      "row": "p1.c opened 2 struct page *p = first();",
+      "change": "removed",
+      "rules": [
+       "carry+heads"
+      ]
+     }
+    ]
+   }
+  },
+  "written-computed-includes-cscope.json": {
+   "rax_default -dL -C -0 RAX_MALLOC_INCLUDE": {
+    "recorded": "case.c <global> 1 #ifndef RAX_MALLOC_INCLUDE\ncase.c <global> 4 #include RAX_MALLOC_INCLUDE\ncase.c RAX_MALLOC_INCLUDE 2 #define RAX_MALLOC_INCLUDE \"rax_malloc.h\"\n",
+    "intended": "case.c <global> 1 #ifndef RAX_MALLOC_INCLUDE\ncase.c <global> 2 #define RAX_MALLOC_INCLUDE \"rax_malloc.h\"\ncase.c <global> 4 #include RAX_MALLOC_INCLUDE\n",
+    "changes": [
+     {
+      "row": "case.c <global> 2 #define RAX_MALLOC_INCLUDE \"rax_malloc.h\"",
+      "change": "added",
+      "rules": [
+       "caseless-own-row"
+      ]
+     },
+     {
+      "row": "case.c RAX_MALLOC_INCLUDE 2 #define RAX_MALLOC_INCLUDE \"rax_malloc.h\"",
+      "change": "removed",
+      "rules": [
+       "caseless-own-row"
+      ]
+     }
+    ]
+   }
+  },
+  "written-message-pragma.json": {
+   "message_guarded -C 0.*": {
+    "recorded": "case.c <global> 1 #ifdef ASMINF\ncase.c <global> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\ncase.c f 4 void f(void ) { target(); }\ncase.c f 6 int after;\n",
+    "intended": "case.c <global> 1 #ifdef ASMINF\ncase.c <global> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\ncase.c <global> 6 int after;\ncase.c f 4 void f(void ) { target(); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 6 int after;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c f 6 int after;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   },
+   "message_guarded 0.*": {
+    "recorded": "case.c <global> 1 #ifdef ASMINF\ncase.c <global> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\ncase.c f 4 void f(void ) { target(); }\ncase.c f 6 int after;\n",
+    "intended": "case.c <global> 1 #ifdef ASMINF\ncase.c <global> 2 #pragma message(\"Assembler code may have bugs -- use at your own risk\")\ncase.c <global> 6 int after;\ncase.c f 4 void f(void ) { target(); }\n",
+    "changes": [
+     {
+      "row": "case.c <global> 6 int after;",
+      "change": "added",
+      "rules": [
+       "consumption"
+      ]
+     },
+     {
+      "row": "case.c f 6 int after;",
+      "change": "removed",
+      "rules": [
+       "consumption"
+      ]
+     }
+    ]
+   }
+  }
+ }
+}

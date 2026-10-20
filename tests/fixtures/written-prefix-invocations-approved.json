@@ -1,0 +1,47 @@
+{
+ "decision": "Intended reading of opaque invocations after prefix words, in prototypes and prefixed definitions.",
+ "reference": "tests/fixtures/written-prefix-invocations-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "memdebug_prototypes": {
+   "0": {
+    "ALLOC_SIZE": "case.c <global> 1 CURL_EXTERN ALLOC_FUNC ALLOC_SIZE(1) void *curl_dbg_malloc(size_t size,\n",
+    "ALLOC_SIZE2": "case.c <global> 3 CURL_EXTERN ALLOC_FUNC ALLOC_SIZE2(1, 2) void *curl_dbg_calloc(size_t n,\n",
+    "curl_dbg_malloc": "case.c <global> 1 CURL_EXTERN ALLOC_FUNC ALLOC_SIZE(1) void *curl_dbg_malloc(size_t size,\n",
+    "curl_dbg_calloc": "case.c <global> 3 CURL_EXTERN ALLOC_FUNC ALLOC_SIZE2(1, 2) void *curl_dbg_calloc(size_t n,\n",
+    "curl_dbg_free": "case.c <global> 5 CURL_EXTERN void curl_dbg_free(void *ptr, int line, const char *source);\n",
+    "size": "case.c <global> 1 CURL_EXTERN ALLOC_FUNC ALLOC_SIZE(1) void *curl_dbg_malloc(size_t size,\ncase.c <global> 4 size_t size, int line, const char *source);\n",
+    "line": "case.c <global> 2 int line, const char *source);\ncase.c <global> 4 size_t size, int line, const char *source);\ncase.c <global> 5 CURL_EXTERN void curl_dbg_free(void *ptr, int line, const char *source);\n",
+    "source": "case.c <global> 2 int line, const char *source);\ncase.c <global> 4 size_t size, int line, const char *source);\ncase.c <global> 5 CURL_EXTERN void curl_dbg_free(void *ptr, int line, const char *source);\n",
+    "after": "case.c <global> 6 int after;\n"
+   },
+   "1": {
+    "ALLOC_SIZE": "",
+    "ALLOC_SIZE2": "",
+    "after": "case.c after 6 int after;\n"
+   },
+   "2": {
+    "ALLOC_SIZE": "",
+    "ALLOC_SIZE2": ""
+   },
+   "3": {
+    "g": "case.c h 7 void h(void ) { g(); }\n",
+    "curl_dbg_malloc": "",
+    "curl_dbg_free": ""
+   }
+  },
+  "static_definition": {
+   "0": {
+    "ANN": "case.c <global> 1 static ANN(1) int f(void ) { g(); }\n"
+   },
+   "1": {
+    "ANN": ""
+   },
+   "2": {
+    "ANN": ""
+   },
+   "3": {
+    "g": "case.c f 1 static ANN(1) int f(void ) { g(); }\n"
+   }
+  }
+ }
+}

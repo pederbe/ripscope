@@ -1,0 +1,616 @@
+{
+  "ordinary": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "HOME": "<isolated case directory>",
+      "inherit_other_variables": false
+    },
+    "profiles": [
+      {
+        "caseless": false,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 1 // Needle Needle\nz.c <unknown> 1 // Needle\na.h <unknown> 1 // Needle header\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "needle"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \nz.c <unknown> 2 // xneedleY\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "Needle "
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 1 // Needle Needle\na.h <unknown> 1 // Needle header\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              " Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 1 // Needle Needle\nz.c <unknown> 1 // Needle\na.h <unknown> 1 // Needle header\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "\t"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              ".*[\\^$+?|()"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "{2}"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "["
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "\\"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              " "
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 1 // Needle Needle\nb.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \nb.c <unknown> 3 // NEEDLE\r\nb.c <unknown> 5 // tailz.c <unknown> 1 // Needle\nz.c <unknown> 2 // xneedleY\na.h <unknown> 1 // Needle header\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              ""
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "tail"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 5 // tail",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "before"
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "header"
+            ],
+            "exit_code": 0,
+            "stdout": "a.h <unknown> 1 // Needle header\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "\r"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 3 // NEEDLE\r\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "missing"
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": ""
+          }
+        ]
+      },
+      {
+        "caseless": true,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "needle"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 1 // Needle Needle\nb.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \nb.c <unknown> 3 // NEEDLE\r\nz.c <unknown> 1 // Needle\nz.c <unknown> 2 // xneedleY\na.h <unknown> 1 // Needle header\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "Needle "
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              " Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "\t"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              ".*[\\^$+?|()"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "{2}"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "["
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "\\"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              " "
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 1 // Needle Needle\nb.c <unknown> 2 \t// needle.*[\\^$+?|(){2}\t \nb.c <unknown> 3 // NEEDLE\r\nb.c <unknown> 5 // tailz.c <unknown> 1 // Needle\nz.c <unknown> 2 // xneedleY\na.h <unknown> 1 // Needle header\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              ""
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "tail"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 5 // tail",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "before"
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "header"
+            ],
+            "exit_code": 0,
+            "stdout": "a.h <unknown> 1 // Needle header\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "\r"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 3 // NEEDLE\r\n",
+            "stderr": ""
+          },
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "missing"
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": ""
+          }
+        ]
+      }
+    ],
+    "files": {
+      "z.c": "#include \"a.h\"\nint old;\n",
+      "b.c": "int before;\n",
+      "a.h": "int header;\n",
+      "unselected.c": "// Needle\n"
+    },
+    "seeds": [
+      "z.c",
+      "b.c"
+    ],
+    "field": "4",
+    "build": {
+      "args": [
+        "-bk",
+        "z.c",
+        "b.c"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "live_files": {
+      "b.c": "// Needle Needle\n\t// needle.*[\\^$+?|(){2}\t \n// NEEDLE\r\n\n// tail",
+      "z.c": "// Needle\n// xneedleY\n",
+      "a.h": "// Needle header\n"
+    },
+    "unreadable": [],
+    "persistent_input": "4Needle\nc\n4Needle\n4\n4tail\nq\n",
+    "persistent": {
+      "args": [
+        "-dl"
+      ],
+      "exit_code": 0,
+      "stdout": ">> cscope: 3 lines\nb.c <unknown> 1 // Needle Needle\nz.c <unknown> 1 // Needle\na.h <unknown> 1 // Needle header\n>> >> Unable to search database\n>> Unable to search database\n>> cscope: 1 lines\nb.c <unknown> 5 // tail>> ",
+      "stderr": ""
+    }
+  },
+  "missing": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "HOME": "<isolated case directory>",
+      "inherit_other_variables": false
+    },
+    "profiles": [
+      {
+        "caseless": false,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 1 // Needle Needle\na.h <unknown> 1 // Needle header\n",
+            "stderr": "Cannot open file z.c\n"
+          }
+        ]
+      },
+      {
+        "caseless": true,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": "Cannot open file z.c\n"
+          }
+        ]
+      }
+    ],
+    "files": {
+      "z.c": "#include \"a.h\"\nint old;\n",
+      "b.c": "int before;\n",
+      "a.h": "int header;\n",
+      "unselected.c": "// Needle\n"
+    },
+    "seeds": [
+      "z.c",
+      "b.c"
+    ],
+    "field": "4",
+    "build": {
+      "args": [
+        "-bk",
+        "z.c",
+        "b.c"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "live_files": {
+      "b.c": "// Needle Needle\n\t// needle.*[\\^$+?|(){2}\t \n// NEEDLE\r\n\n// tail",
+      "z.c": null,
+      "a.h": "// Needle header\n"
+    },
+    "unreadable": []
+  },
+  "unreadable": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "HOME": "<isolated case directory>",
+      "inherit_other_variables": false
+    },
+    "profiles": [
+      {
+        "caseless": false,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-4",
+              "Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 1 // Needle Needle\na.h <unknown> 1 // Needle header\n",
+            "stderr": "Cannot open file z.c\n"
+          }
+        ]
+      },
+      {
+        "caseless": true,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-C",
+              "-4",
+              "Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": "Cannot open file z.c\n"
+          }
+        ]
+      }
+    ],
+    "files": {
+      "z.c": "#include \"a.h\"\nint old;\n",
+      "b.c": "int before;\n",
+      "a.h": "int header;\n",
+      "unselected.c": "// Needle\n"
+    },
+    "seeds": [
+      "z.c",
+      "b.c"
+    ],
+    "field": "4",
+    "build": {
+      "args": [
+        "-bk",
+        "z.c",
+        "b.c"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "live_files": {
+      "b.c": "// Needle Needle\n\t// needle.*[\\^$+?|(){2}\t \n// NEEDLE\r\n\n// tail",
+      "z.c": "// Needle\n// xneedleY\n",
+      "a.h": "// Needle header\n"
+    },
+    "unreadable": [
+      "z.c"
+    ]
+  },
+  "other_cwd": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "environment": {
+      "LC_ALL": "C",
+      "PATH": "/usr/bin:/bin",
+      "HOME": "<isolated case directory>",
+      "inherit_other_variables": false
+    },
+    "profiles": [
+      {
+        "caseless": false,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-f",
+              "../cscope.out",
+              "-4",
+              "Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "b.c <unknown> 1 // Needle other\n",
+            "stderr": "Cannot open file z.c\nCannot open file a.h\n"
+          }
+        ]
+      },
+      {
+        "caseless": true,
+        "queries": [
+          {
+            "args": [
+              "-dL",
+              "-f",
+              "../cscope.out",
+              "-C",
+              "-4",
+              "Needle"
+            ],
+            "exit_code": 0,
+            "stdout": "",
+            "stderr": "Cannot open file z.c\nCannot open file a.h\n"
+          }
+        ]
+      }
+    ],
+    "files": {
+      "z.c": "#include \"a.h\"\nint old;\n",
+      "b.c": "int before;\n",
+      "a.h": "int header;\n",
+      "unselected.c": "// Needle\n"
+    },
+    "seeds": [
+      "z.c",
+      "b.c"
+    ],
+    "field": "4",
+    "build": {
+      "args": [
+        "-bk",
+        "z.c",
+        "b.c"
+      ],
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "live_files": {
+      "b.c": "// Needle Needle\n\t// needle.*[\\^$+?|(){2}\t \n// NEEDLE\r\n\n// tail",
+      "z.c": "// Needle\n// xneedleY\n",
+      "a.h": "// Needle header\n",
+      "other/b.c": "// Needle other\n"
+    },
+    "unreadable": [],
+    "query_directory": "other"
+  },
+  "reference_profile": {
+    "package": "cscope 15.9-2build1",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "uid": 1000,
+    "source_commit": "612a539b585ccdb70a1261652954f579ccedb270"
+  }
+}

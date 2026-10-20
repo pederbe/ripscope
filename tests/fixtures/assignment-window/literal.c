@@ -1,0 +1,18 @@
+void nearby(int *slots) {
+    int counter = 0;
+    /* A complete nearby comment remains in the raw window. */
+    counter++;
+    slots[counter] = 1;
+}
+void quoted(int *slots) {
+    int counter = 0;
+    const char *padding = "01234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789";
+    counter++;
+    slots[counter] = 1;
+    (void)padding;
+}
+void clean_neighbor(int *slots) {
+    int counter = 0;
+    counter++;
+    slots[counter] = 1;
+}

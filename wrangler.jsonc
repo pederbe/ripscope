@@ -1,0 +1,15 @@
+// Staged static hosting. This file creates no resources until an approved deploy.
+// Keep Cloudflare Workers Builds disconnected: main pushes never deploy this site.
+{
+  "$schema": "./tools/site/node_modules/wrangler/config-schema.json",
+  "name": "ripscope-site",
+  "compatibility_date": "2026-10-02",
+  "assets": {
+    "directory": "./target/site",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "workers_dev": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "ripscope.com", "custom_domain": true }]
+}

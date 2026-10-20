@@ -1,0 +1,102 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/35-unspaced-conditionals.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void ) {"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "$",
+          "f",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if(",
+        ")"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          " ",
+          "A",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#elif!",
+        "(",
+        ")"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "B",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "`",
+          "g",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "g",
+          "h",
+          false
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2749 @@
+{
+  "provenance": {
+    "producer": "v11 at9257242",
+    "binary_sha256": "44aed8bcff2eca9b91e3e496cb659313821c0067f96ad1a695d733fee1120ef7",
+    "note": "Pre-adoption Windows stored-query regression capture, source physically removed. Not a cscope capture."
+  },
+  "cases": {
+    "0-False": {
+      "files": {
+        "case.c": "void function(void){\nint __attribute__((unused)) first, second;\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 int __attribute__((unused)) first, second;\ncase.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 int __attribute__((unused)) first, second;\ncase.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c target 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c target 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "0-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\nint __attribute__((unused)) first, second;\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 int __attribute__((unused)) first, second;\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 int __attribute__((unused)) first, second;\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 3 int __attribute__((unused)) first, second;\ncase.c .* 6 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 3 int __attribute__((unused)) first, second;\ncase.c .* 6 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "1-False": {
+      "files": {
+        "case.c": "void function(void){\n__attribute__((unused)) int first;\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 __attribute__((unused)) int first;\ncase.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 __attribute__((unused)) int first;\ncase.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c target 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c target 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "1-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\n__attribute__((unused)) int first;\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 __attribute__((unused)) int first;\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 __attribute__((unused)) int first;\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 3 __attribute__((unused)) int first;\ncase.c .* 6 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 3 __attribute__((unused)) int first;\ncase.c .* 6 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "2-False": {
+      "files": {
+        "case.c": "void function(void){\nextern struct S value; extern union U other; extern enum E third;\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 extern struct S value; extern union U other; extern enum E third;\ncase.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 extern struct S value; extern union U other; extern enum E third;\ncase.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c target 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c target 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "2-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\nextern struct S value; extern union U other; extern enum E third;\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 extern struct S value; extern union U other; extern enum E third;\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 extern struct S value; extern union U other; extern enum E third;\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 6 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 6 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "3-False": {
+      "files": {
+        "case.c": "void function(void){\nType first=1, *second=0; extern int hidden; int local(int);\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c local 2 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c target 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c local 2 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c target 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 Type first=1, *second=0; extern int hidden; int local(int );\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 Type first=1, *second=0; extern int hidden; int local(int );\n"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "3-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\nType first=1, *second=0; extern int hidden; int local(int);\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 3 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c .* 6 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 3 Type first=1, *second=0; extern int hidden; int local(int );\ncase.c .* 6 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 Type first=1, *second=0; extern int hidden; int local(int );\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 Type first=1, *second=0; extern int hidden; int local(int );\n"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "4-False": {
+      "files": {
+        "case.c": "void function(void){\nint a[2]={1,2}, b=3;\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 int a[2]={1,2}, b=3;\ncase.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 5 int after;\ncase.c function 1 void function(void ){\ncase.c function 2 int a[2]={1,2}, b=3;\ncase.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\ncase.c .* 5 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c target 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c target 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 target();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 target();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 int a[2]={1,2}, b=3;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 int a[2]={1,2}, b=3;\n"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "4-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\nint a[2]={1,2}, b=3;\n target();\n}\nint after;\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 int a[2]={1,2}, b=3;\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 int a[2]={1,2}, b=3;\ncase.c <global> 4 target();\ncase.c <global> 6 int after;\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 3 int a[2]={1,2}, b=3;\ncase.c .* 6 int after;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\ncase.c .* 3 int a[2]={1,2}, b=3;\ncase.c .* 6 int after;\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 int a[2]={1,2}, b=3;\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 int a[2]={1,2}, b=3;\n"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "annotation-0-False": {
+      "files": {
+        "case.c": "void function(void){\n__attribute__((fallthrough));\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 __attribute__((fallthrough));\ncase.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 __attribute__((fallthrough));\ncase.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c after 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c after 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "annotation-0-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\n__attribute__((fallthrough));\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 __attribute__((fallthrough));\ncase.c <global> 4 after();\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 __attribute__((fallthrough));\ncase.c <global> 4 after();\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "annotation-1-False": {
+      "files": {
+        "case.c": "void function(void){\n__attribute__((annotate(helper()))) target();\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 __attribute__((annotate(helper()))) target();\ncase.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 __attribute__((annotate(helper()))) target();\ncase.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c helper 2 __attribute__((annotate(helper()))) target();\ncase.c target 2 __attribute__((annotate(helper()))) target();\ncase.c after 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c helper 2 __attribute__((annotate(helper()))) target();\ncase.c target 2 __attribute__((annotate(helper()))) target();\ncase.c after 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 __attribute__((annotate(helper()))) target();\ncase.c function 2 __attribute__((annotate(helper()))) target();\ncase.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 __attribute__((annotate(helper()))) target();\ncase.c function 2 __attribute__((annotate(helper()))) target();\ncase.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "annotation-1-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\n__attribute__((annotate(helper()))) target();\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 __attribute__((annotate(helper()))) target();\ncase.c <global> 4 after();\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 __attribute__((annotate(helper()))) target();\ncase.c <global> 4 after();\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "expression-annotation-0-False": {
+      "files": {
+        "case.c": "void function(void){\n__attribute__((unused)) sink() + other();\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 __attribute__((unused)) sink() + other();\ncase.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 __attribute__((unused)) sink() + other();\ncase.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c sink 2 __attribute__((unused)) sink() + other();\ncase.c other 2 __attribute__((unused)) sink() + other();\ncase.c after 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c sink 2 __attribute__((unused)) sink() + other();\ncase.c other 2 __attribute__((unused)) sink() + other();\ncase.c after 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 __attribute__((unused)) sink() + other();\ncase.c function 2 __attribute__((unused)) sink() + other();\ncase.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 __attribute__((unused)) sink() + other();\ncase.c function 2 __attribute__((unused)) sink() + other();\ncase.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "expression-annotation-0-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\n__attribute__((unused)) sink() + other();\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 __attribute__((unused)) sink() + other();\ncase.c <global> 4 after();\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 __attribute__((unused)) sink() + other();\ncase.c <global> 4 after();\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "expression-annotation-1-False": {
+      "files": {
+        "case.c": "void function(void){\nlabel: __attribute__((annotate(helper()))) target();\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 label: __attribute__((annotate(helper()))) target();\ncase.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 label: __attribute__((annotate(helper()))) target();\ncase.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c helper 2 label: __attribute__((annotate(helper()))) target();\ncase.c target 2 label: __attribute__((annotate(helper()))) target();\ncase.c after 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c helper 2 label: __attribute__((annotate(helper()))) target();\ncase.c target 2 label: __attribute__((annotate(helper()))) target();\ncase.c after 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 label: __attribute__((annotate(helper()))) target();\ncase.c function 2 label: __attribute__((annotate(helper()))) target();\ncase.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 label: __attribute__((annotate(helper()))) target();\ncase.c function 2 label: __attribute__((annotate(helper()))) target();\ncase.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "expression-annotation-1-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\nlabel: __attribute__((annotate(helper()))) target();\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 label: __attribute__((annotate(helper()))) target();\ncase.c <global> 4 after();\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 label: __attribute__((annotate(helper()))) target();\ncase.c <global> 4 after();\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "expression-annotation-2-False": {
+      "files": {
+        "case.c": "void function(void){\nsink(__attribute__((unused)) value);\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 sink(__attribute__((unused)) value);\ncase.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 1 void function(void ){\ncase.c function 2 sink(__attribute__((unused)) value);\ncase.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c sink 2 sink(__attribute__((unused)) value);\ncase.c after 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c sink 2 sink(__attribute__((unused)) value);\ncase.c after 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 sink(__attribute__((unused)) value);\ncase.c function 3 after();\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 sink(__attribute__((unused)) value);\ncase.c function 3 after();\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "expression-annotation-2-True": {
+      "files": {
+        "case.c": "#define VALUE 1 // comment\nvoid function(void){\nsink(__attribute__((unused)) value);\n after();\n}\n"
+      },
+      "fields": {
+        "0": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 1 #define VALUE 1\ncase.c <global> 3 sink(__attribute__((unused)) value);\ncase.c <global> 4 after();\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c <global> 3 sink(__attribute__((unused)) value);\ncase.c <global> 4 after();\ncase.c VALUE 1 #define VALUE 1\ncase.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "1": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c .* 1 #define VALUE 1\n"
+                }
+              ]
+            }
+          ]
+        },
+        "2": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c function 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "3": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": "case.c VALUE 2 void function(void ){\n"
+                }
+              ]
+            }
+          ]
+        },
+        "9": {
+          "profiles": [
+            {
+              "caseless": false,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            },
+            {
+              "caseless": true,
+              "queries": [
+                {
+                  "args": [
+                    ".*"
+                  ],
+                  "stdout": ""
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

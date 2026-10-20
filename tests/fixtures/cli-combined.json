@@ -1,0 +1,96 @@
+{
+  "source_sha256": "c1284a9e1bc4be064d85471f4b6ca8b0a5469f8676dea0c8d728e808906e93bb",
+  "provenance": "experiments/definition-isolation/results.json",
+  "queries": [
+    {
+      "pattern": "Count",
+      "cscope_stdout": "case.c Count 1 typedef int Count;\n",
+      "stdout": "case.c Count 1 typedef int Count;\n"
+    },
+    {
+      "pattern": "Callback",
+      "cscope_stdout": "case.c Callback 2 typedef void (*Callback)(int );\n",
+      "stdout": "case.c Callback 2 typedef void (*Callback)(int );\n"
+    },
+    {
+      "pattern": "Item",
+      "cscope_stdout": "case.c Item 3 struct Item { int value; Callback run; };\n",
+      "stdout": "case.c Item 3 struct Item { int value; Callback run; };\n"
+    },
+    {
+      "pattern": "value",
+      "cscope_stdout": "",
+      "stdout": "case.c value 3 struct Item { int value; Callback run; };\n"
+    },
+    {
+      "pattern": "run",
+      "cscope_stdout": "",
+      "stdout": "case.c run 3 struct Item { int value; Callback run; };\n"
+    },
+    {
+      "pattern": "Storage",
+      "cscope_stdout": "case.c Storage 4 union Storage { int number; char byte; };\n",
+      "stdout": "case.c Storage 4 union Storage { int number; char byte; };\n"
+    },
+    {
+      "pattern": "number",
+      "cscope_stdout": "",
+      "stdout": "case.c number 4 union Storage { int number; char byte; };\n"
+    },
+    {
+      "pattern": "byte",
+      "cscope_stdout": "",
+      "stdout": "case.c byte 4 union Storage { int number; char byte; };\n"
+    },
+    {
+      "pattern": "Mode",
+      "cscope_stdout": "case.c Mode 5 enum Mode { IDLE, BUSY = 2 };\n",
+      "stdout": "case.c Mode 5 enum Mode { IDLE, BUSY = 2 };\n"
+    },
+    {
+      "pattern": "IDLE",
+      "cscope_stdout": "",
+      "stdout": "case.c IDLE 5 enum Mode { IDLE, BUSY = 2 };\n"
+    },
+    {
+      "pattern": "BUSY",
+      "cscope_stdout": "",
+      "stdout": "case.c BUSY 5 enum Mode { IDLE, BUSY = 2 };\n"
+    },
+    {
+      "pattern": "global",
+      "cscope_stdout": "",
+      "stdout": "case.c global 6 int global = 1;\n"
+    },
+    {
+      "pattern": "external",
+      "cscope_stdout": "",
+      "stdout": ""
+    },
+    {
+      "pattern": "declared",
+      "cscope_stdout": "",
+      "stdout": ""
+    },
+    {
+      "pattern": "factory",
+      "cscope_stdout": "case.c factory 9 void (*factory(void ))(int ) { return 0; }\n",
+      "stdout": "case.c factory 9 void (*factory(void ))(int ) { return 0; }\n"
+    },
+    {
+      "pattern": "ordinary",
+      "cscope_stdout": "case.c ordinary 10 void ordinary(void ) { int local = 0; local += global; }\n",
+      "stdout": "case.c ordinary 10 void ordinary(void ) { int local = 0; local += global; }\n"
+    },
+    {
+      "pattern": "local",
+      "cscope_stdout": "",
+      "stdout": ""
+    },
+    {
+      "pattern": "sentinel",
+      "cscope_stdout": "",
+      "stdout": ""
+    }
+  ]
+}

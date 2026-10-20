@@ -1,0 +1,807 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/49-decorated-pointers.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        " *",
+        ")(int ",
+        ");"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "CALLBACK",
+          false
+        ],
+        [
+          "g",
+          "handler",
+          false
+        ],
+        [
+          " ",
+          "arg",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        " {"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "s",
+          "ops",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        " ",
+        " *",
+        ")(",
+        " *",
+        ", ",
+        " ",
+        ");"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          " ",
+          "HRESULT",
+          false
+        ],
+        [
+          " ",
+          "STDMETHODCALLTYPE",
+          false
+        ],
+        [
+          " ",
+          "__RPC_FAR",
+          false
+        ],
+        [
+          "m",
+          "query",
+          false
+        ],
+        [
+          " ",
+          "IVim",
+          false
+        ],
+        [
+          " ",
+          "self",
+          false
+        ],
+        [
+          " ",
+          "REFID",
+          false
+        ],
+        [
+          " ",
+          "id",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        " * const *",
+        "[4])(int ",
+        ");"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "API",
+          false
+        ],
+        [
+          "m",
+          "table",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        " *",
+        ")();"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "API",
+          false
+        ],
+        [
+          "m",
+          "empty",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "extern ",
+        " (",
+        " *",
+        ")(void );"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "WINAPI",
+          false
+        ],
+        [
+          " ",
+          "external",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ", ",
+        ";"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          "g",
+          "left",
+          false
+        ],
+        [
+          "g",
+          "right",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        " *",
+        ") (",
+        ");"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          " ",
+          "__typeof__",
+          false
+        ],
+        [
+          " ",
+          "left",
+          false
+        ],
+        [
+          " ",
+          "right",
+          false
+        ],
+        [
+          " ",
+          "product",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        " *",
+        ") (",
+        ");"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          " ",
+          "TYPEOF",
+          false
+        ],
+        [
+          " ",
+          "left",
+          false
+        ],
+        [
+          " ",
+          "right",
+          false
+        ],
+        [
+          " ",
+          "macro_product",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        " *",
+        ") (*",
+        ");"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          " ",
+          "TYPEOF",
+          false
+        ],
+        [
+          " ",
+          "left",
+          false
+        ],
+        [
+          " ",
+          "right",
+          false
+        ],
+        [
+          "g",
+          "pointer_product",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        " *",
+        ") (",
+        "[(1, 2)]);"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          " ",
+          "TYPEOF",
+          false
+        ],
+        [
+          " ",
+          "left",
+          false
+        ],
+        [
+          " ",
+          "right",
+          false
+        ],
+        [
+          " ",
+          "array_product",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        " ",
+        ")(int ",
+        ");"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "API",
+          false
+        ],
+        [
+          " ",
+          "opaque",
+          false
+        ],
+        [
+          " ",
+          "arg",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (*",
+        " ",
+        ")(int ",
+        ");"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "AFTER",
+          false
+        ],
+        [
+          " ",
+          "opaque_after",
+          false
+        ],
+        [
+          " ",
+          "arg",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (*",
+        " *",
+        ")(int ",
+        ");"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "BETWEEN",
+          false
+        ],
+        [
+          " ",
+          "opaque_between",
+          false
+        ],
+        [
+          " ",
+          "arg",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        " *",
+        ")(T);"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "API",
+          false
+        ],
+        [
+          " ",
+          "opaque_parameter",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        " *",
+        ")( T);"
+      ],
+      "line": 17,
+      "symbols": [
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "API",
+          false
+        ],
+        [
+          " ",
+          "comment_parameter",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        " = ",
+        "(",
+        " *",
+        ")(",
+        ", ",
+        ");"
+      ],
+      "line": 18,
+      "symbols": [
+        [
+          "g",
+          "x",
+          true
+        ],
+        [
+          " ",
+          "invoke",
+          false
+        ],
+        [
+          " ",
+          "API",
+          false
+        ],
+        [
+          " ",
+          "operand",
+          false
+        ],
+        [
+          " ",
+          "int_value",
+          false
+        ],
+        [
+          " ",
+          "other",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(",
+        " (",
+        " *",
+        ")(int )) {"
+      ],
+      "line": 19,
+      "symbols": [
+        [
+          "$",
+          "owner",
+          false
+        ],
+        [
+          " ",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "CALLBACK",
+          false
+        ],
+        [
+          " ",
+          "parameter",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " (",
+        " *",
+        ")(int ",
+        ");"
+      ],
+      "line": 20,
+      "symbols": [
+        [
+          "`",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "CALLBACK",
+          false
+        ],
+        [
+          " ",
+          "local",
+          false
+        ],
+        [
+          " ",
+          "arg",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 21,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " ",
+        " (",
+        " *",
+        ")(int ",
+        ")"
+      ],
+      "line": 22,
+      "symbols": [
+        [
+          "#",
+          "DECL",
+          false
+        ],
+        [
+          "`",
+          "T",
+          false
+        ],
+        [
+          " ",
+          "CALLBACK",
+          false
+        ],
+        [
+          " ",
+          "macro_name",
+          false
+        ],
+        [
+          " ",
+          "arg",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int (",
+        " *",
+        ")(int ",
+        ");"
+      ],
+      "line": 23,
+      "symbols": [
+        [
+          " ",
+          "CALLBACK",
+          false
+        ],
+        [
+          "t",
+          "alias",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 24,
+      "symbols": [
+        [
+          "g",
+          "after",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "typedef int ",
+        "(int , int );"
+      ],
+      "line": 25,
+      "symbols": [
+        [
+          "t",
+          "callback",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        " *",
+        "(int ",
+        ");"
+      ],
+      "line": 26,
+      "symbols": [
+        [
+          " ",
+          "callback",
+          false
+        ],
+        [
+          " ",
+          "choose",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "(",
+        ")(int ",
+        ")"
+      ],
+      "line": 28,
+      "symbols": [
+        [
+          "g",
+          "wrapper",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "{ return ",
+        "(",
+        " *",
+        ")(",
+        ", value); }"
+      ],
+      "line": 29,
+      "symbols": [
+        [
+          " ",
+          "choose",
+          false
+        ],
+        [
+          " ",
+          "left",
+          false
+        ],
+        [
+          " ",
+          "right",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    }
+  ]
+}

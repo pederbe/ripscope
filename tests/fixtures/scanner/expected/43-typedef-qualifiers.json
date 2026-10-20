@@ -1,0 +1,272 @@
+{
+ "probe": "probes/43-typedef-qualifiers.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "typedef const ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "foo_t",
+     false
+    ],
+    [
+     "t",
+     "bar_t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "typedef volatile ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "uint32_t",
+     false
+    ],
+    [
+     "t",
+     "reg_t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "typedef const struct ",
+    " *",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "tag",
+     false
+    ],
+    [
+     "t",
+     "tag_ptr",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "typedef volatile struct ",
+    " { int ",
+    "; } ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "s",
+     "vtag",
+     false
+    ],
+    [
+     "m",
+     "a",
+     false
+    ],
+    [
+     "t",
+     "vtag_t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 5,
+   "fragments": [
+    "typedef const char *",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "cstr",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "typedef const volatile unsigned long ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "cvul",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "typedef ",
+    " const *",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "foo_t",
+     false
+    ],
+    [
+     "t",
+     "after_ptr",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "typedef const ",
+    " *const ",
+    ", ",
+    "[4];"
+   ],
+   "symbols": [
+    [
+     "t",
+     "foo_t",
+     false
+    ],
+    [
+     "t",
+     "cptr_t",
+     false
+    ],
+    [
+     "t",
+     "arr_t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 9,
+   "fragments": [
+    "typedef const enum ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "mode",
+     false
+    ],
+    [
+     "t",
+     "mode_t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "typedef unsigned ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "__int64",
+     false
+    ],
+    [
+     "t",
+     "u64",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 11,
+   "fragments": [
+    "typedef int ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "API",
+     false
+    ],
+    [
+     "t",
+     "api_t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "typedef const ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "t",
+     "x_t",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 13,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "last",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

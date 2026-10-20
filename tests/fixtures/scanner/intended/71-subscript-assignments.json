@@ -1,0 +1,660 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/71-subscript-assignments.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "[4] = {0};"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "g",
+          "slots",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "[2][2] = {{0}};"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "g",
+          "grid",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "char ",
+        "[] = \"ok\";"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "g",
+          "text",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int *",
+        "[4] = {0};"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "g",
+          "pointers",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ", ",
+        "[4], ",
+        "[4], ",
+        ";"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "g",
+          "index",
+          false
+        ],
+        [
+          "g",
+          "source",
+          false
+        ],
+        [
+          "g",
+          "other",
+          false
+        ],
+        [
+          "g",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(void );"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          " ",
+          "next",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(int *",
+        ") {"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "$",
+          "stores",
+          false
+        ],
+        [
+          " ",
+          "pointer",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "[] = {1, 2};"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "local",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "[0] = 1;"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "[1] += 2;"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "[0]; ",
+        "[2] = 3; ",
+        "[3] ^= 4;"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          false
+        ],
+        [
+          " ",
+          "slots",
+          true
+        ],
+        [
+          " ",
+          "slots",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "[0][",
+        "()] <<= 1;"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          " ",
+          "grid",
+          true
+        ],
+        [
+          "`",
+          "next",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "[",
+        "] = ",
+        "[index];"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          true
+        ],
+        [
+          " ",
+          "index",
+          false
+        ],
+        [
+          " ",
+          "source",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "; ",
+        "[",
+        " = 1] = ",
+        ";"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          " ",
+          "index",
+          false
+        ],
+        [
+          " ",
+          "slots",
+          true
+        ],
+        [
+          " ",
+          "index",
+          true
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "[",
+        "[",
+        "()] = 1] = ",
+        ";"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          true
+        ],
+        [
+          " ",
+          "other",
+          true
+        ],
+        [
+          "`",
+          "next",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "[",
+        "] = ",
+        ";"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          " ",
+          "pointer",
+          true
+        ],
+        [
+          " ",
+          "index",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "*",
+        "[",
+        "] = ",
+        ";"
+      ],
+      "line": 17,
+      "symbols": [
+        [
+          " ",
+          "pointer",
+          false
+        ],
+        [
+          " ",
+          "index",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "if (",
+        "[0] == ",
+        " || slots[1] != value) ",
+        "();"
+      ],
+      "line": 18,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ],
+        [
+          "`",
+          "next",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "if (",
+        "[0] <= ",
+        " || slots[1] >= value) ",
+        "();"
+      ],
+      "line": 19,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          false
+        ],
+        [
+          " ",
+          "value",
+          false
+        ],
+        [
+          "`",
+          "next",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "[0]++; --slots[1];"
+      ],
+      "line": 20,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        ""
+      ],
+      "line": 21,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 24,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": true,
+      "fragments": [
+        "#define ",
+        " ",
+        "[0] = 1"
+      ],
+      "line": 25,
+      "symbols": [
+        [
+          "#",
+          "SET",
+          false
+        ],
+        [
+          " ",
+          "slots",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "struct ",
+        " { int ",
+        "[4]; int ",
+        "; } ",
+        ", ",
+        "[4];"
+      ],
+      "line": 26,
+      "symbols": [
+        [
+          "s",
+          "S",
+          false
+        ],
+        [
+          "m",
+          "slots",
+          false
+        ],
+        [
+          "m",
+          "member",
+          false
+        ],
+        [
+          "g",
+          "object",
+          false
+        ],
+        [
+          "g",
+          "objects",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(struct ",
+        " *",
+        ") {"
+      ],
+      "line": 27,
+      "symbols": [
+        [
+          "$",
+          "excluded",
+          false
+        ],
+        [
+          " ",
+          "S",
+          false
+        ],
+        [
+          " ",
+          "p",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        ".",
+        "[0] = 1;"
+      ],
+      "line": 28,
+      "symbols": [
+        [
+          " ",
+          "object",
+          false
+        ],
+        [
+          " ",
+          "slots",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "->",
+        "[0] = 2;"
+      ],
+      "line": 29,
+      "symbols": [
+        [
+          " ",
+          "p",
+          false
+        ],
+        [
+          " ",
+          "slots",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "(",
+        ")[0] = 3;"
+      ],
+      "line": 30,
+      "symbols": [
+        [
+          " ",
+          "slots",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "[0].",
+        " = ",
+        ";"
+      ],
+      "line": 31,
+      "symbols": [
+        [
+          " ",
+          "objects",
+          false
+        ],
+        [
+          " ",
+          "member",
+          true
+        ],
+        [
+          " ",
+          "value",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 32,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    }
+  ]
+}

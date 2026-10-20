@@ -1,0 +1,111 @@
+{
+ "decision": "Intended reading of prototypes whose type is a macro invocation, such as PyAPI_FUNC(int) f(PyObject *o);.",
+ "reference": "tests/fixtures/written-type-prototypes-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "same_line": {
+   "0": {
+    "PyAPI_FUNC": "case.c <global> 1 PyAPI_FUNC(int ) f(PyObject *o);\n",
+    "PyObject": "case.c <global> 1 PyAPI_FUNC(int ) f(PyObject *o);\n",
+    "o": "case.c <global> 1 PyAPI_FUNC(int ) f(PyObject *o);\n",
+    "f": "case.c <global> 1 PyAPI_FUNC(int ) f(PyObject *o);\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "PyAPI_FUNC": "",
+    "after": "case.c after 2 int after;\n"
+   },
+   "2": {
+    "PyAPI_FUNC": ""
+   },
+   "3": {
+    "f": "",
+    "h": "case.c g 3 void g(void ) { h(); }\n"
+   }
+  },
+  "pointer_argument": {
+   "0": {
+    "PyAPI_FUNC": "case.c <global> 1 PyAPI_FUNC(PyObject *) f(void );\n",
+    "PyObject": "case.c <global> 1 PyAPI_FUNC(PyObject *) f(void );\n",
+    "f": "case.c <global> 1 PyAPI_FUNC(PyObject *) f(void );\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "PyAPI_FUNC": "",
+    "after": "case.c after 2 int after;\n"
+   },
+   "2": {
+    "PyAPI_FUNC": ""
+   },
+   "3": {
+    "f": "",
+    "h": "case.c g 3 void g(void ) { h(); }\n"
+   }
+  },
+  "line_before": {
+   "0": {
+    "FT_EXPORT": "case.c <global> 1 FT_EXPORT( FT_Error )\n",
+    "FT_Error": "case.c <global> 1 FT_EXPORT( FT_Error )\n",
+    "FT_Init": "case.c <global> 2 FT_Init(FT_Library *alib);\n",
+    "FT_Library": "case.c <global> 2 FT_Init(FT_Library *alib);\n",
+    "alib": "case.c <global> 2 FT_Init(FT_Library *alib);\n",
+    "after": "case.c <global> 3 int after;\n"
+   },
+   "1": {
+    "FT_EXPORT": "",
+    "after": "case.c after 3 int after;\n"
+   },
+   "2": {
+    "FT_EXPORT": ""
+   },
+   "3": {
+    "FT_Init": "",
+    "h": "case.c g 4 void g(void ) { h(); }\n"
+   }
+  },
+  "trailing_annotations": {
+   "0": {
+    "f": "case.c <global> 1 extern LZMA_API(lzma_bool) f(lzma_check c) lzma_nothrow lzma_attr_const;\n",
+    "LZMA_API": "case.c <global> 1 extern LZMA_API(lzma_bool) f(lzma_check c) lzma_nothrow lzma_attr_const;\n",
+    "lzma_bool": "case.c <global> 1 extern LZMA_API(lzma_bool) f(lzma_check c) lzma_nothrow lzma_attr_const;\n",
+    "lzma_check": "case.c <global> 1 extern LZMA_API(lzma_bool) f(lzma_check c) lzma_nothrow lzma_attr_const;\n",
+    "c": "case.c <global> 1 extern LZMA_API(lzma_bool) f(lzma_check c) lzma_nothrow lzma_attr_const;\n",
+    "lzma_nothrow": "case.c <global> 1 extern LZMA_API(lzma_bool) f(lzma_check c) lzma_nothrow lzma_attr_const;\n",
+    "lzma_attr_const": "case.c <global> 1 extern LZMA_API(lzma_bool) f(lzma_check c) lzma_nothrow lzma_attr_const;\n",
+    "after": "case.c <global> 2 int after;\n"
+   },
+   "1": {
+    "f": "",
+    "LZMA_API": "",
+    "after": "case.c after 2 int after;\n"
+   },
+   "2": {
+    "LZMA_API": ""
+   },
+   "3": {
+    "h": "case.c g 3 void g(void ) { h(); }\n"
+   }
+  },
+  "static_several": {
+   "0": {
+    "f": "case.c <global> 1 static M(int ) f(int a, char *b);\n",
+    "M": "case.c <global> 1 static M(int ) f(int a, char *b);\ncase.c <global> 2 static M(void ) e(void );\n",
+    "a": "case.c <global> 1 static M(int ) f(int a, char *b);\n",
+    "b": "case.c <global> 1 static M(int ) f(int a, char *b);\n",
+    "e": "case.c <global> 2 static M(void ) e(void );\n",
+    "after": "case.c <global> 3 int after;\n"
+   },
+   "1": {
+    "M": "",
+    "after": "case.c after 3 int after;\n"
+   },
+   "2": {
+    "M": ""
+   },
+   "3": {
+    "f": "",
+    "e": "",
+    "h": "case.c g 4 void g(void ) { h(); }\n"
+   }
+  }
+ }
+}

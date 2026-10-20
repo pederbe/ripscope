@@ -1,0 +1,639 @@
+{
+  "provenance": {
+    "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "note": "Unmodified reference streams. Fields 0/2/3 for the three original variants reused from conditional-prose-attribution.json where requests match. Additional streams captured with existing helper."
+  },
+  "cases": {
+    "macro_three": {
+      "source": "#define MIN_MATCH 3\nvoid f(void) {\n#if MIN_MATCH != 3\nCall UPDATE_HASH() MIN_MATCH-3 more times\n#endif\nafter();\n}\n",
+      "source_sha256": "b00f292c1a3ec27a543dfa43b4073cddbec2e8394c2b2e128a2a515b65e4a9ff",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "Call"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "times"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c UPDATE_HASH 4 Call UPDATE_HASH() MIN_MATCH-3 more times\ncase.c after 6 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "macro_four": {
+      "source": "#define MIN_MATCH 4\nvoid f(void) {\n#if MIN_MATCH != 3\nCall UPDATE_HASH() MIN_MATCH-3 more times\n#endif\nafter();\n}\n",
+      "source_sha256": "d496a24660abe90d9ecce32448ca72fd5c93eed93bd2ccb2c91eb1ad8c630915",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "Call"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "times"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 2 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c UPDATE_HASH 4 Call UPDATE_HASH() MIN_MATCH-3 more times\ncase.c after 6 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 4 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "literal_zero": {
+      "source": "void f(void) {\n#if 0\nCall UPDATE_HASH() MIN_MATCH-3 more times\n#endif\nafter();\n}\n",
+      "source_sha256": "e9c59672935b16f741a9bdc52c2487247ae1788b8fa23208dca161f9908131f1",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "Call"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "times"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c UPDATE_HASH 3 Call UPDATE_HASH() MIN_MATCH-3 more times\ncase.c after 5 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "close": {
+      "source": "void f(void) {\n#if X\nCall UPDATE_HASH() MIN_MATCH-3 more times\n#endif\n}\n",
+      "source_sha256": "03f189a703a0722b2bad10b3ab50d3b232bf6196102b559b37079d64ff85dbef",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "Call"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "times"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c UPDATE_HASH 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    "control": {
+      "source": "void f(void) { int value;\n#if X\nCall UPDATE_HASH() MIN_MATCH-3 more times\n#endif\nwhile (ready()) { value = 3; after(); }\n}\n",
+      "source_sha256": "5d433674efce316299d6bfce3ca29c499ba8e6f3c069dcf9ff9dfac3238fcddd",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "Call"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "times"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) { int value;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c UPDATE_HASH 3 Call UPDATE_HASH() MIN_MATCH-3 more times\ncase.c ready 5 while (ready()) { value = 3; after(); }\ncase.c after 5 while (ready()) { value = 3; after(); }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 5 while (ready()) { value = 3; after(); }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    "alternative": {
+      "source": "void f(void) {\n#if X\nCall UPDATE_HASH() MIN_MATCH-3 more times\n#else\nUse renamed() COUNT+2 more steps\n#endif\nafter();\n}\n",
+      "source_sha256": "017c269ff066ff81d739f7488e70df51f71bc9b667e45fbf49a13ca03d6c1ba6",
+      "queries": [
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "Call"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-0",
+            "times"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 1 void f(void ) {\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-1",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-2",
+            "f"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c UPDATE_HASH 3 Call UPDATE_HASH() MIN_MATCH-3 more times\ncase.c renamed 5 Use renamed() COUNT+2 more steps\ncase.c after 7 after();\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-3",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "case.c f 3 Call UPDATE_HASH() MIN_MATCH-3 more times\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "UPDATE_HASH"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-d",
+            "-L",
+            "-9",
+            "value"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  }
+}

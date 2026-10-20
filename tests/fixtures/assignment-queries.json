@@ -1,0 +1,471 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "PATH": "/usr/bin:/bin",
+    "HOME": "<isolated case directory>",
+    "inherit_other_variables": false
+  },
+  "profiles": [
+    {
+      "caseless": false,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "x"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "X"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 2 int X = 2;\na.c h 4 X = 1;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "y"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c h 5 y = x = 1;\nz.c f 8 x = 2; x = 3; y = 4;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "a"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "p"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "local"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c f 22 int local = x;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "SET"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "OBJ"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "INNER"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 25 int after = 1;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "trailing"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "final"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 27 int final = 3;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 int other = 1;\nz.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\nz.c <global> 25 int after = 1;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c f 22 int local = x;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\nz.c g 27 int final = 3;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "x|y"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "^x$"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            " x"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "x "
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-9",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "caseless": true,
+      "queries": [
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "x"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "X"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "y"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c h 5 y = x = 1;\nz.c f 8 x = 2; x = 3; y = 4;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "a"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "p"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "local"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c f 22 int local = x;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "SET"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "OBJ"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "INNER"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "after"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 25 int after = 1;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "trailing"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "final"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 27 int final = 3;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            ".*"
+          ],
+          "exit_code": 0,
+          "stdout": "a.c <global> 1 int other = 1;\nz.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\nz.c <global> 25 int after = 1;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c f 22 int local = x;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\nz.c g 27 int final = 3;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "x|y"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "^x$"
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            " x"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "x "
+          ],
+          "exit_code": 0,
+          "stdout": "z.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "["
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            ""
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-C",
+            "-9",
+            "missing"
+          ],
+          "exit_code": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  ],
+  "files": {
+    "z.c": "int x = 1;\nint X = 2;\nint y;\nstruct S { int x; };\n#define SET(x) x = 1\n#define OBJ x += 2\nint f(struct S *p, int *a) {\n x = 2; x = 3; y = 4;\n x += 1; x -= 1; x *= 1; x /= 1;\n x %= 1; x &= 1; x |= 1; x ^= 1;\n x <<= 1; x >>= 1;\n x == 1; x != 1; x <= 1; x >= 1;\n x++; ++x; x--; --x;\n *x = 1; (x) = 1; a[x] = 1;\n p->x = 1; p->x += 1;\n x/*gap*/=1;\n x /*gap*/ = 1;\n x/*multi\n line*/=1;\n x\n = 1;\n int local = x;\n return x;\n}\nint after = 1;\nint g(void) { x=1; } int trailing = 2;\nint final = 3;\n",
+    "a.c": "int other = 1;\nint h(void) {\n#define INNER x = 1\n X = 1;\n y = x = 1;\n return 0;\n}\n"
+  },
+  "seeds": [
+    "z.c",
+    "a.c"
+  ],
+  "field": "9",
+  "build": {
+    "args": [
+      "-bk",
+      "z.c",
+      "a.c"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "sources_deleted_before_queries": true,
+  "unreadable": [],
+  "persistent_input": "9x\n9[\n9missing\nc\n9x\nq\n",
+  "persistent": {
+    "args": [
+      "-dl"
+    ],
+    "exit_code": 0,
+    "stdout": ">> cscope: 13 lines\nz.c <global> 1 int x = 1;\na.c INNER 3 #define INNER x = 1\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n>> Unable to search database\n>> Unable to search database\n>> >> cscope: 15 lines\nz.c <global> 1 int x = 1;\nz.c <global> 2 int X = 2;\na.c INNER 3 #define INNER x = 1\na.c h 4 X = 1;\na.c h 5 y = x = 1;\nz.c OBJ 6 #define OBJ x += 2\nz.c f 8 x = 2; x = 3; y = 4;\nz.c f 9 x += 1; x -= 1; x *= 1; x /= 1;\nz.c f 10 x %= 1; x &= 1; x |= 1; x ^= 1;\nz.c f 11 x <<= 1; x >>= 1;\nz.c f 14 *x = 1; (x) = 1; a[x] = 1;\nz.c f 15 p->x = 1; p->x += 1;\nz.c f 16 x =1;\nz.c f 17 x = 1;\nz.c g 26 int g(void ) { x=1; } int trailing = 2;\n>> ",
+    "stderr": ""
+  }
+}

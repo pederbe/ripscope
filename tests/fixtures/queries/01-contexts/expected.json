@@ -1,0 +1,590 @@
+{
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "commands": [
+   "cscope -bk <files>",
+   "cscope -dL [-C] -<field> <pattern>"
+  ],
+  "inverted_index": "rowsq/statusq/stderrq: the same queries on `cscope -bqk -f qscope.out <files>`",
+  "rows": "each byte one character (Latin-1)"
+ },
+ "files": [
+  "a.c",
+  "b.c",
+  "c.c"
+ ],
+ "queries": [
+  {
+   "field": "0",
+   "pattern": "counter",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c <global> 3 int counter;",
+    "b.c <global> 1 extern int counter;",
+    "a.c BUMP 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 7 counter = value;",
+    "a.c main 13 counter += local;",
+    "a.c main 14 if (counter == 2)",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c LAST 5 #define LAST counter \\"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <global> 3 int counter;",
+    "b.c <global> 1 extern int counter;",
+    "a.c BUMP 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 7 counter = value;",
+    "a.c main 13 counter += local;",
+    "a.c main 14 if (counter == 2)",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c LAST 5 #define LAST counter \\"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "helper",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c helper 5 static int helper(int value)",
+    "a.c main 12 int local = helper(1);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c helper 5 static int helper(int value)",
+    "a.c main 12 int local = helper(1);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c <global> 3 int counter;",
+    "a.c <global> 4 #define BUMP(x) ((x) + counter)",
+    "b.c <global> 1 extern int counter;",
+    "a.c helper 5 static int helper(int value)",
+    "a.c helper 7 counter = value;",
+    "a.c helper 8 return BUMP(value);",
+    "a.c main 10 int main(void )",
+    "a.c main 12 int local = helper(1);",
+    "a.c main 13 counter += local;",
+    "a.c main 14 if (counter == 2)",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c f 3 int f(void ) { return seen; }",
+    "b.c f 4 int later = 2;",
+    "b.c f 5 #define LAST counter \\",
+    "c.c LAST 1 int after = 1;",
+    "c.c LAST 2 void more(void ) { reset(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <global> 3 int counter;",
+    "b.c <global> 1 extern int counter;",
+    "b.c <global> 4 int later = 2;",
+    "c.c <global> 1 int after = 1;",
+    "a.c BUMP 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 5 static int helper(int value)",
+    "a.c helper 7 counter = value;",
+    "a.c helper 8 return BUMP(value);",
+    "a.c main 10 int main(void )",
+    "a.c main 12 int local = helper(1);",
+    "a.c main 13 counter += local;",
+    "a.c main 14 if (counter == 2)",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c f 3 int f(void ) { return seen; }",
+    "b.c LAST 5 #define LAST counter \\",
+    "c.c more 2 void more(void ) { reset(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "COUNTER",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "COUNTER",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c <global> 3 int counter;",
+    "b.c <global> 1 extern int counter;",
+    "a.c BUMP 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 7 counter = value;",
+    "a.c main 13 counter += local;",
+    "a.c main 14 if (counter == 2)",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c LAST 5 #define LAST counter \\"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <global> 3 int counter;",
+    "b.c <global> 1 extern int counter;",
+    "a.c BUMP 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 7 counter = value;",
+    "a.c main 13 counter += local;",
+    "a.c main 14 if (counter == 2)",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c LAST 5 #define LAST counter \\"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "BUMP",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c <global> 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 8 return BUMP(value);"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <global> 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 8 return BUMP(value);"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "BUMP",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c BUMP 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 8 return BUMP(value);"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <global> 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 8 return BUMP(value);"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "^co.*r$",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c <global> 3 int counter;",
+    "b.c <global> 1 extern int counter;",
+    "a.c BUMP 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 7 counter = value;",
+    "a.c main 13 counter += local;",
+    "a.c main 14 if (counter == 2)",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c LAST 5 #define LAST counter \\"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <global> 3 int counter;",
+    "b.c <global> 1 extern int counter;",
+    "a.c BUMP 4 #define BUMP(x) ((x) + counter)",
+    "a.c helper 7 counter = value;",
+    "a.c main 13 counter += local;",
+    "a.c main 14 if (counter == 2)",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c LAST 5 #define LAST counter \\"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "1",
+   "pattern": "counter",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c counter 3 int counter;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c counter 3 int counter;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "1",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c .* 3 int counter;",
+    "a.c .* 4 #define BUMP(x) ((x) + counter)",
+    "a.c .* 5 static int helper(int value)",
+    "a.c .* 10 int main(void )",
+    "b.c .* 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c .* 3 int f(void ) { return seen; }",
+    "b.c .* 4 int later = 2;",
+    "b.c .* 5 #define LAST counter \\",
+    "c.c .* 1 int after = 1;",
+    "c.c .* 2 void more(void ) { reset(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c .* 3 int counter;",
+    "a.c .* 4 #define BUMP(x) ((x) + counter)",
+    "a.c .* 5 static int helper(int value)",
+    "a.c .* 10 int main(void )",
+    "b.c .* 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c .* 3 int f(void ) { return seen; }",
+    "b.c .* 4 int later = 2;",
+    "b.c .* 5 #define LAST counter \\",
+    "c.c .* 1 int after = 1;",
+    "c.c .* 2 void more(void ) { reset(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "1",
+   "pattern": "Counter",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c Counter 3 int counter;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c Counter 3 int counter;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "1",
+   "pattern": "^ma",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "main",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c helper 12 int local = helper(1);",
+    "a.c printf 15 printf(\"%d\\n\", counter);"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c helper 12 int local = helper(1);",
+    "a.c printf 15 printf(\"%d\\n\", counter);"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c BUMP 8 return BUMP(value);",
+    "a.c helper 12 int local = helper(1);",
+    "a.c printf 15 printf(\"%d\\n\", counter);",
+    "b.c helper 2 void reset(void ) { counter = 0; helper(2); }",
+    "b.c reset 2 void more(void ) { reset(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c BUMP 8 return BUMP(value);",
+    "a.c helper 12 int local = helper(1);",
+    "a.c printf 15 printf(\"%d\\n\", counter);",
+    "b.c helper 2 void reset(void ) { counter = 0; helper(2); }",
+    "c.c reset 2 void more(void ) { reset(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "2",
+   "pattern": "BUMP",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "helper",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c main 12 int local = helper(1);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c main 12 int local = helper(1);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c helper 8 return BUMP(value);",
+    "a.c main 12 int local = helper(1);",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "c.c LAST 2 void more(void ) { reset(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c helper 8 return BUMP(value);",
+    "a.c main 12 int local = helper(1);",
+    "a.c main 15 printf(\"%d\\n\", counter);",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "c.c more 2 void more(void ) { reset(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "3",
+   "pattern": "reset",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "c.c LAST 2 void more(void ) { reset(); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "c.c more 2 void more(void ) { reset(); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "7",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c <unknown> 1 <unknown>",
+    "b.c <unknown> 1 <unknown>",
+    "c.c <unknown> 1 <unknown>"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <unknown> 1 <unknown>",
+    "b.c <unknown> 1 <unknown>",
+    "c.c <unknown> 1 <unknown>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "7",
+   "pattern": "B",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "7",
+   "pattern": "B",
+   "caseless": true,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "b.c <unknown> 1 <unknown>"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "b.c <unknown> 1 <unknown>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": "stdio.h",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c <global> 1 #include <stdio.h>"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <global> 1 #include <stdio.h>"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c <global> 1 #include <stdio.h>",
+    "a.c <global> 2 #include \"local.h\""
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <global> 1 #include <stdio.h>",
+    "a.c <global> 2 #include \"local.h\""
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "8",
+   "pattern": "local",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c <global> 2 #include \"local.h\""
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c <global> 2 #include \"local.h\""
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": "counter",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "a.c helper 7 counter = value;",
+    "a.c main 13 counter += local;",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "a.c helper 7 counter = value;",
+    "a.c main 13 counter += local;",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "9",
+   "pattern": ".*",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "b.c <global> 4 int later = 2;",
+    "a.c helper 7 counter = value;",
+    "a.c main 12 int local = helper(1);",
+    "a.c main 13 counter += local;",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "c.c LAST 1 int after = 1;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "b.c <global> 4 int later = 2;",
+    "a.c helper 7 counter = value;",
+    "a.c main 12 int local = helper(1);",
+    "a.c main 13 counter += local;",
+    "b.c reset 2 void reset(void ) { counter = 0; helper(2); }",
+    "c.c LAST 1 int after = 1;"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "notthere",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "bad name",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [],
+   "stderr": "",
+   "rowsq": [],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "seen",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "b.c f 3 int f(void ) { return seen; }"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "b.c f 3 int f(void ) { return seen; }"
+   ],
+   "stderrq": ""
+  },
+  {
+   "field": "0",
+   "pattern": "later",
+   "caseless": false,
+   "status": 0,
+   "statusq": 0,
+   "rows": [
+    "b.c <global> 4 int later = 2;"
+   ],
+   "stderr": "",
+   "rowsq": [
+    "b.c <global> 4 int later = 2;"
+   ],
+   "stderrq": ""
+  }
+ ]
+}

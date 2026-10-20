@@ -1,0 +1,693 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "cases": [
+    {
+      "name": "array",
+      "source": "local z_crc_t FAR x2n_table[32];\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 local z_crc_t FAR x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "x2n_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c x2n_table 1 local z_crc_t FAR x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "other"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "API"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": true
+    },
+    {
+      "name": "ordinary",
+      "source": "z_crc_t x2n_table[32];\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 z_crc_t x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "x2n_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c x2n_table 1 z_crc_t x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "other"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "API"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": true
+    },
+    {
+      "name": "one-leading",
+      "source": "local z_crc_t x2n_table[32];\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 local z_crc_t x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "x2n_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c x2n_table 1 local z_crc_t x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "other"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "API"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": false
+    },
+    {
+      "name": "one-middle",
+      "source": "z_crc_t FAR x2n_table[32];\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 z_crc_t FAR x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "x2n_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c x2n_table 1 z_crc_t FAR x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "other"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "API"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": false
+    },
+    {
+      "name": "scalar",
+      "source": "local z_crc_t FAR x2n_table;\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 local z_crc_t FAR x2n_table;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "x2n_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c x2n_table 1 local z_crc_t FAR x2n_table;\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "other"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "API"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": false
+    },
+    {
+      "name": "two-leading",
+      "source": "local static z_crc_t x2n_table[32];\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 local static z_crc_t x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "x2n_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c x2n_table 1 local static z_crc_t x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "other"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "API"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": false
+    },
+    {
+      "name": "two-middle",
+      "source": "z_crc_t FAR API x2n_table[32];\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 z_crc_t FAR API x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "x2n_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c x2n_table 1 z_crc_t FAR API x2n_table[32];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "other"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "API"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": true
+    },
+    {
+      "name": "two-declarators",
+      "source": "local z_crc_t FAR x2n_table[32], other[2];\n",
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            ".*"
+          ],
+          "exit": 0,
+          "stdout": "case.c .* 1 local z_crc_t FAR x2n_table[32], other[2];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "x2n_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c x2n_table 1 local z_crc_t FAR x2n_table[32], other[2];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "other"
+          ],
+          "exit": 0,
+          "stdout": "case.c other 1 local z_crc_t FAR x2n_table[32], other[2];\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "local"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "API"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ],
+      "ripscope_accept": false
+    }
+  ]
+}

@@ -1,0 +1,186 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/53-conditional-comments.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        ""
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          " ",
+          "FLAG",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "g",
+          "inside",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "g",
+          "after",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "void ",
+        "(void ) {"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "$",
+          "function",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        ""
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "FLAG",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "`",
+          "target",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "();"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          "`",
+          "real",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 16,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        ""
+      ],
+      "line": 17,
+      "symbols": [
+        [
+          " ",
+          "FLAG",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 21,
+      "symbols": [
+        [
+          "g",
+          "final",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#if ",
+        ""
+      ],
+      "line": 22,
+      "symbols": [
+        [
+          " ",
+          "FLAG",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "*/ int ",
+        ";"
+      ],
+      "line": 24,
+      "symbols": [
+        [
+          "g",
+          "unchanged",
+          false
+        ]
+      ]
+    }
+  ]
+}

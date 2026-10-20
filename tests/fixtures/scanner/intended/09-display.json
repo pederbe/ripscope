@@ -1,0 +1,195 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/09-display.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "(int ",
+        ")"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "$",
+          "spacing",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "while (",
+        ") ",
+        "--;"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          " ",
+          "x",
+          false
+        ],
+        [
+          " ",
+          "x",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "if(",
+        ") ",
+        "++;"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          " ",
+          "x",
+          false
+        ],
+        [
+          " ",
+          "x",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "if (",
+        ") ",
+        "++;"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          " ",
+          "x",
+          false
+        ],
+        [
+          " ",
+          "x",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "switch (",
+        ") { case 1: return (int )x; default: return (unsigned )x; }"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          " ",
+          "x",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "return sizeof(",
+        ") + (long )x;"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "x",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "char *",
+        ";"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "g",
+          "p",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "static int ",
+        " = 1 ;"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          "g",
+          "wide_gaps",
+          true
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          "g",
+          "tabs_and_spaces",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          "g",
+          "trailing",
+          false
+        ]
+      ]
+    }
+  ]
+}

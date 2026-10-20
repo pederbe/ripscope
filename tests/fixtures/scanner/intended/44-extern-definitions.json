@@ -1,0 +1,231 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/44-extern-definitions.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "extern void ",
+        "(int ",
+        ")"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          "$",
+          "first",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "(",
+        ");"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          "`",
+          "use",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "",
+        "}"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#define ",
+        " int ",
+        " = 0; (void )",
+        "y"
+      ],
+      "line": 5,
+      "symbols": [
+        [
+          "#",
+          "LOCAL",
+          false
+        ],
+        [
+          " ",
+          "y",
+          true
+        ],
+        [
+          ")",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "const char * ",
+        ";"
+      ],
+      "line": 7,
+      "symbols": [
+        [
+          "m",
+          "start",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "const char * ",
+        ";"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          "m",
+          "end",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "} ",
+        ";"
+      ],
+      "line": 9,
+      "symbols": [
+        [
+          "t",
+          "span",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "g",
+          "after",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "extern int ",
+        "(void ) { return 0; ",
+        "}"
+      ],
+      "line": 11,
+      "symbols": [
+        [
+          "$",
+          "second",
+          false
+        ],
+        [
+          "}",
+          "",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 12,
+      "symbols": [
+        [
+          "g",
+          "lost_by_cscope",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 13,
+      "symbols": [
+        [
+          "g",
+          "kept",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "extern int ",
+        ";"
+      ],
+      "line": 14,
+      "symbols": [
+        [
+          " ",
+          "declared",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 15,
+      "symbols": [
+        [
+          "g",
+          "defined_after_declaration",
+          false
+        ]
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "environment": {
+    "LC_ALL": "C",
+    "binary": "Ubuntu cscope 15.9-2build1"
+  },
+  "cases": [
+    {
+      "name": "exact",
+      "source": "local void write_table(FILE *, const z_crc_t FAR *, int);\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "marker"], "exit": 0, "stdout": "case.c marker 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "z_crc_t"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "local"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "word32",
+      "source": "local void write_table32hi(FILE *, const z_word_t FAR *, int);\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table32hi"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "z_word_t"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "word64",
+      "source": "local void write_table64(FILE *, const z_word_t FAR *, int);\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table64"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "z_word_t"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "combined",
+      "source": "local void write_table(FILE *, const z_crc_t FAR *, int);\nlocal void write_table32hi(FILE *, const z_word_t FAR *, int);\nlocal void write_table64(FILE *, const z_word_t FAR *, int);\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 4 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "marker"], "exit": 0, "stdout": "case.c marker 4 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table32hi"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table64"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "parameter-only",
+      "source": "void write_table(FILE *, const z_crc_t FAR *, int);\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "unqualified",
+      "source": "void write_table(FILE *, z_crc_t FAR *, int);\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "ordinary",
+      "source": "void write_table(FILE *, const z_crc_t *, int);\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "leading-control",
+      "source": "local void write_table(int);\nint marker;\n",
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "local"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    },
+    {
+      "name": "named",
+      "source": "local void write_table(FILE *file, const z_crc_t FAR *table, int count);\nint marker;\n",
+      "ripscope_accept": false,
+      "commands": [
+        { "args": ["-bk", "case.c"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", ".*"], "exit": 0, "stdout": "case.c .* 2 int marker;\n", "stderr": "" },
+        { "args": ["-dL", "-1", "write_table"], "exit": 0, "stdout": "", "stderr": "" },
+        { "args": ["-dL", "-1", "FAR"], "exit": 0, "stdout": "", "stderr": "" }
+      ]
+    }
+  ]
+}

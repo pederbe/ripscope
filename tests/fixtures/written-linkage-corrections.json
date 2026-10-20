@@ -1,0 +1,366 @@
+[
+  {
+    "case": "linkage",
+    "field": "0",
+    "pattern": ".*",
+    "caseless": false,
+    "expected": "case.c <global> 2 int x;\ncase.c f 3 int f(void ) { target(); return x; }\ncase.c f 5 int after;\n"
+  },
+  {
+    "case": "linkage",
+    "field": "0",
+    "pattern": "f",
+    "caseless": false,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "0",
+    "pattern": "x",
+    "caseless": false,
+    "expected": "case.c <global> 2 int x;\ncase.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "0",
+    "pattern": "target",
+    "caseless": false,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "0",
+    "pattern": ".*",
+    "caseless": true,
+    "expected": "case.c <global> 2 int x;\ncase.c f 3 int f(void ) { target(); return x; }\ncase.c f 5 int after;\n"
+  },
+  {
+    "case": "linkage",
+    "field": "0",
+    "pattern": "f",
+    "caseless": true,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "0",
+    "pattern": "x",
+    "caseless": true,
+    "expected": "case.c <global> 2 int x;\ncase.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "0",
+    "pattern": "target",
+    "caseless": true,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "1",
+    "pattern": ".*",
+    "caseless": false,
+    "expected": "case.c .* 2 int x;\ncase.c .* 3 int f(void ) { target(); return x; }\ncase.c .* 5 int after;\n"
+  },
+  {
+    "case": "linkage",
+    "field": "1",
+    "pattern": "f",
+    "caseless": false,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "1",
+    "pattern": "x",
+    "caseless": false,
+    "expected": "case.c x 2 int x;\n"
+  },
+  {
+    "case": "linkage",
+    "field": "1",
+    "pattern": "after",
+    "caseless": false,
+    "expected": "case.c after 5 int after;\n"
+  },
+  {
+    "case": "linkage",
+    "field": "1",
+    "pattern": ".*",
+    "caseless": true,
+    "expected": "case.c .* 2 int x;\ncase.c .* 3 int f(void ) { target(); return x; }\ncase.c .* 5 int after;\n"
+  },
+  {
+    "case": "linkage",
+    "field": "1",
+    "pattern": "f",
+    "caseless": true,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "1",
+    "pattern": "x",
+    "caseless": true,
+    "expected": "case.c x 2 int x;\n"
+  },
+  {
+    "case": "linkage",
+    "field": "1",
+    "pattern": "after",
+    "caseless": true,
+    "expected": "case.c after 5 int after;\n"
+  },
+  {
+    "case": "linkage",
+    "field": "2",
+    "pattern": ".*",
+    "caseless": false,
+    "expected": "case.c target 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "2",
+    "pattern": "f",
+    "caseless": false,
+    "expected": "case.c target 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "2",
+    "pattern": ".*",
+    "caseless": true,
+    "expected": "case.c target 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "2",
+    "pattern": "f",
+    "caseless": true,
+    "expected": "case.c target 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "3",
+    "pattern": ".*",
+    "caseless": false,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "3",
+    "pattern": "target",
+    "caseless": false,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "3",
+    "pattern": ".*",
+    "caseless": true,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "linkage",
+    "field": "3",
+    "pattern": "target",
+    "caseless": true,
+    "expected": "case.c f 3 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "0",
+    "pattern": ".*",
+    "caseless": false,
+    "expected": "case.c <global> 1 #ifdef __cplusplus\ncase.c <global> 4 int x;\ncase.c f 5 int f(void ) { target(); return x; }\ncase.c f 6 #ifdef __cplusplus\ncase.c f 9 int after;\n"
+  },
+  {
+    "case": "guarded",
+    "field": "0",
+    "pattern": "f",
+    "caseless": false,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "0",
+    "pattern": "x",
+    "caseless": false,
+    "expected": "case.c <global> 4 int x;\ncase.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "0",
+    "pattern": "target",
+    "caseless": false,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "0",
+    "pattern": ".*",
+    "caseless": true,
+    "expected": "case.c <global> 1 #ifdef __cplusplus\ncase.c <global> 4 int x;\ncase.c f 5 int f(void ) { target(); return x; }\ncase.c f 6 #ifdef __cplusplus\ncase.c f 9 int after;\n"
+  },
+  {
+    "case": "guarded",
+    "field": "0",
+    "pattern": "f",
+    "caseless": true,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "0",
+    "pattern": "x",
+    "caseless": true,
+    "expected": "case.c <global> 4 int x;\ncase.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "0",
+    "pattern": "target",
+    "caseless": true,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "1",
+    "pattern": ".*",
+    "caseless": false,
+    "expected": "case.c .* 4 int x;\ncase.c .* 5 int f(void ) { target(); return x; }\ncase.c .* 9 int after;\n"
+  },
+  {
+    "case": "guarded",
+    "field": "1",
+    "pattern": "f",
+    "caseless": false,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "1",
+    "pattern": "x",
+    "caseless": false,
+    "expected": "case.c x 4 int x;\n"
+  },
+  {
+    "case": "guarded",
+    "field": "1",
+    "pattern": "after",
+    "caseless": false,
+    "expected": "case.c after 9 int after;\n"
+  },
+  {
+    "case": "guarded",
+    "field": "1",
+    "pattern": ".*",
+    "caseless": true,
+    "expected": "case.c .* 4 int x;\ncase.c .* 5 int f(void ) { target(); return x; }\ncase.c .* 9 int after;\n"
+  },
+  {
+    "case": "guarded",
+    "field": "1",
+    "pattern": "f",
+    "caseless": true,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "1",
+    "pattern": "x",
+    "caseless": true,
+    "expected": "case.c x 4 int x;\n"
+  },
+  {
+    "case": "guarded",
+    "field": "1",
+    "pattern": "after",
+    "caseless": true,
+    "expected": "case.c after 9 int after;\n"
+  },
+  {
+    "case": "guarded",
+    "field": "2",
+    "pattern": ".*",
+    "caseless": false,
+    "expected": "case.c target 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "2",
+    "pattern": "f",
+    "caseless": false,
+    "expected": "case.c target 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "2",
+    "pattern": ".*",
+    "caseless": true,
+    "expected": "case.c target 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "2",
+    "pattern": "f",
+    "caseless": true,
+    "expected": "case.c target 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "3",
+    "pattern": ".*",
+    "caseless": false,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "3",
+    "pattern": "target",
+    "caseless": false,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "3",
+    "pattern": ".*",
+    "caseless": true,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "guarded",
+    "field": "3",
+    "pattern": "target",
+    "caseless": true,
+    "expected": "case.c f 5 int f(void ) { target(); return x; }\n"
+  },
+  {
+    "case": "empty",
+    "field": "1",
+    "pattern": ".*",
+    "caseless": false,
+    "expected": "case.c .* 3 int after;\n"
+  },
+  {
+    "case": "empty",
+    "field": "1",
+    "pattern": "after",
+    "caseless": false,
+    "expected": "case.c after 3 int after;\n"
+  },
+  {
+    "case": "empty",
+    "field": "1",
+    "pattern": ".*",
+    "caseless": true,
+    "expected": "case.c .* 3 int after;\n"
+  },
+  {
+    "case": "empty",
+    "field": "1",
+    "pattern": "after",
+    "caseless": true,
+    "expected": "case.c after 3 int after;\n"
+  }
+]

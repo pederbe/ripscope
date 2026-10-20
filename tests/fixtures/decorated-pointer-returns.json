@@ -1,0 +1,407 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "locale": "C",
+  "cases": [
+    {
+      "name": "exact",
+      "source": "const z_crc_t FAR * ZEXPORT get_crc_table(void) { return 0; }\n",
+      "ripscope_accept": true,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c get_crc_table 1 const z_crc_t FAR * ZEXPORT get_crc_table(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "two-definitions",
+      "source": "const z_crc_t FAR * ZEXPORT first(void) { return 0; }\nconst z_crc_t FAR * ZEXPORT second(void) { return 0; }\n",
+      "ripscope_accept": true,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "first"
+          ],
+          "exit": 0,
+          "stdout": "case.c first 1 const z_crc_t FAR * ZEXPORT first(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "second"
+          ],
+          "exit": 0,
+          "stdout": "case.c second 2 const z_crc_t FAR * ZEXPORT second(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "preprocessor",
+      "source": "#if X\nconst z_crc_t FAR * ZEXPORT wrapped(void) { return 0; }\n#endif\n",
+      "ripscope_accept": true,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "wrapped"
+          ],
+          "exit": 0,
+          "stdout": "case.c wrapped 2 const z_crc_t FAR * ZEXPORT wrapped(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "mixed-adapter",
+      "source": "const z_crc_t FAR * ZEXPORT get_crc_table(void) { return 0; }\nvoid use(z_crc_t FAR *table) {}\n",
+      "ripscope_accept": true,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c get_crc_table 1 const z_crc_t FAR * ZEXPORT get_crc_table(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "use"
+          ],
+          "exit": 0,
+          "stdout": "case.c use 2 void use(z_crc_t FAR *table) {}\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "ordinary",
+      "source": "const z_crc_t *get_crc_table(void) { return 0; }\n",
+      "ripscope_accept": true,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c get_crc_table 1 const z_crc_t *get_crc_table(void ) { return 0; }\n",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "far-only",
+      "source": "const z_crc_t FAR *get_crc_table(void) { return 0; }\n",
+      "ripscope_accept": false,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c get_crc_table 1 const z_crc_t FAR *get_crc_table(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "FAR"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "zexport-only",
+      "source": "const z_crc_t * ZEXPORT get_crc_table(void) { return 0; }\n",
+      "ripscope_accept": false,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "case.c get_crc_table 1 const z_crc_t * ZEXPORT get_crc_table(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "ZEXPORT"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "prototype",
+      "source": "const z_crc_t FAR * ZEXPORT get_crc_table(void);\n",
+      "ripscope_accept": false,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "get_crc_table"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "other-type",
+      "source": "const Type FAR * ZEXPORT f(void) { return 0; }\n",
+      "ripscope_accept": false,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "f"
+          ],
+          "exit": 0,
+          "stdout": "case.c f 1 const Type FAR * ZEXPORT f(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "Type"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "without-const",
+      "source": "z_crc_t FAR * ZEXPORT f(void) { return 0; }\n",
+      "ripscope_accept": false,
+      "commands": [
+        {
+          "args": [
+            "-bk",
+            "case.c"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "f"
+          ],
+          "exit": 0,
+          "stdout": "case.c f 1 z_crc_t FAR * ZEXPORT f(void ) { return 0; }\n",
+          "stderr": ""
+        },
+        {
+          "args": [
+            "-dL",
+            "-1",
+            "z_crc_t"
+          ],
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}
+

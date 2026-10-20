@@ -1,0 +1,74 @@
+{
+ "decision": "Intended reading of K&R definition look-ahead across lines.",
+ "reference": "tests/fixtures/written-knr-lookahead-lines-cscope.json holds the original pinned cscope observations; these are the intended responses where they differ, for both case modes.",
+ "cases": {
+  "openssl_typedef": {
+   "0": {
+    "DEFINE_STACK_OF": "case.c <global> 1 DEFINE_STACK_OF(EX_CALLBACK)\n",
+    "EX_CALLBACK": "case.c <global> 1 DEFINE_STACK_OF(EX_CALLBACK)\n",
+    "mem_st": "case.c <global> 2 typedef struct mem_st MEM;\n",
+    "MEM": "case.c <global> 2 typedef struct mem_st MEM;\n",
+    "after": "case.c <global> 3 int after;\n"
+   },
+   "1": {
+    "DEFINE_STACK_OF": "",
+    "after": "case.c after 3 int after;\n"
+   },
+   "2": {
+    "DEFINE_STACK_OF": ""
+   },
+   "3": {
+    "h": "case.c g 4 void g(void ) { h(); }\n"
+   }
+  },
+  "other_name": {
+   "0": {
+    "M": "case.c <global> 1 M(a)\n",
+    "a": "case.c <global> 1 M(a)\n",
+    "b": "case.c <global> 2 int b;\n",
+    "after": "case.c <global> 3 int after;\n"
+   },
+   "1": {
+    "M": "",
+    "b": "case.c b 2 int b;\n",
+    "after": "case.c after 3 int after;\n"
+   },
+   "2": {
+    "M": ""
+   },
+   "3": {
+    "h": "case.c g 4 void g(void ) { h(); }\n"
+   }
+  },
+  "extern_next": {
+   "0": {
+    "M": "case.c <global> 1 M(a, c)\n",
+    "a": "case.c <global> 1 M(a, c)\n",
+    "b": "case.c <global> 2 extern int b;\n",
+    "c": "case.c <global> 1 M(a, c)\n",
+    "after": "case.c <global> 3 int after;\n"
+   },
+   "1": {
+    "M": "",
+    "after": "case.c after 3 int after;\n"
+   }
+  },
+  "static_next": {
+   "0": {
+    "M": "case.c <global> 1 M(a)\n",
+    "a": "case.c <global> 1 M(a)\n",
+    "b": "case.c <global> 2 static int b;\n"
+   },
+   "1": {
+    "M": "",
+    "b": "case.c b 2 static int b;\n"
+   },
+   "2": {
+    "M": ""
+   },
+   "3": {
+    "h": "case.c g 3 void g(void ) { h(); }\n"
+   }
+  }
+ }
+}

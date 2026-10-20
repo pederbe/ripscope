@@ -1,0 +1,134 @@
+{
+ "probe": "probes/07-literals.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "char *",
+    " = \"hello(world); int fake;\";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "greeting",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "char ",
+    " = '\\'';"
+   ],
+   "symbols": [
+    [
+     "g",
+     "quote",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "char *",
+    " = \"a \\\" b(c) \\\\\";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "escaped",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "char *",
+    " = \"part one \\ two(call)\";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "continued",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 6,
+   "fragments": [
+    "int ",
+    "(void ) { return ",
+    "(\"x(y)\"); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "after_literal",
+     false
+    ],
+    [
+     "`",
+     "strlen",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "char *",
+    " = \"open"
+   ],
+   "symbols": [
+    [
+     "g",
+     "unterminated",
+     true
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "int ",
+    "(void ) { return 1; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "recovered",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

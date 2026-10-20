@@ -1,0 +1,563 @@
+{
+ "probe": "probes/47-attributed-bodies.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "",
+    "(",
+    ") int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "dllexport",
+     false
+    ],
+    [
+     "$",
+     "simple",
+     false
+    ],
+    [
+     "`",
+     "first",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    "(",
+    ") ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "noinline",
+     false
+    ],
+    [
+     "$",
+     "placed",
+     false
+    ],
+    [
+     "`",
+     "second",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "DLL",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 4,
+   "fragments": [
+    "",
+    "(",
+    ")"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "dllexport",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 7,
+   "fragments": [
+    "#if ",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "WINDOWS",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 8,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "VimMain",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 10,
+   "fragments": [
+    "",
+    ""
+   ],
+   "symbols": [
+    [
+     " ",
+     "main",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 12,
+   "fragments": [
+    "(int ",
+    ", char **",
+    ")"
+   ],
+   "symbols": [
+    [
+     " ",
+     "argc",
+     false
+    ],
+    [
+     " ",
+     "argv",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 14,
+   "fragments": [
+    "",
+    "(",
+    ", ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "start",
+     false
+    ],
+    [
+     " ",
+     "argc",
+     false
+    ],
+    [
+     " ",
+     "argv",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 15,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 16,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    " ",
+    " ",
+    "(",
+    " ",
+    ", ",
+    " ",
+    ", ",
+    " ",
+    ") {"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "dllexport",
+     false
+    ],
+    [
+     " ",
+     "BOOL",
+     false
+    ],
+    [
+     " ",
+     "WINAPI",
+     false
+    ],
+    [
+     "$",
+     "DllMain",
+     false
+    ],
+    [
+     " ",
+     "HINSTANCE",
+     false
+    ],
+    [
+     " ",
+     "inst",
+     false
+    ],
+    [
+     " ",
+     "DWORD",
+     false
+    ],
+    [
+     " ",
+     "reason",
+     false
+    ],
+    [
+     " ",
+     "LPVOID",
+     false
+    ],
+    [
+     " ",
+     "reserved",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 17,
+   "fragments": [
+    "",
+    "(",
+    ");"
+   ],
+   "symbols": [
+    [
+     "`",
+     "enter",
+     false
+    ],
+    [
+     " ",
+     "inst",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 18,
+   "fragments": [
+    "return ",
+    ";"
+   ],
+   "symbols": [
+    [
+     " ",
+     "TRUE",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 19,
+   "fragments": [
+    "",
+    "}"
+   ],
+   "symbols": [
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 20,
+   "fragments": [
+    "",
+    "(",
+    ") int ",
+    "(int ",
+    ");"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "dllexport",
+     false
+    ],
+    [
+     "`",
+     "prototype",
+     false
+    ],
+    [
+     " ",
+     "arg",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 21,
+   "fragments": [
+    "extern ",
+    "(",
+    ") ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "dllimport",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     " ",
+     "imported",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 22,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    " ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "selectany",
+     false
+    ],
+    [
+     " ",
+     "T",
+     false
+    ],
+    [
+     " ",
+     "global",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 23,
+   "fragments": [
+    "",
+    "(",
+    ") ",
+    "(",
+    ") int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "noinline",
+     false
+    ],
+    [
+     "$",
+     "__declspec",
+     false
+    ],
+    [
+     " ",
+     "dllexport",
+     false
+    ],
+    [
+     "$",
+     "twice",
+     false
+    ],
+    [
+     "`",
+     "third",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 24,
+   "fragments": [
+    "",
+    "((",
+    ")) int ",
+    "(void ) { ",
+    "(); ",
+    "}"
+   ],
+   "symbols": [
+    [
+     " ",
+     "__attribute__",
+     false
+    ],
+    [
+     " ",
+     "noinline",
+     false
+    ],
+    [
+     "$",
+     "gnu",
+     false
+    ],
+    [
+     "`",
+     "fourth",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 25,
+   "fragments": [
+    "int ",
+    ";"
+   ],
+   "symbols": [
+    [
+     "g",
+     "after",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}

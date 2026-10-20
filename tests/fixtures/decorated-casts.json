@@ -1,0 +1,299 @@
+{
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "cases": [
+    {
+      "name": "primitive-pointer-exact",
+      "source": "int f(void) { return (const unsigned char FAR *)word; }\nint word;\n",
+      "queries": [
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 int f(void ) { return (const unsigned char FAR *)word; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "word",
+          "stdout": "case.c word 2 int word;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "FAR",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "primitive-pointer-tabs",
+      "source": "int f(void) { return (const\tunsigned\tchar\tFAR\t*)word; }\nint word;\n",
+      "queries": [
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 int f(void ) { return (const unsigned char FAR *)word; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "word",
+          "stdout": "case.c word 2 int word;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "FAR",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "primitive-pointer-mixed-adapters",
+      "source": "unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n                              z_size_t len) { return (const unsigned char FAR *)word != buf; }\nint g(void) { return (API Type *)p != 0; }\nint word;\n",
+      "queries": [
+        {
+          "pattern": "crc32_z",
+          "stdout": "case.c crc32_z 1 unsigned long ZEXPORT crc32_z(unsigned long crc, const unsigned char FAR *buf,\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "g",
+          "stdout": "case.c g 3 int g(void ) { return (API Type *)p != 0; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "word",
+          "stdout": "case.c word 4 int word;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "FAR",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "aliased",
+      "source": "int f(void) { return (API Type *)p; }\nint x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 int f(void ) { return (API Type *)p; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 2 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "trailing",
+      "source": "int f(void) { return (Type API *)p; }\nint x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 int f(void ) { return (Type API *)p; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 2 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "primitive",
+      "source": "int f(void) { return (API int *)p; }\nint x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 int f(void ) { return (API int *)p; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 2 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "ordinary",
+      "source": "int f(void) { return (const Type *)p; }\nint x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 int f(void ) { return (const Type *)p; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 2 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "no-pointer",
+      "source": "int f(void) { return (API Type)p; }\nint x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 int f(void ) { return (API Type)p; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 2 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "sizeof",
+      "source": "int f(void) { return sizeof(API Type *); }\nint x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 int f(void ) { return sizeof(API Type *); }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 2 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    },
+    {
+      "name": "parameter",
+      "source": "int f(API Type *p) { return 0; }\nint x;\n",
+      "queries": [
+        {
+          "pattern": "API",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "f",
+          "stdout": "case.c f 1 int f(API Type *p) { return 0; }\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "x",
+          "stdout": "case.c x 2 int x;\n",
+          "exit": 0,
+          "stderr": ""
+        },
+        {
+          "pattern": "Type",
+          "stdout": "",
+          "exit": 0,
+          "stderr": ""
+        }
+      ]
+    }
+  ]
+}

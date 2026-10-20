@@ -1,0 +1,6 @@
+{
+  "definition": "greet.c greet 6 void greet(const char *name)\n",
+  "before": "main.c main 5 greet(\"world\");\n",
+  "after": "main.c main 5 greet(\"world\");\nmain.c helper 8 void helper(void ) { greet(\"x\"); }\n",
+  "addition": "void helper(void) { greet(\"x\"); }"
+}

@@ -1,0 +1,7 @@
+/* Every installation option remains available without JavaScript. */
+/* The theme layer precedes Preflight, whose hidden rule is also important. */
+@layer theme {
+  .installer .install-panel[hidden] { display: block !important; border-top: 1px solid var(--color-base-300); }
+}
+.install-tabs, .copy { display: none; }
+.install-panel { min-height: 0; }

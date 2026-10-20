@@ -1,0 +1,165 @@
+{
+  "note": "The enabled reading, where it differs from the reference's records in ../expected/.",
+  "probe": "probes/39-directive-rest.c",
+  "records": [
+    {
+      "define_end": false,
+      "fragments": [
+        "#include ",
+        " ",
+        " #include ",
+        "> ",
+        " <",
+        ".",
+        ">"
+      ],
+      "line": 1,
+      "symbols": [
+        [
+          " ",
+          "redirecting",
+          false
+        ],
+        [
+          " ",
+          "incorrect",
+          false
+        ],
+        [
+          "~",
+          "<sys/errno.h",
+          false
+        ],
+        [
+          " ",
+          "to",
+          false
+        ],
+        [
+          " ",
+          "errno",
+          false
+        ],
+        [
+          " ",
+          "h",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 2,
+      "symbols": [
+        [
+          "g",
+          "after_warning",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        " #if ",
+        "(",
+        ") && ",
+        "(",
+        ")"
+      ],
+      "line": 3,
+      "symbols": [
+        [
+          " ",
+          "defined",
+          false
+        ],
+        [
+          " ",
+          "A",
+          false
+        ],
+        [
+          " ",
+          "B",
+          false
+        ],
+        [
+          " ",
+          "x",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 4,
+      "symbols": [
+        [
+          "g",
+          "inside",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        "; #int ",
+        ";"
+      ],
+      "line": 6,
+      "symbols": [
+        [
+          "g",
+          "a",
+          false
+        ],
+        [
+          "g",
+          "b",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "#int ",
+        ";"
+      ],
+      "line": 8,
+      "symbols": [
+        [
+          " ",
+          "c",
+          false
+        ]
+      ]
+    },
+    {
+      "define_end": false,
+      "fragments": [
+        "int ",
+        ";"
+      ],
+      "line": 10,
+      "symbols": [
+        [
+          "g",
+          "d",
+          false
+        ]
+      ]
+    }
+  ]
+}

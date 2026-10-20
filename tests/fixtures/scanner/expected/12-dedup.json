@@ -1,0 +1,98 @@
+{
+ "probe": "probes/12-dedup.c",
+ "reference": {
+  "binary_sha256": "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c",
+  "command": "cscope -bk <probe>",
+  "decoding": "examples/support/cscope_db.rs (as cscope displays it)"
+ },
+ "stderr": "",
+ "records": [
+  {
+   "line": 1,
+   "fragments": [
+    "int ",
+    "(int ",
+    ") { return same + same; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "same",
+     false
+    ],
+    [
+     " ",
+     "same",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 2,
+   "fragments": [
+    "int ",
+    "(void ) { ",
+    "(); f(); ",
+    "(f()); return 0; ",
+    "}"
+   ],
+   "symbols": [
+    [
+     "$",
+     "calls",
+     false
+    ],
+    [
+     "`",
+     "f",
+     false
+    ],
+    [
+     "`",
+     "g",
+     false
+    ],
+    [
+     "}",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  },
+  {
+   "line": 3,
+   "fragments": [
+    "#define ",
+    "(",
+    ") v + ",
+    "v"
+   ],
+   "symbols": [
+    [
+     "#",
+     "TWICE",
+     false
+    ],
+    [
+     " ",
+     "v",
+     false
+    ],
+    [
+     ")",
+     "",
+     false
+    ]
+   ],
+   "define_end": false
+  }
+ ]
+}
