@@ -28,11 +28,12 @@ Run `scripts/build-site.sh --dev` from a development checkout. The combined outp
 is `target/site`, with the landing page at `/` and documentation at `/docs/`.
 The build requires Rust and mdBook 0.5.4 (`MDBOOK` can select an installed binary).
 It never deploys. `--docs-only` checks documentation during page development;
-it cannot be combined with a release build.
+it cannot be combined with a deployment build.
 
-`scripts/build-site.sh --release vVERSION` requires a clean checkout at the exact
-local tag matching the root package version. The deployment workflow must select
-that tag before running this command. Building a tag does not authorize deployment.
+`scripts/build-site.sh --deploy` requires a clean checkout whose root package version
+already has its `vVERSION` tag, so the page's download links exist. The deployment
+workflow selects a reviewed commit on `main` before running this command, so website
+changes ship without a new release. Building does not authorize deployment.
 
 Only chapters selected by `docs/SUMMARY.md`, their local assets, resolved Markdown
 includes and the theme enter the documentation build. `--list-inputs` lists the
@@ -71,7 +72,7 @@ cargo clippy --locked --all-targets --manifest-path tools/site/Cargo.toml -- -D 
 cargo test --locked --manifest-path tools/site/Cargo.toml
 ```
 
-Combined development and release builds also copy the canonical root `install.sh`
+Combined development and deployment builds also copy the canonical root `install.sh`
 and `install.ps1` to the site root. Documentation-only builds omit those scripts.
 `--list-inputs` includes both canonical installers for the public source closure.
 They must be regular files; symlinks and `site/install.sh` / `site/install.ps1`

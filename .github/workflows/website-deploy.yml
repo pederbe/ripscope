@@ -5,12 +5,8 @@ name: Deploy website after approval
 on:
   workflow_dispatch:
     inputs:
-      release_tag:
-        description: Exact existing version tag, such as v0.1.0
-        type: string
-        required: true
-      release_commit:
-        description: Exact 40-character commit reviewed for this deployment
+      deploy_commit:
+        description: Exact 40-character commit on main reviewed for this deployment
         type: string
         required: true
       confirmation:
@@ -43,13 +39,11 @@ jobs:
       # missing environment or absent reviewer rule fails before deployment starts.
       - name: Validate inputs and existing approval protection
         env:
-          RELEASE_TAG: ${{ inputs.release_tag }}
-          RELEASE_COMMIT: ${{ inputs.release_commit }}
+          DEPLOY_COMMIT: ${{ inputs.deploy_commit }}
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
-          [[ "$RELEASE_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$DEPLOY_COMMIT" =~ ^[0-9a-f]{40}$ ]]
           gh api --method GET "repos/$GITHUB_REPOSITORY/environments/site-production" > "$RUNNER_TEMP/site-environment.json"
           jq -e '
             type == "object" and
@@ -87,19 +81,17 @@ jobs:
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: ${{ inputs.release_commit }}
+          ref: ${{ inputs.deploy_commit }}
           fetch-depth: 0
           persist-credentials: false
-      - name: Verify immutable selected tag
+      - name: Verify the selected commit is on main
         env:
-          RELEASE_TAG: ${{ inputs.release_tag }}
-          RELEASE_COMMIT: ${{ inputs.release_commit }}
+          DEPLOY_COMMIT: ${{ inputs.deploy_commit }}
         run: |
           set -euo pipefail
-          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
-          [[ "$RELEASE_COMMIT" =~ ^[0-9a-f]{40}$ ]]
-          test "$(git rev-parse HEAD)" = "$RELEASE_COMMIT"
-          test "$(git rev-parse --verify "refs/tags/$RELEASE_TAG^{commit}")" = "$RELEASE_COMMIT"
+          [[ "$DEPLOY_COMMIT" =~ ^[0-9a-f]{40}$ ]]
+          test "$(git rev-parse HEAD)" = "$DEPLOY_COMMIT"
+          git merge-base --is-ancestor "$DEPLOY_COMMIT" origin/main
           test -z "$(git status --porcelain --untracked-files=normal)"
       - name: Select Rust
         run: |
@@ -111,17 +103,15 @@ jobs:
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
           node-version: '24'
-      - name: Build selected release source and verify internal links
-        env:
-          RELEASE_TAG: ${{ inputs.release_tag }}
-        run: scripts/build-site.sh --release "$RELEASE_TAG"
+      - name: Build selected source and verify internal links
+        run: scripts/build-site.sh --deploy
       - name: Validate static hosting without deploying
         env:
           WRANGLER_SEND_METRICS: 'false'
         run: |
           npm ci --ignore-scripts --no-audit --no-fund --prefix tools/site
           node tools/site/node_modules/wrangler/bin/wrangler.js deploy --dry-run --config wrangler.jsonc --outdir "$RUNNER_TEMP/site-dry-run"
-      - name: Deploy approved release website
+      - name: Deploy approved website
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

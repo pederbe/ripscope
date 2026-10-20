@@ -7,7 +7,7 @@ use std::process::Command;
 
 const SITE: &str = "https://ripscope.com";
 const INSTALLERS: [&str; 2] = ["install.sh", "install.ps1"];
-const USAGE: &str = "usage: scripts/build-site.sh (--dev | --release vVERSION) [--render-diagrams] [--check-external] [--docs-only]\nOutput: target/site. --docs-only is a development check, never a release build.";
+const USAGE: &str = "usage: scripts/build-site.sh (--dev | --deploy) [--render-diagrams] [--check-external] [--docs-only]\nOutput: target/site. --docs-only is a development check, never a deployment build.";
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 #[derive(Debug)]
@@ -20,7 +20,7 @@ struct Chapter {
 #[derive(Default)]
 struct Options {
     dev: bool,
-    release: Option<String>,
+    deploy: bool,
     render: bool,
     external: bool,
     docs_only: bool,
@@ -35,11 +35,10 @@ fn main() {
 
 fn run() -> Result<()> {
     let mut options = Options::default();
-    let mut args = std::env::args().skip(1);
     let root = Path::new(env!("CARGO_MANIFEST_DIR"))
         .join("../..")
         .canonicalize()?;
-    while let Some(arg) = args.next() {
+    for arg in std::env::args().skip(1) {
         match arg.as_str() {
             "--list-inputs" => {
                 for input in source_inputs(&root)? {
@@ -48,7 +47,7 @@ fn run() -> Result<()> {
                 return Ok(());
             }
             "--dev" => options.dev = true,
-            "--release" => options.release = Some(args.next().ok_or(USAGE)?),
+            "--deploy" => options.deploy = true,
             "--render-diagrams" => options.render = true,
             "--check-external" => options.external = true,
             "--docs-only" => options.docs_only = true,
@@ -59,11 +58,11 @@ fn run() -> Result<()> {
             _ => return Err(USAGE.into()),
         }
     }
-    if options.dev == options.release.is_some() || (options.docs_only && !options.dev) {
+    if options.dev == options.deploy || (options.docs_only && !options.dev) {
         return Err(USAGE.into());
     }
-    if let Some(tag) = &options.release {
-        check_release(&root, tag)?;
+    if options.deploy {
+        check_deployable(&root)?;
     }
     let mdbook = std::env::var("MDBOOK").unwrap_or_else(|_| "mdbook".into());
     let version = output(Command::new(&mdbook).arg("--version"))?;
@@ -304,22 +303,18 @@ fn package_version(root: &Path) -> Result<String> {
         .to_owned())
 }
 
-fn check_release(root: &Path, tag: &str) -> Result<()> {
-    if tag != format!("v{}", package_version(root)?) {
-        return Err("release tag must equal v plus Cargo.toml's package version".into());
-    }
-    let tag_commit = output(Command::new("git").current_dir(root).args([
+fn check_deployable(root: &Path) -> Result<()> {
+    // The landing page links to this version's release downloads.
+    let tag = format!("v{}", package_version(root)?);
+    if output(Command::new("git").current_dir(root).args([
         "rev-parse",
         "--verify",
+        "--quiet",
         &format!("refs/tags/{tag}^{{commit}}"),
-    ]))?;
-    let head = output(
-        Command::new("git")
-            .current_dir(root)
-            .args(["rev-parse", "HEAD"]),
-    )?;
-    if tag_commit != head {
-        return Err("release build must run at the exact selected release tag".into());
+    ]))
+    .is_err()
+    {
+        return Err(format!("deployment build requires the release tag {tag}").into());
     }
     if !output(Command::new("git").current_dir(root).args([
         "status",
@@ -329,7 +324,7 @@ fn check_release(root: &Path, tag: &str) -> Result<()> {
     .trim()
     .is_empty()
     {
-        return Err("release build requires a clean source checkout".into());
+        return Err("deployment build requires a clean source checkout".into());
     }
     Ok(())
 }
@@ -1065,7 +1060,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn release_guard_requires_exact_existing_version_tag_and_clean_source() {
+    fn deployment_guard_requires_released_version_and_clean_source() {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
         write(&root.join("Cargo.toml"), "[package]\nversion = \"0.1.0\"\n").unwrap();
@@ -1075,7 +1070,7 @@ mod tests {
                     .current_dir(root)
                     .args([
                         "-c",
-                        "user.name=Release fixture",
+                        "user.name=Deployment fixture",
                         "-c",
                         "user.email=fixture@example.invalid",
                     ])
@@ -1085,31 +1080,24 @@ mod tests {
         };
         git(&["init", "--initial-branch=main"]);
         git(&["add", "Cargo.toml"]);
-        git(&["commit", "-m", "Release fixture"]);
+        git(&["commit", "-m", "Deployment fixture"]);
         assert!(
-            check_release(root, "v0.1.0").is_err(),
-            "missing tag accepted"
+            check_deployable(root).is_err(),
+            "unreleased version accepted"
         );
         git(&["tag", "v0.1.0"]);
-        check_release(root, "v0.1.0").unwrap();
-        assert!(
-            check_release(root, "v0.2.0").is_err(),
-            "wrong package version accepted"
-        );
+        check_deployable(root).unwrap();
         write(&root.join("untracked.txt"), "pending").unwrap();
-        assert!(
-            check_release(root, "v0.1.0").is_err(),
-            "untracked source accepted"
-        );
+        assert!(check_deployable(root).is_err(), "untracked source accepted");
         git(&["add", "untracked.txt"]);
-        assert!(
-            check_release(root, "v0.1.0").is_err(),
-            "staged source accepted"
-        );
+        assert!(check_deployable(root).is_err(), "staged source accepted");
         git(&["commit", "-m", "Later fixture source"]);
+        check_deployable(root).unwrap();
+        write(&root.join("Cargo.toml"), "[package]\nversion = \"0.2.0\"\n").unwrap();
+        git(&["commit", "-am", "Unreleased version"]);
         assert!(
-            check_release(root, "v0.1.0").is_err(),
-            "tag pointing at an earlier commit accepted"
+            check_deployable(root).is_err(),
+            "unreleased version accepted"
         );
     }
 
@@ -1194,8 +1182,7 @@ mod tests {
                 .env("SITE_ENVIRONMENT_STATUS", status)
                 .env("RUNNER_TEMP", temp.path())
                 .env("GITHUB_REPOSITORY", "fixture/site")
-                .env("RELEASE_TAG", "v0.1.0")
-                .env("RELEASE_COMMIT", "0123456789012345678901234567890123456789")
+                .env("DEPLOY_COMMIT", "0123456789012345678901234567890123456789")
                 .output()
                 .unwrap();
             assert_eq!(

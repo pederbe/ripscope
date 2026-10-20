@@ -28,21 +28,21 @@ and never publishes a website.
 
 Complete setup only after the maintainer explicitly authorizes deployment:
 
-1. Select the reviewed release commit and create its matching `vVERSION` tag.
-   The root package version must match. Neither tagging nor building deploys it.
+1. Select the reviewed commit on `main`. Website changes deploy without a new
+   release, as long as the root package version is already tagged. Building a
+   commit does not deploy it.
 2. Create the GitHub environment named `site-production`. Require a reviewer,
    including the maintainer for this solo-maintained project. Allow self-review
    (`prevent_self_review=false`) so the maintainer can approve a manually dispatched
    deployment. Disable administrator bypass in the environment settings.
 3. Configure the environment's deployment branch policy to permit the intended
-   dispatch branch, `main`. The workflow dispatch uses `main`; the selected release
-   tag is checked out separately. A tag-only environment policy would block it.
+   dispatch branch, `main`. The selected commit is checked out separately.
 4. Store a scoped `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in that environment.
    The token needs only the permissions necessary to deploy the approved Worker and
    its custom domain. Keep credentials out of repository files and build artifacts.
 5. Only after the explicit go, set the repository variable `SITE_DEPLOY_ENABLED`
    to `true`. It is intentionally unset by default. The deployment also requires a
-   public repository, the exact reviewed tag and full commit SHA, the typed phrase
+   public repository, the reviewed commit's full SHA, the typed phrase
    `Deploy ripscope.com`, and approval in `site-production`.
 
 The independent preflight job has no environment or provider credentials. It uses
@@ -59,9 +59,10 @@ and served installation commands after their access changes; checking HTML links
 does not execute or validate download URLs printed inside code examples. Resolve
 outstanding destinations before presenting them as available.
 
-After preflight and approval, the deploy job checks out the immutable commit,
-verifies the selected tag and clean source, builds with `--release`, checks internal
-links, and validates the Wrangler configuration before deploying. Disable the repository
+After preflight and approval, the deploy job checks out the selected commit,
+verifies that it is on `main`, clean and at a tagged version, builds with
+`--deploy`, checks internal links, and validates the Wrangler configuration before
+deploying. Disable the repository
 opt-in again when the approved deployment window has ended. Custom-domain routing
 can affect DNS; the future authorization must include that change.
 
