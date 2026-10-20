@@ -39,13 +39,13 @@ x86-64 executable, with glibc 2.28 or newer and the system GCC runtime required.
 Verify the selected package's `.sha256` sidecar, then install it:
 
 ```sh
-sha256sum -c ripscope_0.1.1_amd64.deb.sha256
-sudo apt install ./ripscope_0.1.1_amd64.deb
+sha256sum -c ripscope_0.2.0_amd64.deb.sha256
+sudo apt install ./ripscope_0.2.0_amd64.deb
 ```
 
 ```sh
-sha256sum -c ripscope-0.1.1-1.x86_64.rpm.sha256
-sudo dnf install ./ripscope-0.1.1-1.x86_64.rpm
+sha256sum -c ripscope-0.2.0-1.x86_64.rpm.sha256
+sudo dnf install ./ripscope-0.2.0-1.x86_64.rpm
 ```
 
 Notices and editor sources are installed in `/usr/share/ripscope`.
@@ -64,16 +64,16 @@ manifest. Compare the archive against its individual `.sha256` sidecar before
 extracting it. Keep the complete extracted directory:
 
 ```sh
-sha256sum -c ripscope-0.1.1-x86_64-linux-gnu.tar.gz.sha256
-tar -xzf ripscope-0.1.1-x86_64-linux-gnu.tar.gz
-./ripscope-0.1.1-x86_64-linux-gnu/bin/ripscope --help
+sha256sum -c ripscope-0.2.0-x86_64-linux-gnu.tar.gz.sha256
+tar -xzf ripscope-0.2.0-x86_64-linux-gnu.tar.gz
+./ripscope-0.2.0-x86_64-linux-gnu/bin/ripscope --help
 ```
 
 ```powershell
-Get-FileHash .\ripscope-0.1.1-x86_64-windows-msvc.zip -Algorithm SHA256
-Get-Content .\ripscope-0.1.1-x86_64-windows-msvc.zip.sha256
-Expand-Archive .\ripscope-0.1.1-x86_64-windows-msvc.zip -DestinationPath .\ripscope-install
-.\ripscope-install\ripscope-0.1.1-x86_64-windows-msvc\bin\ripscope.exe --help
+Get-FileHash .\ripscope-0.2.0-x86_64-windows-msvc.zip -Algorithm SHA256
+Get-Content .\ripscope-0.2.0-x86_64-windows-msvc.zip.sha256
+Expand-Archive .\ripscope-0.2.0-x86_64-windows-msvc.zip -DestinationPath .\ripscope-install
+.\ripscope-install\ripscope-0.2.0-x86_64-windows-msvc\bin\ripscope.exe --help
 ```
 
 Checksums identify the downloaded bytes. For repository and workflow provenance,
