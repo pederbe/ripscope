@@ -101,7 +101,9 @@ test = true
 [[example]]
 name = "assess-workflows"
 path = "examples/assess-workflows.rs"
-test = true
+# Needs an assessment host (a systemd user scope on Linux, an ordinary user on Windows):
+# run it there with `cargo test --example assess-workflows`.
+test = false
 
 [[example]]
 name = "compass-scale"
