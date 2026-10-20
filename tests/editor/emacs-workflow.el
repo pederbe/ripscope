@@ -114,8 +114,9 @@ lands on LINE of FILE."
 
 (defun ripscope-test-published (root)
   "Whether the index `ripscope --project' names for ROOT is published."
+  ;; With the package's own coding, which passes the accented path on Windows.
   (with-temp-buffer
-    (call-process ripscope-test-backend nil t nil "--project" root)
+    (should (eql 0 (ripscope--call ripscope-test-backend t (list "--project" root))))
     (eq t (alist-get 'published (ripscope--json (buffer-string))))))
 
 (ert-deftest ripscope-first-search-indexes-and-all-nine-searches-jump ()
