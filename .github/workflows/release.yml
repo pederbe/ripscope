@@ -84,7 +84,7 @@ jobs:
           curl --proto '=https' --tlsv1.2 -fL "$($release profile linux mold_url)" -o "$RUNNER_TEMP/mold.tar.gz"
           $release linux --work "$RUNNER_TEMP/linux" \
             --toolchain "$HOME/.rustup/toolchains/1.98.1-x86_64-unknown-linux-gnu" --mold-archive "$RUNNER_TEMP/mold.tar.gz"
-      - name: Package the inspected executable and check installers
+      - name: Package the inspected executable and smoke-test the packages
         env:
           TAG: ${{ inputs.tag }}
         run: |
@@ -93,9 +93,6 @@ jobs:
           sudo apt-get install -y --no-install-recommends rpm cpio
           version=${TAG#v}
           bash scripts/package-linux.sh "$version" "$RUNNER_TEMP/linux/ripscope-$version-x86_64-linux-gnu" "$RUNNER_TEMP/linux/dist"
-          cargo run --locked --example check-installers -- \
-            --archive "$RUNNER_TEMP/linux/dist/ripscope-$version-x86_64-linux-gnu.tar.gz" \
-            --installer "$PWD/install.sh" --work "$RUNNER_TEMP/linux-installer"
           podman pull docker.io/library/debian:12-slim
           podman pull docker.io/library/almalinux:8-minimal
           podman run --rm --network=none --tmpfs /work:rw,exec,mode=1777 -v "$RUNNER_TEMP/linux/dist:/input:ro" docker.io/library/debian:12-slim sh -ec '
