@@ -22,10 +22,11 @@ main.c main 5 greet("world");
 
 ## Why Ripscope?
 
-- **Measured performance.** Measured on the 0.1.0 release candidate, Ripscope wins
-  30 of 50 later Session searches against cscope `-q` on Linux and 47 of 50 on
-  Windows, in both repetitions. The [benchmark tables](docs/reference/benchmarks.md)
-  give the conditions and every comparison.
+- **Fast, by a wide margin.** On the Linux kernel, symbol, definition and caller
+  lookups return in about a tenth of a millisecond, hundreds of times faster than
+  cscope. Even against cscope `-q`, text searches run about 6× faster, egrep 10×
+  and assignment searches over 70×. See the [benchmarks](docs/reference/benchmarks.md)
+  for every search on Linux and Windows.
 - **Better reading of specific C constructs.** Find written increments and
   indexed stores, recognise ordinary split-line calls and correct mislabelled
   contexts. [Paired fixtures and source evidence](docs/reference/differences-from-cscope.md)

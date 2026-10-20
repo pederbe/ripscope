@@ -103,7 +103,7 @@ jobs:
             rpm -i /input/ripscope-*.x86_64.rpm; cd /work; printf "int value;\n" > source.c
             ripscope -bk source.c; ripscope -dL -1 value | grep "source.c value 1 int value;"
             rpm -e ripscope; test ! -e /usr/bin/ripscope; test -f ripscope.db'
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: linux-release
           path: ${{ runner.temp }}/linux/dist/*
@@ -136,7 +136,7 @@ jobs:
           $version = $env:TAG.Substring(1)
           cargo run --locked --example check-installers -- --archive "$env:RUNNER_TEMP\windows\dist\ripscope-$version-x86_64-windows-msvc.zip" --installer "$PWD\install.ps1" --work "$env:RUNNER_TEMP\windows-installer"
           if ($LASTEXITCODE) { throw 'Windows installer checks failed' }
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: windows-release
           path: ${{ runner.temp }}/windows/dist/*
@@ -151,7 +151,7 @@ jobs:
       id-token: write
       attestations: write
     steps:
-      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           pattern: '*-release'
           path: artifacts
