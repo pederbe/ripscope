@@ -40,10 +40,9 @@ for a rebuilt archive. No tag, release, Cargo publication or channel is changed.
 
 Each package retains the full archive below its private installation prefix and
 exposes one command on PATH. The retained directory contains `BUILD.json`, the
-file manifest, dependency/Rust/SQLite notices and editor sources. The Emacs
-integration includes separately licensed xcscope source and `COPYING` unchanged
-(ADR 0014, "Ripscope ships its own editor integrations, set up in one step").
-A package does not set up editors. The install scripts and plugin managers do.
+file manifest, dependency/Rust/SQLite notices and editor sources (ADR 0014,
+"Ripscope ships its own editor integrations, set up in one step"). A package does
+not set up editors. The install scripts and plugin managers do.
 
 | Route | Installed support directory | Removal |
 | --- | --- | --- |
@@ -119,8 +118,7 @@ and [Rattler-Build repackaging and recipe format](https://rattler-build.prefix.d
 After a release, verify downloads from the final release URLs before copying the
 generated recipes into their destinations. Keep the helper check beside the Nix and
 conda recipes. Homebrew embeds it. Check applicable channel policies, maintainer
-metadata and licensing before any upstream submission. The licence list includes
-the separately shipped GPL Emacs integration, and the full bundled dependency
+metadata and licensing before any upstream submission. The full bundled dependency
 notices remain with each package.
 
 For each later version, regenerate the recipes, reset package

@@ -29,9 +29,9 @@ can be missed; `--verify` or `-bu` reads every file. Atomic publication guarante
 a complete index revision for a query, not that every stored query always reads
 the latest source bytes. See [stored and live fields](../guide/queries.md#stored-and-live-fields).
 
-Legacy Vim and xcscope row parsers split paths at spaces. Ripscope's
-[JSON interface](../guide/json.md), used by its Neovim adapter, preserves exact
-path and line bytes. Choose the integration that fits your paths and editor.
+Vim.s cscope row parser splits paths at spaces. Ripscope.s
+[JSON interface](../guide/json.md), used by its Neovim and Emacs packages, preserves
+exact path and line bytes. Choose the integration that fits your paths and editor.
 
 The [search benchmarks](benchmarks.md) compare Ripscope, cscope and cscope `-q`
 on three pinned C selections, with timing and source-backed answer judgments.

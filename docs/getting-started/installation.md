@@ -58,7 +58,7 @@ The [Vim](../editors/vim.md), [Neovim](../editors/neovim.md) and
 ## Start searching
 
 Open a C file in your project and search: `:cs find g main` in Vim,
-`:RipscopeFind g main` in Neovim, or `C-c s g` in Emacs. The first search indexes
+`:RipscopeFind g main` in Neovim, or `M-.` on `main` in Emacs. The first search indexes
 the project into your cache directory, and later searches see your saved edits.
 
 To search from the command line too, check that your terminal finds Ripscope:

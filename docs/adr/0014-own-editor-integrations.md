@@ -1,5 +1,8 @@
 # Ripscope ships its own editor integrations, set up in one step
 
+[ADR 0015](0015-native-emacs-package.md), "Emacs searches through xref, with no
+package dependencies", supersedes the vendored xcscope and its adapter described here.
+
 Ripscope is used from Vim, Neovim and Emacs. Their cscope integrations expect an
 executable named `cscope`, ignore its exit status or swallow its failures, and each
 finds its database in its own way. Someone trying Ripscope decides in the first few

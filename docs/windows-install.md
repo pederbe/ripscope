@@ -30,8 +30,7 @@ and prints the line Emacs needs. Set `$env:RIPSCOPE_EDITORS = 'none'` to leave t
 editors alone.
 
 The installer prints an absolute `.ripscope-notices-<version>.<random>` directory
-beside the executable. Keep its licences, build identity and editor integrations,
-including the complete separately licensed xcscope source and `COPYING`.
+beside the executable. Keep its licences, build identity and editor integrations.
 `ORIGINAL-ARCHIVE-MANIFEST.sha256` describes the original ZIP; the executable has
 moved to the printed destination. `BUILD.json` and `INSTALLATION.txt` identify its
 SHA-256. Earlier notices directories are retained automatically.

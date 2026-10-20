@@ -14,8 +14,8 @@ Navigation accuracy and workflow checks.
   change detection and content checks for recently modified files.
 - **Drop-in command line.** The invocations Vim, Neovim, Emacs and cscope scripts
   already use, including `cscope.files` options.
-- **Editor integrations.** Vim, persistent Neovim sessions and native Windows Emacs
-  discovery, with workflow checks on Linux and Windows.
+- **Editor integrations.** Vim, and Neovim and Emacs packages over persistent JSON
+  sessions, with workflow checks on Linux and Windows.
 - **Scoped evidence.** Synthetic reference captures, finite source-labelled inputs
   and index-lifecycle tests remain available with their stated limits.
 

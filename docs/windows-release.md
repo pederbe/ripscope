@@ -33,8 +33,7 @@ available rows with warnings, source deletion, changed-source Refresh and an
 unchanged Refresh that preserves the revision.
 
 The ZIP contains the executable, installation instructions, `BUILD.json`, file
-manifest, licences and editor integration sources. xcscope's complete source and
-`COPYING` remain beside the Emacs adaptation. `dist/` holds the ZIP,
+manifest, licences and editor integration sources. `dist/` holds the ZIP,
 `SHA256SUMS` and the individual `.zip.sha256` sidecar. Command logs, the build
 receipt and the smoke receipt remain in the work directory. The smoke can be repeated
 on its own against an archive with

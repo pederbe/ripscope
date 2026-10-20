@@ -5,7 +5,7 @@ pkgrel=1
 pkgdesc='C navigation with atomic index updates'
 arch=('x86_64')
 url='https://ripscope.com'
-license=('MIT OR Apache-2.0' 'GPL-2.0-or-later')
+license=('MIT OR Apache-2.0')
 depends=('glibc>=2.28' 'gcc-libs')
 checkdepends=('diffutils' 'findutils' 'grep')
 provides=("ripscope=$pkgver")
@@ -27,5 +27,5 @@ package() {
     install -d "$pkgdir/usr/share/licenses/$pkgname"
     cp -a "$pkgdir/usr/lib/ripscope/licenses" "$pkgdir/usr/share/licenses/$pkgname/"
     install -m644 "$srcdir/$_name/LICENSE-MIT" "$srcdir/$_name/LICENSE-APACHE" \
-        "$srcdir/$_name/contrib/emacs/vendor/COPYING" "$pkgdir/usr/share/licenses/$pkgname/"
+        "$pkgdir/usr/share/licenses/$pkgname/"
 }

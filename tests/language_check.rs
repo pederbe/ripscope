@@ -165,7 +165,7 @@ const EXCEPTIONS: &[Exception] = &[
     only(
         "contrib/emacs/",
         &["Emacs Lisp"],
-        "the Emacs integration and the vendored xcscope",
+        "the Emacs package, in the editor's own language",
     ),
     only(
         "tests/editor/setup.vim",

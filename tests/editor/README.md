@@ -142,13 +142,15 @@ prove process cleanup, as in an SSH login, the check accepts an empty process gr
 
 ## Emacs
 
-The `check-emacs` Cargo example exercises the shipped pinned xcscope and owned adapter with
-GNU Emacs 27.1 or newer. Linux also needs Bash, GNU-compatible find and sed;
-Windows discovery uses the native backend with no shell helpers.
+The `check-emacs` Cargo example exercises the shipped Emacs package with GNU Emacs
+28.1 or newer. `--package-lint DIR` names a checkout of
+[package-lint](https://github.com/purcell/package-lint) to run as well; without it the
+report says package-lint was skipped.
 
 ```sh
 cargo run --locked --example check-emacs -- --backend /absolute/path/ripscope \
-  --emacs /usr/bin/emacs --output /absolute/path/emacs-linux.json
+  --emacs /usr/bin/emacs --package-lint /path/to/package-lint \
+  --output /absolute/path/emacs-linux.json
 ```
 
 ```powershell
@@ -157,27 +159,22 @@ cargo run --locked --example check-emacs -- --backend target/release/ripscope.ex
   --output C:/path/to/emacs-windows.json
 ```
 
-The shared ERT cases cover all nine searches and actual jumps, missing and
-foreign indexes, valid empty answers, invalid-pattern diagnostics, warnings
-with navigable results and with no results, repair, relative project roots,
-remote-database rejection and vendor-source checks. As cscope does, a one-shot
-invalid pattern exits 0 with a diagnostic; xcscope's completion banner alone
-does not establish a valid answer.
+The shared ERT cases cover all nine searches and their jumps through the xref buffer,
+the first search's index build, `M-.` and `M-?` in a C buffer, the optional keymap,
+valid empty answers, invalid patterns, warnings with results and with none, file
+lists, include directories and large answers, in a project whose path holds spaces and
+accents. They save and immediately search, then follow saved and externally changed
+definitions, callers and headers, and file creation, rename and removal, all in one
+session. Manual mode waits for `ripscope-index-project`. The package byte-compiles
+without warnings and passes `checkdoc`.
 
-Automatic checks save and immediately search, then navigate saved and externally
-changed definitions, callers and headers. They cover file creation, removal and rename
-under the platform's persisted Selection rule, with explicit list edits where needed.
-Every search uses a completed One-shot process. Normal saves and searches preserve
-the generated Linux list. Manual mode retains skipped updates and explicit builds.
-
-Linux additionally checks helper prerequisites and failures, permissions,
-selection rules, failed process exits and signals after streamed rows,
-concurrent index builds, and diagnostic placement when rerunning an older
-search. Windows checks native discovery without shell helpers, preserving
-manual lists, custom lists, include paths, argument encoding and concurrent
-build refusal. The driver enforces a 90-second deadline for the editor process
-and records whether its inputs changed during the run. Version discovery and
-platform cleanup helpers need an external timeout for the complete invocation.
+Linux also replaces the session with fake executables that exit, are killed, send a
+frame out of order or never answer, and checks that each fails its search and leaves
+the next one to a new session. Windows checks the staged executable's accented path,
+patterns outside the ANSI code page and the refusal of a non-`.exe` executable. The
+driver enforces a 90-second deadline for the editor process and records whether its
+inputs changed during the run. Version discovery and platform cleanup helpers need an
+external timeout for the complete invocation.
 
 Ordinary `cargo test` checks the drivers' exit-status handling, captured output and
 process-tree timeouts using child-process fixtures; it does not start an editor. The

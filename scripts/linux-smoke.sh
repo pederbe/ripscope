@@ -7,8 +7,7 @@ tar -xzf "/input/$archive"
 package=/work/${archive%.tar.gz}
 cd "$package"
 sha256sum -c MANIFEST.sha256
-test -s contrib/emacs/vendor/COPYING
-test -s contrib/emacs/vendor/xcscope.el
+test -s contrib/emacs/ripscope.el
 for tool in rustc cargo cc gcc clang mold sqlite3; do
     if command -v "$tool" >/dev/null 2>&1; then
         echo "Unexpected development/database tool: $tool" >&2

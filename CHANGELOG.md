@@ -7,6 +7,20 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
+### Editors
+
+- The Emacs package is Ripscope's own and searches through xref: `M-.` finds a
+  definition and `M-?` the uses of a symbol in C buffers, and results open in the xref
+  buffer. All nine searches are commands, such as `ripscope-find-callers`, and
+  `ripscope-command-map` holds them on xcscope's keys for a prefix such as `C-c s`.
+  Result paths may hold spaces. It replaces the bundled xcscope, which no longer ships,
+  and needs Emacs 28.1 or newer and no other package.
+- The Emacs settings are now `ripscope-include-directories`, `ripscope-auto-refresh`,
+  `ripscope-executable` and `ripscope-timeout`. `M-x ripscope-index-project` indexes a
+  project again and `M-x ripscope-stop-sessions` stops the sessions.
+- The Emacs package is licensed MIT or Apache-2.0, as the rest of Ripscope is, so
+  release archives and system packages are too.
+
 ## [0.1.1] - 2026-10-20
 
 ### Freshness

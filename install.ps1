@@ -271,7 +271,6 @@ function Install-Ripscope {
         $package = Join-Path $unpacked $name
         foreach ($file in @('bin/ripscope.exe', 'LICENSE-MIT', 'LICENSE-APACHE', 'DEPENDENCIES.json', 'BUILD.json',
             'MANIFEST.sha256', 'licenses/SQLITE-NOTICE.txt', 'licenses/rust/COPYRIGHT-library.html', 'contrib/emacs/ripscope.el',
-            'contrib/emacs/ripscope-xcscope.el', 'contrib/emacs/vendor/xcscope.el', 'contrib/emacs/vendor/COPYING',
             'contrib/vim/plugin/ripscope.vim', 'contrib/vim/plugin/ripscope.lua', 'contrib/vim/lua/ripscope.lua',
             'contrib/vim/lua/ripscope/session.lua', 'contrib/vim/lua/ripscope/project.lua')) {
             $path = Join-Path $package $file

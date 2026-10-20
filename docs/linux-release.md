@@ -26,8 +26,7 @@ cargo run --locked --manifest-path tools/release/Cargo.toml -- linux \
 
 The tool preserves logs and `receipt.json` there. The archive contains the
 executable, installation guidance, `BUILD.json`, `MANIFEST.sha256`, dependency
-notices, Rust and SQLite notices, and editor integration sources. The Emacs
-integration includes separately licensed xcscope source and `COPYING` unchanged.
+notices, Rust and SQLite notices, and editor integration sources.
 `dist/` holds the archive, its `.sha256` sidecar and `SHA256SUMS`.
 
 The pinned container builds the artifact and runs release tests for the product

@@ -11,14 +11,13 @@ for tool in dpkg-deb rpmbuild rpm2cpio cpio sha256sum; do
     command -v "$tool" >/dev/null || { echo "Required package tool missing: $tool" >&2; exit 1; }
 done
 (cd "$package" && sha256sum -c MANIFEST.sha256)
-test -s "$package/contrib/emacs/vendor/COPYING"
-test -s "$package/contrib/emacs/vendor/xcscope.el"
+test -s "$package/contrib/emacs/ripscope.el"
 export SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH:-$(stat -c %Y "$package/bin/ripscope")}
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 same() {
     cmp "$package/bin/ripscope" "$1/usr/bin/ripscope"
-    # The complete archive support material is distributed, including xcscope source.
+    # The complete archive support material is distributed, including the editor integrations.
     diff -r "$work/support" "$1/usr/share/ripscope"
 }
 mkdir "$work/support"
@@ -60,7 +59,7 @@ Name: ripscope
 Version: %{release_version}
 Release: 1
 Summary: C navigation with atomic index updates
-License: (MIT OR Apache-2.0) AND GPL-2.0-or-later
+License: MIT OR Apache-2.0
 URL: https://ripscope.com
 BuildArch: x86_64
 AutoReqProv: no
@@ -68,7 +67,7 @@ Requires: glibc >= 2.28
 Requires: libgcc
 %description
 Cscope searches for C, with stored queries and live text searches.
-The optional Emacs integration includes separately licensed xcscope source.
+It includes the Vim, Neovim and Emacs integrations.
 %install
 mkdir -p %{buildroot}/usr
 cp -a %{_sourcedir}/usr/. %{buildroot}/usr/

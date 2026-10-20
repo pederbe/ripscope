@@ -33,10 +33,13 @@ fn run() -> Result<i32> {
     let mut emacs = OsString::from("emacs");
     let mut output = None;
     let mut repo = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let mut lint = None;
     let mut args = env::args_os().skip(1);
     while let Some(arg) = args.next() {
         if arg == "--help" || arg == "-h" {
-            println!("check-emacs --backend EXE [--emacs EXE] [--repo DIR] --output REPORT.json");
+            println!(
+                "check-emacs --backend EXE [--emacs EXE] [--package-lint DIR] [--repo DIR] --output REPORT.json"
+            );
             return Ok(0);
         }
         let value = args.next().ok_or("missing option value")?;
@@ -44,6 +47,7 @@ fn run() -> Result<i32> {
             Some("--backend") => backend = Some(PathBuf::from(value)),
             Some("--emacs") => emacs = value,
             Some("--output") => output = Some(PathBuf::from(value)),
+            Some("--package-lint") => lint = Some(std::path::absolute(value)?),
             Some("--repo") => repo = PathBuf::from(value),
             _ => return Err(format!("unknown option: {}", arg.to_string_lossy()).into()),
         }
@@ -66,33 +70,21 @@ fn run() -> Result<i32> {
         return Err("run as an unprivileged user for permission checks".into());
     }
     fs::create_dir_all(output.parent().ok_or("report has no parent directory")?)?;
-    let adapter = repo.join("contrib/emacs/ripscope-xcscope.el");
+    let package = repo.join("contrib/emacs/ripscope.el");
     let workflow = repo.join("tests/editor/emacs-workflow.el");
     let mut input_paths = vec![
         backend.clone(),
         emacs.clone(),
-        adapter.clone(),
+        package.clone(),
         workflow.clone(),
-        repo.join("contrib/emacs/vendor/xcscope.el"),
         repo.join("tests/editor/check_emacs.rs"),
         repo.join("tests/editor/emacs-windows-workflow.el"),
         repo.join("Cargo.toml"),
         repo.join("Cargo.lock"),
         env::current_exe()?,
     ];
-    let mut helpers = BTreeMap::new();
-    if cfg!(target_os = "linux") {
-        for name in ["bash", "find", "sed"] {
-            let path = executable(OsStr::new(name))?;
-            helpers.insert(
-                name,
-                json!({
-                    "path": path, "sha256": sha(&path)?,
-                    "version": first_line(Command::new(&path).arg("--version"))?,
-                }),
-            );
-            input_paths.push(path);
-        }
+    if let Some(lint) = &lint {
+        input_paths.push(lint.join("package-lint.el"));
     }
     let inputs = input_paths
         .iter()
@@ -103,7 +95,7 @@ fn run() -> Result<i32> {
         "emacs_version": first_line(Command::new(&emacs).arg("--version"))?,
         "platform": format!("{}-{}", env::consts::OS, env::consts::ARCH),
         "os_release": os_release()?,
-        "helpers": helpers,
+        "package_lint": lint,
     });
     let home = tempfile::Builder::new()
         .prefix("ripscope-emacs-home-")
@@ -128,9 +120,15 @@ fn run() -> Result<i32> {
             workflow.as_os_str(),
         ])
         .env("HOME", home.path())
+        .env_remove("XDG_CACHE_HOME")
+        .env_remove("RIPSCOPE_CACHE_DIR")
         .env("LC_ALL", "C.UTF-8")
-        .env("RIPSCOPE_EMACS_ADAPTER", &adapter)
-        .env("RIPSCOPE_EMACS_BACKEND", &staged);
+        .env("RIPSCOPE_EMACS_PACKAGE", &package)
+        .env("RIPSCOPE_EMACS_BACKEND", &staged)
+        .env(
+            "RIPSCOPE_PACKAGE_LINT",
+            lint.as_deref().unwrap_or(Path::new("")),
+        );
     if cfg!(windows) {
         command
             .env("USERPROFILE", home.path())

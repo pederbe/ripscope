@@ -500,14 +500,6 @@ pub fn delivery_files(source: &Path, package: &Path) -> Result<()> {
     for name in ["plugin", "lua"] {
         copy_tree(&source.join(name), &package.join("contrib/vim").join(name))?;
     }
-    for name in [
-        "contrib/emacs/vendor/xcscope.el",
-        "contrib/emacs/vendor/COPYING",
-    ] {
-        if sha(&source.join(name))? != sha(&package.join(name))? {
-            return Err("Editor source/licence changed during packaging".into());
-        }
-    }
     Ok(())
 }
 
@@ -655,7 +647,7 @@ mod tests {
     }
 
     #[test]
-    fn editor_source_and_copying_are_distributed_unchanged() {
+    fn editor_files_are_delivered_unchanged() {
         let root = tempfile::tempdir().unwrap();
         let (source, package) = (root.path().join("source"), root.path().join("package"));
         fs::create_dir(&source).unwrap();
@@ -664,8 +656,7 @@ mod tests {
             "LICENSE-MIT",
             "LICENSE-APACHE",
             "README.md",
-            "contrib/emacs/vendor/xcscope.el",
-            "contrib/emacs/vendor/COPYING",
+            "contrib/emacs/ripscope.el",
             "plugin/ripscope.vim",
             "lua/ripscope.lua",
         ] {

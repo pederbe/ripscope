@@ -83,7 +83,7 @@ Plug 'pederbe/ripscope', { 'branch': 'release', 'do': ':RipscopeInstall' }  " Vi
 ```
 
 Then open a C file in your project and search with `:cs find g main` in Vim,
-`:RipscopeFind g main` in Neovim, or `C-c s g` in Emacs. The first search indexes
+`:RipscopeFind g main` in Neovim, or `M-.` on `main` in Emacs. The first search indexes
 the project into your cache directory, and later searches see your saved edits.
 See [installation](docs/getting-started/installation.md) for the details, system
 packages and source builds.
@@ -138,8 +138,7 @@ Bug reports, compatibility reports and pull requests are welcome. See
 ## License
 
 Ripscope is licensed under either of [Apache License 2.0](LICENSE-APACHE) or
-[MIT license](LICENSE-MIT), at your option. The Emacs integration in
-[`contrib/emacs`](contrib/emacs) is GPL-2.0-or-later.
+[MIT license](LICENSE-MIT), at your option. So are the editor integrations.
 
 Ripscope is an independent project, not affiliated with
 [cscope](https://cscope.sourceforge.net/). Its longstanding interface and

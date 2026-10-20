@@ -3,10 +3,7 @@ class Ripscope < Formula
   homepage "https://ripscope.com"
   url "https://github.com/pederbe/ripscope/releases/download/v@VERSION@/ripscope-@VERSION@-x86_64-linux-gnu.tar.gz"
   sha256 "@ARCHIVE_SHA256@"
-  license all_of: [
-    { any_of: ["MIT", "Apache-2.0"] },
-    "GPL-2.0-or-later",
-  ]
+  license any_of: ["MIT", "Apache-2.0"]
 
   depends_on "patchelf" => :build
   depends_on arch: :x86_64
