@@ -66,6 +66,7 @@
   (insert (json-encode
            `((errors . ,(vconcat setup-errors))
              (searches . ,(vconcat (nreverse setup-searches)))
+             (installer_started . ,(if (bound-and-true-p ripscope--installation) t :json-false))
              (installer . ,(if (get-buffer "*ripscope-install*")
                                (with-current-buffer "*ripscope-install*" (buffer-string))
                              ""))

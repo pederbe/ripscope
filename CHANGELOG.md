@@ -5,6 +5,22 @@ All notable changes are recorded here. The format follows
 [Semantic Versioning](https://semver.org/). Before 1.0, a minor version may change the
 index format or command-line behavior, and its entry says so.
 
+## [Unreleased]
+
+### Editors
+
+- A project reached through a symbolic link and by its own path shares one index.
+- `:RipscopeInstall` and `M-x ripscope-install` leave the decision to the installer. Run
+  with `--plugin` (`-Plugin` on Windows) from a checkout, it installs the checkout's
+  version unless the executable found is that version or newer, or one it did not put
+  there. A prerelease now counts as older than its release in every editor.
+- Neovim settings that choose an index or sources build it on the first search until
+  it is published with those sources, not only when the file is missing.
+- `ripscope --project PATH` takes an index build's `-f`, `-k`, `-R`, `-i` and files, and
+  judges publication by them.
+- The Windows uninstaller names the cache folder Ripscope uses when
+  `RIPSCOPE_CACHE_DIR` is `\cache` or another path without a drive.
+
 ## [0.1.0] - 2026-10-20
 
 The first release. Ripscope answers cscope's searches over C source from the command

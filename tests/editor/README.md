@@ -114,9 +114,9 @@ editor left no process behind.
 
 | Route | Setup |
 | --- | --- |
-| `path` | The plugin as Vim's and Neovim's own packages, or on Emacs's load path, with `ripscope` on PATH |
+| `path` | The plugin as Vim's and Neovim's own packages, or on Emacs's load path, with `ripscope` on PATH, and for Vim on Linux a shell whose startup prints |
 | `plugin` | A repository copy whose install command installs the executable, as a build hook does, over an older one on Linux |
-| `installer` | The install script and its printed Emacs line, then `--uninstall` |
+| `installer` | The install script and its printed Emacs line, then `--uninstall`. Emacs must not run a decoy installer two folders above its placed copy |
 | `installer-lazy` | The install script where lazy.nvim is set up, and the lazy.nvim line it prints |
 | `interrupted` | As `path`, after a first index build that published nothing |
 | `home` | As `path`, with the projects in the home directory and the editor started there |

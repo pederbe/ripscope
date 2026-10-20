@@ -2,6 +2,9 @@
 # Uninstall: & ([scriptblock]::Create((irm https://ripscope.com/install.ps1))) -Uninstall
 # Settings: RIPSCOPE_VERSION, RIPSCOPE_INSTALL_DIR, RIPSCOPE_RELEASES (mirror),
 # RIPSCOPE_EDITORS (all, the default, or none to leave the editors alone).
+# From a checkout, as the editors' install commands run it: install.ps1 -Plugin installs
+# the checkout's version for its plugins, unless the ripscope.exe found is that version
+# or newer, or not one this installer put there. -Plugin -Force installs anyway.
 # Dot sourcing defines the filesystem helpers for the native installer checks.
 function Get-RipscopeAttributes([string] $Path) {
     try { return [IO.File]::GetAttributes($Path) }
@@ -64,6 +67,22 @@ function Complete-RipscopePublication([string] $Destination, [string] $Backup, [
     }
     return $true
 }
+function Test-RipscopeOlder([string] $Have, [string] $Wanted) {
+    # Whether release Have comes before Wanted: by the numbers before any suffix, then a
+    # prerelease, with a suffix, before its release. An unknown version comes first.
+    # Two prereleases of one release count as equal: the release branch carries none.
+    if (-not $Have) { return $true }
+    $a = $Have -replace '[^0-9.].*$', ''
+    $b = $Wanted -replace '[^0-9.].*$', ''
+    $x = $a.Split('.')
+    $y = $b.Split('.')
+    for ($i = 0; $i -lt [Math]::Max($x.Count, $y.Count); $i++) {
+        $p = if ($i -lt $x.Count -and $x[$i]) { [decimal] $x[$i] } else { [decimal] 0 }
+        $q = if ($i -lt $y.Count -and $y[$i]) { [decimal] $y[$i] } else { [decimal] 0 }
+        if ($p -ne $q) { return $p -lt $q }
+    }
+    return ($Have -ne $a) -and ($Wanted -eq $b)
+}
 function Get-RipscopeEditorPaths {
     # Where Vim and Neovim load packages from on their own, and Emacs's integration.
     if (-not $env:LOCALAPPDATA) { throw 'LOCALAPPDATA is not set.' }
@@ -123,7 +142,8 @@ function Uninstall-Ripscope([string] $InstallDir) {
             catch { Write-Warning "Could not remove ${directory}: $_" }
         }
     }
-    $cache = if ($env:RIPSCOPE_CACHE_DIR -and [IO.Path]::IsPathRooted($env:RIPSCOPE_CACHE_DIR)) { $env:RIPSCOPE_CACHE_DIR } else { Join-Path $env:LOCALAPPDATA 'ripscope' }
+    # A drive or UNC path, as Ripscope takes one; \cache alone names no drive.
+    $cache = if ($env:RIPSCOPE_CACHE_DIR -match '^([A-Za-z]:[\\/]|\\\\)') { $env:RIPSCOPE_CACHE_DIR } else { Join-Path $env:LOCALAPPDATA 'ripscope' }
     Write-Output "Indexes the editors made remain in $cache (RIPSCOPE_CACHE_DIR names another folder when set). Delete the .db files there too if you no longer need them."
     if ($inUse) { throw "Ripscope's executable is in use and was not removed: close the editors running Ripscope and uninstall again." }
 }
@@ -134,13 +154,43 @@ function Install-Ripscope {
         [string] $InstallDir = $env:RIPSCOPE_INSTALL_DIR,
         [string] $Releases = $env:RIPSCOPE_RELEASES,
         [string] $Editors = $env:RIPSCOPE_EDITORS,
-        [switch] $Uninstall
+        [switch] $Uninstall,
+        [switch] $Plugin,
+        [switch] $Force
     )
     $ErrorActionPreference = 'Stop'
     Set-StrictMode -Version 2
     if ($Uninstall) { Uninstall-Ripscope $InstallDir; return }
     if (-not $Editors) { $Editors = 'all' }
+    if ($Plugin) {
+        $manifest = if ($PSScriptRoot) { Join-Path $PSScriptRoot 'Cargo.toml' } else { '' }
+        if (-not $manifest -or -not (Test-RipscopeRegularFile $manifest)) { throw '-Plugin installs for a checkout of the repository.' }
+        # The plugins are in place already, and want the executable of their own version.
+        $Editors = 'none'
+        $line = Select-String -LiteralPath $manifest -Pattern '^version = "([^"]+)"$' | Select-Object -First 1
+        $Version = if ($line) { $line.Matches[0].Groups[1].Value } else { '' }
+    }
     if ($Editors -notin @('all', 'none')) { throw 'Set RIPSCOPE_EDITORS to all or none.' }
+    if ($Plugin -and -not $Force) {
+        # The ripscope.exe the editors find: on PATH, else where this installer puts it.
+        $destination = Join-Path $(if ($InstallDir) { $InstallDir } else { Join-Path $HOME '.local\bin' }) 'ripscope.exe'
+        $found = Get-Command 'ripscope.exe' -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source
+        if (-not $found -and (Test-RipscopeRegularFile $destination)) { $found = $destination }
+        if ($found) {
+            $have = ''
+            try {
+                $reported = @(& $found --version 2>$null)
+                if ($LASTEXITCODE -eq 0 -and $reported.Count -gt 0 -and $reported[0] -match '^ripscope (\S+)') { $have = $Matches[1] }
+            }
+            catch { }
+            # A system package's or a build's ripscope.exe stays as it is.
+            $ours = [IO.Path]::GetFullPath($found) -eq [IO.Path]::GetFullPath($destination)
+            if (-not $ours -or -not (Test-RipscopeOlder $have ($Version -replace '^v', ''))) {
+                Write-Output "Ripscope $(if ($have) { $have } else { 'of unknown version' }) is installed: $found"
+                return
+            }
+        }
+    }
     if ([Environment]::OSVersion.Platform -ne [PlatformID]::Win32NT -or
         -not [Environment]::Is64BitOperatingSystem -or $env:PROCESSOR_ARCHITECTURE -ne 'AMD64') {
         throw 'The prebuilt archive supports x86-64 Windows.'
@@ -305,6 +355,8 @@ function Install-Ripscope {
     }
 }
 if ($MyInvocation.InvocationName -ne '.') {
-    # -Uninstall arrives as a plain argument from both a script block and -File.
-    if ($args -contains '-Uninstall') { Install-Ripscope -Uninstall } else { Install-Ripscope @args }
+    # -Uninstall, -Plugin and -Force arrive as plain arguments from both a script block and -File.
+    if ($args -contains '-Uninstall') { Install-Ripscope -Uninstall }
+    elseif ($args -contains '-Plugin') { Install-Ripscope -Plugin -Force:($args -contains '-Force') }
+    else { Install-Ripscope @args }
 }

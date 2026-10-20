@@ -45,7 +45,11 @@ pub(super) fn run(
             }
             Action::Session => session::session(&invocation, &root, stdin, stdout, stderr),
             Action::Verify => verify(&invocation, &root, stdout, stderr),
-            Action::Project(path) => project(path, &root, stdout),
+            Action::Project {
+                path,
+                index,
+                sources,
+            } => project(path, index.as_deref(), sources.as_ref(), &root, stdout),
         }
     });
     match result {
@@ -66,7 +70,7 @@ Usage:
   ripscope -L [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json] [-f INDEX] -FIELD PATTERN
   ripscope -l [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json | --vim-errors] [-f INDEX]
   ripscope --verify [-d] [-f INDEX]
-  ripscope --project PATH
+  ripscope --project PATH [-f INDEX] [-kR] [-i LIST] [FILE...]
   ripscope -h | --help
   ripscope -V | --version
 
@@ -83,18 +87,33 @@ does, in either argument order. -u reads every file again at startup and on r. -
 repairs a damaged index. In a session, send the field and the pattern on one line
 (1main), r to update, q to quit. --project reports, as JSON for editor integrations,
 the project of a file: its root, index in the cache directory, selection, and whether
-that index is published with that selection.
+that index is published with that selection. After it, an index build's -f names
+another index and its -k, -R, -i and files other sources.
 ";
 
 /// `--project PATH`, for editor integrations: one JSON object naming the Project's
 /// root, its index in the cache directory (the cache directory is made when missing,
 /// the index is not), the selection arguments an index build or a session there takes,
-/// and whether the index has a published revision built with that selection.
-fn project(path: &Path, cwd: &Path, stdout: &mut impl Write) -> Result<(), String> {
+/// and whether the index has a published revision built with that selection. INDEX,
+/// named as an index build in the root names it, replaces the cache index, and SOURCES
+/// the project's own, for an editor whose settings choose them.
+fn project(
+    path: &Path,
+    index: Option<&Path>,
+    sources: Option<&Sources>,
+    cwd: &Path,
+    stdout: &mut impl Write,
+) -> Result<(), String> {
     let places = crate::project::Places::from_environment(cwd)?;
-    let found = crate::project::find(path, &places)?;
+    let mut found = crate::project::find(path, &places)?;
     std::fs::create_dir_all(&places.cache)
         .map_err(|error| format!("cannot make {}: {error}", places.cache.display()))?;
+    if let Some(index) = index {
+        found.index = crate::project::absolute(index, &found.root);
+    }
+    if let Some(sources) = sources {
+        found.sources = sources.clone();
+    }
     // A session keeps the rule the index was built with, so an index built before a
     // `cscope.files` was added or removed counts as unpublished, and the editor builds
     // it again with the selection the project calls for now.
@@ -105,7 +124,7 @@ fn project(path: &Path, cwd: &Path, stdout: &mut impl Write) -> Result<(), Strin
                 let snapshot = store.snapshot().ok()?;
                 refresh::stored_rule(&snapshot).ok().flatten()
             })
-            .is_some_and(|rule| rule.sources == found.sources());
+            .is_some_and(|rule| rule.sources == found.sources);
     let report = serde_json::json!({
         "root": crate::project::text(&found.root)?,
         "index": crate::project::text(&found.index)?,

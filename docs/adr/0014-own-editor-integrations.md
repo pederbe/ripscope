@@ -15,7 +15,11 @@ with a small adapter that reports the backend failures xcscope would ignore.
 Setting an editor up takes one step. A plugin-manager line installs the integration
 from the repository's `release` branch. The integration then installs the executable
 of the same version through the checksum-verifying installer, from a build hook in Vim
-and Neovim and from `ripscope-setup` in Emacs. Alternatively the installer
+and Neovim and from `ripscope-setup` in Emacs. Run from the checkout with `--plugin`,
+the installer alone decides whether to: it installs the checkout's version unless the
+executable the editors find is that version or newer, or one it did not put there.
+Emacs asks it only when the executable is missing or the installer has not yet checked
+it for the checkout's `Cargo.toml`, so that starting Emacs runs no installer. Alternatively the installer
 installs the executable, places the Vim and Neovim plugins where those editors load
 packages, and prints the line Emacs needs. Each release moves the `release` branch to
 its tag.
@@ -30,8 +34,9 @@ and so one index per project.
   root are never taken as a Git repository or a current directory, and a project
   there is read without its subdirectories.
 - **Index.** In the user's cache directory, named after the project directory and the
-  first 16 hexadecimal digits of the SHA-256 of its path. On Windows the path has
-  forward slashes and is lower-cased first. The project gets no Ripscope file, though
+  first 16 hexadecimal digits of the SHA-256 of its path with links resolved, so that a
+  project reached through a link shares its index. On Windows the path has forward
+  slashes and is lower-cased first. The project gets no Ripscope file, though
   on Windows a session briefly makes its marker file there
   ([ADR 0008](0008-sessions-refresh-on-watched-changes.md)).
 - **First search.** The editor builds the index when nothing is published in it yet,
@@ -39,7 +44,9 @@ and so one index per project.
   process per search and a one-shot query refreshes first, so the Emacs adapter keeps
   one session per index.
 
-Every explicit setting overrides these defaults.
+Every explicit setting overrides these defaults. `ripscope --project PATH` followed by
+an index build's `-f` and selection options judges publication by that index and those
+sources, for an editor whose settings choose them.
 
 ## Consequences
 

@@ -8,6 +8,7 @@
 //! and one-shot output are read and ignored. Options ripscope cannot honour faithfully
 //! are refused, never ignored, and so are combinations no editor or script sends.
 
+use crate::refresh::Sources;
 use crate::sink::Transport;
 use std::ffi::OsString;
 use std::path::PathBuf;
@@ -31,8 +32,14 @@ pub(crate) enum Action {
     /// `--verify`: check the index, then bring it up to date reading every file.
     Verify,
     /// `--project PATH`: report the Project of a file or directory, for editor
-    /// integrations (ADR 0014).
-    Project(PathBuf),
+    /// integrations (ADR 0014). An index build's `-f` names another index, and its
+    /// selection options (`-k`, `-R`, `-i` and files) other sources, to judge
+    /// publication by.
+    Project {
+        path: PathBuf,
+        index: Option<PathBuf>,
+        sources: Option<Sources>,
+    },
 }
 
 #[derive(Clone, Debug, PartialEq, Eq)]
@@ -222,10 +229,21 @@ pub(crate) fn parse(args: &[OsString]) -> Result<Invocation, String> {
     let action = if let Some(action) = stop {
         action
     } else if let Some(path) = project {
-        if verify || index.is_some() || !update || !others.is_empty() || !files.is_empty() {
-            return Err("--project takes only a file or directory".into());
+        let selecting = ["-k", "-R", "-i"];
+        if verify
+            || !update
+            || others
+                .iter()
+                .any(|other| !selecting.contains(&other.as_str()))
+        {
+            return Err("--project takes only a file or directory and an index build's -f, -k, -R, -i and files".into());
         }
-        Action::Project(path)
+        Action::Project {
+            path,
+            index: index.clone(),
+            sources: (!others.is_empty() || !files.is_empty())
+                .then(|| Sources::named(list.clone(), files.clone(), recursive)),
+        }
     } else if verify {
         if let Some(other) = others.first() {
             return Err(format!("--verify takes only -f INDEX and -d, not {other}"));
@@ -317,21 +335,49 @@ mod tests {
     }
 
     #[test]
-    fn project_takes_one_path_and_nothing_else() {
+    fn project_takes_a_path_and_an_index_builds_selection() {
         assert_eq!(
             read(&["--project", "src/main.c"]).expect("project").action,
-            Action::Project(PathBuf::from("src/main.c"))
+            Action::Project {
+                path: PathBuf::from("src/main.c"),
+                index: None,
+                sources: None
+            }
         );
         assert!(read(&["--project"]).is_err());
+        let chosen =
+            read(&["--project", "a.c", "-f", "x.db", "-k", "-R", "-i", "list"]).expect("chosen");
+        assert_eq!(
+            chosen.action,
+            Action::Project {
+                path: PathBuf::from("a.c"),
+                index: Some(PathBuf::from("x.db")),
+                sources: Some(Sources::List(b"list".to_vec()))
+            }
+        );
+        let project = |args: &[&str]| match read(args).expect("project").action {
+            Action::Project { sources, .. } => sources,
+            other => panic!("{other:?}"),
+        };
+        assert_eq!(
+            project(&["--project", "a.c", "-k", "--", "b.c"]),
+            Some(Sources::Files(vec![b"b.c".to_vec()]))
+        );
+        assert_eq!(
+            project(&["--project", "a.c", "-k"]),
+            Some(Sources::Automatic { recursive: false })
+        );
         for args in [
-            &["--project", "a.c", "-R"][..],
-            &["--project", "a.c", "-f", "x.db"],
-            &["-l", "--project", "a.c"],
-            &["--project", "a.c", "b.c"],
+            &["-l", "--project", "a.c"][..],
+            &["--project", "a.c", "-d"],
+            &["--project", "a.c", "-L", "-1", "x"],
+            &["--project", "a.c", "-bk"],
+            &["--project", "a.c", "--verify"],
+            &["--project", "a.c", "-I", "inc"],
         ] {
             assert_eq!(
                 read(args).map(|_| ()),
-                Err("--project takes only a file or directory".into()),
+                Err("--project takes only a file or directory and an index build's -f, -k, -R, -i and files".into()),
                 "{args:?}"
             );
         }

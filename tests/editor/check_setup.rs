@@ -4,11 +4,11 @@
 //!
 //! Routes set each editor up:
 //! - `path`: the plugin as Vim's and Neovim's own packages, or on Emacs's load path,
-//!   with ripscope on PATH;
+//!   with ripscope on PATH, and for Vim on Linux a shell whose startup prints;
 //! - `plugin`: a repository copy whose install command installs ripscope, as plugin
 //!   managers' build hooks do, over an older executable on Linux;
 //! - `installer`: the installer, which places the integrations itself, then
-//!   `--uninstall`;
+//!   `--uninstall`, with a decoy installer around the Emacs copy it placed;
 //! - `installer-lazy`: the installer where lazy.nvim is set up, with the line it prints;
 //! - `interrupted`: as `path`, after a first index build that published nothing;
 //! - `home`: as `path`, with the editor started in the home directory;
@@ -515,6 +515,13 @@ impl Route<'_> {
             ));
             profile.set("PATH", std::env::join_paths(path)?);
         }
+        if self.route == "path" && self.editor == "vim" && !WINDOWS {
+            // A shell whose startup files print, as Vim runs its commands through it.
+            let rc = profile.root.join("noisy-shell-rc");
+            fs::write(&rc, "echo 'shell startup noise'\n")?;
+            profile.set("SHELL", "/bin/bash");
+            profile.set("BASH_ENV", &rc);
+        }
         if self.vim_spaces() {
             // Vim takes a path with spaces by its short 8.3 name, which it expands again
             // for an index, so its cache is where the documented variable puts it.
@@ -525,6 +532,11 @@ impl Route<'_> {
         let mut steps = Vec::new();
         let mut passed = true;
         let emacs_init = self.prepare(&profile, &directory, &mut steps, &mut passed)?;
+        let decoy = if self.route == "installer" && self.editor == "emacs" {
+            Some(decoy_checkout(&profile, &directory)?)
+        } else {
+            None
+        };
         let projects = match self.route {
             "home" => profile.home.join("projects"),
             "spaces" => profile.root.join("projects"),
@@ -558,6 +570,12 @@ impl Route<'_> {
             passed &= released;
             steps.push(json!({"step": "release-branch", "checkout": checkout,
                 "released": released}));
+        }
+        if let Some(marker) = &decoy {
+            // A copy the installer placed runs no installer that happens to sit nearby.
+            let ran = marker.exists();
+            passed &= !ran;
+            steps.push(json!({"step": "decoy-installer", "marker": marker, "ran": ran}));
         }
         if self.route == "installer" {
             let (program, args) = installer(options, &["uninstall"]);
@@ -899,6 +917,12 @@ impl Route<'_> {
         );
         if project.kind == "listed" {
             checks.insert("file_list_used", rows(&found("ignored_symbol")) == 0);
+        } else if self.editor == "emacs" {
+            // The first start checked the executable: later ones run no installer.
+            checks.insert(
+                "no_installer_after_first_start",
+                observed["installer_started"] == false,
+            );
         }
         if self.editor == "nvim" {
             // Searched from the quickfix window, where no file names the project.
@@ -952,6 +976,34 @@ impl Route<'_> {
             "files_before": before, "files_after": after}),
         )
     }
+}
+
+/// A decoy checkout around the Emacs copy the installer placed, two directories up as a
+/// checkout's `contrib/emacs` is, whose installers leave the marker it returns.
+fn decoy_checkout(profile: &Profile, directory: &Path) -> Result<PathBuf> {
+    let emacs = profile
+        .editor_directories()
+        .into_iter()
+        .find(|(source, _)| *source == "contrib/emacs")
+        .map(|(_, path)| path)
+        .ok_or("no Emacs directory")?;
+    let root = emacs
+        .parent()
+        .and_then(Path::parent)
+        .ok_or("no decoy root")?;
+    let marker = directory.join("decoy-installer-ran");
+    let shown = marker.to_string_lossy().replace('\'', "''");
+    fs::create_dir_all(root.join("contrib/emacs"))?;
+    fs::write(
+        root.join("Cargo.toml"),
+        "[package]\nname = \"decoy\"\nversion = \"9.9.9\"\n",
+    )?;
+    fs::write(root.join("install.sh"), format!("touch '{shown}'\n"))?;
+    fs::write(
+        root.join("install.ps1"),
+        format!("New-Item -ItemType File -Force -Path '{shown}' | Out-Null\n"),
+    )?;
+    Ok(marker)
 }
 
 /// The installer's command line, with FLAGS such as `uninstall`.

@@ -206,6 +206,48 @@ impl Checks {
         }
         self.command(label, command, success)
     }
+    /// The checkout's installer SCRIPT run as the editors' install command, with
+    /// `--force` when FORCE, and PATH when given.
+    fn plugin(
+        &mut self,
+        label: &str,
+        script: &Path,
+        force: bool,
+        success: bool,
+        path: Option<&Path>,
+    ) -> Result<()> {
+        let mut command = if cfg!(windows) {
+            let mut command = Command::new(powershell());
+            command.args([
+                "-NoProfile",
+                "-NonInteractive",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+            ]);
+            command.arg(script).arg("-Plugin");
+            if force {
+                command.arg("-Force");
+            }
+            command
+        } else {
+            let mut command = Command::new("sh");
+            command.arg(script).arg("--plugin");
+            if force {
+                command.arg("--force");
+            }
+            command
+        };
+        self.profile.apply(&mut command);
+        command
+            .env_remove("RIPSCOPE_VERSION")
+            .env("RIPSCOPE_INSTALL_DIR", self.work.join("installation"))
+            .env("RIPSCOPE_RELEASES", &self.mirror.url);
+        if let Some(path) = path {
+            command.env("PATH", path);
+        }
+        self.command(label, command, success)
+    }
     /// The editor integrations the installer places in the profile.
     fn editor_directories(&self) -> Vec<PathBuf> {
         self.profile
@@ -384,6 +426,168 @@ fn tar_entry(name: &str, kind: u8) -> Vec<u8> {
     let mut archive = header.to_vec();
     archive.resize(1536, 0);
     archive
+}
+/// Release orderings the editors' install command decides by: whether the first version,
+/// installed, is older than the second, wanted.
+const ORDERINGS: &[(&str, &str, bool)] = &[
+    ("0.0.1", "0.1.0", true),
+    ("0.1.0", "0.1.0", false),
+    ("0.2.0", "0.1.0", false),
+    ("0.9.0", "0.10.0", true),
+    ("0.10.0", "0.9.0", false),
+    ("1", "1.0.1", true),
+    ("0.1.0-rc1", "0.1.0", true),
+    ("0.1.0", "0.1.0-rc1", false),
+    ("0.1.0-rc1", "0.1.0-rc2", false),
+    ("", "0.1.0", true),
+];
+/// The editors' install command: the installer of a checkout with `--plugin`, which
+/// installs the checkout's version unless the ripscope the editors find is that version
+/// or newer, or not one the installer put there.
+fn plugin_checks(
+    checks: &mut Checks,
+    executable: &Path,
+    expected_hash: &str,
+    archive_name: &str,
+    archive: &[u8],
+) -> Result<()> {
+    let checkout = checks.work.join("checkout");
+    fs::create_dir_all(&checkout)?;
+    let script = checkout.join(if cfg!(windows) {
+        "install.ps1"
+    } else {
+        "install.sh"
+    });
+    fs::copy(&checks.installer, &script)?;
+    let manifest = |version: &str| {
+        fs::write(
+            checkout.join("Cargo.toml"),
+            format!("[package]\nname = \"ripscope\"\nversion = \"{version}\"\n"),
+        )
+    };
+    let unchanged = |label: &str| -> Result<()> {
+        ensure(
+            capture::digest(executable)? == expected_hash,
+            &format!("{label}: the installed executable changed"),
+        )
+    };
+    // Every download fails, so what the installer keeps it keeps without one.
+    checks
+        .mirror
+        .archive(&checks.version, archive_name, archive, false);
+    manifest(&checks.version)?;
+    checks.plugin("plugin-current", &script, false, true, None)?;
+    unchanged("plugin-current")?;
+    // A newer checkout: the installer's own executable is upgraded, so it downloads.
+    manifest("9.9.9")?;
+    checks.plugin("plugin-older", &script, false, false, None)?;
+    unchanged("plugin-older")?;
+    // Another ripscope first on PATH, such as a system package's, is left alone.
+    let other = checks.work.join("other-bin");
+    fs::create_dir_all(&other)?;
+    fs::copy(
+        executable,
+        other.join(executable.file_name().ok_or("no name")?),
+    )?;
+    let mut search = vec![other];
+    search.extend(std::env::split_paths(
+        &checks
+            .profile
+            .env
+            .iter()
+            .find(|(name, _)| name == "PATH")
+            .map(|(_, value)| value.clone())
+            .unwrap_or_default(),
+    ));
+    let search = std::env::join_paths(search)?;
+    checks.plugin(
+        "plugin-other",
+        &script,
+        false,
+        true,
+        Some(Path::new(&search)),
+    )?;
+    unchanged("plugin-other")?;
+    // Forced, and with the release served, it installs the checkout's version.
+    checks
+        .mirror
+        .archive(&checks.version, archive_name, archive, true);
+    manifest(&checks.version)?;
+    checks.plugin("plugin-force", &script, true, true, None)?;
+    unchanged("plugin-force")?;
+    checks
+        .mirror
+        .archive(&checks.version, archive_name, archive, false);
+    plugin_orderings(checks, &script, executable, &manifest)?;
+    checks
+        .mirror
+        .archive(&checks.version, archive_name, archive, true);
+    Ok(())
+}
+#[cfg(unix)]
+fn plugin_orderings(
+    checks: &mut Checks,
+    script: &Path,
+    executable: &Path,
+    manifest: &dyn Fn(&str) -> io::Result<()>,
+) -> Result<()> {
+    use std::os::unix::fs::PermissionsExt;
+    let kept = checks.work.join("kept-ripscope");
+    fs::rename(executable, &kept)?;
+    for (index, (have, wanted, older)) in ORDERINGS.iter().enumerate() {
+        // An installed executable that reports HAVE, or nothing, while no download works.
+        let said = if have.is_empty() {
+            "exit 1".to_owned()
+        } else {
+            format!("echo 'ripscope {have}'")
+        };
+        fs::write(executable, format!("#!/bin/sh\n{said}\n"))?;
+        fs::set_permissions(executable, fs::Permissions::from_mode(0o755))?;
+        manifest(wanted)?;
+        checks.plugin(
+            &format!("plugin-order-{index}"),
+            script,
+            false,
+            !older,
+            None,
+        )?;
+    }
+    fs::rename(kept, executable)?;
+    Ok(())
+}
+#[cfg(windows)]
+fn plugin_orderings(
+    checks: &mut Checks,
+    _script: &Path,
+    _executable: &Path,
+    _manifest: &dyn Fn(&str) -> io::Result<()>,
+) -> Result<()> {
+    let table = ORDERINGS
+        .iter()
+        .map(|(have, wanted, older)| format!("@('{have}', '{wanted}', ${older})"))
+        .collect::<Vec<_>>()
+        .join(", ");
+    let path = checks.work.join("plugin-orderings.ps1");
+    fs::write(
+        &path,
+        format!(
+            "param($Installer)\n$ErrorActionPreference = 'Stop'\n. $Installer\nforeach ($row in @({table})) {{\n    if ((Test-RipscopeOlder $row[0] $row[1]) -ne $row[2]) {{ throw \"Ordering of '$($row[0])' before '$($row[1])' is not $($row[2])\" }}\n}}\n"
+        ),
+    )?;
+    let mut command = Command::new(powershell());
+    command
+        .args([
+            "-NoProfile",
+            "-NonInteractive",
+            "-ExecutionPolicy",
+            "Bypass",
+            "-File",
+        ])
+        .arg(&path)
+        .arg("-Installer")
+        .arg(&checks.installer);
+    checks.profile.apply(&mut command);
+    checks.command("plugin-orderings", command, true)
 }
 #[cfg(unix)]
 fn linux_checks(
@@ -835,6 +1039,13 @@ fn run() -> Result<()> {
         &mut checks,
         &executable,
         &archive_path,
+        &archive_name,
+        &archive,
+    )?;
+    plugin_checks(
+        &mut checks,
+        &executable,
+        &expected_hash,
         &archive_name,
         &archive,
     )?;

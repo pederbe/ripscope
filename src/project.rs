@@ -3,7 +3,7 @@
 //! selection arguments that build it. `ripscope --project PATH` reports it, so that Vim,
 //! Neovim and Emacs share one way of finding it and so one index per project.
 
-use crate::refresh::Sources;
+use crate::refresh::{AUTOMATIC_LIST, AUTOMATIC_LIST_NAME, Sources};
 use sha2::{Digest, Sha256};
 use std::path::{Component, Path, PathBuf};
 
@@ -56,20 +56,8 @@ pub(crate) struct Project {
     /// project's sources: its `cscope.files`, or discovery with or without its
     /// subdirectories.
     pub selection: Vec<&'static str>,
-}
-
-impl Project {
-    /// The selection rule an index build with `selection` stores: the project's list,
-    /// or discovery with or without its subdirectories.
-    pub(crate) fn sources(&self) -> Sources {
-        if self.selection.contains(&"-i") {
-            Sources::List(b"cscope.files".to_vec())
-        } else {
-            Sources::Automatic {
-                recursive: self.selection.contains(&"-R"),
-            }
-        }
-    }
+    /// The selection rule an index build with `selection` stores.
+    pub sources: Sources,
 }
 
 /// The project of PATH, a file or a directory: the nearest directory upward holding
@@ -90,10 +78,13 @@ pub(crate) fn find(path: &Path, places: &Places) -> Result<Project, String> {
         .ancestors()
         .find(|directory| directory.is_dir())
         .map_or(start.clone(), Path::to_owned);
-    let broad = |directory: &Path| same(directory, &places.home) || directory.parent().is_none();
+    // Home reached through a link, such as /home for /var/home, is still home.
+    let home = physical(&places.home);
+    let broad =
+        |directory: &Path| same(&physical(directory), &home) || directory.parent().is_none();
     let listed = start
         .ancestors()
-        .find(|directory| directory.join("cscope.files").is_file())
+        .find(|directory| directory.join(AUTOMATIC_LIST_NAME).is_file())
         .map(Path::to_owned);
     let root = match &listed {
         Some(listed) => listed.clone(),
@@ -109,18 +100,27 @@ pub(crate) fn find(path: &Path, places: &Places) -> Result<Project, String> {
             }
         }
     };
-    let selection = if listed.is_some() {
-        vec!["-k", "-i", "cscope.files"]
-    } else if broad(&root) {
-        vec!["-k"]
+    let (selection, sources) = if listed.is_some() {
+        (
+            vec!["-k", "-i", AUTOMATIC_LIST_NAME],
+            Sources::List(AUTOMATIC_LIST.to_vec()),
+        )
     } else {
-        vec!["-k", "-R"]
+        let recursive = !broad(&root);
+        let selection = if recursive {
+            vec!["-k", "-R"]
+        } else {
+            vec!["-k"]
+        };
+        (selection, Sources::Automatic { recursive })
     };
-    let index = places.cache.join(index_name(&root)?);
+    // One index for the directory, however it is reached: through a link or not.
+    let index = places.cache.join(index_name(&physical(&root))?);
     Ok(Project {
         root,
         index,
         selection,
+        sources,
     })
 }
 
@@ -182,6 +182,11 @@ fn key(path: &Path) -> Result<String, String> {
     } else {
         text
     })
+}
+
+/// PATH with its links resolved, or as it is when that fails.
+fn physical(path: &Path) -> PathBuf {
+    std::fs::canonicalize(path).unwrap_or_else(|_| path.to_owned())
 }
 
 fn same(left: &Path, right: &Path) -> bool {
@@ -263,6 +268,7 @@ mod tests {
         let project = find(&source, &f.places).unwrap();
         assert_eq!(project.root, root);
         assert_eq!(project.selection, ["-k", "-i", "cscope.files"]);
+        assert_eq!(project.sources, Sources::List(b"cscope.files".to_vec()));
         assert_eq!(project.index.parent(), Some(f.places.cache.as_path()));
     }
 
@@ -274,6 +280,7 @@ mod tests {
         let source = root.join("lib/deep/greet.c");
         file(&source);
         let project = find(&source, &f.places).unwrap();
+        assert_eq!(project.sources, Sources::Automatic { recursive: true });
         assert_eq!((project.root, project.selection), (root, vec!["-k", "-R"]));
         // A worktree or submodule marks itself with a .git file.
         let worktree = f.places.home.join("worktree");
@@ -297,10 +304,23 @@ mod tests {
         // A file directly in the home directory is read without subdirectories.
         file(&f.places.home.join("top.c"));
         let project = find(&f.places.home.join("top.c"), &f.places).unwrap();
+        assert_eq!(project.sources, Sources::Automatic { recursive: false });
         assert_eq!(
             (project.root, project.selection),
             (f.places.home.clone(), vec!["-k"])
         );
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn home_reached_through_a_link_is_still_home() {
+        let f = fixture("");
+        let linked = f.top.join("linked-home");
+        std::os::unix::fs::symlink(&f.places.home, &linked).unwrap();
+        fs::create_dir_all(f.places.home.join(".git")).unwrap();
+        file(&f.places.home.join("top.c"));
+        let project = find(&linked.join("top.c"), &f.places).unwrap();
+        assert_eq!((project.root, project.selection), (linked, vec!["-k"]));
     }
 
     #[test]
