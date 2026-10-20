@@ -125,7 +125,7 @@ and in [`docs/`](docs/README.md).
 
 ## Status
 
-0.1.0 is the first release. Ripscope reads C only and runs on x86-64 Linux and
+Ripscope 0.1.1 is the current release. It reads C only and runs on x86-64 Linux and
 Windows. Before 1.0, a minor version may change the index format or command-line
 behavior, and the [changelog](CHANGELOG.md) says when it does. Reports of wrong
 answers and failed setups help most.

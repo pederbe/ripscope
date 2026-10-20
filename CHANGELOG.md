@@ -7,6 +7,14 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-10-20
+
+### Freshness
+
+- On Windows, a session's next search after a build writes hundreds of files into the
+  project no longer waits about half a second. When the file watcher reports lost
+  events, the session refreshes at once.
+
 ### Editors
 
 - A project reached through a symbolic link and by its own path shares one index.
@@ -85,4 +93,6 @@ and the [benchmarks](https://ripscope.com/docs/reference/benchmarks).
   SHA-256 checksum.
 - Source builds with Cargo.
 
+[Unreleased]: https://github.com/pederbe/ripscope/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/pederbe/ripscope/releases/tag/v0.1.1
 [0.1.0]: https://github.com/pederbe/ripscope/releases/tag/v0.1.0
