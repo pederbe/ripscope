@@ -1301,7 +1301,11 @@ mod tests {
     #[test]
     fn absolute_inputs_inside_the_declared_project_retain_their_spelling() {
         let root = tempfile::tempdir().unwrap();
-        let source = tempfile::tempdir().unwrap();
+        // A long-name base, since a temporary folder spelled with 8.3 short names (as on
+        // hosted Windows runners) is a different spelling of the project.
+        let base = std::env::temp_dir().canonicalize().unwrap();
+        let base = PathBuf::from(base.to_string_lossy().trim_start_matches(r"\\?\"));
+        let source = tempfile::tempdir_in(base).unwrap();
         fs::create_dir(source.path().join("include")).unwrap();
         let header = source.path().join("include").join("real.h");
         fs::write(&header, "int known;\n").unwrap();
