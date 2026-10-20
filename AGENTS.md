@@ -9,9 +9,9 @@ terms, and `docs/adr/` records the decisions behind the design.
 
 ## Workflow
 
-- Contributors: work on a branch of your fork and open a pull request against `main`.
-- The maintainer works on `main` in `pederbe/ripscope` and may follow additional
-  private procedures.
+All changes enter `main` through a pull request that passes the required CI check,
+including the maintainer's. The maintainer uses a `contrib/` branch in
+`pederbe/ripscope`, and contributors use a branch in their fork.
 
 ## Checks
 
