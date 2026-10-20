@@ -99,7 +99,8 @@ impl Backend {
         }
     }
 
-    /// Every change reported up to now, once the watch's own file's event has come.
+    /// Every change reported up to now, once the watch's own file's event has come, or
+    /// that events were lost.
     pub(super) fn events(&mut self) -> Vec<Happened> {
         self.tidy();
         let mut happened = Vec::new();
@@ -125,11 +126,19 @@ impl Backend {
         let settled = loop {
             let left = deadline.saturating_duration_since(Instant::now());
             match self.events.recv_timeout(left) {
+                // The system kept fewer changes than were made, as after a build writes
+                // many files, and the marker's own event may be among those it dropped.
+                // A new watch follows, so nothing more is worth waiting for.
+                Ok(Ok(event)) if event.need_rescan() => {
+                    happened.push(Happened::Lost);
+                    break true;
+                }
+                // So does an error from the watcher.
+                Ok(Err(_)) => {
+                    happened.push(Happened::Lost);
+                    break true;
+                }
                 Ok(Ok(event)) => {
-                    if event.need_rescan() {
-                        happened.push(Happened::Lost);
-                        continue;
-                    }
                     if event
                         .paths
                         .iter()
@@ -139,7 +148,6 @@ impl Backend {
                     }
                     happened.extend(entries(event));
                 }
-                Ok(Err(_)) => happened.push(Happened::Lost),
                 Err(RecvTimeoutError::Timeout | RecvTimeoutError::Disconnected) => break false,
             }
         };
@@ -178,4 +186,41 @@ fn entries(event: notify::Event) -> impl Iterator<Item = Happened> {
         kind,
         directory: None,
     })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// A build writing into the tree can make more changes at once than the system keeps
+    /// for the watcher, which then learns only that some were lost, and the marker's event
+    /// may be among them: that alone ends the wait.
+    #[test]
+    fn a_burst_of_new_files_ends_the_wait_before_the_marker_deadline() {
+        let work = tempfile::tempdir().expect("directory");
+        let root = work.path();
+        let mut backend = Backend::new(root).expect("watch");
+        backend.events();
+        for burst in 0..4 {
+            let build = root.join("build").join(burst.to_string());
+            std::fs::create_dir_all(&build).expect("build directory");
+            for file in 0..3000 {
+                std::fs::write(build.join(format!("f{file}.obj")), [0; 4096]).expect("object");
+            }
+            let started = Instant::now();
+            let happened = backend.events();
+            let waited = started.elapsed();
+            let lost = happened.iter().any(|h| matches!(h, Happened::Lost));
+            assert!(
+                waited < SETTLE,
+                "burst {burst} waited {waited:?}, {} reports, lost: {lost}",
+                happened.len()
+            );
+            if lost {
+                // A session starts another watch with its next Refresh.
+                backend = Backend::new(root).expect("watch");
+                backend.events();
+            }
+        }
+    }
 }

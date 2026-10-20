@@ -53,3 +53,7 @@ refreshes only then. The refresh itself is the ordinary one of
 - Windows needs the `notify` crate's 9.0 line, which reports a buffer overflow so the
   watch can rescan. Earlier versions drop it silently. Linux uses inotify through
   `rustix`.
+- On Windows a build that writes a few hundred files or more into the tree at once can
+  overflow that buffer, and the marker's event may be lost with the rest. The overflow
+  ends the wait, so the next query refreshes and starts a new watch at once rather than
+  after the marker's 500 ms deadline.
