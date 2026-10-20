@@ -15,7 +15,7 @@ curl -fsSL https://ripscope.com/install.sh | sh
 ```
 
 It needs curl, GNU tar, gzip and ordinary GNU coreutils. The default destination
-is `~/.local/bin/ripscope`. Set `RIPSCOPE_VERSION=0.1.1` to select a version,
+is `~/.local/bin/ripscope`. Set `RIPSCOPE_VERSION=0.2.0` to select a version,
 `RIPSCOPE_INSTALL_DIR` for another directory, or `RIPSCOPE_RELEASES` for an
 explicit mirror. An HTTPS mirror must keep redirects on HTTPS. The checksum
 checks the download against the release's checksum, and the separate attestation
@@ -59,9 +59,9 @@ They place it in `/usr/bin/ripscope` and retain notices and editor source under
 release, check it with `sha256sum -c`, then install with your package manager:
 
 ```sh
-sudo apt install ./ripscope_0.1.1_amd64.deb
+sudo apt install ./ripscope_0.2.0_amd64.deb
 # Or, on an RPM distribution:
-sudo dnf install ./ripscope-0.1.1-1.x86_64.rpm
+sudo dnf install ./ripscope-0.2.0-1.x86_64.rpm
 ```
 
 Use `sudo apt remove ripscope` or `sudo dnf remove ripscope` to remove the package.
