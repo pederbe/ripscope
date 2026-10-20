@@ -1,22 +1,10 @@
 name: CI
 
-# In a private repository, push and pull-request runs are skipped unless the repository
-# variable CI_ON_PUSH is "true", which saves runner minutes. Manual and weekly runs always
-# execute, and a public repository runs everything.
+# Every pull request runs this workflow, so the required "CI" check always reports.
+# Changes to documentation alone skip the build and test jobs.
 
 on:
-  push:
-    branches: [main]
-    paths-ignore:
-      - "docs/**"
-      - "**.md"
-      - "book.toml"
-      - ".github/ISSUE_TEMPLATE/**"
   pull_request:
-    paths-ignore:
-      - "docs/**"
-      - "**.md"
-      - "book.toml"
   schedule:
     - cron: "17 3 * * 1"
   workflow_dispatch:
@@ -33,13 +21,34 @@ env:
   CARGO_INCREMENTAL: 0
 
 jobs:
+  changes:
+    name: Classify changes
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      code: ${{ steps.filter.outputs.code }}
+    steps:
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
+        id: filter
+        with:
+          predicate-quantifier: every
+          filters: |
+            code:
+              - '!docs/**'
+              - '!**/*.md'
+              - '!book.toml'
+              - '!.github/ISSUE_TEMPLATE/**'
+
   check:
     name: ${{ matrix.os }}
+    needs: changes
+    # Scheduled and manual runs skip the classification and always check.
     if: >-
-      github.event_name == 'workflow_dispatch' ||
-      github.event_name == 'schedule' ||
-      !github.event.repository.private ||
-      vars.CI_ON_PUSH == 'true'
+      !cancelled() &&
+      (github.event_name != 'pull_request' || needs.changes.outputs.code != 'false')
     strategy:
       fail-fast: false
       matrix:
@@ -83,3 +92,22 @@ jobs:
           cargo fmt --manifest-path tools/release/Cargo.toml --check
           cargo clippy --locked --all-targets --manifest-path tools/release/Cargo.toml -- -D warnings
           cargo test --locked --manifest-path tools/release/Cargo.toml
+
+  # The one required check. It passes when every check passed or was skipped as
+  # unneeded, and fails otherwise.
+  ci:
+    name: CI
+    needs: [changes, check]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Require passing checks
+        env:
+          RESULTS: ${{ join(needs.*.result, ' ') }}
+        run: |
+          for result in $RESULTS; do
+            case "$result" in
+              success|skipped) ;;
+              *) echo "A check finished with: $result"; exit 1 ;;
+            esac
+          done

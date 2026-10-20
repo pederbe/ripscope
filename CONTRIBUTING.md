@@ -103,11 +103,16 @@ Hard-to-reverse design changes (storage, analyzers, interfaces, scope) get a sho
 
 ## Pull requests
 
+All changes enter `main` through a pull request, including the maintainer's. The
+maintainer creates a `contrib/` branch in this repository, and other contributors
+create a branch in their fork. Open the pull request against `main` once the checks
+above pass, and link the issue when there is one. A pull request merges after the
+required CI check passes on Linux and Windows, with the branch current with `main`.
+
 - Keep each pull request focused on one change, and update the documentation and
   `CHANGELOG.md` when user-visible behavior changes.
 - Write commit subjects in the imperative ("Preserve UTF-8 literal bytes"), and
   explain *why* in the body when it is not obvious.
-- CI must pass on Linux and Windows.
 
 Contributions are dual-licensed under MIT or Apache-2.0, like the rest of Ripscope,
 unless explicitly stated otherwise. The Emacs integration under `contrib/emacs` is
