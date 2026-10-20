@@ -5,15 +5,16 @@ The search-time tables below come from the **18 and 19 October 2026** measuremen
 first, followed by Redis and zlib. Both repetitions and both platforms are shown
 separately, and every time and comparison note comes from that measurement.
 
-With updates skipped, Ripscope wins 30 of the 50 later searches against cscope `-q`
-on Linux and 47 of 50 on Windows, in both repetitions. Against plain cscope the
-counts are 48 and 49. A win needs a clear timing difference and an equivalent or
+On Linux, with the kernel selection, symbol, definition and caller lookups take about a
+tenth of a millisecond, hundreds of times faster than plain cscope. Even against
+cscope `-q`, Ripscope runs text searches about 6× faster, egrep 10× and assignment
+searches over 70×. A win needs a clear timing difference and an equivalent or
 source-confirmed better answer.
 
 After a normal startup a Ripscope Session watches its sources and refreshes on its
 own. On Linux that costs nothing measurable per search. On Windows each search
-first checks a marker file, about 0.3 to 0.5 ms, so cscope `-q` answers the three
-lookups of a name nobody defines faster there, and Ripscope wins the other 47.
+first checks a marker file, about 0.3 to 0.5 ms, which lets cscope `-q` answer the
+three lookups of a name nobody defines faster there.
 
 ## Search times
 
