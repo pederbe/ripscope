@@ -11,6 +11,12 @@
 
 ;; This file is not part of GNU Emacs.
 
+;; This program is free software, licensed under either of the Apache License,
+;; Version 2.0 or the MIT license, at your option.  See LICENSE-APACHE and
+;; LICENSE-MIT in the repository, or
+;; <https://www.apache.org/licenses/LICENSE-2.0> and
+;; <https://opensource.org/license/mit>.
+
 ;;; Commentary:
 
 ;; Ripscope finds definitions, callers, called functions, assignments,
@@ -37,9 +43,6 @@
 ;; Searches need the ripscope executable.  Installed from the repository,
 ;; `ripscope-setup' installs the matching one; otherwise run the one-line
 ;; installer from https://ripscope.com.  See README.md beside this file.
-;;
-;; This package is free software, under the MIT or the Apache-2.0
-;; licence at your option, as Ripscope is.
 
 ;;; Code:
 
