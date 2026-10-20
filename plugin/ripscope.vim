@@ -101,9 +101,19 @@ function! s:Paths() abort
     throw 'ripscope: Vim''s cscope support cannot use the index ' . s:config.index
           \ . ', whose path holds a space or another character it cannot pass. Set the'
           \ . ' environment variable RIPSCOPE_CACHE_DIR to a folder without them, such as '
-          \ . (has('win32') ? 'C:\ripscope-cache' : '/var/tmp/ripscope-cache')
+          \ . s:SpacelessCache()
   endif
   return [s:Usable(s:config.backend), s:config.index, s:Usable(s:config.root)]
+endfunction
+
+" A cache folder without spaces to suggest: one in the user's own folder where its path
+" has none, else a shared one.
+function! s:SpacelessCache() abort
+  let own = s:Slashes(has('win32') ? $USERPROFILE : $HOME) . '/.cache/ripscope'
+  if own !~# s:path_pattern
+    return has('win32') ? 'C:\ripscope-cache' : '/var/tmp/ripscope-cache'
+  endif
+  return has('win32') ? tr(own, '/', '\') : own
 endfunction
 
 " Changes the directory without telling autocommands, returning the one before.
@@ -169,7 +179,8 @@ function! s:Disconnect() abort
 endfunction
 
 " Runs ARGS in CWD with ENV added, returning the exit status and the combined output.
-function! s:Run(args, cwd, env) abort
+" On Windows it runs as a job, without a shell. WHAT names it in messages.
+function! s:Run(args, cwd, env, what) abort
   if !has('win32')
     let prefix = empty(a:env) ? [] : ['env'] + map(items(a:env), 'v:val[0] . "=" . v:val[1]')
     let command = 'cd ' . shellescape(a:cwd) . ' && '
@@ -177,52 +188,53 @@ function! s:Run(args, cwd, env) abort
     let output = system(command . ' 2>&1')
     return [v:shell_error, output]
   endif
-  if exists('s:build_job') && job_status(s:build_job) ==# 'run'
-    throw 'ripscope: previous build still running; output retained at ' . s:build_log
+  if exists('s:job') && job_status(s:job) ==# 'run'
+    throw 'ripscope: ' . s:job_what . ' still running; output retained at ' . s:job_log
   endif
-  if exists('s:build_log')
-    call delete(s:build_log)
+  if exists('s:job_log')
+    call delete(s:job_log)
   endif
-  let s:build_log = tempname()
+  let [s:job_log, s:job_what] = [tempname(), a:what]
   try
-    let options = {'cwd': a:cwd, 'in_io': 'null', 'out_io': 'file', 'out_name': s:build_log,
+    let options = {'cwd': a:cwd, 'in_io': 'null', 'out_io': 'file', 'out_name': s:job_log,
           \ 'err_io': 'out', 'stoponexit': 'kill'}
     if !empty(a:env)
       let options.env = a:env
     endif
-    let s:build_job = job_start(a:args, options)
-    if job_status(s:build_job) ==# 'fail'
-      throw 'ripscope: build failed to start: ' . a:args[0]
+    let s:job = job_start(a:args, options)
+    if job_status(s:job) ==# 'fail'
+      throw 'ripscope: ' . a:what . ' failed to start: ' . a:args[0]
     endif
-    while job_status(s:build_job) ==# 'run'
+    while job_status(s:job) ==# 'run'
       sleep 10m
     endwhile
-    return [job_info(s:build_job).exitval, join(readfile(s:build_log), "\n")]
+    return [job_info(s:job).exitval, join(readfile(s:job_log), "\n")]
   catch /^Vim:Interrupt$/
-    throw 'ripscope: build interrupted; publication outcome must be checked before retry'
+    throw 'ripscope: ' . a:what . ' interrupted'
+          \ . (a:what ==# 'build' ? '; publication outcome must be checked before retry' : '')
   finally
-    if exists('s:build_job') && job_status(s:build_job) ==# 'run'
-      call job_stop(s:build_job, 'kill')
+    if exists('s:job') && job_status(s:job) ==# 'run'
+      call job_stop(s:job, 'kill')
       for retry in range(100)
-        if job_status(s:build_job) !=# 'run'
+        if job_status(s:job) !=# 'run'
           break
         endif
         sleep 10m
       endfor
     endif
-    if exists('s:build_job') && job_status(s:build_job) ==# 'run'
-      echomsg 'ripscope: build still running; output retained at ' . s:build_log
+    if exists('s:job') && job_status(s:job) ==# 'run'
+      echomsg 'ripscope: ' . a:what . ' still running; output retained at ' . s:job_log
     else
-      unlet! s:build_job
+      unlet! s:job
       for retry in range(100)
-        if !filereadable(s:build_log) || delete(s:build_log) == 0
-          unlet s:build_log
+        if !filereadable(s:job_log) || delete(s:job_log) == 0
+          unlet s:job_log
           break
         endif
         sleep 10m
       endfor
-      if exists('s:build_log')
-        echomsg 'ripscope: build output could not be removed: ' . s:build_log
+      if exists('s:job_log')
+        echomsg 'ripscope: ' . a:what . ' output could not be removed: ' . s:job_log
       endif
     endif
   endtry
@@ -244,12 +256,12 @@ function! s:Build() abort
       call extend(args, s:config.sources)
     endif
   endif
-  let [status, output] = s:Run(args, s:config.root, {})
+  let [status, output] = s:Run(args, s:config.root, {}, 'build')
   if status != 0 && s:Automatic() && output =~# 'another process'
     " Another editor's index build has held the index for a minute: wait once more.
     echomsg 'ripscope: another editor is indexing ' . s:config.root . '; waiting for it...'
     redraw
-    let [status, output] = s:Run(args, s:config.root, {})
+    let [status, output] = s:Run(args, s:config.root, {}, 'build')
   endif
   if status != 0
     throw 'ripscope: build failed (exit ' . status . '): ' . output
@@ -278,12 +290,6 @@ function! s:Same(left, right) abort
   return has('win32') ? a:left ==? a:right : a:left ==# a:right
 endfunction
 
-function! s:InstallerExecutable() abort
-  let directory = !empty($RIPSCOPE_INSTALL_DIR) ? $RIPSCOPE_INSTALL_DIR
-        \ : (has('win32') ? $USERPROFILE : $HOME) . '/.local/bin'
-  return s:Slashes(directory) . (has('win32') ? '/ripscope.exe' : '/ripscope')
-endfunction
-
 function! s:Executable() abort
   let configured = get(s:settings, 'backend', '')
   if !empty(configured)
@@ -307,33 +313,15 @@ function! s:OurProgram() abort
   return &cscopeprg ==# 'cscope' || &cscopeprg ==# get(s:, 'program', '')
 endfunction
 
-" The project of PATH, as `ripscope --project` reports it from Vim's directory.
-" It runs without a shell where Vim has jobs, and only its JSON line is read, so that
-" nothing a shell's startup files print gets in the way.
+" The project of PATH, as `ripscope --project` reports it from Vim's directory. Only
+" its JSON line is read, so that nothing a shell's startup files print gets in the way.
 function! s:Locate(backend, path) abort
-  let args = [a:backend, '--project', a:path]
-  if has('job')
-    let [out, err] = [tempname(), tempname()]
-    let job = job_start(args, {'cwd': getcwd(), 'in_io': 'null', 'out_io': 'file',
-          \ 'out_name': out, 'err_io': 'file', 'err_name': err})
-    " Until it exits and Vim has written all it said.
-    let waited = 0
-    while job_status(job) ==# 'run' || (ch_status(job) ==# 'open' && waited < 200)
-      sleep 10m
-      let waited += job_status(job) ==# 'run' ? 0 : 1
-    endwhile
-    let status = job_info(job).exitval
-    let lines = filereadable(out) ? readfile(out) : []
-    let problem = filereadable(err) ? join(readfile(err), ' ') : ''
-    call delete(out)
-    call delete(err)
-  else
-    let lines = systemlist('cd ' . shellescape(getcwd()) . ' && '
-          \ . join(map(copy(args), 'shellescape(v:val)'), ' '))
-    let [status, problem] = [v:shell_error, join(lines, ' ')]
-  endif
+  let [status, output] = s:Run([a:backend, '--project', a:path], getcwd(), {},
+        \ 'ripscope --project')
+  let lines = split(output, "\n")
   let json = filter(copy(lines), 'v:val =~# ''^{''')
   if status != 0 || empty(json)
+    let problem = join(filter(lines, 'v:val !~# ''^{'''), ' ')
     throw 'ripscope: ' . (empty(problem) ? 'ripscope --project failed (exit ' . status . ')'
           \ : substitute(problem, '^ripscope: ', '', ''))
   endif
@@ -396,69 +384,27 @@ function! s:Opened(file) abort
   endtry
 endfunction
 
-" The version of the Ripscope repository this plugin came from, or ''.
-function! s:CheckoutVersion() abort
-  let manifest = s:repository . '/Cargo.toml'
-  if !filereadable(manifest)
-    return ''
-  endif
-  for line in readfile(manifest, '', 40)
-    let number = matchstr(line, '^version = "\zs[^"]\+\ze"')
-    if !empty(number)
-      return number
-    endif
-  endfor
-  return ''
-endfunction
-
-" Whether version OLD is older than NEW, by their numbers.
-function! s:Older(old, new) abort
-  let old = map(split(matchstr(a:old, '^[0-9.]*'), '\.'), 'str2nr(v:val)')
-  let new = map(split(matchstr(a:new, '^[0-9.]*'), '\.'), 'str2nr(v:val)')
-  for position in range(max([len(old), len(new)]))
-    if get(old, position, 0) != get(new, position, 0)
-      return get(old, position, 0) < get(new, position, 0)
-    endif
-  endfor
-  return 0
-endfunction
-
 " Installs the executable of this checkout's version with the repository's installer,
-" when none is found or the one found is older, or always when FORCE is set.
+" which leaves a ripscope of that version or newer alone, and one it did not put there,
+" unless FORCE is set.
 function! s:Install(force) abort
-  let wanted = s:CheckoutVersion()
-  let found = s:Executable()
-  if !a:force && !empty(found)
-    let [status, output] = s:Run([found, '--version'], s:repository, {})
-    let have = matchstr(output, 'ripscope \zs\S\+')
-    " Only an executable the installer put there is upgraded, not a system package's.
-    let ours = s:Same(found, s:InstallerExecutable())
-    if status == 0 && (empty(wanted) || !ours || !s:Older(have, wanted))
-      echomsg 'ripscope: ripscope ' . have . ' is installed: ' . found
-      return
-    endif
-  endif
   let script = s:repository . (has('win32') ? '/install.ps1' : '/install.sh')
   if !filereadable(script)
     throw 'ripscope: this copy has no installer; run the one-line installer from https://ripscope.com'
   endif
   let command = has('win32')
         \ ? [$SystemRoot . '/System32/WindowsPowerShell/v1.0/powershell.exe', '-NoProfile',
-        \    '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script]
-        \ : ['sh', script]
-  echomsg 'ripscope: installing ripscope ' . wanted . '...'
+        \    '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script, '-Plugin']
+        \   + (a:force ? ['-Force'] : [])
+        \ : ['sh', script, '--plugin'] + (a:force ? ['--force'] : [])
+  echomsg 'ripscope: running the installer...'
   redraw
-  " The plugin is here already, so the installer leaves the editors alone.
-  let environment = {'RIPSCOPE_EDITORS': 'none'}
-  if !empty(wanted)
-    let environment.RIPSCOPE_VERSION = wanted
-  endif
-  let [status, output] = s:Run(command, s:repository, environment)
+  let [status, output] = s:Run(command, s:repository, {}, 'installer')
   if status != 0
     throw 'ripscope: installation failed (exit ' . status . '): ' . output
   endif
-  let lines = filter(split(output, "\n"), 'v:val =~# ''^Installed''')
-  echomsg empty(lines) ? 'ripscope: installed' : 'ripscope: ' . lines[-1]
+  let lines = filter(split(output, "\n"), 'v:val =~# ''^Installed\|is installed: ''')
+  echomsg 'ripscope: ' . (empty(lines) ? 'installed' : lines[-1])
 endfunction
 
 let s:requested = string(s:settings)

@@ -109,7 +109,8 @@ pub(crate) enum Sources {
 }
 
 /// The list automatic discovery reads when present.
-pub(crate) const AUTOMATIC_LIST: &[u8] = b"cscope.files";
+pub(crate) const AUTOMATIC_LIST_NAME: &str = "cscope.files";
+pub(crate) const AUTOMATIC_LIST: &[u8] = AUTOMATIC_LIST_NAME.as_bytes();
 
 /// What a selection rule names at one refresh.
 enum Chosen<'s> {

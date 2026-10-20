@@ -161,6 +161,7 @@ plugin loads, so restart Vim to change them. Without a plugin manager, set
   spaces, since Vim turns a short name back into the long one there. With a space in
   your Windows user folder's name, set the environment variable `RIPSCOPE_CACHE_DIR`
   to a folder without spaces, such as `C:\ripscope-cache`, and the one-step setup
-  works as usual. For other paths, use [Neovim](neovim.md).
+  works as usual. Ripscope's message suggests a folder in your own user folder when
+  that path has no spaces. For other paths, use [Neovim](neovim.md).
 - Result paths use cscope's line format: printable ASCII without spaces. For other
   paths, use [Neovim](neovim.md) or another [JSON](../guide/json.md) client.

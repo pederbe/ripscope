@@ -502,6 +502,21 @@ printf '{"type":"result","count":1}\n["case ü.c","ctx",1,"ok"]\n{"type":"ready"
     jump(items[1], root, '$HOME.c', 1)
   end)
 
+  test('a file project with chosen sources is built until its index is published with them', function()
+    local root = project()
+    vim.fn.mkdir(root .. '/.git', 'p')
+    vim.fn.mkdir(root .. '/nested', 'p')
+    write(root .. '/nested/deep.c', 'int Deep;\n')
+    -- What a first index build stopped before publishing leaves.
+    write(root .. '/own index', '')
+    adapter.setup({ exec = backend, index = 'own index', sources = { 'nested/deep.c' }, open = false })
+    vim.cmd('edit ' .. vim.fn.fnameescape(root .. '/case ü.c'))
+    check(#query(1, 'Deep') == 1 and #query(1, 'callee') == 0)
+    -- Published with other sources than the settings now choose.
+    adapter.setup({ exec = backend, index = 'own index', sources = { 'case ü.c' }, open = false })
+    check(#query(1, 'callee') == 1 and #query(1, 'Deep') == 0)
+  end)
+
   test('publication error releases operation ownership', function()
     local root = project()
     setup(root)

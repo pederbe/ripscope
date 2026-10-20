@@ -283,3 +283,74 @@ fn the_emacs_package_has_the_crate_version() {
         .map(str::trim);
     assert_eq!(version, Some(env!("CARGO_PKG_VERSION")));
 }
+
+#[cfg(unix)]
+#[test]
+fn a_project_reached_through_a_link_shares_its_index() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let physical = temp.path().join("disk/tool");
+    fs::create_dir_all(physical.join(".git")).unwrap();
+    write(&physical.join("main.c"), "int main(void) { return 0; }\n");
+    fs::create_dir_all(&home).unwrap();
+    let logical = home.join("tool");
+    std::os::unix::fs::symlink(&physical, &logical).unwrap();
+    let through_link = project(&home, &home, &logical.join("main.c"));
+    let direct = project(&home, &home, &physical.join("main.c"));
+    // Each keeps the path the editor named, and both name one index.
+    assert_eq!(through_link["root"], slashes(&logical));
+    assert_eq!(direct["root"], slashes(&physical));
+    assert_eq!(through_link["index"], direct["index"]);
+    build(&physical, &home, &direct);
+    assert_eq!(
+        project(&home, &home, &logical.join("main.c"))["published"],
+        true
+    );
+}
+
+#[test]
+fn build_options_name_the_index_and_sources_published_is_judged_by() {
+    let temp = tempfile::tempdir().unwrap();
+    let home = temp.path().join("home");
+    let root = home.join("tool");
+    fs::create_dir_all(root.join(".git")).unwrap();
+    write(&root.join("main.c"), "int main(void) { return 0; }\n");
+    write(&root.join("files"), "main.c\n");
+    let file = root.join("main.c");
+    let file = file.to_str().unwrap();
+    let ask = |extra: &[&str]| {
+        let mut args = vec!["--project", file];
+        args.extend(extra);
+        let output = ripscope(&home, &home, &args, None);
+        assert!(output.status.success(), "{output:?}");
+        serde_json::from_slice::<Value>(&output.stdout).unwrap()
+    };
+    // The index is named as an index build in the root names it.
+    let own = ask(&["-f", "own.db", "-k", "-i", "files"]);
+    assert_eq!(own["index"], slashes(&root.join("own.db")));
+    assert_eq!(own["root"], slashes(&root));
+    // An index file that holds nothing published is not published.
+    fs::write(root.join("own.db"), "").unwrap();
+    assert_eq!(
+        ask(&["-f", "own.db", "-k", "-i", "files"])["published"],
+        false
+    );
+    fs::remove_file(root.join("own.db")).unwrap();
+    let built = ripscope(&root, &home, &["-bk", "-f", "own.db", "-i", "files"], None);
+    assert!(built.status.success(), "{built:?}");
+    assert_eq!(
+        ask(&["-f", "own.db", "-k", "-i", "files"])["published"],
+        true
+    );
+    // Other sources than the index was built with: not published.
+    assert_eq!(ask(&["-f", "own.db", "-k", "-R"])["published"], false);
+    assert_eq!(
+        ask(&["-f", "own.db", "-k", "--", "main.c"])["published"],
+        false
+    );
+    // An index alone is judged by the project's own selection, discovery here.
+    assert_eq!(ask(&["-f", "own.db"])["published"], false);
+    let built = ripscope(&root, &home, &["-bk", "-R", "-f", "own.db"], None);
+    assert!(built.status.success(), "{built:?}");
+    assert_eq!(ask(&["-f", "own.db"])["published"], true);
+}

@@ -3,6 +3,9 @@
 # Uninstall: curl -fsSL https://ripscope.com/install.sh | sh -s -- --uninstall
 # Settings: RIPSCOPE_VERSION, RIPSCOPE_INSTALL_DIR, RIPSCOPE_RELEASES (mirror),
 # RIPSCOPE_EDITORS (all, the default, or none to leave the editors alone).
+# From a checkout, as the editors' install commands run it: sh install.sh --plugin
+# installs the checkout's version for its plugins, unless the ripscope found is that
+# version or newer, or not one this installer put there. --plugin --force installs anyway.
 # The complete function must arrive before installation can begin.
 ripscope_install() (
     set -eu
@@ -27,6 +30,8 @@ ripscope_install() (
     vim_package=$vim_home/pack/ripscope
     neovim_package=$data/nvim/site/pack/ripscope
     emacs_directory=$data/ripscope/emacs
+    plugin=no
+    force=no
     case ${1:-} in
         --uninstall)
             dir=${RIPSCOPE_INSTALL_DIR:-$HOME/.local/bin}
@@ -48,11 +53,57 @@ ripscope_install() (
             esac
             say "Indexes the editors made remain in $cache (RIPSCOPE_CACHE_DIR names another folder when set). Delete them too if you no longer need them."
             exit 0 ;;
+        --plugin|--force)
+            case $1:${2:-} in
+                --plugin:) ;;
+                --plugin:--force|--force:--plugin) force=yes ;;
+                *) fail "unknown options: $*" ;;
+            esac
+            plugin=yes ;;
         '') ;;
         *) fail "unknown option: $1" ;;
     esac
     editors=${RIPSCOPE_EDITORS:-all}
+    if [ "$plugin" = yes ]; then
+        # Run as a file, not piped: $0 names the script beside the checkout's manifest.
+        case $0 in */install.sh|install.sh) ;; *) fail '--plugin runs the install.sh of a checkout.' ;; esac
+        checkout=$(cd "$(dirname "$0")" && pwd -P)
+        [ -f "$checkout/Cargo.toml" ] || fail '--plugin installs for a checkout of the repository.'
+        # The plugins are in place already, and want the executable of their own version.
+        editors=none
+        RIPSCOPE_VERSION=$(sed -n 's/^version = "\([^"]*\)".*/\1/p' "$checkout/Cargo.toml" | head -n 1)
+    fi
     case $editors in all|none) ;; *) fail 'set RIPSCOPE_EDITORS to all or none.' ;; esac
+    # Whether release $1 comes before $2: by the numbers before any suffix, then a
+    # prerelease, with a suffix, before its release. An unknown version comes first.
+    # Two prereleases of one release count as equal: the release branch carries none.
+    older() {
+        [ -n "$1" ] || return 0
+        a=${1%%[!0-9.]*}
+        b=${2%%[!0-9.]*}
+        while [ -n "$a$b" ]; do
+            x=${a%%.*}
+            y=${b%%.*}
+            [ "${x:-0}" -eq "${y:-0}" ] || { [ "${x:-0}" -lt "${y:-0}" ]; return; }
+            case $a in *.*) a=${a#*.} ;; *) a= ;; esac
+            case $b in *.*) b=${b#*.} ;; *) b= ;; esac
+        done
+        [ "$1" != "${1%%[!0-9.]*}" ] && [ "$2" = "${2%%[!0-9.]*}" ]
+    }
+    if [ "$plugin" = yes ] && [ "$force" = no ]; then
+        # The ripscope the editors find: on PATH, else where this installer puts it.
+        destination=${RIPSCOPE_INSTALL_DIR:-$HOME/.local/bin}/ripscope
+        found=$(command -v ripscope 2>/dev/null) || found=
+        [ -n "$found" ] || [ ! -f "$destination" ] || found=$destination
+        if [ -n "$found" ]; then
+            have=$("$found" --version 2>/dev/null | sed -n 's/^ripscope //p' | head -n 1) || have=
+            # A system package's or a build's ripscope stays as it is.
+            if [ ! "$found" -ef "$destination" ] || ! older "$have" "${RIPSCOPE_VERSION#v}"; then
+                say "Ripscope ${have:-of unknown version} is installed: $found"
+                exit 0
+            fi
+        fi
+    fi
     case $(uname -s):$(uname -m) in
         Linux:x86_64) ;;
         *) fail 'the archive supports x86-64 Linux with glibc 2.28 or newer.' ;;

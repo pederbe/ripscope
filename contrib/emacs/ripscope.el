@@ -58,39 +58,26 @@
                                     ripscope--repository)))
       (and (file-regular-p script) script))))
 
-(defun ripscope--checkout-version ()
-  "The version of the Ripscope repository this copy came from, or nil."
-  (let ((manifest (and ripscope--repository
-                       (expand-file-name "Cargo.toml" ripscope--repository))))
-    (when (and manifest (file-readable-p manifest))
-      (with-temp-buffer
-        (insert-file-contents manifest)
-        (when (re-search-forward "^version = \"\\([^\"]+\\)\"" nil t)
-          (match-string 1))))))
+(defun ripscope--manifest ()
+  "This checkout and the SHA-256 of its Cargo.toml, which names its version."
+  (with-temp-buffer
+    (insert-file-contents (expand-file-name "Cargo.toml" ripscope--repository))
+    (concat ripscope--repository "\n" (secure-hash 'sha256 (current-buffer)))))
 
-(defun ripscope--installed-version (executable)
-  "The version EXECUTABLE reports, or nil."
-  (let ((line (car (ignore-errors (process-lines executable "--version")))))
-    (and line (string-match "\\`ripscope \\(\\S-+\\)" line) (match-string 1 line))))
+(defun ripscope--checked-file ()
+  "Where the manifest the installer last checked the executable for is kept."
+  (locate-user-emacs-file "ripscope-installer-checked"))
 
-(defun ripscope--installer-executable ()
-  "Where Ripscope's installer puts the executable."
-  (expand-file-name (if (eq system-type 'windows-nt) "ripscope.exe" "ripscope")
-                    (or (getenv "RIPSCOPE_INSTALL_DIR")
-                        (expand-file-name ".local/bin"
-                                          (or (and (eq system-type 'windows-nt)
-                                                   (getenv "USERPROFILE"))
-                                              "~")))))
-
-(defun ripscope--wanted-p (found)
-  "Whether to install over the executable FOUND, which may be nil: it is
-missing, or the installer put it there and it is older than this copy."
-  (let ((wanted (ripscope--checkout-version)))
-    (or (null found)
-        (and wanted
-             (file-equal-p found (ripscope--installer-executable))
-             (let ((have (ripscope--installed-version found)))
-               (or (null have) (version< have wanted)))))))
+(defun ripscope--changed-p (found)
+  "Whether the installer should look at FOUND, the executable or nil: it is
+missing, or the installer has not checked it for this checkout's manifest,
+as after an upgrade of the package.  Starting Emacs then runs no installer."
+  (or (null found)
+      (not (equal (ignore-errors
+                    (with-temp-buffer
+                      (insert-file-contents (ripscope--checked-file))
+                      (buffer-string)))
+                  (ripscope--manifest)))))
 
 ;;;###autoload
 (defun ripscope-setup (&optional executable)
@@ -109,8 +96,8 @@ copy.  Call this once, before any other copy of xcscope loads."
   (unless executable
     (let ((found (ripscope-xcscope--find-executable)))
       (cond
-       ((not (ripscope--wanted-p found)))
-       ((ripscope--installer) (ripscope-install))
+       ((ripscope--installer)
+        (when (ripscope--changed-p found) (ripscope-install)))
        ((null found)
         ;; A message, not an error, so that the rest of the init file still loads.
         (message "Ripscope: the ripscope executable is not installed; %s"
@@ -123,50 +110,60 @@ copy.  Call this once, before any other copy of xcscope loads."
 ;;;###autoload
 (defun ripscope-install (&optional force)
   "Install the ripscope executable with Ripscope's verifying installer.
-Installs this copy's version when the executable is missing or older,
-or anyway with FORCE, the prefix argument.  The installer runs in the
-background and reports in the *ripscope-install* buffer."
+It installs this copy's version, but leaves an executable of that version
+or newer alone, and one it did not install, unless FORCE, the prefix
+argument, is given.  The installer runs in the background and reports in
+the *ripscope-install* buffer."
   (interactive "P")
   (ripscope--load)
-  (let* ((windows (eq system-type 'windows-nt))
-         (found (ripscope-xcscope--find-executable))
-         (wanted (ripscope--checkout-version))
-         (script (ripscope--installer)))
+  (let ((windows (eq system-type 'windows-nt))
+        (script (ripscope--installer))
+        (quiet (not (called-interactively-p 'any))))
     (cond
-     ((and (not force) (not (ripscope--wanted-p found)))
-      (message "Ripscope %s is installed: %s" (ripscope--installed-version found) found))
      ((process-live-p ripscope--installation)
       (message "Ripscope's installer is running already"))
      ((not script)
       (user-error "This copy of Ripscope has no installer; run the one-line installer from https://ripscope.com"))
      (t
       (let ((default-directory (file-name-as-directory ripscope--repository))
-            ;; The integration is here already, so the installer leaves the editors alone.
-            (process-environment
-             (append (list "RIPSCOPE_EDITORS=none")
-                     (and wanted (list (concat "RIPSCOPE_VERSION=" wanted)))
-                     process-environment))
             (buffer (get-buffer-create "*ripscope-install*")))
         (with-current-buffer buffer
           (let ((inhibit-read-only t)) (erase-buffer)))
-        (message "Ripscope: installing ripscope %s..." (or wanted ""))
+        (unless quiet (message "Ripscope: running the installer..."))
         (setq ripscope--installation
               (make-process
                :name "ripscope-install" :buffer buffer :noquery t
-               :command (if windows
-                            (list (ripscope--powershell) "-NoProfile" "-NonInteractive"
-                                  "-ExecutionPolicy" "Bypass" "-File" script)
-                          (list "sh" script))
-               :sentinel #'ripscope--installed)))))))
+               :command (append (if windows
+                                    (list (ripscope--powershell) "-NoProfile" "-NonInteractive"
+                                          "-ExecutionPolicy" "Bypass" "-File" script "-Plugin")
+                                  (list "sh" script "--plugin"))
+                                (and force (list (if windows "-Force" "--force"))))
+               :sentinel #'ripscope--installed))
+        ;; Run at startup, it reports only an installation.
+        (process-put ripscope--installation 'quiet quiet))))))
 
 (defun ripscope--installed (process _event)
   "Report how PROCESS, the installer, went."
   (unless (process-live-p process)
-    (let ((found (ripscope-xcscope--find-executable)))
+    (let ((found (ripscope-xcscope--find-executable))
+          (said (let ((buffer (process-buffer process)))
+                  (and (buffer-live-p buffer)
+                       (with-current-buffer buffer
+                         (save-excursion
+                           (goto-char (point-max))
+                           (and (re-search-backward
+                                 "^\\(Installed [^\r\n]*\\|[^\r\n]* is installed: [^\r\n]*\\)" nil t)
+                                (match-string 1))))))))
       (if (and found (eq (process-status process) 'exit) (= (process-exit-status process) 0))
           (progn
             (when ripscope-xcscope--automatic (ripscope-xcscope--use found))
-            (message "Ripscope: installed %s" found))
+            (ignore-errors
+              (let ((checked (ripscope--checked-file)))
+                (make-directory (file-name-directory checked) t)
+                (with-temp-file checked (insert (ripscope--manifest)))))
+            (when (or (not (process-get process 'quiet))
+                      (and said (string-prefix-p "Installed" said)))
+              (message "Ripscope: %s" (or said (format "installed %s" found)))))
         (message "Ripscope: installation failed; see %s" (buffer-name (process-buffer process)))))))
 
 (provide 'ripscope)

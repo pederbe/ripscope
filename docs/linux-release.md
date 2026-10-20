@@ -91,7 +91,8 @@ cargo run --locked --example check-installers -- \
 
 The work directory must be new. Captures retain installer/archive hashes and
 outcomes for replacement, checksum/path/link refusals, mandatory notices,
-interruption after rename, and selective removal. These are functional checks;
+interruption after rename, the editors' `--plugin` install decisions, and selective
+removal. These are functional checks;
 they do not measure performance or establish broad platform qualification.
 
 ## Guarded release workflow

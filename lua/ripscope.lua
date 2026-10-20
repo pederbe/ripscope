@@ -222,26 +222,29 @@ local function current()
   local cwd = vim.fn.getcwd()
   local path = is_file and file or cwd
   local exec = executable(opts.exec)
+  -- Settings that choose the sources or the index replace the project's own, and
+  -- `ripscope --project` judges publication by them.
+  local chosen = opts.recursive ~= nil or opts.file_list or #opts.sources > 0
+  local options = {}
+  if opts.index then vim.list_extend(options, { '-f', opts.index }) end
+  if chosen then
+    options[#options + 1] = '-k'
+    if opts.recursive then options[#options + 1] = '-R' end
+    if opts.file_list then vim.list_extend(options, { '-i', opts.file_list }) end
+    if #opts.sources > 0 then
+      options[#options + 1] = '--'
+      vim.list_extend(options, opts.sources)
+    end
+  end
   local place = (path == cwd and cwd or vim.fs.dirname(path)) .. '\0' .. cwd
   local found = located[place]
   if not found then
-    found = project.locate(exec, path, cwd)
+    found = project.locate(exec, path, cwd, options)
     located[place] = found
   end
-  opts.root = found.root
-  -- Settings that choose the sources replace the selection the project has.
-  local chosen = opts.recursive ~= nil or opts.file_list or #opts.sources > 0
+  opts.root, opts.index = found.root, found.index
   if not chosen then opts.selection = found.selection end
   local published = found.published
-  if opts.index then
-    opts.index = absolute(opts.index, found.root)
-  else
-    opts.index = found.index
-  end
-  if opts.index ~= found.index or chosen then
-    -- `published` speaks for the cache index built with the project's own selection.
-    published = vim.uv.fs_stat(opts.index) ~= nil
-  end
   local key = opts.root .. '\0' .. opts.index
   local entry = projects[key]
   if not entry then
@@ -319,36 +322,29 @@ function M.build()
 end
 
 -- Installs the executable of this checkout's version with the repository's installer,
--- when none is found or the one found is older, or always with FORCE.
+-- which leaves a ripscope of that version or newer alone, and one it did not put there,
+-- unless FORCE is set.
 function M.install(force)
   local source = debug.getinfo(1, 'S').source:sub(2)
   local repository = vim.fs.dirname(vim.fs.dirname(vim.fs.normalize(source)))
-  local wanted = project.checkout_version(repository)
-  local found = project.executable()
-  if found and not force then
-    local result = vim.system({ found, '--version' }, { text = true }):wait()
-    local have = (result.stdout or ''):match('ripscope (%S+)')
-    -- Only an executable the installer put there is upgraded, not a system package's.
-    local ours = project.same(found, project.installer_executable())
-    if result.code == 0 and have and not (wanted and ours and project.older(have, wanted)) then
-      vim.notify('Ripscope: ripscope ' .. have .. ' is installed: ' .. found, vim.log.levels.INFO)
-      return
-    end
-  end
   local script = repository .. (windows and '/install.ps1' or '/install.sh')
   assert(vim.uv.fs_stat(script), 'this copy has no installer; run the one-line installer from https://ripscope.com')
   local command = windows and { (vim.env.SystemRoot or 'C:/Windows') .. '/System32/WindowsPowerShell/v1.0/powershell.exe',
-    '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script } or { 'sh', script }
-  vim.notify('Ripscope: installing ripscope ' .. (wanted or '') .. '...', vim.log.levels.INFO)
-  -- The plugin is here already, so the installer leaves the editors alone.
-  local env = { RIPSCOPE_EDITORS = 'none', RIPSCOPE_VERSION = wanted }
-  local result = vim.system(command, { cwd = repository, text = true, env = env }):wait()
+    '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script, '-Plugin' }
+    or { 'sh', script, '--plugin' }
+  if force then command[#command + 1] = windows and '-Force' or '--force' end
+  vim.notify('Ripscope: running the installer...', vim.log.levels.INFO)
+  local result = vim.system(command, { cwd = repository, text = true }):wait()
   local output = (result.stdout or '') .. (result.stderr or '')
   log('Ripscope install\n' .. output)
   if result.code ~= 0 then
     error('installation failed (exit ' .. tostring(result.code) .. '); see :RipscopeLog\n' .. output)
   end
-  vim.notify('Ripscope: ' .. (output:match('(Installed[^\n]*)') or 'installed'), vim.log.levels.INFO)
+  local said = 'installed'
+  for line in output:gmatch('[^\r\n]+') do
+    if line:match('^Installed') or line:match('is installed: ') then said = line end
+  end
+  vim.notify('Ripscope: ' .. said, vim.log.levels.INFO)
 end
 
 function M.commands()
