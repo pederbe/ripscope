@@ -100,7 +100,7 @@ function! s:InterruptBuild(timer) abort
     if info.status ==# 'run' && index(info.cmd, '-bk') >= 0
       let sid = getscriptinfo({'name': 'ripscope.vim$'})[0].sid
       let vars = getscriptinfo({'sid': sid})[0].variables
-      call add(s:observations, {'interrupted_pid': info.process, 'output_file': vars.build_log, 'state': info.status})
+      call add(s:observations, {'interrupted_pid': info.process, 'output_file': vars.job_log, 'state': info.status})
       call interrupt()
       return
     endif
@@ -152,8 +152,8 @@ try
     call assert_false(cscope_connection(), 'interruption does not connect')
     let script = getscriptinfo({'name': 'ripscope.vim$'})[0]
     let variables = getscriptinfo({'sid': script.sid})[0].variables
-    call assert_false(has_key(variables, 'build_job'), 'interrupted job released before retry')
-    call assert_false(has_key(variables, 'build_log'), 'interrupted output removed before retry')
+    call assert_false(has_key(variables, 'job'), 'interrupted job released before retry')
+    call assert_false(has_key(variables, 'job_log'), 'interrupted output removed before retry')
     call add(s:observations, {'interruption_error': failure})
     call writefile(['int Workflow;'], s:root . '/workflow.c')
   endif
