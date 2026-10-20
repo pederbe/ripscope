@@ -123,11 +123,11 @@ Each is a plist of :root, :index, :selection and :published.")
                  (ripscope--find-executable))))
     (cond
      ((not found)
-      (user-error "Ripscope is not installed; run M-x ripscope-install, %s"
+      (user-error "Ripscope is not installed, so run M-x ripscope-install, %s"
                   "or the one-line installer from https://ripscope.com"))
      ((not (and (file-executable-p found) (not (file-directory-p found))
                 (or (not (ripscope--windows-p)) (string-suffix-p ".exe" (downcase found)))))
-      (user-error "Ripscope cannot run %s; set `ripscope-executable' to %s" found
+      (user-error "Ripscope cannot run %s, so set `ripscope-executable' to %s" found
                   (if (ripscope--windows-p) "the ripscope.exe file" "the ripscope executable")))
      (t found))))
 
@@ -138,6 +138,9 @@ Each is a plist of :root, :index, :selection and :published.")
                          (/= (symbol-value 'w32-ansi-code-page) 65001))
                     (intern (format "cp%d" (symbol-value 'w32-ansi-code-page)))
                   'utf-8-unix)))
+    (unless (coding-system-p coding)
+      (user-error "Ripscope cannot pass arguments in Windows code page %s, which Emacs lacks"
+                  coding))
     (dolist (argument arguments)
       (unless (equal argument (decode-coding-string (encode-coding-string argument coding)
                                                     coding))
@@ -183,11 +186,12 @@ Each is a plist of :root, :index, :selection and :published.")
                      ripscope--projects))))))
 
 (defun ripscope--project ()
-  "The project of the current buffer's file, else of the last search."
+  "The project of the current buffer's file or directory.
+From the xref buffer, it is the project of the last search."
   (when (file-remote-p default-directory)
     (user-error "Ripscope searches local files only"))
   (let ((file buffer-file-name))
-    (if (and (not file) ripscope--recent)
+    (if (and (not file) ripscope--recent (derived-mode-p 'xref--xref-buffer-mode))
         ripscope--recent
       (let* ((path (expand-file-name (or file default-directory)))
              (directory (file-name-directory path)))
@@ -214,7 +218,7 @@ Each is a plist of :root, :index, :selection and :published.")
                                           (ripscope--include-arguments)
                                           (list "-f" (plist-get project :index))))))
       (unless (eql status 0)
-        (user-error "Ripscope could not index %s (%s); see *ripscope-index*"
+        (user-error "Ripscope could not index %s (%s), and *ripscope-index* says why"
                     (abbreviate-file-name root) status)))
     (plist-put project :published t)))
 
@@ -330,7 +334,7 @@ Searches keep the index up to date by themselves, unless
        (push (alist-get 'message value) (ripscope--session-notes session)))
       (_
        (unless (and (eq phase 'rows) (null type) (proper-list-p value) (= (length value) 4)
-                    (stringp (nth 1 value)) (natnump (nth 2 value)))
+                    (stringp (nth 1 value)) (natnump (nth 2 value)) (> (nth 2 value) 0))
          (error "Unexpected row or frame"))
        (push value (ripscope--session-rows session))
        (when (= (cl-decf (ripscope--session-remaining session)) 0)
@@ -387,7 +391,7 @@ Searches keep the index up to date by themselves, unless
 
 ;;;###autoload
 (defun ripscope-stop-sessions ()
-  "Stop the running Ripscope sessions; the next search starts its own.
+  "Stop the running Ripscope sessions.  The next search starts its own.
 It also finds each project again.  On Windows a session keeps its project's
 directory in use, so stop them before you move or remove a project."
   (interactive)
@@ -412,7 +416,7 @@ Its summary names the function a line is in, or a definition's line alone."
                               ((or (= field 1) (member context '("<global>" "<unknown>"))) text)
                               (t (concat (propertize context 'face 'font-lock-function-name-face)
                                          ": " text)))))
-    (xref-make summary (xref-make-file-location (expand-file-name path root) (max line 1) 0))))
+    (xref-make summary (xref-make-file-location (expand-file-name path root) line 0))))
 
 (defun ripscope--search (project field pattern)
   "Search PROJECT with the search FIELD for PATTERN.
@@ -457,9 +461,9 @@ Returns its results as xrefs, and shows any warnings that came with them."
       (let ((root (plist-get project :root)))
         (or (prog1 (mapcar (lambda (row) (ripscope--xref root field row))
                            (reverse (ripscope--session-rows session)))
-              (when notes (message "Ripscope: %s" (string-join notes "; "))))
+              (when notes (message "Ripscope: %s" (string-join notes ", "))))
             (user-error "Ripscope found no %s %s%s" (alist-get field ripscope--fields) pattern
-                        (if notes (concat " (" (string-join notes "; ") ")") "")))))))
+                        (if notes (concat " (" (string-join notes ", ") ")") "")))))))
 
 ;;;; Searches
 
@@ -650,7 +654,7 @@ executable when it is missing or older than this copy."
         (when (ripscope--changed-p found) (ripscope-install)))
        ((null found)
         ;; A message, not an error, so that the rest of the init file still loads.
-        (message "Ripscope: the ripscope executable is not installed; %s"
+        (message "Ripscope: the ripscope executable is not installed, so %s"
                  "run the one-line installer from https://ripscope.com"))))))
 
 (defun ripscope--powershell ()
@@ -673,7 +677,7 @@ the *ripscope-install* buffer."
      ((process-live-p ripscope--installation)
       (message "Ripscope's installer is running already"))
      ((not script)
-      (user-error "This copy of Ripscope has no installer; %s"
+      (user-error "This copy of Ripscope has no installer, so %s"
                   "run the one-line installer from https://ripscope.com"))
      (t
       (let ((default-directory (file-name-as-directory ripscope--repository))
@@ -714,7 +718,7 @@ the *ripscope-install* buffer."
             (when (or (not (process-get process 'quiet))
                       (and said (string-prefix-p "Installed" said)))
               (message "Ripscope: %s" (or said (format "installed %s" found)))))
-        (message "Ripscope: installation failed; see %s" (buffer-name (process-buffer process)))))))
+        (message "Ripscope: installation failed, and %s says why" (buffer-name (process-buffer process)))))))
 
 (provide 'ripscope)
 ;;; ripscope.el ends here

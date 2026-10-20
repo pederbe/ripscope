@@ -15,7 +15,7 @@ whose path holds a control character, with one warning per answer that points to
 
 ## Consequences
 
-- The Neovim plugin and the Emacs adapter's sessions use the JSON interface. Vim uses
+- The Neovim plugin and the Emacs package's sessions use the JSON interface. Vim uses
   the line protocol through its built-in cscope support.
 - Other integrations can use the [JSON interface](../guide/json.md) directly.
 

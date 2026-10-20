@@ -274,6 +274,21 @@ lands on LINE of FILE."
            (should (ripscope-test-rows root 1 "Other"))))
       (delete-directory shared t))))
 
+(ert-deftest ripscope-a-buffer-without-a-file-searches-its-directory ()
+  (ripscope-test-project
+   (ripscope-test-rows root 1 "callee")
+   (make-directory "other/.git" t)
+   (ripscope-test-write "other/other.c" "int Elsewhere;\n")
+   ;; As from Dired in another project, after a search in this one.
+   (with-temp-buffer
+     (setq default-directory (expand-file-name "other/" root))
+     (should (equal (plist-get (ripscope--project) :root)
+                    (directory-file-name (file-truename (expand-file-name "other" root))))))
+   ;; The xref buffer keeps the project of the search that made it.
+   (with-current-buffer (ripscope-test-source root) (ripscope-find-callers "callee"))
+   (with-current-buffer "*xref*"
+     (should (equal (plist-get (ripscope--project) :root) (file-truename root))))))
+
 (ert-deftest ripscope-remote-files-are-left-to-other-backends ()
   (let ((default-directory "/ssh:example:/project/"))
     (should-not (ripscope--backend))

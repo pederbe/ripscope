@@ -29,8 +29,8 @@ Neovim plugin is:
   and an interrupted or late answer ends the session. The next search starts another.
 - The first search in a project builds its index, and `ripscope-setup` installs the
   executable as ADR 0014 describes.
-- It needs GNU Emacs 28.1 or newer, for xref's public `xref-show-xrefs`, and no other
-  package.
+- It needs GNU Emacs 28.1 or newer, for the xref and minibuffer functions it
+  uses, and no other package.
 - It is licensed MIT or Apache-2.0, as the rest of Ripscope is.
 
 ## Consequences

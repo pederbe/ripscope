@@ -39,8 +39,7 @@ results before replacing a maintained capture. Source-labelled navigation uses
 the separate seal and run procedure in `scripts/navigation-assessment.md`.
 
 Ripscope's scanner is its own implementation. cscope's behavior is credited under the
-notice in `CSCOPE-NOTICE.txt`, and Ripscope is not affiliated with cscope. Vendored
-xcscope stays under its GPL-2.0-or-later notice and `contrib/emacs/vendor/COPYING`.
+notice in `CSCOPE-NOTICE.txt`, and Ripscope is not affiliated with cscope.
 Third-party fixture source keeps its own copyright notices and licenses.
 
 ## Search benchmarks
