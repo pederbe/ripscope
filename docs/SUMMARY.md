@@ -58,6 +58,7 @@
   - [0012 Written assignment search](adr/0012-written-assignment-search.md)
   - [0013 JSON interface](adr/0013-json-interface.md)
   - [0014 Own editor integrations](adr/0014-own-editor-integrations.md)
+  - [0015 Native Emacs package](adr/0015-native-emacs-package.md)
 
 # Project
 

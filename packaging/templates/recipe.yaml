@@ -51,22 +51,18 @@ tests:
         - lib/ripscope/MANIFEST.sha256
         - lib/ripscope/DEPENDENCIES.json
         - lib/ripscope/licenses/**
-        - lib/ripscope/contrib/emacs/vendor/COPYING
-        - lib/ripscope/contrib/emacs/vendor/xcscope.el
 about:
   homepage: https://ripscope.com
   summary: C navigation with atomic index updates
   description: |
     Repackages the upstream Linux x86-64 glibc archive without recompilation,
     adjusting its relative runtime path to the environment's GCC library.
-    SQLite is bundled. Vim, Neovim and Emacs integration sources are included;
-    the Emacs integration and xcscope are separately GPL-2.0-or-later licensed.
-  license: (MIT OR Apache-2.0) AND GPL-2.0-or-later
+    SQLite is bundled. Vim, Neovim and Emacs integration sources are included.
+  license: MIT OR Apache-2.0
   license_file:
     - LICENSE-MIT
     - LICENSE-APACHE
     - licenses/
-    - contrib/emacs/vendor/COPYING
   documentation: https://ripscope.com/docs
   repository: https://github.com/pederbe/ripscope
 extra:

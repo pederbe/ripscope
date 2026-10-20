@@ -19,7 +19,6 @@ use mirror::Mirror;
 use profile::{Profile, powershell};
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 const NOTICE_FIXTURES: &[&str] = &[
-    "missing-copying",
     "missing-rust-tree",
     "empty-rust-tree",
     "missing-copyright",
@@ -139,7 +138,6 @@ fn refusal(kind: &str) -> &'static str {
     match kind {
         "traversal" => "unsafe archive path",
         "symlink-entry" | "hardlink-entry" | "linked-entry" => "linked or special",
-        "missing-copying" => "mandatory archive file: contrib/emacs/vendor/COPYING",
         "missing-copyright" | "empty-copyright" | "missing-rust-tree" | "empty-rust-tree" => {
             "mandatory archive file: licenses/rust/COPYRIGHT-library.html"
         }
@@ -268,15 +266,7 @@ impl Checks {
                 neovim.join("start/ripscope"),
                 &["plugin/ripscope.lua", "lua/ripscope/session.lua"][..],
             ),
-            (
-                emacs,
-                &[
-                    "ripscope.el",
-                    "ripscope-xcscope.el",
-                    "vendor/xcscope.el",
-                    "vendor/COPYING",
-                ][..],
-            ),
+            (emacs, &["ripscope.el"][..]),
         ] {
             for file in files {
                 ensure(
@@ -318,9 +308,6 @@ impl Checks {
                 "licenses/SQLITE-NOTICE.txt",
                 "licenses/rust/COPYRIGHT-library.html",
                 "contrib/emacs/ripscope.el",
-                "contrib/emacs/ripscope-xcscope.el",
-                "contrib/emacs/vendor/xcscope.el",
-                "contrib/emacs/vendor/COPYING",
                 "contrib/vim/plugin/ripscope.vim",
                 "contrib/vim/lua/ripscope.lua",
             ] {
@@ -352,7 +339,6 @@ fn remove_notice(package: &Path, kind: &str) -> Result<()> {
     let rust = package.join("licenses/rust");
     let dependencies = package.join("licenses/dependencies");
     match kind {
-        "missing-copying" => fs::remove_file(package.join("contrib/emacs/vendor/COPYING"))?,
         "missing-copyright" => fs::remove_file(rust.join("COPYRIGHT-library.html"))?,
         "empty-copyright" => fs::write(rust.join("COPYRIGHT-library.html"), [])?,
         "missing-rust-tree" | "empty-rust-tree" => {
@@ -836,7 +822,6 @@ if ($Kind -ne 'traversal' -and $Kind -ne 'linked-entry') {
     $rust = Join-Path $package 'licenses/rust'
     $dependencies = Join-Path $package 'licenses/dependencies'
     switch ($Kind) {
-        'missing-copying' { [IO.File]::Delete((Join-Path $package 'contrib/emacs/vendor/COPYING')) }
         'missing-copyright' { [IO.File]::Delete((Join-Path $rust 'COPYRIGHT-library.html')) }
         'empty-copyright' { [IO.File]::WriteAllBytes((Join-Path $rust 'COPYRIGHT-library.html'), [byte[]] @()) }
         'missing-rust-tree' { Remove-Item -LiteralPath $rust -Recurse -Force }

@@ -115,8 +115,7 @@ required CI check passes on Linux and Windows, with the branch current with `mai
   explain *why* in the body when it is not obvious.
 
 Contributions are dual-licensed under MIT or Apache-2.0, like the rest of Ripscope,
-unless explicitly stated otherwise. The Emacs integration under `contrib/emacs` is
-GPL-2.0-or-later.
+unless explicitly stated otherwise.
 
 ## Release builds
 

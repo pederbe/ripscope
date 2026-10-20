@@ -29,8 +29,7 @@ the line Emacs needs. Set `RIPSCOPE_EDITORS=none` to leave the editors alone.
 
 The installer prints an absolute `.ripscope-notices-<version>.<random>` directory
 beside the executable. Keep it: it contains dependency licences, build identity,
-and the editor integrations, including the complete separately licensed xcscope
-source and `COPYING`. Its `ORIGINAL-ARCHIVE-MANIFEST.sha256` describes the original
+and the editor integrations. Its `ORIGINAL-ARCHIVE-MANIFEST.sha256` describes the original
 archive, and the executable has moved to the printed destination. `BUILD.json` and
 `INSTALLATION.txt` identify that executable by SHA-256.
 

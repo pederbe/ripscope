@@ -7,8 +7,7 @@ support=$(realpath "${3:?archive support directory required}")
 test -x "$binary"
 for document in BUILD.json DEPENDENCIES.json INSTALL.md LICENSE-MIT LICENSE-APACHE \
     licenses/SQLITE-NOTICE.txt licenses/rust/COPYRIGHT-library.html \
-    contrib/vim/plugin/ripscope.vim contrib/vim/lua/ripscope.lua contrib/emacs/ripscope.el \
-    contrib/emacs/vendor/COPYING contrib/emacs/vendor/xcscope.el; do
+    contrib/vim/plugin/ripscope.vim contrib/vim/lua/ripscope.lua contrib/emacs/ripscope.el; do
     test -s "$support/$document"
 done
 test -n "$(find "$support/licenses/dependencies" -type f -size +0c -print -quit)"

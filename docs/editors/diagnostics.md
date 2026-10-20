@@ -7,12 +7,12 @@ available or the editor reports completion.
 
 | Outcome | Vim | Neovim | Emacs |
 | --- | --- | --- | --- |
-| Matches | Quickfix results | Quickfix results after the complete JSON response | Selectable results in `*cscope*` |
-| Valid query, no matches | E259, without E609 | `No matches` | `No matches were found`, then `Search complete` |
-| Answer with warnings | Available rows and E609: `this answer may be incomplete` | Available rows and a warning notification; details in `:RipscopeLog` | Available rows and `ripscope:` diagnostics in `*cscope*`, then `Search complete` |
-| Invalid pattern | E609: `the query pattern cannot be used` | Failed query with its reason in `:RipscopeLog` | `Ripscope search failed` with `invalid query pattern` in `*cscope*` |
-| Index cannot be read | E609 with the reason, or a connection error at startup | Failed query with diagnostics in `:RipscopeLog` | `Ripscope search failed` with diagnostics in `*cscope*` |
-| Index build fails | `RipscopeBuild` reports the exit status and output | Failed build with output in `:RipscopeLog` | Failure in `*cscope-indexing-buffer*` |
+| Matches | Quickfix results | Quickfix results after the complete JSON response | The xref buffer after the complete JSON response, or a jump to a single definition |
+| Valid query, no matches | E259, without E609 | `No matches` | `Ripscope found no ...` in the echo area |
+| Answer with warnings | Available rows and E609: `this answer may be incomplete` | Available rows and a warning notification; details in `:RipscopeLog` | Available rows, and the warning in the echo area and `*Messages*` |
+| Invalid pattern | E609: `the query pattern cannot be used` | Failed query with its reason in `:RipscopeLog` | `Ripscope could not search for ...` with `invalid query pattern` in the echo area |
+| Index cannot be read | E609 with the reason, or a connection error at startup | Failed query with diagnostics in `:RipscopeLog` | An error in the echo area with the session's diagnostics |
+| Index build fails | `RipscopeBuild` reports the exit status and output | Failed build with output in `:RipscopeLog` | `Ripscope could not index ...`, with the output in `*ripscope-index*` |
 
 CLI one-shot queries, including `--json`, retain cscope's status-0 response to an
 invalid pattern: check standard error as well as the exit status. Sessions tell the
@@ -57,9 +57,8 @@ timed-out index build has unconfirmed completion: its exit alone does not tell
 whether it committed. Inspect the diagnostic and retry the index build before
 relying on freshness.
 
-Neovim publishes query rows only after the response's final `ready` frame. A
+Neovim and Emacs show query rows only after the response's final `ready` frame. A
 timeout, truncated response or broken connection fails that search; the next
-explicit search opens a new session. Vim and Emacs own their result readers;
-treat any rows already shown by a failed or interrupted search as incomplete.
-Reconnect Vim if its backend exited. Emacs starts a new session at the next search
-after one ended.
+explicit search opens a new session. Vim owns its result reader; treat any rows
+already shown by a failed or interrupted search as incomplete, and reconnect Vim if
+its backend exited.

@@ -13,8 +13,8 @@ does not change source text and uses its own index format. Read
 ## Can I point my existing cscope setup at Ripscope?
 
 Vim's `cscopeprg` can run Ripscope directly; the [Vim page](../editors/vim.md) has a ready
-configuration. Emacs uses the bundled xcscope adapter. For Neovim, use the included Lua
-adapter. Scripts that run `cscope -Rbqk` can run `ripscope -Rbqk`; the index is
+configuration. For Emacs and Neovim, use the included packages, which search through
+xref and the quickfix list. Scripts that run `cscope -Rbqk` can run `ripscope -Rbqk`; the index is
 `ripscope.db` unless `-f` names another.
 
 ## My query returned nothing. Is that "no matches" or an error?

@@ -51,14 +51,9 @@ pub fn unpack(archive: &Path, install: &Path) -> Result<PathBuf> {
     if actual != expected {
         return Err("Unpacked file inventory/checksum mismatch".into());
     }
-    for name in [
-        "contrib/emacs/vendor/COPYING",
-        "contrib/emacs/vendor/xcscope.el",
-    ] {
-        let path = package.join(name);
-        if !path.is_file() || fs::metadata(&path)?.len() == 0 {
-            return Err("Missing separately licensed editor source/notice".into());
-        }
+    let emacs = package.join("contrib/emacs/ripscope.el");
+    if !emacs.is_file() || fs::metadata(&emacs)?.len() == 0 {
+        return Err("Missing the Emacs package".into());
     }
     Ok(package)
 }
@@ -445,13 +440,12 @@ mod tests {
     use crate::archive;
 
     #[test]
-    fn unpacking_checks_the_manifest_and_editor_notices() {
+    fn unpacking_checks_the_manifest_and_the_emacs_package() {
         let root = tempfile::tempdir().unwrap();
         let package = root.path().join("ripscope-0.1.0-x86_64-windows-msvc");
         for (name, contents) in [
             ("bin/ripscope.exe", "binary"),
-            ("contrib/emacs/vendor/COPYING", "licence"),
-            ("contrib/emacs/vendor/xcscope.el", "source"),
+            ("contrib/emacs/ripscope.el", "package"),
         ] {
             let path = package.join(name);
             fs::create_dir_all(path.parent().unwrap()).unwrap();

@@ -145,8 +145,7 @@ shows.
 
 The scripts retain a hidden `.ripscope-notices-*` directory beside the
 executable. It contains licences, build information and a copy of the editor
-integrations. The Emacs integration includes xcscope's source and its own
-`COPYING` file.
+integrations.
 
 To find the directories on Linux, run
 

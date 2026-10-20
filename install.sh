@@ -175,8 +175,7 @@ ripscope_install() (
     package=$download/unpacked/$name
     for file in bin/ripscope LICENSE-MIT LICENSE-APACHE DEPENDENCIES.json BUILD.json MANIFEST.sha256 \
         licenses/SQLITE-NOTICE.txt licenses/rust/COPYRIGHT-library.html \
-        contrib/emacs/ripscope.el contrib/emacs/ripscope-xcscope.el contrib/emacs/vendor/xcscope.el \
-        contrib/emacs/vendor/COPYING contrib/vim/plugin/ripscope.vim contrib/vim/plugin/ripscope.lua \
+        contrib/emacs/ripscope.el contrib/vim/plugin/ripscope.vim contrib/vim/plugin/ripscope.lua \
         contrib/vim/lua/ripscope.lua contrib/vim/lua/ripscope/session.lua \
         contrib/vim/lua/ripscope/project.lua; do
         [ -f "$package/$file" ] && [ ! -L "$package/$file" ] && [ -s "$package/$file" ] || fail "missing mandatory archive file: $file"

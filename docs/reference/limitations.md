@@ -28,9 +28,9 @@ This reference describes Ripscope’s supported platforms and C reading. See the
   `-bu`. Only fields 0 to 3, 8 and 9 read stored analyses, so field 7 still lists those
   files and text searches read them, without a warning. Without `-d` a query analyses
   them again.
-- Vim and xcscope split rows at spaces, so paths with spaces break their parsing, as
-  with cscope. The [JSON interface](../guide/json.md) keeps such paths whole, and the
-  Neovim plugin uses it.
+- Vim splits rows at spaces, so paths with spaces break its parsing, as with
+  cscope. The [JSON interface](../guide/json.md) keeps such paths whole, and the
+  Neovim and Emacs packages use it.
 - A query for an exact name reads the blocks of lines that hold it and, for a
   matching function or macro, the rest of its body. A common name can occur in
   many blocks. A regular expression or a `-C` name pattern in fields 0 to 3 and 9
@@ -85,7 +85,5 @@ This reference describes Ripscope’s supported platforms and C reading. See the
 
 - No interactive terminal interface. Use an editor integration or the command line.
 - On Windows, Emacs command arguments must fit the active Windows ANSI code page, and
-  unsupported characters are refused. Its native index build uses Ripscope's file
-  discovery rules. xcscope's suffix and directory-exclusion settings apply only on
-  Linux.
+  unsupported characters are refused.
 - Editor integrations are tested on specific versions, listed on each editor's page.

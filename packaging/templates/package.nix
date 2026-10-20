@@ -42,7 +42,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   meta = {
     description = "C navigation with atomic index updates";
     homepage = "https://ripscope.com";
-    license = with lib.licenses; [ mit asl20 gpl2Plus ];
+    license = with lib.licenses; [ mit asl20 ];
     platforms = [ "x86_64-linux" ];
     sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
     mainProgram = "ripscope";

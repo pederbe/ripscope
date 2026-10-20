@@ -236,13 +236,13 @@ test('forced colors retains visible selection and focus indicators', async () =>
   } finally { await page.close(); }
 });
 
-test('structured data declares both core licenses and the Emacs license separately', async () => {
+test('structured data declares both licenses', async () => {
   const html = await readFile(resolve(site, 'index.html'), 'utf8');
   const data = JSON.parse(html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]);
   assert.equal(data.license.length, 2);
   assert.ok(data.license.some(value => value.includes('mit')));
   assert.ok(data.license.some(value => value.includes('apache')));
-  assert.match(data.hasPart.description, /GPL-2.0-or-later/);
+  assert.equal(data.hasPart, undefined);
 });
 
 async function animationTimes(page) {

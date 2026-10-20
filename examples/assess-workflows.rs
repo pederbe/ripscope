@@ -105,8 +105,8 @@ impl Mode {
             },
             Self::Emacs => Editor {
                 extension: "el",
-                adapter: "contrib/emacs/ripscope-xcscope.el",
-                dependencies: &["contrib/emacs/vendor/xcscope.el"],
+                adapter: "contrib/emacs/ripscope.el",
+                dependencies: &[],
                 args: &[
                     "-Q",
                     "--batch",
