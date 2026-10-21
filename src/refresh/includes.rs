@@ -3,13 +3,12 @@
 
 use super::{Selection, below, canonical_path, path_of};
 use crate::hashing::{HashMap, HashSet};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 pub(super) struct IncludeResolver {
     root: PathBuf,
     directories: Vec<Vec<u8>>,
-    /// Directory listings for discovery's exact Windows spelling.
-    listings: HashMap<PathBuf, HashSet<std::ffi::OsString>>,
+    listings: Listings,
     existing: HashMap<Vec<u8>, bool>,
     /// Discovery's candidates for an operand, for angle and quoted delimiters, in search
     /// order up to the first that exists, and whether one does: the files do not change
@@ -19,6 +18,9 @@ pub(super) struct IncludeResolver {
 
 /// Discovery's candidates for an operand up to the first that exists, and whether one does.
 type Candidates = (Vec<Vec<u8>>, bool);
+
+/// Directory listings for discovery's exact Windows spelling.
+type Listings = HashMap<PathBuf, HashSet<std::ffi::OsString>>;
 
 /// A recorded question to the file system: the name it asks about, and whether it was a
 /// regular file spelled exactly.
@@ -104,7 +106,7 @@ impl IncludeResolver {
         if let Some(known) = self.existing.get(name) {
             return *known;
         }
-        let exists = self.look_for(name);
+        let exists = exact_file(&self.root, name, &mut self.listings);
         self.existing.insert(name.to_vec(), exists);
         exists
     }
@@ -126,32 +128,30 @@ impl IncludeResolver {
     }
 
     /// Whether the file system still answers every question `observations` records as
-    /// it did then, asked on several threads.
-    pub(super) fn observes(&mut self, observations: &[u8]) -> bool {
+    /// it did then, asked on several threads. Each thread asks a run of neighbouring
+    /// names with its own directory listings, so a directory is listed about once per
+    /// thread. The answers fill nothing in: a Refresh that goes on records only what its
+    /// discovery asks.
+    pub(super) fn observes(&self, observations: &[u8]) -> bool {
         let Some(questions) = questions(observations) else {
             return false;
         };
-        // On Windows an exact spelling is found through directory listings, which this
-        // resolver keeps: the questions are asked here.
-        if cfg!(windows) {
-            return questions
-                .iter()
-                .all(|&(name, exists)| self.exists(name) == exists);
-        }
         let root = &self.root;
-        let same = |&(name, exists): &Question<'_>| below(root, name).is_file() == exists;
+        let all_same = |questions: &[Question<'_>]| {
+            let mut listings = Listings::default();
+            questions
+                .iter()
+                .all(|&(name, exists)| exact_file(root, name, &mut listings) == exists)
+        };
         let threads = super::checking_threads(questions.len()).min(8);
         let chunk = questions.len().div_ceil(threads).max(1);
         std::thread::scope(|scope| {
             let others: Vec<_> = questions
                 .chunks(chunk)
                 .skip(1)
-                .map(|questions| scope.spawn(move || questions.iter().all(same)))
+                .map(|questions| scope.spawn(move || all_same(questions)))
                 .collect();
-            let first = questions
-                .chunks(chunk)
-                .next()
-                .is_none_or(|q| q.iter().all(same));
+            let first = questions.chunks(chunk).next().is_none_or(all_same);
             others
                 .into_iter()
                 .fold(first, |all, other| other.join().unwrap_or(false) && all)
@@ -168,37 +168,40 @@ impl IncludeResolver {
         }
         out
     }
+}
 
-    fn look_for(&mut self, name: &[u8]) -> bool {
-        let path = below(&self.root, name);
-        if !path.is_file() {
+/// Whether `name`, below `root`, is a regular file spelled exactly, including on
+/// case-insensitive filesystems. On Windows the spelling is checked against the
+/// directory listings in `listings`, read when first needed.
+fn exact_file(root: &Path, name: &[u8], listings: &mut Listings) -> bool {
+    let path = below(root, name);
+    if !path.is_file() {
+        return false;
+    }
+    if !cfg!(windows) {
+        return true;
+    }
+    let mut parent = if path_of(name).is_absolute() {
+        PathBuf::new()
+    } else {
+        root.to_owned()
+    };
+    for component in path_of(name).components() {
+        let std::path::Component::Normal(part) = component else {
+            parent.push(component.as_os_str());
+            continue;
+        };
+        let listing = listings.entry(parent.clone()).or_insert_with(|| {
+            std::fs::read_dir(&parent)
+                .map(|entries| entries.flatten().map(|entry| entry.file_name()).collect())
+                .unwrap_or_default()
+        });
+        if !listing.contains(part) {
             return false;
         }
-        if !cfg!(windows) {
-            return true;
-        }
-        let mut parent = if path_of(name).is_absolute() {
-            PathBuf::new()
-        } else {
-            self.root.clone()
-        };
-        for component in path_of(name).components() {
-            let std::path::Component::Normal(part) = component else {
-                parent.push(component.as_os_str());
-                continue;
-            };
-            let listing = self.listings.entry(parent.clone()).or_insert_with(|| {
-                std::fs::read_dir(&parent)
-                    .map(|entries| entries.flatten().map(|entry| entry.file_name()).collect())
-                    .unwrap_or_default()
-            });
-            if !listing.contains(part) {
-                return false;
-            }
-            parent.push(part);
-        }
-        true
+        parent.push(part);
     }
+    true
 }
 
 /// What begins each question [`IncludeResolver::observations`] records: whether a name is
