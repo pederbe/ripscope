@@ -1,11 +1,11 @@
 {
-  "build_image": "quay.io/pypa/manylinux_2_28_x86_64@sha256:531d7aa844bbb0c131d4ab011d3db741c4abc8d498cd5ccc86121046f62303b4",
-  "runtime_image": "docker.io/library/debian@sha256:3783cc01769c7b2b1b83a5c5ad96c815348e28ed7da68e2e3687004faa906251",
-  "rust_version": "1.98.1",
-  "rust_commit": "48a229ceaefd4985c50990b14116b6d856af0985",
-  "mold_version": "2.40.4",
-  "mold_archive_sha256": "4c999e19ffa31afa5aa429c679b665d5e2ca5a6b6832ad4b79668e8dcf3d8ec1",
-  "mold_url": "https://github.com/rui314/mold/releases/download/v2.40.4/mold-2.40.4-x86_64-linux.tar.gz",
+  "build_image": "quay.io/pypa/manylinux_2_28_x86_64@sha256:b74a5b6f1705ecff17be8bd792589bef9b3b039766d12205720ecd2a9e919192",
+  "runtime_image": "docker.io/library/debian@sha256:4c25275446ca371766b8b093c696782eabce06263fccacb8d5d813b3dc44b308",
+  "rust_version": "1.99.1",
+  "rust_commit": "58cf8f9c35b355199727627d07ae34a4e2846d67",
+  "mold_version": "3.0.0",
+  "mold_archive_sha256": "6c90d4a474c7c0409dfb575be03a5345878ac14fdba18de8b40fa58c60121189",
+  "mold_url": "https://github.com/rui314/mold/releases/download/v3.0.0/mold-3.0.0-x86_64-linux.tar.gz",
   "rustflags": "-C target-cpu=x86-64 -C link-arg=-fuse-ld=mold --remap-path-prefix=/work/source=/ripscope --remap-path-prefix=/work/vendor=/vendor",
   "cflags": "-march=x86-64 -mtune=generic -ffile-prefix-map=/work/source=/ripscope -ffile-prefix-map=/work/vendor=/vendor"
 }

@@ -8,8 +8,8 @@ smokes the extracted archive. Initial vendoring and image acquisition can use th
 network; the build and runtime containers cannot. This prepares local files without
 publishing them.
 
-Use Git, binutils (`readelf`), GNU tar, rootless Podman, the pinned Rust 1.98.1
-toolchain and the Mold 2.40.4 archive, plus Rust 1.98 or later to build the release
+Use Git, binutils (`readelf`), GNU tar, rootless Podman, the pinned Rust 1.99.1
+toolchain and the Mold 3.0.0 archive, plus Rust 1.98 or later to build the release
 tool itself. Native developer-proof tests also require disk-backed `/var/tmp` with at
 least 4 GiB free, a reachable user systemd manager, and a visible unified cgroup
 hierarchy under that manager. The tool checks those prerequisites without recording
@@ -20,8 +20,8 @@ checks `mold_archive_sha256` before extraction. Select a new external work direc
 ```sh
 cargo run --locked --manifest-path tools/release/Cargo.toml -- linux \
   --work /var/tmp/ripscope-linux-candidate \
-  --toolchain "$HOME/.rustup/toolchains/1.98.1-x86_64-unknown-linux-gnu" \
-  --mold-archive /path/to/mold-2.40.4-x86_64-linux.tar.gz
+  --toolchain "$HOME/.rustup/toolchains/1.99.1-x86_64-unknown-linux-gnu" \
+  --mold-archive /path/to/mold-3.0.0-x86_64-linux.tar.gz
 ```
 
 The tool preserves logs and `receipt.json` there. The archive contains the
