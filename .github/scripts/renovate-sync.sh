@@ -35,7 +35,10 @@ for key in rust mold mdbook; do
       rm "$tmp"
       ;;
     mdbook)
+      digest=$(curl --proto '=https' --tlsv1.2 -fsSL "https://api.github.com/repos/rust-lang/mdBook/releases/tags/v$new" | jq -er --arg name "mdbook-v$new-x86_64-unknown-linux-gnu.tar.gz" '.assets[] | select(.name == $name) | .digest | select(test("^sha256:[0-9a-f]{64}$")) | ltrimstr("sha256:")')
       replace "mdbook v$old" "mdbook v$new" tools/site/src/main.rs
+      replace "/v$old/mdbook-v$old-" "/v$new/mdbook-v$new-" scripts/build-site.sh
+      DIGEST=$digest perl -pi -e 'if (/mdbook\.tar\.gz.*sha256sum/) { s/[0-9a-f]{64}/$ENV{DIGEST}/ }' scripts/build-site.sh
       replace "mdbook@$old" "mdbook@$new" .github/workflows/*.yml
       ;;
   esac

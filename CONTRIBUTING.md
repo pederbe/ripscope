@@ -141,6 +141,9 @@ releases are included. Merge follows required checks and an independent Spec
 and Standards review. The self-hosted runner executes `.github/scripts/renovate-sync.sh` to
 prepare compiler commits, download hashes and duplicated tool versions before
 pushing the PR. An unavailable upstream digest fails preparation.
+Urgent security fixes may produce separate pull requests outside the daily batch.
+Existing Dependabot security alerts and updates remain enabled.
+
 
 The notify 9 release candidate preserves Windows overflow/rescan handling absent
 from stable 8.2. Replace it with stable 9 or newer when available. Minimum Rust
