@@ -296,7 +296,7 @@ fn main() -> Result<()> {
     let metadata = json!({
         "started_unix_seconds": SystemTime::now().duration_since(SystemTime::UNIX_EPOCH)?.as_secs(),
         "os": std::env::consts::OS, "architecture": std::env::consts::ARCH,
-        "binary": binary, "binary_sha256": format!("{:x}", Sha256::digest(fs::read(&binary)?)),
+        "binary": binary, "binary_sha256": base16ct::lower::encode_string(&Sha256::digest(fs::read(&binary)?)),
         "binary_version": version, "harness_sqlite_version": rusqlite::version(),
         "harness_sqlite_version_number": rusqlite::version_number(),
         "harness_version": env!("CARGO_PKG_VERSION"),

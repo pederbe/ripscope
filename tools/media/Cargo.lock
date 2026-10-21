@@ -3,6 +3,12 @@
 version = 4
 
 [[package]]
+name = "base16ct"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "fd307490d624467aa6f74b0eabb77633d1f758a7b25f12bceb0b22e08d9726f6"
+
+[[package]]
 name = "block-buffer"
 version = "0.12.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -101,6 +107,7 @@ dependencies = [
 name = "ripscope-media"
 version = "0.1.0"
 dependencies = [
+ "base16ct",
  "serde_json",
  "sha2",
 ]

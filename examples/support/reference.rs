@@ -94,7 +94,7 @@ impl Reference {
     /// Checks the executable's identity, then runs `args` inside Linux. The inner deadline
     /// kills the whole group; commands under it must use `timeout --foreground`.
     pub fn run(&self, args: &[&str], stdin: Option<&[u8]>, seconds: f64) -> io::Result<Output> {
-        let actual = format!("{:x}", Sha256::digest(std::fs::read(&self.cscope)?));
+        let actual = base16ct::lower::encode_string(&Sha256::digest(std::fs::read(&self.cscope)?));
         if actual != self.sha256 {
             return Err(io::Error::other(
                 "the reference cscope binary does not match ADR 0001",
@@ -232,7 +232,7 @@ mod tests {
         let cscope = root.join("cscope");
         std::fs::write(&cscope, b"pinned reference").unwrap();
         Reference {
-            sha256: format!("{:x}", Sha256::digest(b"pinned reference")),
+            sha256: base16ct::lower::encode_string(&Sha256::digest(b"pinned reference")),
             cscope,
             windows,
             libraries: None,
@@ -332,7 +332,7 @@ mod tests {
     fn reference_identity_is_checked_before_any_command() {
         let root = tempfile::tempdir().unwrap();
         let mut reference = fake(root.path(), false);
-        reference.sha256 = format!("{:x}", Sha256::digest(b"another cscope build"));
+        reference.sha256 = base16ct::lower::encode_string(&Sha256::digest(b"another cscope build"));
         let marker = root.path().join("ran");
         let script = format!("touch {}", quote(&marker.to_string_lossy()));
         let error = reference

@@ -11,6 +11,7 @@ rust-version = "1.98"
 [workspace]
 
 [dependencies]
+base16ct = { version = "=1.0.0", features = ["alloc"] }
 flate2 = { version = "=1.1.10", default-features = false, features = ["rust_backend"] }
 regex = "=1.13.1"
 # Receipts keep their members in the order the build records them.

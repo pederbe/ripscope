@@ -30,7 +30,9 @@ fn main() -> ExitCode {
 }
 
 fn sha(path: &Path) -> Result<String> {
-    Ok(format!("{:x}", Sha256::digest(fs::read(path)?)))
+    Ok(base16ct::lower::encode_string(&Sha256::digest(fs::read(
+        path,
+    )?)))
 }
 
 fn run() -> Result<i32> {

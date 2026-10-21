@@ -173,7 +173,7 @@ fn sha(path: &Path) -> Result<String> {
         }
         digest.update(&buffer[..count]);
     }
-    Ok(format!("{:x}", digest.finalize()))
+    Ok(base16ct::lower::encode_string(&digest.finalize()))
 }
 
 #[cfg(test)]

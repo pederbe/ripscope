@@ -119,7 +119,7 @@ fn read(path: &Path) -> io::Result<Value> {
 }
 
 fn hash(bytes: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(bytes))
+    base16ct::lower::encode_string(&Sha256::digest(bytes))
 }
 
 fn limits() -> Value {
@@ -923,7 +923,7 @@ mod tests {
     use std::{fs, os::unix::fs::PermissionsExt, path::Path, process::Command};
 
     fn digest(path: &Path) -> String {
-        format!("{:x}", Sha256::digest(fs::read(path).unwrap()))
+        base16ct::lower::encode_string(&Sha256::digest(fs::read(path).unwrap()))
     }
 
     fn fixture(source: &str, baseline: Value, enabled: Value) -> tempfile::TempDir {

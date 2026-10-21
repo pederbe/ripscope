@@ -45,7 +45,7 @@ pub fn digest(path: &Path) -> io::Result<String> {
         }
         hash.update(&bytes[..count]);
     }
-    Ok(format!("{:x}", hash.finalize()))
+    Ok(base16ct::lower::encode_string(&hash.finalize()))
 }
 
 /// Hash only the bounded byte snapshot; an unknown producer may still append.
@@ -65,7 +65,7 @@ pub(crate) fn snapshot(path: &Path) -> io::Result<Value> {
         hash.update(&bytes[..count]);
     }
     Ok(
-        json!({"observed_bytes":observed,"hash_bytes":total,"sha256":format!("{:x}",hash.finalize())}),
+        json!({"observed_bytes":observed,"hash_bytes":total,"sha256":base16ct::lower::encode_string(&hash.finalize())}),
     )
 }
 

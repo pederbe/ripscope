@@ -756,7 +756,10 @@ fn rewrite_assets(docs: &Path) -> Result<()> {
                 })
                 .into_owned()
         };
-        let name = format!("{prefix}{:x}.js", Sha256::digest(text.as_bytes()));
+        let name = format!(
+            "{prefix}{}.js",
+            base16ct::lower::encode_string(&Sha256::digest(text.as_bytes()))
+        );
         fs::write(docs.join(&name), text)?;
         fs::remove_file(old)?;
         renames.insert(
@@ -810,7 +813,10 @@ fn render_diagrams(root: &Path, docs: &Path, refresh: bool) -> Result<()> {
                 digest.update(source.as_bytes());
                 digest.update(b"\0");
                 digest.update(fs::read(&config)?);
-                let name = format!("{:x}-{theme}.svg", digest.finalize());
+                let name = format!(
+                    "{}-{theme}.svg",
+                    base16ct::lower::encode_string(&digest.finalize())
+                );
                 let render = cache.join(&name);
                 if !render.is_file() {
                     if !refresh {

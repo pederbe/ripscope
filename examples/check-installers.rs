@@ -36,7 +36,7 @@ fn ensure(ok: bool, message: &str) -> Result<()> {
     }
 }
 fn hash(bytes: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(bytes))
+    base16ct::lower::encode_string(&Sha256::digest(bytes))
 }
 fn script_path(path: &Path) -> Result<PathBuf> {
     let canonical = path.canonicalize()?;

@@ -104,7 +104,7 @@ pub fn sha(path: &Path) -> Result<String> {
         }
         digest.update(&buffer[..count]);
     }
-    Ok(format!("{:x}", digest.finalize()))
+    Ok(base16ct::lower::encode_string(&digest.finalize()))
 }
 
 /// Every path below `root`, directories included, without entering linked directories.
