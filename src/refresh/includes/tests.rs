@@ -222,3 +222,101 @@ fn recorded_questions_read_back_and_others_are_refused() {
     assert_eq!(questions(&earlier), None);
     assert!(!IncludeResolver::new(&rule, &[], false).observes(&earlier));
 }
+
+/// A large project's questions, asked on several threads, give the answers they gave
+/// when recorded, and one changed answer anywhere among them is noticed.
+#[test]
+fn many_questions_are_answered_as_recorded() {
+    let work = tempfile::tempdir().unwrap();
+    let root = work.path();
+    let names: Vec<_> = (0..700)
+        .map(|at| format!("dir{}/api{at}.h", at % 7))
+        .collect();
+    for name in &names {
+        write(root, name);
+    }
+    let rule = selection(root, &["include"]);
+    let mut resolver = IncludeResolver::new(&rule, &[], false);
+    for name in &names {
+        assert!(
+            resolver
+                .discover(name.as_bytes(), true, &HashSet::default())
+                .is_some()
+        );
+    }
+    assert!(
+        resolver
+            .discover(b"absent.h", true, &HashSet::default())
+            .is_none()
+    );
+    let observed = resolver.observations();
+    assert!(questions(&observed).unwrap().len() > 512);
+    assert!(IncludeResolver::new(&rule, &[], false).observes(&observed));
+    std::fs::remove_file(root.join(&names[350])).unwrap();
+    assert!(!IncludeResolver::new(&rule, &[], false).observes(&observed));
+    write(root, &names[350]);
+    assert!(IncludeResolver::new(&rule, &[], false).observes(&observed));
+    write(root, "include/absent.h");
+    assert!(!IncludeResolver::new(&rule, &[], false).observes(&observed));
+}
+
+/// A Refresh that goes on after its early stop records only what its own discovery asks,
+/// not the questions the early stop asked.
+#[test]
+fn a_failed_early_stop_leaves_no_questions_behind() {
+    let work = tempfile::tempdir().unwrap();
+    let root = work.path();
+    write(root, "include/old.h");
+    write(root, "include/new.h");
+    let rule = selection(root, &["include"]);
+    let mut earlier = IncludeResolver::new(&rule, &[], false);
+    assert!(
+        earlier
+            .discover(b"old.h", true, &HashSet::default())
+            .is_some()
+    );
+    let observed = earlier.observations();
+    std::fs::remove_file(root.join("include/old.h")).unwrap();
+    let mut resolver = IncludeResolver::new(&rule, &[], false);
+    assert!(!resolver.observes(&observed));
+    assert!(
+        resolver
+            .discover(b"new.h", true, &HashSet::default())
+            .is_some()
+    );
+    let mut fresh = IncludeResolver::new(&rule, &[], false);
+    assert!(
+        fresh
+            .discover(b"new.h", true, &HashSet::default())
+            .is_some()
+    );
+    assert_eq!(resolver.observations(), fresh.observations());
+}
+
+/// On several threads a Windows question still asks for the exact spelling: a file whose
+/// name now differs only in case no longer answers it.
+#[cfg(windows)]
+#[test]
+fn many_questions_keep_exact_spellings() {
+    let work = tempfile::tempdir().unwrap();
+    let root = work.path();
+    let names: Vec<_> = (0..600)
+        .map(|at| format!("dir{}/api{at}.h", at % 5))
+        .collect();
+    for name in &names {
+        write(root, name);
+    }
+    let rule = selection(root, &[]);
+    let mut resolver = IncludeResolver::new(&rule, &[], false);
+    for name in &names {
+        assert!(
+            resolver
+                .discover(name.as_bytes(), true, &HashSet::default())
+                .is_some()
+        );
+    }
+    let observed = resolver.observations();
+    assert!(IncludeResolver::new(&rule, &[], false).observes(&observed));
+    std::fs::rename(root.join(&names[400]), root.join(names[400].to_uppercase())).unwrap();
+    assert!(!IncludeResolver::new(&rule, &[], false).observes(&observed));
+}
