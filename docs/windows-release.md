@@ -12,7 +12,7 @@ directory on local NTFS:
 ```powershell
 cargo run --locked --manifest-path tools/release/Cargo.toml -- windows `
   --work C:/builds/ripscope-candidate `
-  --toolchain C:/Users/USER/.rustup/toolchains/1.98.1-x86_64-pc-windows-msvc `
+  --toolchain C:/Users/USER/.rustup/toolchains/1.99.1-x86_64-pc-windows-msvc `
   --msvc 'C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207' `
   --sdk 'C:/Program Files (x86)/Windows Kits/10'
 ```

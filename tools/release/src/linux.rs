@@ -82,7 +82,7 @@ pub fn inspect_elf(
     if !header.contains("Advanced Micro Devices X86-64") || !header.contains("ELF64") {
         return Err("Not an x86-64 ELF64 artifact".into());
     }
-    if !interpreter.contains("/lib64/ld-linux-x86-64.so.2") || !comments.contains("mold 2.40.4") {
+    if !interpreter.contains("/lib64/ld-linux-x86-64.so.2") || !comments.contains("mold 3.0.0") {
         return Err("Unexpected interpreter or missing pinned Mold identification".into());
     }
     let maximum: Vec<String> = highest.iter().map(u64::to_string).collect();
@@ -561,7 +561,7 @@ pub fn run(args: &[String]) -> Result<()> {
         300,
         None,
     )?;
-    let mold = work.join("mold/mold-2.40.4-x86_64-linux");
+    let mold = work.join("mold/mold-3.0.0-x86_64-linux");
     let vendor = work.join("vendor");
     // Cargo's progress and configuration share a retained log. The generated
     // configuration below uses fixed container paths instead of log extraction.
@@ -940,7 +940,7 @@ mod tests {
             "(NEEDED) [libc.so.6]",
             "GLIBC_2.2.5 GLIBC_2.28",
             "x86 ISA needed: x86-64-baseline",
-            "mold 2.40.4",
+            "mold 3.0.0",
             "ELF64 Advanced Micro Devices X86-64",
             "/lib64/ld-linux-x86-64.so.2",
         ];

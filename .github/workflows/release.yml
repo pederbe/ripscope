@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   preflight:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     permissions:
       contents: read
       actions: read
@@ -35,7 +35,7 @@ jobs:
           fetch-depth: 0
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
         with:
-          toolchain: '1.98.1'
+          toolchain: '1.99.1'
       # Built with no token in the environment or in .git/config. Only the next step,
       # which runs the guard, is given one.
       - name: Build the release guard
@@ -68,7 +68,7 @@ jobs:
           echo "publish=$PUBLISH" >> "$GITHUB_OUTPUT"
   linux:
     needs: preflight
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -76,14 +76,14 @@ jobs:
           ref: ${{ inputs.source_sha }}
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
         with:
-          toolchain: '1.98.1'
+          toolchain: '1.99.1'
       - name: Build exact Linux archive
         run: |
           set -euo pipefail
           release="cargo run --locked --quiet --manifest-path tools/release/Cargo.toml --"
           curl --proto '=https' --tlsv1.2 -fL "$($release profile linux mold_url)" -o "$RUNNER_TEMP/mold.tar.gz"
           $release linux --work "$RUNNER_TEMP/linux" \
-            --toolchain "$HOME/.rustup/toolchains/1.98.1-x86_64-unknown-linux-gnu" --mold-archive "$RUNNER_TEMP/mold.tar.gz"
+            --toolchain "$HOME/.rustup/toolchains/1.99.1-x86_64-unknown-linux-gnu" --mold-archive "$RUNNER_TEMP/mold.tar.gz"
       - name: Package the inspected executable and smoke-test the packages
         env:
           TAG: ${{ inputs.tag }}
@@ -110,7 +110,7 @@ jobs:
           if-no-files-found: error
   windows:
     needs: preflight
-    runs-on: windows-2022
+    runs-on: windows-2025
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -118,7 +118,7 @@ jobs:
           ref: ${{ inputs.source_sha }}
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
         with:
-          toolchain: '1.98.1'
+          toolchain: '1.99.1'
       - name: Build exact Windows archive and check installer
         env:
           TAG: ${{ inputs.tag }}
@@ -130,7 +130,7 @@ jobs:
           $vs = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
           $msvc = Join-Path $vs "VC\Tools\MSVC\$($profile.msvc_directory)"
           if (-not (Test-Path -LiteralPath $msvc)) { throw 'Pinned MSVC is unavailable; install the recorded profile before release.' }
-          $toolchain = Join-Path $HOME '.rustup\toolchains\1.98.1-x86_64-pc-windows-msvc'
+          $toolchain = Join-Path $HOME '.rustup\toolchains\1.99.1-x86_64-pc-windows-msvc'
           cargo run --locked --manifest-path tools/release/Cargo.toml -- windows --work "$env:RUNNER_TEMP\windows" --toolchain $toolchain --msvc $msvc --sdk "${env:ProgramFiles(x86)}\Windows Kits\10"
           if ($LASTEXITCODE) { throw 'Windows archive build failed' }
           $version = $env:TAG.Substring(1)
@@ -144,7 +144,7 @@ jobs:
   publish:
     needs: [preflight, linux, windows]
     if: needs.preflight.outputs.publish == 'true'
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     environment: release
     permissions:
       contents: write
