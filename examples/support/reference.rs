@@ -263,19 +263,24 @@ mod tests {
             .trim()
             .parse()
             .unwrap();
-        let state = std::fs::read_to_string(format!("/proc/{pid}/status"))
-            .ok()
-            .and_then(|status| {
-                status
-                    .lines()
-                    .find(|line| line.starts_with("State:"))
-                    .map(str::to_owned)
-            });
-        if let Some(state) = state {
-            assert!(
-                state.contains("Z (zombie)"),
-                "timed-out descendant is still running: {state}"
-            );
+        // SIGKILL is delivered asynchronously, so the descendant can briefly still run.
+        let state = || {
+            std::fs::read_to_string(format!("/proc/{pid}/status"))
+                .ok()
+                .and_then(|status| {
+                    status
+                        .lines()
+                        .find(|line| line.starts_with("State:"))
+                        .map(str::to_owned)
+                })
+                .filter(|state| !state.contains("Z (zombie)"))
+        };
+        let stopping = Instant::now();
+        while state().is_some() && stopping.elapsed() < Duration::from_secs(5) {
+            thread::sleep(Duration::from_millis(10));
+        }
+        if let Some(state) = state() {
+            panic!("timed-out descendant is still running: {state}");
         }
     }
 
