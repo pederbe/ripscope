@@ -143,6 +143,11 @@ const fn only(
 /// The only places code in another language may live.
 const EXCEPTIONS: &[Exception] = &[
     only(
+        ".github/scripts/renovate-sync.sh",
+        &["shell"],
+        "dependency updater glue synchronizes download metadata before CI",
+    ),
+    only(
         "install.sh",
         &["shell"],
         "the Linux installer runs before Ripscope or Rust is present",

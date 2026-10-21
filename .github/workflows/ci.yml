@@ -30,12 +30,15 @@ jobs:
       pull-requests: read
     outputs:
       code: ${{ steps.filter.outputs.code }}
+      media: ${{ steps.filter.outputs.media }}
     steps:
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
         id: filter
         with:
           predicate-quantifier: every
           filters: |
+            media:
+              - "tools/media/**"
             code:
               - '!docs/**'
               - '!**/*.md'
@@ -66,7 +69,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # Pinned so new Clippy lints cannot break CI unannounced; bump deliberately.
+      # Renovate advances the pinned stable compiler in the daily dependency batch.
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
         with:
           toolchain: "1.98.1"
@@ -94,6 +97,13 @@ jobs:
           cargo fmt --manifest-path tools/latency/Cargo.toml --check
           cargo clippy --locked --all-targets --manifest-path tools/latency/Cargo.toml -- -D warnings
           cargo test --locked --all-targets --manifest-path tools/latency/Cargo.toml
+
+      - name: Media tooling
+        if: github.event_name != 'pull_request' || needs.changes.outputs.media == 'true'
+        run: |
+          cargo fmt --manifest-path tools/media/Cargo.toml --check
+          cargo clippy --locked --all-targets --manifest-path tools/media/Cargo.toml -- -D warnings
+          cargo test --locked --manifest-path tools/media/Cargo.toml
 
       - name: Release tooling
         run: |
