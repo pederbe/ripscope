@@ -97,6 +97,33 @@
       "datasourceTemplate": "docker",
       "currentValueTemplate": "latest",
       "versioningTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/dependency-pins\\.json$/"
+      ],
+      "matchStrings": [
+        "\"node\":\\s*\"(?<currentValue>[^\"\\s]+)\""
+      ],
+      "depNameTemplate": "node",
+      "packageNameTemplate": "node",
+      "datasourceTemplate": "node-version",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/dependency-pins\\.json$/"
+      ],
+      "matchStrings": [
+        "\"lychee\":\\s*\"(?<currentValue>[^\"\\s]+)\""
+      ],
+      "depNameTemplate": "lychee",
+      "packageNameTemplate": "lycheeverse/lychee",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^lychee-v(?<version>.+)$"
     }
   ],
   "postUpgradeTasks": {
@@ -109,7 +136,8 @@
       "tools/site/src/main.rs",
       "scripts/build-site.sh",
       "docs/linux-release.md",
-      "docs/windows-release.md"
+      "docs/windows-release.md",
+      "tools/site/README.md"
     ],
     "executionMode": "branch"
   },

@@ -7,7 +7,7 @@ pins=.github/dependency-pins.json
 replace() {
   OLD=$1 NEW=$2 perl -pi -e 's/\Q$ENV{OLD}\E/$ENV{NEW}/g' "${@:3}"
 }
-for key in rust mold mdbook; do
+for key in rust mold mdbook node lychee; do
   old=$(jq -er --arg key "$key" '.[$key]' <<< "$old_pins")
   new=$(jq -er --arg key "$key" '.[$key]' "$pins")
   [[ $new =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
@@ -34,7 +34,14 @@ for key in rust mold mdbook; do
       cat "$tmp" > tools/release/linux-release-profile.json
       rm "$tmp"
       ;;
+    node)
+      replace "node-version: '$old'" "node-version: '$new'" .github/workflows/docs.yml
+      ;;
+    lychee)
+      replace "lychee@$old" "lychee@$new" .github/workflows/docs.yml
+      ;;
     mdbook)
+      replace "$old" "$new" tools/site/README.md
       digest=$(curl --proto '=https' --tlsv1.2 -fsSL "https://api.github.com/repos/rust-lang/mdBook/releases/tags/v$new" | jq -er --arg name "mdbook-v$new-x86_64-unknown-linux-gnu.tar.gz" '.assets[] | select(.name == $name) | .digest | select(test("^sha256:[0-9a-f]{64}$")) | ltrimstr("sha256:")')
       replace "mdbook v$old" "mdbook v$new" tools/site/src/main.rs
       replace "/v$old/mdbook-v$old-" "/v$new/mdbook-v$new-" scripts/build-site.sh

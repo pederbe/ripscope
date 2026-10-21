@@ -41,7 +41,7 @@ jobs:
           tool: mdbook@0.5.4,lychee@0.24.2
       - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
         with:
-          node-version: '24'
+          node-version: '26.12.1'
       - name: Check site tooling
         run: |
           cargo fmt --manifest-path tools/site/Cargo.toml --check
