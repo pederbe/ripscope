@@ -31,9 +31,11 @@ It never deploys. `--docs-only` checks documentation during page development;
 it cannot be combined with a deployment build.
 
 `scripts/build-site.sh --deploy` requires a clean checkout whose root package version
-already has its `vVERSION` tag, so the page's download links exist. The deployment
-workflow selects a reviewed commit on `main` before running this command, so website
-changes ship without a new release. Building does not authorize deployment.
+already has its `vVERSION` tag, so the page's download links exist. Cloudflare
+Workers Builds runs this build automatically for website-input changes on `main`,
+so website changes ship without a new release or manual deployment.
+`scripts/build-site.sh --cloudflare` installs the build tools and runs `--deploy`
+in Cloudflare's build image. Local `--dev` and `--deploy` builds do not publish.
 
 Only chapters selected by `docs/SUMMARY.md`, their local assets, resolved Markdown
 includes and the theme enter the documentation build. `--list-inputs` lists the
@@ -78,8 +80,8 @@ and `install.ps1` to the site root. Documentation-only builds omit those scripts
 They must be regular files; symlinks and `site/install.sh` / `site/install.ps1`
 shadow copies are refused. Keep only the root sources when changing installation.
 
-Static hosting configuration and its manual approval gates are described in
-[Website hosting and approval](../../docs/project/website-hosting.md).
+Static hosting configuration and automatic deployment are described in
+[Website hosting and deployment](../../docs/project/website-hosting.md).
 
 The optional tooling lock retains patched KaTeX and scopes Sharp 0.35.5 and
 Undici 7.29.1 overrides to Miniflare. These patch versions correct advisories in

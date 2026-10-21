@@ -1,5 +1,5 @@
-// Staged static hosting. This file creates no resources until an approved deploy.
-// Keep Cloudflare Workers Builds disconnected: main pushes never deploy this site.
+// Cloudflare Workers Builds deploys website-input changes on main to ripscope.com.
+// Build watch paths are configured in the Worker's production build settings.
 {
   "$schema": "./tools/site/node_modules/wrangler/config-schema.json",
   "name": "ripscope-site",

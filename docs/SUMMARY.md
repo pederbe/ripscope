@@ -65,5 +65,5 @@
 - [Roadmap](project/roadmap.md)
 - [Contributing](project/contributing.md)
 - [How Ripscope is built](project/how-it-is-built.md)
-- [Website hosting and approval](project/website-hosting.md)
+- [Website hosting and deployment](project/website-hosting.md)
 - [Changelog](project/changelog.md)
