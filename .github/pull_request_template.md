@@ -1,15 +1,16 @@
 ## What and why
 
-<!-- What this change does and the problem it solves. Link the issue: "Fixes #123". -->
+<!-- What this changes and why. Link the issue, for example "Fixes #123". -->
 
-## Behavior and compatibility
+## How you tested it
 
-<!-- Does this change query output, diagnostics, exit status, index format or editor behavior?
-     If it changes cscope-compatible behavior, how was the expected result established? -->
+<!-- New or changed tests, or how you checked the result by hand.
+     CI runs formatting, Clippy and the full test suite, so no need to list those. -->
 
-## Validation
+## Worth knowing
 
-- [ ] `cargo fmt --all --check`
-- [ ] `cargo clippy --locked --all-targets -- -D warnings`
-- [ ] `cargo test --locked`
-- [ ] Documentation updated (README, `docs/`, `CHANGELOG.md`) where user-visible behavior changed
+<!-- Delete what doesn't apply:
+     - Changes output, diagnostics or exit status: show the output before and after.
+     - Adds a dependency: say why.
+     - Changes speed: include before and after timings.
+     - Changes user-visible behavior: update the docs and CHANGELOG.md. -->
