@@ -3,6 +3,13 @@ name: Website verification
 # This optional workflow never deploys.
 # Cloudflare Workers Builds handles production deployment.
 on:
+  pull_request:
+    paths:
+      - "tools/site/**"
+      - "scripts/build-site.sh"
+      - ".github/workflows/docs.yml"
+      - ".github/workflows/website-deploy.yml"
+      - ".github/dependency-pins.json"
   workflow_dispatch:
     inputs:
       check_external:

@@ -1,0 +1,113 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "enabledManagers": [
+    "cargo",
+    "npm",
+    "github-actions",
+    "dockerfile",
+    "custom.regex"
+  ],
+  "ignorePaths": [
+    "**/node_modules/**",
+    "**/target/**"
+  ],
+  "rangeStrategy": "bump",
+  "ignoreUnstable": true,
+  "minimumReleaseAge": "0 days",
+  "separateMajorMinor": false,
+  "separateMinorPatch": false,
+  "prConcurrentLimit": 1,
+  "prHourlyLimit": 0,
+  "dependencyDashboard": false,
+  "pinDigests": true,
+  "automerge": false,
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "*"
+      ],
+      "groupName": "daily dependencies",
+      "groupSlug": "daily-dependencies",
+      "separateMajorMinor": false
+    },
+    {
+      "description": "notify 9 rc6 repairs Windows overflow/rescan handling absent from stable 8.2. Promote to stable 9+ when available.",
+      "matchManagers": [
+        "cargo"
+      ],
+      "matchPackageNames": [
+        "notify"
+      ],
+      "allowedVersions": ">=9.0.0-rc.6"
+    }
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/dependency-pins\\.json$/"
+      ],
+      "matchStrings": [
+        "\"rust\":\\s*\"(?<currentValue>[^\"\\s]+)\""
+      ],
+      "depNameTemplate": "rust",
+      "packageNameTemplate": "rust",
+      "datasourceTemplate": "rust-version",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/dependency-pins\\.json$/"
+      ],
+      "matchStrings": [
+        "\"mold\":\\s*\"(?<currentValue>[^\"\\s]+)\""
+      ],
+      "depNameTemplate": "mold",
+      "packageNameTemplate": "rui314/mold",
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver",
+      "extractVersionTemplate": "^v(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^\\.github/dependency-pins\\.json$/"
+      ],
+      "matchStrings": [
+        "\"mdbook\":\\s*\"(?<currentValue>[^\"\\s]+)\""
+      ],
+      "depNameTemplate": "mdbook",
+      "packageNameTemplate": "rust-lang/mdBook",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^tools/release/linux-release-profile\\.json$/"
+      ],
+      "matchStrings": [
+        "\"(?:build_image|runtime_image)\":\\s*\"(?<depName>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
+      ],
+      "datasourceTemplate": "docker",
+      "currentValueTemplate": "latest",
+      "versioningTemplate": "docker"
+    }
+  ],
+  "postUpgradeTasks": {
+    "commands": [
+      "bash .github/scripts/renovate-sync.sh"
+    ],
+    "fileFilters": [
+      ".github/**",
+      "tools/release/**",
+      "tools/site/src/main.rs"
+    ],
+    "executionMode": "branch"
+  }
+}
