@@ -11,7 +11,10 @@ Cloudflare Workers Builds is connected to `pederbe/ripscope`, production branch
 typed confirmation, GitHub environment approval or release is needed for a website
 update. Unrelated application and CI changes do not trigger website deployment.
 
-The production build settings are:
+The [production build settings](https://dash.cloudflare.com/122c325c32f2aec8c4c6038a81a04c9a/workers/services/view/ripscope-site/production/settings#builds)
+hold the repository connection, build commands and watch paths.
+
+The configured values are:
 
 - Build command: `bash scripts/build-site.sh --cloudflare`.
 - Deploy command: `node tools/site/node_modules/wrangler/bin/wrangler.js deploy`.
