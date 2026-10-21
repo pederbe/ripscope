@@ -1160,7 +1160,7 @@ fn probe_records_match_the_scanner_version() {
             }
         }
     }
-    let digest = format!("{:x}", hasher.finalize());
+    let digest = base16ct::lower::encode_string(&hasher.finalize());
     assert_eq!(
         super::VERSION,
         38,

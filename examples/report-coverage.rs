@@ -333,7 +333,8 @@ fn run(root: &Path) -> Result<()> {
             let identities = read(&root.join("identities.json"))?;
             let manifest = root.join(format!("challenges/{name}/manifest.json"));
             use sha2::{Digest, Sha256};
-            let manifest_sha = format!("{:x}", Sha256::digest(fs::read(&manifest)?));
+            let manifest_sha =
+                base16ct::lower::encode_string(&Sha256::digest(fs::read(&manifest)?));
             if value["binary_sha256"] != identities["binary_sha256"]
                 || value["manifest_sha256"] != manifest_sha
             {

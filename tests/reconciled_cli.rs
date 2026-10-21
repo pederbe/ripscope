@@ -37,7 +37,7 @@ fn separate_processes_reopen_retained_definitions_after_source_removal() {
         serde_json::from_str(include_str!("fixtures/cli-combined.json")).unwrap();
     let source = include_bytes!("fixtures/cli-combined.c");
     assert_eq!(
-        format!("{:x}", Sha256::digest(source)),
+        base16ct::lower::encode_string(&Sha256::digest(source)),
         fixture["source_sha256"]
     );
     fs::write(root.join("case.c"), source).unwrap();

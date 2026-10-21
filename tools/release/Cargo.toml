@@ -11,17 +11,18 @@ rust-version = "1.98"
 [workspace]
 
 [dependencies]
+base16ct = { version = "=1.0.0", features = ["alloc"] }
 flate2 = { version = "=1.1.10", default-features = false, features = ["rust_backend"] }
 regex = "=1.13.1"
 # Receipts keep their members in the order the build records them.
-serde_json = { version = "=1.0.151", features = ["preserve_order"] }
-sha2 = "=0.10.9"
+serde_json = { version = "=1.0.154", features = ["preserve_order"] }
+sha2 = "=0.11.1"
 toml = { version = "=1.1.8", default-features = false, features = ["parse", "serde", "std"] }
 
 [target.'cfg(unix)'.dependencies]
 # Stops the Linux build's owned containers and scopes when it is interrupted.
 ctrlc = { version = "=3.5.2", features = ["termination"] }
-rustix = { version = "=1.1.4", features = ["fs", "process"] }
+rustix = { version = "=1.1.5", features = ["fs", "process"] }
 
 [dev-dependencies]
 tempfile = "=3.27.0"

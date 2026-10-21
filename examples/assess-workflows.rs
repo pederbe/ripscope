@@ -1839,7 +1839,7 @@ mod tests {
         .unwrap();
         let hash = |bytes: &str| {
             use sha2::Digest;
-            format!("{:x}", sha2::Sha256::digest(bytes.as_bytes()))
+            base16ct::lower::encode_string(&sha2::Sha256::digest(bytes.as_bytes()))
         };
         let plan = serde_json::json!({"name":"tiny","workflow_inventory_version":3,"edit":{"file":"a.c","line":1,"old":"alpha","new":"renamed","original_sha256":hash(original),"edited_sha256":hash(edited)},
             "selection":{"include_directories":[],"index_files":["a.c","b.h"],"closure_paths":["a.c","b.h"]},"source_expectations":{"neighbor_unchanged":[["a.c",2,"neighbor","function"]],"calls_after":[["a.c",1,"renamed","neighbor","call"]]}});

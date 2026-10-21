@@ -22,7 +22,9 @@ fn output(command: &mut Command) -> Result<String> {
     Ok(String::from_utf8(result.stdout)?)
 }
 fn sha(path: &Path) -> Result<String> {
-    Ok(format!("{:x}", Sha256::digest(fs::read(path)?)))
+    Ok(base16ct::lower::encode_string(&Sha256::digest(fs::read(
+        path,
+    )?)))
 }
 fn ascii_path(path: &Path) -> Result<&str> {
     let value = path.to_str().ok_or("path is not UTF-8")?;
@@ -266,7 +268,7 @@ fn run() -> Result<()> {
         "format": 1,
         "before": projection(&before), "after": projection(&after),
         "byte_identical_connection_records": true,
-        "raw_connection_sha256": format!("{:x}", Sha256::digest(before["connection"].as_str().unwrap().as_bytes())),
+        "raw_connection_sha256": base16ct::lower::encode_string(&Sha256::digest(before["connection"].as_str().unwrap().as_bytes())),
         "raw_record_sha256": {"before.json": sha(&destination.join("before.json"))?, "after.json": sha(&destination.join("after.json"))?},
         "projection_note": "Quickfix locations and text are copied from raw Vim records. Temporary absolute paths, process IDs and internal buffer fields are omitted. The connection digest covers the exact original cs show bytes, which were compared before projection."
     });
@@ -298,7 +300,7 @@ fn run() -> Result<()> {
         "observation_sha256": sha(&destination.join("observation.json"))?,
         "commands": ["RipscopeBuild", "cs find c greet", "copen 5", "cclose", "Go; insert helper; Escape", "w", "cs find c greet", "copen 5"],
         "adapter_sha256": sha(&adapter)?,
-        "fixture_sha256": {"main.c": format!("{:x}", Sha256::digest(MAIN.as_bytes())), "greet.c": format!("{:x}", Sha256::digest(GREET.as_bytes())), "include/greet.h": format!("{:x}", Sha256::digest(HEADER.as_bytes())), "main.c.after": format!("{:x}", Sha256::digest(after_source.as_bytes()))}, "vim_version": output(Command::new("vim").arg("--version"))?.lines().next(),
+        "fixture_sha256": {"main.c": base16ct::lower::encode_string(&Sha256::digest(MAIN.as_bytes())), "greet.c": base16ct::lower::encode_string(&Sha256::digest(GREET.as_bytes())), "include/greet.h": base16ct::lower::encode_string(&Sha256::digest(HEADER.as_bytes())), "main.c.after": base16ct::lower::encode_string(&Sha256::digest(after_source.as_bytes()))}, "vim_version": output(Command::new("vim").arg("--version"))?.lines().next(),
         "same_connection": true, "definition": definition, "callers_before": before_rows, "callers_after": after_rows,
         "sources": {"main.c": MAIN, "greet.c": GREET, "include/greet.h": HEADER, "main.c.after": after_source},
         "frames": [

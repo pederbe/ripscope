@@ -196,7 +196,7 @@ fn run() -> Result<bool> {
 }
 
 fn hash(bytes: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(bytes))
+    base16ct::lower::encode_string(&Sha256::digest(bytes))
 }
 
 fn reported_version(executable: &Path) -> Option<String> {

@@ -333,7 +333,7 @@ fn cached_inventory(entry: &Value, mut cached: Value) -> Result<Value> {
 }
 
 fn rank(name: &str) -> String {
-    format!("{:x}", Sha256::digest(format!("{SEED}\n{name}").as_bytes()))
+    base16ct::lower::encode_string(&Sha256::digest(format!("{SEED}\n{name}").as_bytes()))
 }
 
 fn draw(root: &Path, entries: &[Value]) -> Result<Value> {

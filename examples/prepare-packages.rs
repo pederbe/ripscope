@@ -46,7 +46,7 @@ fn sha256(path: &Path) -> Result<String> {
     loop {
         let count = file.read(&mut buffer)?;
         if count == 0 {
-            return Ok(format!("{:x}", hash.finalize()));
+            return Ok(base16ct::lower::encode_string(&hash.finalize()));
         }
         hash.update(&buffer[..count]);
     }
@@ -61,7 +61,7 @@ fn prepare(version: &str, archive: &Path, out: &Path) -> Result<()> {
         return Err(format!("Expected archive filename {filename}").into());
     }
     let archive_hash = sha256(archive)?;
-    let check_hash = format!("{:x}", Sha256::digest(CHECK.as_bytes()));
+    let check_hash = base16ct::lower::encode_string(&Sha256::digest(CHECK.as_bytes()));
     let ruby_check = CHECK
         .lines()
         .map(|line| format!("      {line}"))
@@ -79,7 +79,10 @@ fn prepare(version: &str, archive: &Path, out: &Path) -> Result<()> {
         let path = out.join(name);
         fs::create_dir_all(path.parent().ok_or("Missing output parent")?)?;
         fs::write(path, contents.as_bytes())?;
-        files.insert(name, format!("{:x}", Sha256::digest(contents.as_bytes())));
+        files.insert(
+            name,
+            base16ct::lower::encode_string(&Sha256::digest(contents.as_bytes())),
+        );
     }
     let receipt = json!({
         "schema": 1,

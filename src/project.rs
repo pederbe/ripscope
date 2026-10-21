@@ -365,7 +365,7 @@ mod tests {
         } else {
             "/home/me/My Café"
         };
-        let digest = format!("{:x}", Sha256::digest(key.as_bytes()));
+        let digest = base16ct::lower::encode_string(&Sha256::digest(key.as_bytes()));
         assert_eq!(
             index_name(&root).unwrap(),
             format!("My_Caf_-{}.db", &digest[..16])

@@ -91,7 +91,9 @@ fn options() -> Result<Options> {
 }
 
 fn digest(path: &Path) -> Result<String> {
-    Ok(format!("{:x}", Sha256::digest(fs::read(path)?)))
+    Ok(base16ct::lower::encode_string(&Sha256::digest(fs::read(
+        path,
+    )?)))
 }
 
 fn ensure(condition: bool, message: impl Into<String>) -> Result<()> {

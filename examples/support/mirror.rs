@@ -13,7 +13,7 @@ use std::sync::{
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 
 fn hash(bytes: &[u8]) -> String {
-    format!("{:x}", Sha256::digest(bytes))
+    base16ct::lower::encode_string(&Sha256::digest(bytes))
 }
 
 pub struct Mirror {
