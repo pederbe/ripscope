@@ -15,7 +15,7 @@ for key in rust mold mdbook; do
   case $key in
     rust)
       manifest=$(curl --proto '=https' --tlsv1.2 -fsSL "https://static.rust-lang.org/dist/channel-rust-$new.toml")
-      commit=$(sed -n 's/^git_commit_hash = "\([0-9a-f]*\)"$/\1/p' <<< "$manifest" | sort -u)
+      commit=$(awk '/^\[pkg.rustc\]$/ { selected=1; next } /^\[/ { selected=0 } selected && /^git_commit_hash = / { gsub(/"/, "", $3); print $3 }' <<< "$manifest")
       [[ $commit =~ ^[0-9a-f]{40}$ ]]
       replace "$old" "$new" .github/workflows/*.yml tools/release/*-release-profile.json
       for profile in tools/release/*-release-profile.json; do
