@@ -317,6 +317,14 @@ fn metadata_is_trusted_only_for_files_hashed_well_after_their_last_change() {
     let directory = tempfile::tempdir().expect("directory");
     let root = directory.path();
     write(root, "a.c", "int a;\n");
+    // A change time an hour ahead keeps every update inside the racy window, however
+    // slowly the test runs.
+    let ahead = std::time::SystemTime::now() + Duration::from_secs(60 * 60);
+    std::fs::File::options()
+        .write(true)
+        .open(root.join("a.c"))
+        .and_then(|file| file.set_modified(ahead))
+        .expect("later mtime");
     let mut store = Store::open(&root.join("index.db"), Access::Write).expect("index");
     let rule = selection(root, Sources::Files(vec![b"a.c".to_vec()]), &[]);
     run(&mut store, &rule);
