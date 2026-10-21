@@ -40,6 +40,14 @@ jobs:
               - '!docs/**'
               - '!**/*.md'
               - '!book.toml'
+              - '!site/**'
+              - '!tools/site/**'
+              - '!scripts/build-site.sh'
+              - '!wrangler.jsonc'
+              - '!.gitignore'
+              - '!.github/workflows/ci.yml'
+              - '!.github/workflows/docs.yml'
+              - '!.github/workflows/website-deploy.yml'
               - '!.github/ISSUE_TEMPLATE/**'
 
   check:

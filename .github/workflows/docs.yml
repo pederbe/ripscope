@@ -1,7 +1,7 @@
 name: Website verification
 
-# Manual verification only. Visibility changes, pushes and release creation do not
-# deploy anything. The separate website-deploy workflow requires a manual approval.
+# This optional workflow never deploys.
+# Cloudflare Workers Builds handles production deployment.
 on:
   workflow_dispatch:
     inputs:
