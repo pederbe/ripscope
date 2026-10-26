@@ -94,45 +94,54 @@ interruption after rename, the editors' `--plugin` install decisions, and select
 removal. These are functional checks;
 they do not measure performance or establish broad platform qualification.
 
-## Guarded release workflow
+## Weekly releases
 
-`.github/workflows/release.yml` runs only through manual dispatch at an existing
-version tag. The supplied full source SHA must equal both that tag and the
-workflow's dispatch commit. `publish` defaults to false. Build jobs prepare and
-test artifacts without creating a release or attestation.
+Every Monday at 06:43 UTC, `.github/workflows/weekly-release.yml` checks for
+unreleased code, dependency, editor or packaging changes. Documentation and website
+changes alone do not create a release. The workflow remains enabled until disabled
+in GitHub Actions. You can also dispatch it from `main` for an urgent release.
 
-Before enabling its publication path, configure the fixed `release` environment
-with at least one required reviewer. The preflight runs without environment
-secrets and fails closed unless the environment API returns that exact name and
-valid nonempty reviewers. Publication also requires a public repository and a
-successful preflight, then enters the fixed protected environment. The sole
-maintainer can permit self-approval; disable administrator bypass manually.
-The API check does not prove those dashboard settings. The hosted Windows runner
-must supply the exact pinned MSVC/SDK profile or its build fails.
-The hosted Linux runner's disk storage, user-manager and cgroup prerequisites
-must also be established before use. Local validation does not verify that
-hosted setup; the release tool fails closed when its prerequisites are unavailable.
+The workflow prepares a new patch version by default. Commit subjects with `!`
+before their colon, or bodies containing `BREAKING CHANGE:` or `BREAKING-CHANGE:`,
+advance the minor version before 1.0 and the major version after 1.0. Feature commits
+advance the minor version after 1.0. Mark compatibility changes when merging their
+pull request. A manual dispatch can request a minor or major increment. An explicitly
+prepared newer version in `Cargo.toml` takes precedence.
 
-An approved publication run creates attestations and a draft GitHub release.
-It does not publish the crate. `Cargo.toml` keeps `publish = false` until the
-maintainer explicitly starts and authorizes that separate release action.
-GitHub's account and repository requirements must be checked at that point;
-private preparation does not establish attestation availability or create any.
-See [GitHub's attestation documentation](https://docs.github.com/en/actions/concepts/security/artifact-attestations).
+Release metadata lives on the version tag. Its commit changes `Cargo.toml`,
+`Cargo.lock`, the Emacs version header and `CHANGELOG.md`, leaving the development
+version on `main` unchanged. Each changelog carries all previous release sections,
+new authored entries and grouped commit summaries with comparison links. The next
+release compares the two development snapshots, excluding generated metadata.
+
+The scheduler dispatches `.github/workflows/release.yml` at the exact tag and source
+SHA. That workflow builds, tests, inspects and packages both platform archives before
+attesting their provenance and publishing. Failed runs keep their tag. The next
+weekly or manual run resumes that same version before preparing another. If a
+failure needs a source or workflow fix, merge the fix and manually dispatch with
+`supersede_failed=true`. Once the old run has stopped, this prepares a higher version
+from current `main` and preserves the abandoned tag and its evidence. Successful
+build jobs are retained when retrying failed jobs. Releases are serialized and an
+older tag cannot replace a newer published version or its editor branch.
+
+Automatic publication uses the `automated-release` environment with no approval or
+wait rules and exactly one custom deployment policy, tag `v*`. Its preflight checks
+those settings, the public repository, the existing tag and exact dispatch SHA.
+Configure the environment once before enabling the schedule. The Windows runner
+must provide the pinned MSVC/SDK profile. Linux must satisfy the release tool's disk,
+user-manager and cgroup prerequisites. Missing prerequisites stop publication.
+
+The existing manual release dispatch remains available. With `publish=false` it
+only builds test artifacts. With `publish=true` and `automatic=false`, it requires
+the original `release` environment's reviewer and creates a draft with the actual
+changelog section. Automatic publication does not publish to a Cargo registry.
 
 ## Editor plugin branch
 
-The editor plugin lines follow the public repository's `release` branch, and their
-build step installs the executable whose version the branch's `Cargo.toml` names.
-Before tagging, keep the `Version:` header of `contrib/emacs/ripscope.el` equal to
-the crate version. After the release is published, move the branch to the release's
-tag, so that plugin managers update to it:
-
-```sh
-git push origin 'v0.1.0^{commit}:refs/heads/release'
-```
-
-The first release creates the branch. Until then the plugin lines find nothing.
+Plugin managers follow the `release` branch. After automatic publication, the
+workflow moves that branch to the published tag using a lease to protect concurrent
+updates. Generated release commits can have sibling histories, so this update can
+be non-fast-forward. The Emacs version header and crate version match on every tag.
 
 ## Attestation verification
 

@@ -17,6 +17,11 @@ if [ "${1:-}" = --cloudflare ]; then
     tar -xzf target/site-tools/mdbook.tar.gz -C target/site-tools mdbook
     export MDBOOK="$PWD/target/site-tools/mdbook"
     git fetch --tags --depth=1
+    # The release branch moves only after publication. Keep download links on
+    # that version while documentation continues to build from main.
+    git fetch --depth=1 origin refs/heads/release:refs/remotes/origin/release
+    RIPSCOPE_SITE_RELEASE_TAG=$(git describe --tags --exact-match refs/remotes/origin/release)
+    export RIPSCOPE_SITE_RELEASE_TAG
     npm ci --ignore-scripts --no-audit --no-fund --prefix tools/site
     set -- --deploy
 fi

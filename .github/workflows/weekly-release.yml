@@ -1,0 +1,89 @@
+name: Weekly release
+on:
+  schedule:
+    - cron: '43 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      increment:
+        description: Version increment (auto detects breaking commit markers)
+        type: choice
+        options: [auto, minor, major]
+        default: auto
+      supersede_failed:
+        description: Prepare a newer tag from corrected main instead of retrying the failed tag
+        type: boolean
+        default: false
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: weekly-release
+  cancel-in-progress: false
+jobs:
+  prepare:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
+        with:
+          toolchain: '1.99.1'
+      - name: Prepare or resume a frozen release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SUPERSEDE: ${{ inputs.supersede_failed || false }}
+          INCREMENT: ${{ inputs.increment || 'auto' }}
+        run: |
+          set -euo pipefail
+          previous=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)
+          newest=$(git tag --list 'v*' --sort=-version:refname | head -1)
+          if [ "$newest" != "$previous" ] && [ "$SUPERSEDE" != true ]; then
+            # A failed run retains its immutable tag. Resume it before new changes.
+            test "$(git show -s --format=%s "$newest")" = "Prepare automated release $newest"
+            tag=$newest
+          elif [ "$SUPERSEDE" != true ] && [ "$newest" = "$previous" ] && [ "$(git ls-remote origin refs/heads/release | cut -f1)" != "$(git rev-parse "$previous^{commit}")" ]; then
+            # Publication and editor delivery are separate API operations. Repair a
+            # failed post-publication branch update even when main is unchanged.
+            tag=$previous
+          else
+            if [ "$SUPERSEDE" = true ] && [ "$newest" != "$previous" ]; then
+              active=$(gh run list --workflow release.yml --commit "$(git rev-parse "$newest^{commit}")" --limit 1 --json status --jq '.[0].status // "completed"')
+              test "$active" = completed
+            fi
+            cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- \
+              prepare-weekly "$previous" "$(date -u +%F)" "$INCREMENT" "$RUNNER_TEMP/plan" "$newest"
+            if grep -qx 'changed=false' "$RUNNER_TEMP/plan"; then
+              echo 'No unreleased product or packaging changes.' >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            tag=$(sed -n 's/^tag=//p' "$RUNNER_TEMP/plan")
+            [[ "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+            git config user.name github-actions[bot]
+            git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+            git add Cargo.toml Cargo.lock CHANGELOG.md contrib/emacs/ripscope.el
+            git commit -m "Prepare automated release $tag"
+            git tag "$tag"
+            git push origin "refs/tags/$tag"
+          fi
+          sha=$(git rev-parse "$tag^{commit}")
+          # GITHUB_TOKEN tag pushes do not trigger workflows. Dispatch explicitly.
+          gh run list --workflow release.yml --commit "$sha" --limit 1 --json databaseId,status,conclusion > "$RUNNER_TEMP/runs.json"
+          run_id=$(jq -r '.[0].databaseId // empty' "$RUNNER_TEMP/runs.json")
+          status=$(jq -r '.[0].status // empty' "$RUNNER_TEMP/runs.json")
+          conclusion=$(jq -r '.[0].conclusion // empty' "$RUNNER_TEMP/runs.json")
+          if [ -z "$run_id" ]; then
+            gh workflow run release.yml --ref "$tag" -f tag="$tag" -f source_sha="$sha" -f publish=true -f automatic=true
+          elif [ "$status" != completed ]; then
+            echo "Release $tag already has an active run." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          elif [ "$conclusion" != success ]; then
+            # Retain successful build jobs and their frozen artifacts.
+            gh run rerun "$run_id" --failed
+          else
+            echo "Release $tag completed but delivery is inconsistent. Inspect run $run_id." >&2
+            exit 1
+          fi
+          echo "Release $tag dispatched at $sha. Its release workflow reports completion or failure." >> "$GITHUB_STEP_SUMMARY"

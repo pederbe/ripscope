@@ -1,4 +1,4 @@
-name: Release preparation
+name: Release
 on:
   workflow_dispatch:
     inputs:
@@ -14,10 +14,14 @@ on:
         description: Create attestations and a draft GitHub release after environment approval
         default: false
         type: boolean
+      automatic:
+        description: Publish automatically after all platform checks
+        default: false
+        type: boolean
 permissions:
   contents: read
 concurrency:
-  group: release-${{ inputs.tag }}
+  group: release
   cancel-in-progress: false
 jobs:
   preflight:
@@ -48,6 +52,7 @@ jobs:
           DISPATCH_REF: ${{ github.ref }}
           DISPATCH_SHA: ${{ github.sha }}
           PUBLISH: ${{ inputs.publish }}
+          AUTOMATIC: ${{ inputs.automatic }}
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
@@ -62,8 +67,15 @@ jobs:
           "$release" check-tag "$TAG"
           if [ "$PUBLISH" = true ]; then
             test "$(gh api "repos/$GITHUB_REPOSITORY" --jq .private)" = false
-            gh api "repos/$GITHUB_REPOSITORY/environments/release" > "$RUNNER_TEMP/release-environment.json"
-            "$release" check-environment "$RUNNER_TEMP/release-environment.json"
+            if [ "$AUTOMATIC" = true ]; then
+              gh api "repos/$GITHUB_REPOSITORY/environments/automated-release" > "$RUNNER_TEMP/release-environment.json"
+              "$release" check-automated-environment "$RUNNER_TEMP/release-environment.json"
+              gh api "repos/$GITHUB_REPOSITORY/environments/automated-release/deployment-branch-policies" \
+                --jq '.branch_policies | length == 1 and .[0].name == "v*" and .[0].type == "tag"' | grep -qx true
+            else
+              gh api "repos/$GITHUB_REPOSITORY/environments/release" > "$RUNNER_TEMP/release-environment.json"
+              "$release" check-environment "$RUNNER_TEMP/release-environment.json"
+            fi
           fi
           echo "publish=$PUBLISH" >> "$GITHUB_OUTPUT"
   linux:
@@ -145,12 +157,19 @@ jobs:
     needs: [preflight, linux, windows]
     if: needs.preflight.outputs.publish == 'true'
     runs-on: ubuntu-26.04
-    environment: release
+    environment: ${{ inputs.automatic && 'automated-release' || 'release' }}
     permissions:
       contents: write
       id-token: write
       attestations: write
     steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ inputs.source_sha }}
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
+        with:
+          toolchain: '1.99.1'
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           pattern: '*-release'
@@ -163,13 +182,42 @@ jobs:
             artifacts/*.zip
             artifacts/*.deb
             artifacts/*.rpm
-      - name: Create draft release
+      - name: Publish verified release assets
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ inputs.tag }}
           SOURCE_SHA: ${{ inputs.source_sha }}
+          AUTOMATIC: ${{ inputs.automatic }}
         run: |
           set -euo pipefail
-          gh release create "$TAG" artifacts/*.tar.gz artifacts/*.zip artifacts/*.deb artifacts/*.rpm artifacts/*.sha256 \
-            --repo "$GITHUB_REPOSITORY" --verify-tag --target "$SOURCE_SHA" --draft --title "Ripscope ${TAG#v}" \
-            --notes 'See the changelog and installation documentation for this version.'
+          cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- release-notes "$TAG" "$RUNNER_TEMP/notes.md"
+          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            # A published release is immutable. Re-running must never replace it.
+            draft=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
+            if [ "$draft" = true ]; then
+              mkdir "$RUNNER_TEMP/frozen-assets"
+              gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' > "$RUNNER_TEMP/asset-names"
+              for artifact in artifacts/*; do
+                name=$(basename "$artifact")
+                if grep -Fxq "$name" "$RUNNER_TEMP/asset-names"; then
+                  gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "$name" --dir "$RUNNER_TEMP/frozen-assets"
+                  cmp "$artifact" "$RUNNER_TEMP/frozen-assets/$name"
+                else
+                  gh release upload "$TAG" "$artifact" --repo "$GITHUB_REPOSITORY"
+                fi
+              done
+            fi
+          else
+            gh release create "$TAG" artifacts/* --repo "$GITHUB_REPOSITORY" --verify-tag \
+              --target "$SOURCE_SHA" --draft --title "Ripscope ${TAG#v}" --notes-file "$RUNNER_TEMP/notes.md"
+          fi
+          if [ "$AUTOMATIC" = true ]; then
+            latest=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)
+            newest=$(printf '%s\n' "$TAG" "$latest" | sort -V | tail -1)
+            test "$newest" = "$TAG" || { echo "A newer release $latest already exists." >&2; exit 1; }
+            gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false --latest
+            # Plugin managers follow this branch. It contains generated release
+            # metadata, so subsequent release commits may be on sibling histories.
+            old=$(git ls-remote origin refs/heads/release | cut -f1)
+            git push --force-with-lease="refs/heads/release:$old" origin "$SOURCE_SHA:refs/heads/release"
+          fi

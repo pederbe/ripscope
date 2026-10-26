@@ -32,10 +32,18 @@ it cannot be combined with a deployment build.
 
 `scripts/build-site.sh --deploy` requires a clean checkout whose root package version
 already has its `vVERSION` tag, so the page's download links exist. Cloudflare
-Workers Builds runs this build automatically for website-input changes on `main`,
+Workers Builds runs this build automatically for website-input changes on `main` and `release`,
 so website changes ship without a new release or manual deployment.
 `scripts/build-site.sh --cloudflare` installs the build tools and runs `--deploy`
-in Cloudflare's build image. Local `--dev` and `--deploy` builds do not publish.
+in Cloudflare's build image. It resolves the published version from the tagged
+`release` branch and sets `RIPSCOPE_SITE_RELEASE_TAG`, so download links follow
+weekly releases while documentation can still ship from `main`. Local `--dev`
+and `--deploy` builds do not publish.
+
+The Workers Builds command first fetches and checks out `main`, then runs
+`bash scripts/build-site.sh --cloudflare`. A release-branch trigger therefore
+updates the displayed version without replacing newer documentation with the
+release's frozen snapshot.
 
 Only chapters selected by `docs/SUMMARY.md`, their local assets, resolved Markdown
 includes and the theme enter the documentation build. `--list-inputs` lists the

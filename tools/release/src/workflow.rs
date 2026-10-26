@@ -49,6 +49,28 @@ fn environment(value: &Value) -> Result<()> {
     Ok(())
 }
 
+/// The automatic publication environment has tag restrictions and no human gate.
+pub fn check_automated_environment(args: &[String]) -> Result<()> {
+    let [file] = args else {
+        return Err("usage: ripscope-release check-automated-environment FILE".into());
+    };
+    automated_environment(&serde_json::from_slice(&fs::read(file)?)?)
+}
+
+fn automated_environment(value: &Value) -> Result<()> {
+    if value["name"] != "automated-release"
+        || value["deployment_branch_policy"]["custom_branch_policies"] != true
+        || !value["protection_rules"]
+            .as_array()
+            .is_some_and(|rules| rules.iter().all(|rule| rule["type"] == "branch_policy"))
+    {
+        return Err(
+            "automated-release needs custom tag restrictions and no approval or wait rules".into(),
+        );
+    }
+    Ok(())
+}
+
 /// Prints one field of a release profile, such as `linux mold_url`.
 pub fn profile(args: &[String]) -> Result<()> {
     let [platform, field] = args else {
@@ -71,6 +93,20 @@ pub fn profile(args: &[String]) -> Result<()> {
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn automatic_publication_requires_its_own_restricted_environment() {
+        let valid = json!({"name":"automated-release", "protection_rules":[{"type":"branch_policy"}],
+            "deployment_branch_policy":{"custom_branch_policies":true}});
+        automated_environment(&valid).unwrap();
+        for invalid in [
+            json!({"name":"release"}),
+            json!({"name":"automated-release", "protection_rules":[]}),
+            json!({"name":"automated-release", "protection_rules":[{"type":"required_reviewers"}], "deployment_branch_policy":{"custom_branch_policies":true}}),
+        ] {
+            assert!(automated_environment(&invalid).is_err());
+        }
+    }
 
     #[test]
     fn publication_needs_the_release_environment_with_real_reviewers() {
