@@ -263,7 +263,8 @@ mod tests {
             .trim()
             .parse()
             .unwrap();
-        // SIGKILL is delivered asynchronously, so the descendant can briefly still run.
+        // SIGKILL is delivered asynchronously, so the descendant can briefly still run. A
+        // zombie, or a dead process its parent is reaping, has stopped.
         let state = || {
             std::fs::read_to_string(format!("/proc/{pid}/status"))
                 .ok()
@@ -273,7 +274,7 @@ mod tests {
                         .find(|line| line.starts_with("State:"))
                         .map(str::to_owned)
                 })
-                .filter(|state| !state.contains("Z (zombie)"))
+                .filter(|state| !state.contains("Z (zombie)") && !state.contains("X (dead)"))
         };
         let stopping = Instant::now();
         while state().is_some() && stopping.elapsed() < Duration::from_secs(5) {
