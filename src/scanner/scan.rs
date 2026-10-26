@@ -1766,7 +1766,7 @@ impl<'s> Scan<'s> {
                     self.take(length + tail);
                 }
             }
-            b"if" | b"ifdef" | b"ifndef" if blanks > 0 || (unspaced && word == b"if") => {
+            b"if" | b"ifdef" | b"ifndef" if blanks > 0 || (unspaced && &word[..] == b"if") => {
                 self.conditionals
                     .open(&mut self.nesting, &mut self.declaration);
                 self.take(length + blanks);
@@ -1980,7 +1980,7 @@ fn split_call_suffix(input: &Input) -> bool {
     let word = input.peek_at(first, length);
     let type_start = keywords::keyword_type(&word)
         || matches!(
-            word.as_slice(),
+            &word[..],
             b"_Bool"
                 | b"_Complex"
                 | b"_Imaginary"

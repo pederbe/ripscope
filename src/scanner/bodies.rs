@@ -16,6 +16,8 @@
 //! file linear and leaves each head's reading local. The definition-heads and
 //! linkage-blocks Corrections' smaller look-aheads share the window and the work limit.
 
+use std::borrow::Cow;
+
 use super::input::Input;
 use super::keywords;
 use super::shapes::{is_word, is_word_start};
@@ -705,7 +707,7 @@ fn return_type_wrapper(input: &Input, limit: usize) -> (usize, bool) {
                 let word = input.peek_at(at, length);
                 if keywords::keyword_type(&word) && !opaque && !pointer {
                     builtin = true;
-                    nonvoid |= word != b"void";
+                    nonvoid |= &word[..] != b"void";
                 } else if !matches!(&word[..], b"const" | b"volatile" | b"restrict") {
                     if builtin || opaque || pointer || keywords::keyword(&word).is_some() {
                         return (at + length, false);
@@ -1163,7 +1165,7 @@ fn arm_gap(input: &Input, at: usize, arms: &mut Arms, limit: usize) -> usize {
 }
 
 /// The word of the directive whose `#` is at `at`.
-pub(super) fn directive_word(input: &Input, at: usize, limit: usize) -> Vec<u8> {
+pub(super) fn directive_word<'s>(input: &Input<'s>, at: usize, limit: usize) -> Cow<'s, [u8]> {
     let word = at + 1 + input.run_within(at + 1, limit, |byte| byte == b' ' || byte == b'\t');
     let length = input.run_within(word, limit, |byte| byte.is_ascii_alphabetic());
     input.peek_at(word, length)
