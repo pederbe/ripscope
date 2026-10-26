@@ -130,3 +130,148 @@ mod tests {
         }
     }
 }
+
+#[cfg(all(test, unix))]
+mod delivery_tests {
+    use std::{fs, os::unix::fs::PermissionsExt, path::Path, process::Command};
+
+    fn executable(root: &Path, name: &str, script: &str) {
+        let path = root.join("bin").join(name);
+        fs::write(&path, script).unwrap();
+        fs::set_permissions(path, fs::Permissions::from_mode(0o755)).unwrap();
+    }
+
+    fn workflow_script(name: &str) -> String {
+        fs::read_to_string(
+            Path::new(env!("CARGO_MANIFEST_DIR"))
+                .join("../../.github/workflows")
+                .join(name),
+        )
+        .unwrap()
+        .split_once("        run: |\n")
+        .unwrap()
+        .1
+        .lines()
+        .map(|line| line.strip_prefix("          ").unwrap_or(line))
+        .collect::<Vec<_>>()
+        .join("\n")
+    }
+
+    fn run(root: &Path, script: &str, sha: &str, mode: &str) -> std::process::Output {
+        Command::new("bash")
+            .args(["-c", script])
+            .env(
+                "PATH",
+                format!(
+                    "{}:{}",
+                    root.join("bin").display(),
+                    std::env::var("PATH").unwrap()
+                ),
+            )
+            .env("RUNNER_TEMP", root)
+            .env("GITHUB_STEP_SUMMARY", root.join("summary"))
+            .env("GITHUB_REPOSITORY", "fixture/ripscope")
+            .env("RELEASE_SHA", sha)
+            .env("CLOUDFLARE_DEPLOY_HOOK", "https://example.invalid/hook")
+            .env("SUPERSEDE", "false")
+            .env("INCREMENT", "auto")
+            .env("FIXTURE_TRACE", root.join("trace"))
+            .env("FIXTURE_MODE", mode)
+            .output()
+            .unwrap()
+    }
+
+    #[test]
+    fn website_refresh_is_independent_and_skips_stale_completions() {
+        let root = tempfile::tempdir().unwrap();
+        fs::create_dir(root.path().join("bin")).unwrap();
+        executable(root.path(), "gh", "#!/bin/sh\nprintf delivered\n");
+        executable(
+            root.path(),
+            "curl",
+            r#"#!/bin/bash
+set -euo pipefail
+echo requested >> "$FIXTURE_TRACE"
+if [ "$FIXTURE_MODE" = failure ]; then exit 22; fi
+printf '{"success":true,"result":{"build_uuid":"fixture"}}' > "${!#}"
+"#,
+        );
+        let script = workflow_script("website-deploy.yml");
+        for (sha, mode, success, requested) in [
+            ("stale", "success", true, false),
+            ("delivered", "success", true, true),
+            ("", "success", true, true),
+            ("delivered", "failure", false, true),
+        ] {
+            fs::write(root.path().join("trace"), "").unwrap();
+            let output = run(root.path(), &script, sha, mode);
+            assert_eq!(
+                output.status.success(),
+                success,
+                "{}",
+                String::from_utf8_lossy(&output.stderr)
+            );
+            assert_eq!(
+                !fs::read_to_string(root.path().join("trace"))
+                    .unwrap()
+                    .is_empty(),
+                requested
+            );
+        }
+    }
+
+    #[test]
+    fn weekly_scheduler_ignores_website_failure_but_repairs_editor_delivery() {
+        let root = tempfile::tempdir().unwrap();
+        fs::create_dir(root.path().join("bin")).unwrap();
+        executable(
+            root.path(),
+            "git",
+            r#"#!/bin/bash
+set -euo pipefail
+case "$1" in
+  tag) echo v0.2.4;;
+  show) echo 'Prepare automated release v0.2.4';;
+  rev-parse) echo delivered;;
+  ls-remote) printf '%s\trefs/heads/release\n' "$FIXTURE_MODE";;
+  *) exit 1;;
+esac
+"#,
+        );
+        executable(
+            root.path(),
+            "gh",
+            r#"#!/bin/bash
+set -euo pipefail
+case "$*" in
+  api*) echo v0.2.4;;
+  'run list'*)
+    # A delivered version must not query a release failure caused by its website.
+    test "$FIXTURE_MODE" != delivered
+    echo '[{"databaseId":42,"status":"completed","conclusion":"failure"}]';;
+  'run rerun 42 --failed') echo repaired >> "$FIXTURE_TRACE";;
+  *) exit 1;;
+esac
+"#,
+        );
+        executable(
+            root.path(),
+            "cargo",
+            "#!/bin/bash\nset -euo pipefail\nprintf 'changed=false\\n' > \"$RUNNER_TEMP/plan\"\necho prepared >> \"$FIXTURE_TRACE\"\n",
+        );
+        let script = workflow_script("weekly-release.yml");
+        for (branch, expected) in [("delivered", "prepared\n"), ("older", "repaired\n")] {
+            fs::write(root.path().join("trace"), "").unwrap();
+            let output = run(root.path(), &script, "", branch);
+            assert!(
+                output.status.success(),
+                "{}",
+                String::from_utf8_lossy(&output.stderr)
+            );
+            assert_eq!(
+                fs::read_to_string(root.path().join("trace")).unwrap(),
+                expected
+            );
+        }
+    }
+}

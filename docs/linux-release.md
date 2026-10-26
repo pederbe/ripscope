@@ -159,6 +159,18 @@ workflow moves that branch to the published tag using a lease to protect concurr
 updates. Generated release commits can have sibling histories, so this update can
 be non-fast-forward. The Emacs version header and crate version match on every tag.
 
+## Website deployment
+
+After a successful Release run, the separate Website deployment workflow requests
+Cloudflare's website build. It follows the delivered `release` branch and skips
+stale release completions. Cloudflare reports the actual build and deployment
+result after accepting the request.
+
+A website failure does not fail package publication or block the next weekly
+release. Retry Website deployment manually in GitHub Actions, without rebuilding
+archives or republishing the crate. Weekly release recovery still repairs failed
+package publication and an editor branch that did not advance.
+
 ## Attestation verification
 
 After an authorized release has generated attestations, verify each downloaded

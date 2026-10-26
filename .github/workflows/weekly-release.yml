@@ -40,20 +40,11 @@ jobs:
           set -euo pipefail
           previous=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)
           newest=$(git tag --list 'v*' --sort=-version:refname | head -1)
-          automatic=false
-          delivery_pending=false
-          if [ "$newest" = "$previous" ] && [ "$(git show -s --format=%s "$previous")" = "Prepare automated release $previous" ]; then
-            automatic=true
-            # A website hook can fail after publication and editor delivery.
-            # Retry that run before considering the released source complete.
-            delivery_pending=$(gh run list --workflow release.yml --commit "$(git rev-parse "$previous^{commit}")" --limit 1 \
-              --json status,conclusion --jq 'length == 0 or any(.[]; .status != "completed" or .conclusion != "success")')
-          fi
           if [ "$newest" != "$previous" ] && [ "$SUPERSEDE" != true ]; then
             # A failed run retains its immutable tag. Resume it before new changes.
             test "$(git show -s --format=%s "$newest")" = "Prepare automated release $newest"
             tag=$newest
-          elif [ "$SUPERSEDE" != true ] && [ "$automatic" = true ] && { [ "$delivery_pending" = true ] || [ "$(git ls-remote origin refs/heads/release | cut -f1)" != "$(git rev-parse "$previous^{commit}")" ]; }; then
+          elif [ "$SUPERSEDE" != true ] && [ "$(git show -s --format=%s "$previous")" = "Prepare automated release $previous" ] && [ "$(git ls-remote origin refs/heads/release | cut -f1)" != "$(git rev-parse "$previous^{commit}")" ]; then
             # Publication and editor delivery are separate API operations. Repair a
             # failed post-publication delivery for an automated release.
             # Legacy tags have no automatic workflow and start a new release instead.
