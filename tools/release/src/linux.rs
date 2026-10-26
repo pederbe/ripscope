@@ -8,7 +8,7 @@ use crate::common::{
 };
 use regex::Regex;
 use serde_json::{Map, Value, json};
-use std::ffi::OsString;
+use std::ffi::{OsStr, OsString};
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
@@ -91,6 +91,42 @@ pub fn inspect_elf(
         "maximum_glibc_symbol": maximum.join("."),
         "cpu": "explicit baseline Rust/C flags; no elevated ELF ISA requirement",
     }))
+}
+
+/// Native reference commands require GNU's process-group deadline semantics.
+/// Ubuntu also provides its GNU utilities under names such as `gnutimeout`.
+fn reference_timeout(path: &OsStr) -> Result<PathBuf> {
+    for name in ["timeout", "gnutimeout"] {
+        let candidate = std::env::split_paths(path)
+            .map(|directory| directory.join(name))
+            .find(|candidate| candidate.is_file());
+        let Some(candidate) = candidate else {
+            continue;
+        };
+        let command = [text(&candidate), "--version".to_owned()];
+        let Ok(Some((0, stdout, _))) = capture(&command, Duration::from_secs(5)) else {
+            continue;
+        };
+        if stdout
+            .lines()
+            .next()
+            .is_some_and(|line| line.contains("(GNU coreutils)"))
+        {
+            return Ok(fs::canonicalize(candidate)?);
+        }
+    }
+    Err(
+        "Native reference tests require GNU timeout; install GNU coreutils (gnutimeout on Ubuntu)"
+            .into(),
+    )
+}
+
+/// Stage the selected executable only for child processes, leaving the host unchanged.
+fn reference_tools(path: &OsStr, directory: &Path) -> Result<PathBuf> {
+    let provider = reference_timeout(path)?;
+    fs::create_dir(directory)?;
+    fs::copy(&provider, directory.join("timeout"))?;
+    Ok(provider)
 }
 
 struct Options {
@@ -496,6 +532,20 @@ pub fn run(args: &[String]) -> Result<()> {
         .receipt
         .insert("source_inputs".into(), Value::Object(source_inputs.clone()));
     // These developer proofs need the host's user manager and disk-backed fixtures.
+    let host_path = std::env::var_os("PATH").unwrap_or_default();
+    let native_tools = work.join("native-tools");
+    let timeout = reference_tools(&host_path, &native_tools)?;
+    build.receipt.insert(
+        "native_reference_timeout".into(),
+        json!({"path": timeout, "sha256": sha(&timeout)?}),
+    );
+    build.run(
+        "native-reference-timeout",
+        &[text(&native_tools.join("timeout")), "--version".into()],
+        None,
+        30,
+        None,
+    )?;
     let storage = build.run(
         "native-storage",
         &words(&["stat", "-f", "-c", "%t", "/var/tmp"]),
@@ -740,7 +790,9 @@ pub fn run(args: &[String]) -> Result<()> {
     };
     let mut path = toolchain.join("bin").into_os_string();
     path.push(":");
-    path.push(std::env::var_os("PATH").unwrap_or_default());
+    path.push(native_tools.as_os_str());
+    path.push(":");
+    path.push(host_path);
     set(&mut environment, "PATH", path);
     set(
         &mut environment,
@@ -933,6 +985,40 @@ pub fn run(args: &[String]) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[cfg(target_os = "linux")]
+    #[test]
+    fn native_reference_tools_select_gnu_without_changing_the_parent_path() {
+        let host_path = std::env::var_os("PATH").unwrap();
+        let gnu = reference_timeout(&host_path).unwrap();
+        let root = tempfile::tempdir().unwrap();
+        let bin = root.path().join("bin");
+        fs::create_dir(&bin).unwrap();
+        // A non-GNU provider must not satisfy the deadline prerequisite.
+        let rustc = std::env::split_paths(&host_path)
+            .map(|directory| directory.join("rustc"))
+            .find(|candidate| candidate.is_file())
+            .unwrap();
+        std::os::unix::fs::symlink(rustc, bin.join("timeout")).unwrap();
+        assert!(
+            reference_timeout(bin.as_os_str())
+                .unwrap_err()
+                .to_string()
+                .contains("require GNU timeout")
+        );
+        std::os::unix::fs::symlink(&gnu, bin.join("gnutimeout")).unwrap();
+        let staged = root.path().join("native-tools");
+        assert_eq!(reference_tools(bin.as_os_str(), &staged).unwrap(), gnu);
+        let (status, version, _) = capture(
+            &[text(&staged.join("timeout")), "--version".into()],
+            Duration::from_secs(5),
+        )
+        .unwrap()
+        .unwrap();
+        assert_eq!(status, 0);
+        assert!(version.contains("(GNU coreutils)"));
+        assert_eq!(std::env::var_os("PATH").unwrap(), host_path);
+    }
 
     #[test]
     fn failing_commands_report_their_captured_diagnostic() {
