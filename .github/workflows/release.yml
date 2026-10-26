@@ -191,13 +191,17 @@ jobs:
         run: |
           set -euo pipefail
           cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- release-notes "$TAG" "$RUNNER_TEMP/notes.md"
+          # Platform builders each emit SHA256SUMS for local use. Publish their
+          # uniquely named sidecars, excluding the colliding merged manifests.
+          assets=(artifacts/*.tar.gz artifacts/*.zip artifacts/*.deb artifacts/*.rpm artifacts/*.sha256)
+          for artifact in "${assets[@]}"; do test -f "$artifact"; done
           if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
             # A published release is immutable. Re-running must never replace it.
             draft=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
             if [ "$draft" = true ]; then
               mkdir "$RUNNER_TEMP/frozen-assets"
               gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' > "$RUNNER_TEMP/asset-names"
-              for artifact in artifacts/*; do
+              for artifact in "${assets[@]}"; do
                 name=$(basename "$artifact")
                 if grep -Fxq "$name" "$RUNNER_TEMP/asset-names"; then
                   gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "$name" --dir "$RUNNER_TEMP/frozen-assets"
@@ -208,7 +212,7 @@ jobs:
               done
             fi
           else
-            gh release create "$TAG" artifacts/* --repo "$GITHUB_REPOSITORY" --verify-tag \
+            gh release create "$TAG" "${assets[@]}" --repo "$GITHUB_REPOSITORY" --verify-tag \
               --target "$SOURCE_SHA" --draft --title "Ripscope ${TAG#v}" --notes-file "$RUNNER_TEMP/notes.md"
           fi
           if [ "$AUTOMATIC" = true ]; then

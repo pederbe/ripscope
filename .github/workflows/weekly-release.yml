@@ -44,9 +44,10 @@ jobs:
             # A failed run retains its immutable tag. Resume it before new changes.
             test "$(git show -s --format=%s "$newest")" = "Prepare automated release $newest"
             tag=$newest
-          elif [ "$SUPERSEDE" != true ] && [ "$newest" = "$previous" ] && [ "$(git ls-remote origin refs/heads/release | cut -f1)" != "$(git rev-parse "$previous^{commit}")" ]; then
+          elif [ "$SUPERSEDE" != true ] && [ "$newest" = "$previous" ] && [ "$(git show -s --format=%s "$previous")" = "Prepare automated release $previous" ] && [ "$(git ls-remote origin refs/heads/release | cut -f1)" != "$(git rev-parse "$previous^{commit}")" ]; then
             # Publication and editor delivery are separate API operations. Repair a
-            # failed post-publication branch update even when main is unchanged.
+            # failed post-publication branch update for an automated release.
+            # Legacy tags have no automatic workflow and start a new release instead.
             tag=$previous
           else
             if [ "$SUPERSEDE" = true ] && [ "$newest" != "$previous" ]; then
