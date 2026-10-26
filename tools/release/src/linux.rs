@@ -2,9 +2,9 @@
 
 use crate::archive;
 use crate::common::{
-    Ended, Result, capture, collect_notices, copy_file, copy_source, crate_version, delivery_files,
-    inside, inventory, json_line, json_text, repository, resolved_new, run_logged, sha,
-    unchanged_sources, unique_id, write_text,
+    Ended, Result, capture, collect_notices, command_failure, copy_file, copy_source,
+    crate_version, delivery_files, inside, inventory, json_line, json_text, repository,
+    resolved_new, run_logged, sha, unchanged_sources, unique_id, write_text,
 };
 use regex::Regex;
 use serde_json::{Map, Value, json};
@@ -185,7 +185,7 @@ impl Build {
                 self.last_command().insert("exit".into(), json!(exit));
                 self.save()?;
                 if exit != 0 {
-                    return Err(format!("{name} failed; see {}", log.display()).into());
+                    return Err(command_failure(name, &log));
                 }
                 return Ok(String::from_utf8_lossy(&fs::read(&log)?).into_owned());
             }
@@ -933,6 +933,33 @@ pub fn run(args: &[String]) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn failing_commands_report_their_captured_diagnostic() {
+        let root = tempfile::tempdir().unwrap();
+        let mut build = Build {
+            work: root.path().to_path_buf(),
+            logs: root.path().to_path_buf(),
+            receipt: json!({"commands": []}).as_object().unwrap().clone(),
+        };
+        let error = build
+            .run(
+                "diagnostic-probe",
+                &words(&["rustc", "--release-log-fixture-invalid-option"]),
+                None,
+                10,
+                None,
+            )
+            .unwrap_err();
+        assert!(error.to_string().contains("Unrecognized option"), "{error}");
+        assert!(
+            error
+                .to_string()
+                .contains("release-log-fixture-invalid-option"),
+            "{error}"
+        );
+        assert_eq!(build.receipt["commands"][0]["exit"], 1);
+    }
 
     #[test]
     fn elf_gate_rejects_new_runtime_and_cpu_requirements() {

@@ -2,9 +2,9 @@
 
 use crate::archive;
 use crate::common::{
-    Ended, Result, collect_notices, copy_file, copy_source, crate_version, delivery_files, inside,
-    inventory, json_line, json_text, repository, resolved, run_logged, set_modified, sha,
-    unchanged_sources, under, walk, write_text,
+    Ended, Result, collect_notices, command_failure, copy_file, copy_source, crate_version,
+    delivery_files, inside, inventory, json_line, json_text, repository, resolved, run_logged,
+    set_modified, sha, unchanged_sources, under, walk, write_text,
 };
 use regex::Regex;
 use serde_json::{Map, Value, json};
@@ -151,7 +151,7 @@ impl Build {
         }
         self.save()?;
         if !accepted.contains(&exit) {
-            return Err(format!("{name} failed; see {}", log.display()).into());
+            return Err(command_failure(name, &log));
         }
         let bytes = fs::read(&log)?;
         Ok(String::from_utf8_lossy(&bytes).replace("\r\n", "\n"))
