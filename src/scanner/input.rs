@@ -148,15 +148,25 @@ impl<'s> Input<'s> {
     }
 
     /// The `length` bytes ahead of the read position.
-    pub(super) fn peek(&self, length: usize) -> Vec<u8> {
-        (0..length).filter_map(|offset| self.at(offset)).collect()
+    pub(super) fn peek(&self, length: usize) -> Cow<'s, [u8]> {
+        self.peek_at(0, length)
     }
 
-    /// The `length` bytes starting `offset` places ahead.
-    pub(super) fn peek_at(&self, offset: usize, length: usize) -> Vec<u8> {
-        (offset..offset + length)
-            .filter_map(|offset| self.at(offset))
-            .collect()
+    /// The `length` bytes starting `offset` places ahead, borrowed from the source
+    /// unless pushed-back bytes are among them. Ends early at the end of input.
+    pub(super) fn peek_at(&self, offset: usize, length: usize) -> Cow<'s, [u8]> {
+        match self.source_position(offset) {
+            Some(start) => {
+                let start = start.min(self.source.len());
+                let end = start.saturating_add(length).min(self.source.len());
+                Cow::Borrowed(&self.source[start..end])
+            }
+            None => Cow::Owned(
+                (offset..offset + length)
+                    .filter_map(|offset| self.at(offset))
+                    .collect(),
+            ),
+        }
     }
 
     pub(super) fn advance(&mut self, mut length: usize) {
@@ -200,5 +210,32 @@ impl<'s> Input<'s> {
             length += 1;
         }
         length
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::borrow::Cow;
+
+    use super::Input;
+
+    #[test]
+    fn peeks_borrow_source_spans() {
+        let mut input = Input::new(b"abcdef");
+        input.advance(1);
+        assert!(matches!(input.peek(3), Cow::Borrowed(b"bcd")));
+        assert!(matches!(input.peek_at(2, 9), Cow::Borrowed(b"def")));
+        assert!(matches!(input.peek_at(7, 2), Cow::Borrowed(b"")));
+    }
+
+    #[test]
+    fn peeks_read_pushed_back_bytes_first() {
+        let mut input = Input::new(b"abcdef");
+        input.advance(4);
+        input.push_back(b"xy");
+        assert_eq!(&input.peek(3)[..], b"xye");
+        assert_eq!(&input.peek(9)[..], b"xyef");
+        assert_eq!(&input.peek_at(1, 2)[..], b"ye");
+        assert!(matches!(input.peek_at(2, 2), Cow::Borrowed(b"ef")));
     }
 }
