@@ -295,27 +295,29 @@ enum Spacing {
 /// final carriage return stay raw. The raw runs between escaped bytes are copied whole.
 fn escape_into(out: &mut Vec<u8>, text: &[u8], spacing: Spacing) {
     const HEX: &[u8; 16] = b"0123456789abcdef";
-    let mut raw = 0;
+    let mut run_start = 0;
     for (at, &byte) in text.iter().enumerate() {
-        if !is_control(byte)
-            || (spacing == Spacing::Kept
-                && (byte == b'\t' || (byte == b'\r' && at + 1 == text.len())))
-        {
+        if !is_control(byte) {
             continue;
         }
-        out.extend_from_slice(&text[raw..at]);
+        let kept =
+            spacing == Spacing::Kept && (byte == b'\t' || (byte == b'\r' && at + 1 == text.len()));
+        if kept {
+            continue;
+        }
+        out.extend_from_slice(&text[run_start..at]);
         out.extend_from_slice(&[
             b'\\',
             b'x',
             HEX[usize::from(byte >> 4)],
             HEX[usize::from(byte & 0xf)],
         ]);
-        raw = at + 1;
+        run_start = at + 1;
     }
-    out.extend_from_slice(&text[raw..]);
+    out.extend_from_slice(&text[run_start..]);
 }
 
-/// A line number's decimal digits.
+/// A line number's decimal digits, of which a `u32` has at most ten.
 fn decimal_into(out: &mut Vec<u8>, mut value: u32) {
     let mut digits = [0; 10];
     let mut start = digits.len();
@@ -553,9 +555,21 @@ mod tests {
         );
     }
 
-    /// The delivered line-protocol answer of rows at line 7 of `a.c` in `f`, written as
-    /// found lines or as displayed text.
-    fn texts_at_line_7(texts: &[Vec<u8>], found: bool) -> Vec<u8> {
+    /// The rows of a line-protocol answer, without warnings or framing.
+    fn delivered(sink: Sink) -> Vec<u8> {
+        let mut out = Vec::new();
+        sink.finish(Vec::new())
+            .unwrap()
+            .deliver(&mut out, &mut io::sink(), WarningStyle::Stderr, |_, _| {
+                Ok(())
+            })
+            .unwrap();
+        out
+    }
+
+    /// The answer of rows at line 7 of `a.c` in `f`, written as found lines or as
+    /// displayed text.
+    fn line_answer(texts: &[Vec<u8>], found: bool) -> Vec<u8> {
         let mut sink = Sink::new(Transport::Line);
         for text in texts {
             if found {
@@ -571,34 +585,27 @@ mod tests {
                 .unwrap();
             }
         }
-        let mut out = Vec::new();
-        sink.finish(Vec::new())
-            .unwrap()
-            .deliver(&mut out, &mut io::sink(), WarningStyle::Stderr, |_, _| {
-                Ok(())
-            })
-            .unwrap();
-        out
+        delivered(sink)
     }
 
     #[test]
     fn rows_escape_each_control_byte_and_found_lines_keep_their_spacing() {
-        // Every text of up to three bytes drawn from those escaping treats differently.
+        // Every text of up to three bytes drawn from bytes that escaping treats differently.
         let bytes = [
             b'a', b' ', b'\t', b'\r', b'\n', 0x00, 0x1f, 0x7f, 0x80, 0xff,
         ];
         let mut texts = vec![Vec::new()];
-        let mut longest = texts.clone();
+        let mut shorter = 0..texts.len();
         for _ in 0..3 {
-            longest = longest
-                .iter()
-                .flat_map(|text: &Vec<u8>| {
-                    bytes
-                        .iter()
-                        .map(move |byte| [text.as_slice(), &[*byte]].concat())
-                })
-                .collect();
-            texts.extend(longest.iter().cloned());
+            let longer = texts.len();
+            for at in shorter {
+                for &byte in &bytes {
+                    let mut text = texts[at].clone();
+                    text.push(byte);
+                    texts.push(text);
+                }
+            }
+            shorter = longer..texts.len();
         }
         for found in [false, true] {
             let mut expected = Vec::new();
@@ -614,7 +621,7 @@ mod tests {
                 }
                 expected.push(b'\n');
             }
-            assert_eq!(texts_at_line_7(&texts, found), expected, "found: {found}");
+            assert_eq!(line_answer(&texts, found), expected, "found: {found}");
         }
     }
 
@@ -632,14 +639,7 @@ mod tests {
             sink.text_row(b"a.c", b"f", line, b"x").unwrap();
             expected.push_str(&format!("a.c f {line} x\n"));
         }
-        let mut out = Vec::new();
-        sink.finish(Vec::new())
-            .unwrap()
-            .deliver(&mut out, &mut io::sink(), WarningStyle::Stderr, |_, _| {
-                Ok(())
-            })
-            .unwrap();
-        assert_eq!(String::from_utf8(out).unwrap(), expected);
+        assert_eq!(String::from_utf8(delivered(sink)).unwrap(), expected);
     }
 
     #[test]
