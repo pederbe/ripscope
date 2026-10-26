@@ -225,3 +225,13 @@ jobs:
             old=$(git ls-remote origin refs/heads/release | cut -f1)
             git push --force-with-lease="refs/heads/release:$old" origin "$SOURCE_SHA:refs/heads/release"
           fi
+      - name: Refresh the published website
+        if: inputs.automatic
+        env:
+          CLOUDFLARE_DEPLOY_HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          set -euo pipefail
+          test -n "$CLOUDFLARE_DEPLOY_HOOK"
+          curl --silent --show-error --fail --retry 2 --connect-timeout 10 --max-time 60 \
+            --request POST "$CLOUDFLARE_DEPLOY_HOOK" --output "$RUNNER_TEMP/site-build.json"
+          jq -e '.success == true and (.result.build_uuid | type == "string" and length > 0)' "$RUNNER_TEMP/site-build.json" >/dev/null
