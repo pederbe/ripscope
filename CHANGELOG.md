@@ -7,6 +7,40 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
+## [0.2.1] - 2026-10-26
+
+### Other changes
+
+- Automate weekly releases and generated changelogs (#41) ([ab70727](https://github.com/pederbe/ripscope/commit/ab70727))
+- Update quay.io/pypa/manylinux_2_28_x86_64:latest Docker digest to e280835 (#36) ([eb23569](https://github.com/pederbe/ripscope/commit/eb23569))
+- Update daily dependencies ([7b61e01](https://github.com/pederbe/ripscope/commit/7b61e01))
+- Configure Renovate dependency updates with automerge (#32) ([13c9dbf](https://github.com/pederbe/ripscope/commit/13c9dbf))
+- Update dependency wrangler to v4.152.0 ([73b0444](https://github.com/pederbe/ripscope/commit/73b0444))
+- Update daily dependencies ([e9ac7ce](https://github.com/pederbe/ripscope/commit/e9ac7ce))
+- Track Node Lychee and hinted Action pins in daily updates ([a11b137](https://github.com/pederbe/ripscope/commit/a11b137))
+- Update daily dependencies ([ec98f7d](https://github.com/pederbe/ripscope/commit/ec98f7d))
+- Synchronize release guide commands with dependency tool pins ([9674660](https://github.com/pederbe/ripscope/commit/9674660))
+- Complete mdBook pin synchronization and constrain notify exception ([10e9999](https://github.com/pederbe/ripscope/commit/10e9999))
+- Read compiler identity from the rustc manifest section ([ea3eb75](https://github.com/pederbe/ripscope/commit/ea3eb75))
+- Batch dependency ecosystems and release tool pins with Renovate ([3447882](https://github.com/pederbe/ripscope/commit/3447882))
+- Link the production website build settings ([c640fc0](https://github.com/pederbe/ripscope/commit/c640fc0))
+- Deploy website changes automatically through Cloudflare Builds ([e774558](https://github.com/pederbe/ripscope/commit/e774558))
+- Ask a Windows early stop's include questions on several threads ([8665aac](https://github.com/pederbe/ripscope/commit/8665aac))
+- Add GitHub Sponsors funding link (#22) ([fc0489f](https://github.com/pederbe/ripscope/commit/fc0489f))
+- Keep the racy metadata test inside its window on slow runners ([ecb035d](https://github.com/pederbe/ripscope/commit/ecb035d))
+- Redirect /favicon.ico to the SVG icon ([af63ad9](https://github.com/pederbe/ripscope/commit/af63ad9))
+- Merge Dependabot pull requests automatically once CI passes ([88e58b6](https://github.com/pederbe/ripscope/commit/88e58b6))
+- Format sha2 0.11 digests as hex with base16ct ([490104f](https://github.com/pederbe/ripscope/commit/490104f))
+- Simplify the pull request template ([7bd922e](https://github.com/pederbe/ripscope/commit/7bd922e))
+- Bump the cargo group across 4 directories with 4 updates ([bcda8e1](https://github.com/pederbe/ripscope/commit/bcda8e1))
+- Bump the github-actions group with 3 updates ([adee858](https://github.com/pederbe/ripscope/commit/adee858))
+- Bump wrangler from 4.141.0 to 4.151.1 in /tools/site in the npm group ([ee5cf77](https://github.com/pederbe/ripscope/commit/ee5cf77))
+- Wait for the killed descendant in the reference timeout test ([9e56430](https://github.com/pederbe/ripscope/commit/9e56430))
+- Enable monthly grouped Dependabot version updates ([7cff0dd](https://github.com/pederbe/ripscope/commit/7cff0dd))
+- State the Emacs package's licence above its commentary ([6fbbed1](https://github.com/pederbe/ripscope/commit/6fbbed1))
+
+[Full comparison](https://github.com/pederbe/ripscope/compare/v0.2.0...v0.2.1)
+
 ## [0.2.0] - 2026-10-20
 
 This release changes only the Emacs integration. Emacs users need to update their
@@ -114,7 +148,7 @@ and the [benchmarks](https://ripscope.com/docs/reference/benchmarks).
   SHA-256 checksum.
 - Source builds with Cargo.
 
-[Unreleased]: https://github.com/pederbe/ripscope/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/pederbe/ripscope/compare/v0.2.1...HEAD
 [0.2.0]: https://github.com/pederbe/ripscope/releases/tag/v0.2.0
 [0.1.1]: https://github.com/pederbe/ripscope/releases/tag/v0.1.1
 [0.1.0]: https://github.com/pederbe/ripscope/releases/tag/v0.1.0
