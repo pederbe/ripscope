@@ -9,7 +9,9 @@ A workflow installs, queries and removes them on Debian 12 and AlmaLinux 8.
 
 The Linux tarball and checksum-verified shell installer are also prepared.
 Native Windows uses the Windows ZIP and PowerShell installer, described in
-[Windows preparation](../docs/windows-release.md). There are no macOS, ARM64 or musl
+[Windows preparation](../docs/windows-release.md). That page also covers the
+[WinGet manifests](../docs/windows-release.md#winget-package), which reuse the same ZIP
+and are generated and checked after each release. There are no macOS, ARM64 or musl
 builds. [Limitations](../docs/reference/limitations.md#platforms-and-storage) lists
 the supported platforms.
 

@@ -9,6 +9,9 @@
 //!   directories on PATH.
 //! - `check-tag TAG`, `check-environment FILE` and `profile PLATFORM FIELD`: the release
 //!   workflow's guard on its tag and protected environment, and its pinned profile values.
+//! - `winget VERSION ARCHIVE DATE OUT`: write the WinGet manifests for a checked release ZIP.
+//! - `winget-check PREVIOUS CURRENT INSTALLER WORK`: install, upgrade, use and remove two
+//!   versions' manifests with the WinGet client.
 
 mod archive;
 mod common;
@@ -16,11 +19,12 @@ mod linux;
 mod smoke;
 mod weekly;
 mod windows;
+mod winget;
 mod workflow;
 
 use std::process::ExitCode;
 
-const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | check-automated-environment | prepare-weekly | release-notes | profile) [OPTIONS]\n\
+const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | check-automated-environment | prepare-weekly | release-notes | winget | winget-check | profile) [OPTIONS]\n\
 Run a command with --help for its options. See docs/linux-release.md and docs/windows-release.md.";
 
 fn main() -> ExitCode {
@@ -34,6 +38,8 @@ fn main() -> ExitCode {
         Some("check-environment") => workflow::check_environment(&args[1..]),
         Some("prepare-weekly") => weekly::prepare(&args[1..]),
         Some("release-notes") => weekly::notes(&args[1..]),
+        Some("winget") => winget::run(&args[1..]),
+        Some("winget-check") => winget::check(&args[1..]),
         Some("profile") => workflow::profile(&args[1..]),
         // A native user scope runs this to show it sits under the user's manager.
         Some("native-cgroup") => linux::native_cgroup(),
