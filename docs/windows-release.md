@@ -60,3 +60,49 @@ qualify every Windows endpoint or baseline-only processor.
 The manual publication guard and exact repository/workflow/tag/source attestation
 verification flags are in [Linux release preparation](linux-release.md#guarded-release-workflow).
 The release tool never signs, uploads or publishes artifacts when run locally.
+
+## WinGet package
+
+WinGet, Windows' package manager, can install the published Windows ZIP as a
+portable package. It unpacks the whole ZIP, keeps its licences and editor sources,
+and puts the `ripscope` command on PATH. `winget upgrade` and `winget uninstall`
+replace and remove it. Project indexes and the editors' cache stay where they are.
+
+After each published release, the `WinGet` workflow writes the release's three
+manifests from its published ZIP and checks them on GitHub-hosted Windows. The check
+validates the manifests, installs the previous release, upgrades to the new one,
+finds `ripscope` on a freshly read PATH, indexes and searches a project, runs the
+editors' install command and removes the package. The manifests are in the run's
+`winget-manifests-vX.Y.Z` artifact, laid out as in
+[microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs). The workflow
+runs after publication, so it never holds up or changes a release. Run it again for
+any published tag from the Actions tab.
+
+To write the manifests for a downloaded ZIP and its `.sha256` sidecar yourself:
+
+```sh
+cargo run --locked --manifest-path tools/release/Cargo.toml -- winget \
+  0.2.4 /path/to/ripscope-0.2.4-x86_64-windows-msvc.zip 2026-10-26 /path/to/new-dir
+```
+
+The date is the release's publication date. The command refuses an archive that
+does not match its sidecar or has no `bin/ripscope.exe`, and an existing output
+directory.
+
+### Submission
+
+The package identifier is `PederBergan.Ripscope`. Submitting a version means opening
+a pull request in `microsoft/winget-pkgs` with that version's manifest directory.
+WinGet's own validation and moderators review it there. Submission is a separate,
+manual step after the workflow passes. Once WinGet's source lists the version, check
+`winget install PederBergan.Ripscope` from that source on a clean Windows account
+before the user documentation mentions WinGet.
+
+### Editors with a WinGet installation
+
+The editor integrations find `ripscope` on PATH first, so they use the WinGet
+executable. Plugin managers install the editor plugin from the `release` branch as
+usual. Their `:RipscopeInstall` build step leaves an executable it did not install
+alone, so it never adds a second copy beside the WinGet one. The one-line installer
+always installs its own copy, so WinGet users set up their editors through a plugin
+manager instead.

@@ -1,0 +1,105 @@
+name: WinGet
+
+# After a release is published, generates its WinGet manifests from the published
+# Windows ZIP and checks them with the WinGet client: installing the previous release,
+# upgrading to this one, a search, the editors' install command and removal. It never
+# changes a release, and submission to microsoft/winget-pkgs stays a separate step
+# (docs/windows-release.md).
+
+on:
+  # A release the maintainer publishes from a draft.
+  release:
+    types: [published]
+  # An automated release, which the release workflow publishes itself.
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
+  # Changes to this check, against the latest release.
+  pull_request:
+    paths:
+      - .github/workflows/winget.yml
+      - tools/release/src/winget.rs
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Published release tag, such as v0.2.4
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: winget-${{ github.event.release.tag_name || github.event.workflow_run.head_branch || inputs.tag || github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  manifests:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: windows-2025
+    timeout-minutes: 45
+    steps:
+      # The tools come from the default branch, or the branch under test, since older
+      # release tags predate them.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ (github.event_name == 'workflow_dispatch' || github.event_name == 'pull_request') && github.sha || github.event.repository.default_branch }}
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
+        with:
+          toolchain: '1.99.1'
+      - name: Select the published release and its predecessor
+        id: release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name || github.event.workflow_run.head_branch || inputs.tag }}
+        run: |
+          set -euo pipefail
+          if [ -z "$TAG" ]; then
+            TAG=$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)
+          fi
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          # A release run without publication, or one awaiting the maintainer, has no
+          # published release yet.
+          if [ "$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft 2>/dev/null)" != false ]; then
+            echo "$TAG is not a published release." >> "$GITHUB_STEP_SUMMARY"
+            echo "published=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          previous=$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --exclude-pre-releases \
+            --limit 100 --json tagName --jq '.[].tagName' | sort -V | grep -B1 -x "$TAG" | head -1)
+          test -n "$previous" && test "$previous" != "$TAG"
+          for tag in "$previous" "$TAG"; do
+            version=${tag#v}
+            mkdir -p "$RUNNER_TEMP/releases/$tag"
+            gh release download "$tag" --repo "$GITHUB_REPOSITORY" --dir "$RUNNER_TEMP/releases/$tag" \
+              --pattern "ripscope-$version-x86_64-windows-msvc.zip" \
+              --pattern "ripscope-$version-x86_64-windows-msvc.zip.sha256"
+            date=$(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json publishedAt --jq '.publishedAt[:10]')
+            cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- winget "$version" \
+              "$RUNNER_TEMP/releases/$tag/ripscope-$version-x86_64-windows-msvc.zip" "$date" "$RUNNER_TEMP/winget/$tag"
+          done
+          {
+            echo "published=true"
+            echo "tag=$TAG"
+            echo "previous=$previous"
+          } >> "$GITHUB_OUTPUT"
+      - name: Install, upgrade, use and remove the package with WinGet
+        if: steps.release.outputs.published == 'true'
+        shell: bash
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+          PREVIOUS: ${{ steps.release.outputs.previous }}
+        run: |
+          set -euo pipefail
+          manifests() { echo "$RUNNER_TEMP/winget/$1/manifests/p/PederBergan/Ripscope/${1#v}"; }
+          cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- winget-check \
+            "$(manifests "$PREVIOUS")" "${PREVIOUS#v}" "$(manifests "$TAG")" "${TAG#v}" \
+            "$GITHUB_WORKSPACE\\install.ps1" "$RUNNER_TEMP\\winget-check"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: steps.release.outputs.published == 'true'
+        with:
+          name: winget-manifests-${{ steps.release.outputs.tag }}
+          path: ${{ runner.temp }}/winget/${{ steps.release.outputs.tag }}/manifests
+          if-no-files-found: error
