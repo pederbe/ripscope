@@ -235,8 +235,9 @@ impl<W: Write> Rows<W> {
                 self.buffer.extend_from_slice(path);
                 self.buffer.push(b' ');
                 escape_into(&mut self.buffer, context, Spacing::Escaped);
-                self.buffer
-                    .extend_from_slice(format!(" {line} ").as_bytes());
+                self.buffer.push(b' ');
+                decimal_into(&mut self.buffer, line);
+                self.buffer.push(b' ');
                 escape_into(&mut self.buffer, text, spacing);
                 self.buffer.push(b'\n');
             }
@@ -291,17 +292,44 @@ enum Spacing {
 }
 
 /// Text with control bytes and DEL written as `\xHH`; with `Spacing::Kept`, tabs and a
-/// final carriage return stay raw.
+/// final carriage return stay raw. The raw runs between escaped bytes are copied whole.
 fn escape_into(out: &mut Vec<u8>, text: &[u8], spacing: Spacing) {
+    const HEX: &[u8; 16] = b"0123456789abcdef";
+    let mut run_start = 0;
     for (at, &byte) in text.iter().enumerate() {
+        if !is_control(byte) {
+            continue;
+        }
         let kept =
             spacing == Spacing::Kept && (byte == b'\t' || (byte == b'\r' && at + 1 == text.len()));
-        if is_control(byte) && !kept {
-            out.extend_from_slice(format!("\\x{byte:02x}").as_bytes());
-        } else {
-            out.push(byte);
+        if kept {
+            continue;
+        }
+        out.extend_from_slice(&text[run_start..at]);
+        out.extend_from_slice(&[
+            b'\\',
+            b'x',
+            HEX[usize::from(byte >> 4)],
+            HEX[usize::from(byte & 0xf)],
+        ]);
+        run_start = at + 1;
+    }
+    out.extend_from_slice(&text[run_start..]);
+}
+
+/// A line number's decimal digits, of which a `u32` has at most ten.
+fn decimal_into(out: &mut Vec<u8>, mut value: u32) {
+    let mut digits = [0; 10];
+    let mut start = digits.len();
+    loop {
+        start -= 1;
+        digits[start] = b'0' + (value % 10) as u8;
+        value /= 10;
+        if value == 0 {
+            break;
         }
     }
+    out.extend_from_slice(&digits[start..]);
 }
 
 fn json_bytes(bytes: &[u8]) -> serde_json::Value {
@@ -525,6 +553,93 @@ mod tests {
             skipped,
             ["1 row skipped: its path holds control characters; use --json"]
         );
+    }
+
+    /// The rows of a line-protocol answer, without warnings or framing.
+    fn delivered(sink: Sink) -> Vec<u8> {
+        let mut out = Vec::new();
+        sink.finish(Vec::new())
+            .unwrap()
+            .deliver(&mut out, &mut io::sink(), WarningStyle::Stderr, |_, _| {
+                Ok(())
+            })
+            .unwrap();
+        out
+    }
+
+    /// The answer of rows at line 7 of `a.c` in `f`, written as found lines or as
+    /// displayed text.
+    fn line_answer(texts: &[Vec<u8>], found: bool) -> Vec<u8> {
+        let mut sink = Sink::new(Transport::Line);
+        for text in texts {
+            if found {
+                sink.text_row(b"a.c", b"f", 7, text).unwrap();
+            } else {
+                sink.row(ResultRow {
+                    path: b"a.c",
+                    context: b"f",
+                    line: 7,
+                    text,
+                    at_file_scope: true,
+                })
+                .unwrap();
+            }
+        }
+        delivered(sink)
+    }
+
+    #[test]
+    fn rows_escape_each_control_byte_and_found_lines_keep_their_spacing() {
+        // Every text of up to three bytes drawn from bytes that escaping treats differently.
+        let bytes = [
+            b'a', b' ', b'\t', b'\r', b'\n', 0x00, 0x1f, 0x7f, 0x80, 0xff,
+        ];
+        let mut texts = vec![Vec::new()];
+        let mut shorter = 0..texts.len();
+        for _ in 0..3 {
+            let longer = texts.len();
+            for at in shorter {
+                for &byte in &bytes {
+                    let mut text = texts[at].clone();
+                    text.push(byte);
+                    texts.push(text);
+                }
+            }
+            shorter = longer..texts.len();
+        }
+        for found in [false, true] {
+            let mut expected = Vec::new();
+            for text in &texts {
+                expected.extend_from_slice(b"a.c f 7 ");
+                for (at, &byte) in text.iter().enumerate() {
+                    let kept = found && (byte == b'\t' || (byte == b'\r' && at == text.len() - 1));
+                    if (byte < 0x20 && !kept) || byte == 0x7f {
+                        expected.extend_from_slice(format!("\\x{byte:02x}").as_bytes());
+                    } else {
+                        expected.push(byte);
+                    }
+                }
+                expected.push(b'\n');
+            }
+            assert_eq!(line_answer(&texts, found), expected, "found: {found}");
+        }
+    }
+
+    #[test]
+    fn line_numbers_are_written_in_decimal() {
+        let mut lines: Vec<u32> = (0..=1000).collect();
+        for digits in 4..=9 {
+            let power = 10_u32.pow(digits);
+            lines.extend([power - 1, power, power + 1]);
+        }
+        lines.extend([u32::MAX - 1, u32::MAX]);
+        let mut sink = Sink::new(Transport::Line);
+        let mut expected = String::new();
+        for &line in &lines {
+            sink.text_row(b"a.c", b"f", line, b"x").unwrap();
+            expected.push_str(&format!("a.c f {line} x\n"));
+        }
+        assert_eq!(String::from_utf8(delivered(sink)).unwrap(), expected);
     }
 
     #[test]
