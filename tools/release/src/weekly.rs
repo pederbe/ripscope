@@ -2,6 +2,12 @@
 use crate::common::{Result, repository};
 use std::{fs, path::Path, process::Command};
 
+// Git may check out tracked metadata with CR LF on Windows. Parse its logical
+// lines consistently and write generated metadata with LF on every platform.
+fn read_metadata(path: impl AsRef<Path>) -> Result<String> {
+    Ok(fs::read_to_string(path)?.replace("\r\n", "\n"))
+}
+
 fn git(root: &Path, args: &[&str]) -> Result<String> {
     let output = Command::new("git").current_dir(root).args(args).output()?;
     if !output.status.success() {
@@ -153,7 +159,7 @@ fn prepare_at(
     if mode == "major" {
         next = [old[0] + 1, 0, 0];
     }
-    let manifest = fs::read_to_string(root.join("Cargo.toml"))?;
+    let manifest = read_metadata(root.join("Cargo.toml"))?;
     let current = crate::common::crate_version(&root.join("Cargo.toml"))?;
     // A deliberately prepared newer version on main takes precedence.
     next = next.max(version(&current)?);
@@ -169,12 +175,12 @@ fn prepare_at(
         &format!("version = \"{next}\""),
         1,
     );
-    let lock = fs::read_to_string(root.join("Cargo.lock"))?;
+    let lock = read_metadata(root.join("Cargo.lock"))?;
     let lock = lock.replace(
         &format!("name = \"ripscope\"\nversion = \"{current}\""),
         &format!("name = \"ripscope\"\nversion = \"{next}\""),
     );
-    let changelog = fs::read_to_string(root.join("CHANGELOG.md"))?;
+    let changelog = read_metadata(root.join("CHANGELOG.md"))?;
     let (intro, rest) = changelog
         .split_once("## [Unreleased]\n")
         .ok_or("missing Unreleased changelog heading")?;
@@ -215,7 +221,7 @@ fn prepare_at(
         notes.trim()
     );
     let emacs_path = root.join("contrib/emacs/ripscope.el");
-    let emacs = fs::read_to_string(&emacs_path)?;
+    let emacs = read_metadata(&emacs_path)?;
     let emacs = emacs
         .lines()
         .map(|line| {
@@ -296,7 +302,7 @@ pub fn notes(args: &[String]) -> Result<()> {
         return Err("usage: ripscope-release release-notes TAG OUTPUT".into());
     };
     let root = repository()?;
-    let changelog = fs::read_to_string(root.join("CHANGELOG.md"))?;
+    let changelog = read_metadata(root.join("CHANGELOG.md"))?;
     let version = tag.strip_prefix('v').ok_or("expected version tag")?;
     let heading = format!("## [{version}] - ");
     let section = changelog
@@ -370,6 +376,7 @@ mod tests {
         git(root, &["init"]).unwrap();
         git(root, &["config", "user.email", "test@example.com"]).unwrap();
         git(root, &["config", "user.name", "Test"]).unwrap();
+        git(root, &["config", "core.autocrlf", "true"]).unwrap();
         fs::write(
             root.join("Cargo.toml"),
             "[package]\nname = \"ripscope\"\nversion = \"0.2.0\"\n",
