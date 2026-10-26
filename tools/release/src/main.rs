@@ -14,12 +14,13 @@ mod archive;
 mod common;
 mod linux;
 mod smoke;
+mod weekly;
 mod windows;
 mod workflow;
 
 use std::process::ExitCode;
 
-const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | profile) [OPTIONS]\n\
+const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | check-automated-environment | prepare-weekly | release-notes | profile) [OPTIONS]\n\
 Run a command with --help for its options. See docs/linux-release.md and docs/windows-release.md.";
 
 fn main() -> ExitCode {
@@ -29,7 +30,10 @@ fn main() -> ExitCode {
         Some("windows") => windows::run(&args[1..]),
         Some("windows-smoke") => smoke::run(&args[1..]),
         Some("check-tag") => workflow::check_tag(&args[1..]),
+        Some("check-automated-environment") => workflow::check_automated_environment(&args[1..]),
         Some("check-environment") => workflow::check_environment(&args[1..]),
+        Some("prepare-weekly") => weekly::prepare(&args[1..]),
+        Some("release-notes") => weekly::notes(&args[1..]),
         Some("profile") => workflow::profile(&args[1..]),
         // A native user scope runs this to show it sits under the user's manager.
         Some("native-cgroup") => linux::native_cgroup(),

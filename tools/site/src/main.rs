@@ -61,8 +61,10 @@ fn run() -> Result<()> {
     if options.dev == options.deploy || (options.docs_only && !options.dev) {
         return Err(USAGE.into());
     }
+    let release_tag = std::env::var("RIPSCOPE_SITE_RELEASE_TAG").ok();
+    let release_version = site_version(&root, release_tag.as_deref())?;
     if options.deploy {
-        check_deployable(&root)?;
+        check_deployable_version(&root, &release_version)?;
     }
     let mdbook = std::env::var("MDBOOK").unwrap_or_else(|_| "mdbook".into());
     let version = output(Command::new(&mdbook).arg("--version"))?;
@@ -96,8 +98,10 @@ fn run() -> Result<()> {
         stage_installers(&root, &site)?;
         let landing = site.join("index.html");
         let page = fs::read_to_string(&landing)?;
-        let version = package_version(&root)?;
-        fs::write(&landing, links(&page.replace("@VERSION@", &version)))?;
+        fs::write(
+            &landing,
+            links(&page.replace("@VERSION@", &release_version)),
+        )?;
         check_metadata(
             &landing,
             &fs::read_to_string(&landing)?,
@@ -303,9 +307,26 @@ fn package_version(root: &Path) -> Result<String> {
         .to_owned())
 }
 
+fn site_version(root: &Path, release_tag: Option<&str>) -> Result<String> {
+    match release_tag {
+        None => package_version(root),
+        Some(tag) => {
+            if !Regex::new(r"^v(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$")?.is_match(tag) {
+                return Err("RIPSCOPE_SITE_RELEASE_TAG must be a stable vX.Y.Z tag".into());
+            }
+            Ok(tag[1..].to_owned())
+        }
+    }
+}
+
+#[cfg(test)]
 fn check_deployable(root: &Path) -> Result<()> {
+    check_deployable_version(root, &package_version(root)?)
+}
+
+fn check_deployable_version(root: &Path, version: &str) -> Result<()> {
     // The landing page links to this version's release downloads.
-    let tag = format!("v{}", package_version(root)?);
+    let tag = format!("v{version}");
     if output(Command::new("git").current_dir(root).args([
         "rev-parse",
         "--verify",
@@ -1105,6 +1126,11 @@ mod tests {
             check_deployable(root).is_err(),
             "unreleased version accepted"
         );
+        assert_eq!(site_version(root, Some("v0.1.0")).unwrap(), "0.1.0");
+        check_deployable_version(root, &site_version(root, Some("v0.1.0")).unwrap()).unwrap();
+        assert!(check_deployable_version(root, "0.3.0").is_err());
+        assert!(site_version(root, Some("v0.1.0-rc.1")).is_err());
+        assert!(site_version(root, Some("main")).is_err());
     }
 
     #[test]

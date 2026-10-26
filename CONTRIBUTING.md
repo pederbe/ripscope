@@ -125,7 +125,7 @@ Refresh checks. See the [Linux release guide](https://github.com/pederbe/ripscop
 and [Windows release guide](https://github.com/pederbe/ripscope/blob/main/docs/windows-release.md) for their
 pinned profiles and validation limits, and the
 [tool inventory](https://github.com/pederbe/ripscope/blob/main/scripts/README.md)
-for the maintained checks. Publishing a release is a separate manual step.
+for the maintained checks and automatic weekly release procedure.
 
 ## Code of conduct
 
