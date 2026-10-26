@@ -137,10 +137,20 @@ Configure the environment once before enabling the schedule. The Windows runner
 must provide the pinned MSVC/SDK profile. Linux must satisfy the release tool's disk,
 user-manager and cgroup prerequisites. Missing prerequisites stop publication.
 
+Configure the crates.io trusted publisher for owner `pederbe`, repository `ripscope`,
+workflow `release.yml` and environment `automated-release`. After both platform jobs
+pass, the automatic publish job checks the source package's required files and runs
+`cargo publish --dry-run` before requesting a short-lived registry token. It publishes
+the crate before making the GitHub release public. Retries accept an existing,
+non-yanked crate version only when its registry checksum matches the package from
+the frozen release source. Missing registry authorization or a mismatch stops the
+release before GitHub publication. Configure the publisher before enabling releases
+from a workflow containing this step. Older tags keep their original workflow.
+
 The existing manual release dispatch remains available. With `publish=false` it
 only builds test artifacts. With `publish=true` and `automatic=false`, it requires
 the original `release` environment's reviewer and creates a draft with the actual
-changelog section. Automatic publication does not publish to a Cargo registry.
+changelog section. Manual drafts do not publish to crates.io.
 
 ## Editor plugin branch
 
