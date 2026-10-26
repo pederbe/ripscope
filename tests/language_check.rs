@@ -259,6 +259,11 @@ const EXCEPTIONS: &[Exception] = &[
         "short packaging glue around dpkg-deb and rpmbuild",
     ),
     only(
+        "scripts/publish-crate.sh",
+        &["shell"],
+        "short registry publication glue around Cargo, curl and checksum verification",
+    ),
+    only(
         "packaging/check-installed.sh",
         &["shell"],
         "the installed-package check the package recipes run",

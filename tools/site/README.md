@@ -40,6 +40,11 @@ in Cloudflare's build image. It resolves the published version from the tagged
 weekly releases while documentation can still ship from `main`. Local `--dev`
 and `--deploy` builds do not publish.
 
+The Cloudflare bootstrap explicitly runs the pinned npm version through `npx`.
+The image's default npm 10 does not honor the dependency lock's scoped overrides.
+The selected npm supports the image's Node.js 24 runtime, and Renovate maintains
+its version in `scripts/build-site.sh`.
+
 The Workers Builds command first fetches and checks out `main`, then runs
 `bash scripts/build-site.sh --cloudflare`. The release workflow calls a dedicated
 Cloudflare deploy hook after publishing and updating the editor branch. The hook builds `main` again, refreshing the
@@ -95,6 +100,6 @@ Static hosting configuration and automatic deployment are described in
 [Website hosting and deployment](../../docs/project/website-hosting.md).
 
 The optional tooling lock retains patched KaTeX and scopes Sharp 0.35.5 and
-Undici 7.29.1 overrides to Miniflare. These patch versions correct advisories in
+Undici 8.12.3 overrides to Miniflare. These versions correct advisories in
 its pinned dependencies while retaining the selected Wrangler version. They affect
 local hosting and deployment tooling, rather than files served to visitors.

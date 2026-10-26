@@ -204,6 +204,35 @@ jobs:
             artifacts/*.zip
             artifacts/*.deb
             artifacts/*.rpm
+      - name: Validate the release changelog
+        env:
+          TAG: ${{ inputs.tag }}
+        run: cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- release-notes "$TAG" "$RUNNER_TEMP/notes.md"
+      - name: Reject superseded automatic releases
+        if: inputs.automatic
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          latest=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)
+          newest=$(printf '%s\n' "$TAG" "$latest" | sort -V | tail -1)
+          test "$newest" = "$TAG" || { echo "A newer release $latest already exists." >&2; exit 1; }
+      - name: Verify the Cargo source package before authentication
+        if: inputs.automatic
+        env:
+          TAG: ${{ inputs.tag }}
+        run: bash scripts/publish-crate.sh "${TAG#v}" dry-run
+      - name: Authenticate to crates.io
+        if: inputs.automatic
+        id: crates-auth
+        uses: rust-lang/crates-io-auth-action@3268eb413133e2960fa4ae0e963ca76380c54cd9 # v1.0.6
+      - name: Publish the verified Cargo package
+        if: inputs.automatic
+        env:
+          TAG: ${{ inputs.tag }}
+          CARGO_REGISTRY_TOKEN: ${{ steps.crates-auth.outputs.token }}
+        run: bash scripts/publish-crate.sh "${TAG#v}" publish
       - name: Publish verified release assets
         env:
           GH_TOKEN: ${{ github.token }}
@@ -212,7 +241,6 @@ jobs:
           AUTOMATIC: ${{ inputs.automatic }}
         run: |
           set -euo pipefail
-          cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- release-notes "$TAG" "$RUNNER_TEMP/notes.md"
           # Platform builders each emit SHA256SUMS for local use. Publish their
           # uniquely named sidecars, excluding the colliding merged manifests.
           assets=(artifacts/*.tar.gz artifacts/*.zip artifacts/*.deb artifacts/*.rpm artifacts/*.sha256)
@@ -238,9 +266,6 @@ jobs:
               --target "$SOURCE_SHA" --draft --title "Ripscope ${TAG#v}" --notes-file "$RUNNER_TEMP/notes.md"
           fi
           if [ "$AUTOMATIC" = true ]; then
-            latest=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)
-            newest=$(printf '%s\n' "$TAG" "$latest" | sort -V | tail -1)
-            test "$newest" = "$TAG" || { echo "A newer release $latest already exists." >&2; exit 1; }
             gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false --latest
             # Plugin managers follow this branch. It contains generated release
             # metadata, so subsequent release commits may be on sibling histories.
