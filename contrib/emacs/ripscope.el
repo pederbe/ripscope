@@ -4,7 +4,7 @@
 
 ;; Author: Peder Bergan
 ;; SPDX-License-Identifier: MIT OR Apache-2.0
-;; Version: 0.2.0
+;; Version: 0.2.2
 ;; Package-Requires: ((emacs "28.1"))
 ;; Keywords: c, languages, tools
 ;; URL: https://github.com/pederbe/ripscope
