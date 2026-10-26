@@ -1,7 +1,10 @@
 //! Exercise exact Windows archive bytes with a minimal runtime environment.
 
 use crate::archive::{entry_path, zip_entries, zip_read};
-use crate::common::{Result, capture_command, inventory, json_text, sha, write_text};
+use crate::common::{
+    Ended, Result, capture_command, command_failure, inventory, json_text, run_logged, sha,
+    write_text,
+};
 use serde_json::{Map, Value, json};
 use std::fs;
 use std::io::{Read, Write};
@@ -305,6 +308,57 @@ fn exercise(smoke: &mut Smoke, work: &Path, system: &Path) -> Result<()> {
     Ok(())
 }
 
+/// The inspector is a host tool. Only the product Session gets the restricted
+/// environment. Keep phase/output files if the host probe cannot finish.
+fn module_inventory(system: &Path, pid: u32, work: &Path, label: &str) -> Result<Value> {
+    let powershell = system.join("System32/WindowsPowerShell/v1.0/powershell.exe");
+    let phase = work.join(format!("loaded-modules-{label}.stage"));
+    let listing = work.join(format!("loaded-modules-{label}.json"));
+    let log = work.join(format!("loaded-modules-{label}.log"));
+    let quoted = |path: &Path| path.to_string_lossy().replace('\'', "''");
+    let phase_arg = quoted(&phase);
+    let listing_arg = quoted(&listing);
+    let script = format!(
+        "$ErrorActionPreference='Stop'; \
+         [IO.File]::WriteAllText('{phase_arg}','entered'); \
+         $p=Get-Process -Id {pid}; \
+         [IO.File]::WriteAllText('{phase_arg}','process'); \
+         $m=@($p.Modules | ForEach-Object {{$_.FileName}}); \
+         [IO.File]::WriteAllText('{phase_arg}','modules'); \
+         $json=ConvertTo-Json -InputObject $m -Compress; \
+         [IO.File]::WriteAllText('{listing_arg}',$json); \
+         [IO.File]::WriteAllText('{phase_arg}','complete')"
+    );
+    let arguments = [
+        powershell.to_string_lossy().into_owned(),
+        "-NoProfile".into(),
+        "-NonInteractive".into(),
+        "-Command".into(),
+        script,
+    ];
+    let ended = run_logged(
+        &arguments,
+        None,
+        None,
+        &log,
+        Some(Duration::from_secs(30)),
+        None,
+    )?;
+    if ended != Ended::Exit(0) {
+        let phase = fs::read_to_string(&phase).unwrap_or_else(|_| "before script entry".into());
+        let reason = match ended {
+            Ended::Deadline => "Loaded-module inspection timed out",
+            _ => "Loaded-module inspection failed",
+        };
+        return Err(format!(
+            "{reason} at phase {phase}: {}",
+            command_failure("host module probe", &log)
+        )
+        .into());
+    }
+    Ok(serde_json::from_slice(&fs::read(listing)?)?)
+}
+
 /// A Session answers queries while its loaded modules are checked, then Refreshes.
 fn persistent(
     smoke: &mut Smoke,
@@ -344,32 +398,14 @@ fn persistent(
         if first? != expected {
             return Err("Persistent response mismatch".into());
         }
-        let powershell = system
-            .join("System32")
-            .join("WindowsPowerShell")
-            .join("v1.0")
-            .join("powershell.exe");
-        let script = format!(
-            "$ErrorActionPreference=\"Stop\"; @((Get-Process -Id {}).Modules | ForEach-Object {{$_.FileName}}) | ConvertTo-Json -Compress",
-            child.id()
-        );
-        let (exit, listing, problems) = capture_command(
-            Command::new(powershell)
-                .args(["-NoProfile", "-NonInteractive", "-Command", &script])
-                .env_clear()
-                .envs(smoke.env.iter().map(|(k, v)| (k, v))),
-            None,
-            Duration::from_secs(30),
-        )?
-        .ok_or("Loaded-module inspection timed out")?;
-        if exit != 0 {
-            return Err(format!(
-                "Loaded-module inspection failed: {}",
-                String::from_utf8_lossy(&problems)
-            )
-            .into());
-        }
-        let modules: Value = serde_json::from_slice(&listing)?;
+        let modules = module_inventory(
+            system,
+            child.id(),
+            project
+                .parent()
+                .ok_or("smoke project has no work directory")?,
+            label,
+        )?;
         let names = modules
             .as_array()
             .filter(|names| !names.is_empty())
@@ -438,6 +474,25 @@ fn persistent(
 mod tests {
     use super::*;
     use crate::archive;
+
+    #[cfg(windows)]
+    #[test]
+    fn host_module_probe_inspects_a_real_live_process() {
+        let root = tempfile::tempdir().unwrap();
+        let system = PathBuf::from(std::env::var_os("SystemRoot").unwrap());
+        let modules = module_inventory(&system, std::process::id(), root.path(), "test").unwrap();
+        let executable = std::env::current_exe().unwrap().canonicalize().unwrap();
+        assert!(modules.as_array().unwrap().iter().any(|module| {
+            PathBuf::from(module.as_str().unwrap())
+                .canonicalize()
+                .unwrap()
+                == executable
+        }));
+        assert_eq!(
+            fs::read_to_string(root.path().join("loaded-modules-test.stage")).unwrap(),
+            "complete"
+        );
+    }
 
     #[test]
     fn unpacking_checks_the_manifest_and_the_emacs_package() {

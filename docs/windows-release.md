@@ -28,7 +28,10 @@ The tool records exact source, dependency and tool inventories, selects the
 compiler/linker explicitly, and runs serial release tests. PE inspection rejects
 dynamic CRT and foreign DLL imports, including delayed imports. Runtime smoke
 uses only Windows system directories on PATH and checks actual loaded DLL paths
-while a session answers queries. LF and CRLF cases cover stored/live separation,
+while a session answers queries. The product session keeps its restricted runtime
+environment. The separate Windows PowerShell inspector uses the normal host
+environment and a 30-second deadline. Its phase, JSON inventory and diagnostic log
+are retained beside the smoke receipt, including on failure. LF and CRLF cases cover stored/live separation,
 available rows with warnings, source deletion, changed-source Refresh and an
 unchanged Refresh that preserves the revision.
 
