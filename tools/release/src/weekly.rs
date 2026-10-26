@@ -114,16 +114,13 @@ fn prepare_at(
         fs::write(output, "changed=false\n")?;
         return Ok(());
     }
-    let log = git(
-        root,
-        &["log", "--no-merges", "--format=%s%x00%b%x00%h%x00", &range],
-    )?;
+    let log = git(root, &["log", "--format=%s%x00%b%x00%h%x00%P%x00", &range])?;
     let records: Vec<_> = log.split('\0').collect();
     let mut groups = [Vec::new(), Vec::new(), Vec::new(), Vec::new()];
     let mut breaking = false;
     let mut feature = false;
-    for record in records.chunks(3) {
-        let [subject, body, hash] = record else {
+    for record in records.chunks(4) {
+        let [subject, body, hash, parents] = record else {
             continue;
         };
         let subject = subject.trim();
@@ -137,6 +134,11 @@ fn prepare_at(
             || body.contains("BREAKING-CHANGE:");
         breaking |= is_breaking;
         feature |= subject.starts_with("feat");
+        // A merge title or body may carry the only compatibility marker. Keep
+        // that warning, while ordinary merge bookkeeping stays out of the notes.
+        if parents.split_whitespace().count() > 1 && !is_breaking {
+            continue;
+        }
         let group = if is_breaking {
             0
         } else if subject.starts_with("feat") {
@@ -146,8 +148,15 @@ fn prepare_at(
         } else {
             3
         };
+        let warning = body
+            .lines()
+            .filter(|line| {
+                line.starts_with("BREAKING CHANGE:") || line.starts_with("BREAKING-CHANGE:")
+            })
+            .map(|line| format!("  {line}\n"))
+            .collect::<String>();
         groups[group].push(format!(
-            "- {subject} ([{}](https://github.com/pederbe/ripscope/commit/{}))\n",
+            "- {subject} ([{}](https://github.com/pederbe/ripscope/commit/{}))\n{warning}",
             hash.trim(),
             hash.trim()
         ));
@@ -363,8 +372,7 @@ mod tests {
             assert!(meaningful(path));
         }
     }
-    #[test]
-    fn prepares_metadata_from_real_git_history_and_skips_generated_version_delta() {
+    fn release_fixture() -> tempfile::TempDir {
         let dir = tempfile::tempdir().unwrap();
         let root = dir.path();
         fs::create_dir_all(root.join("contrib/emacs")).unwrap();
@@ -395,6 +403,75 @@ mod tests {
         git(root, &["add", "."]).unwrap();
         git(root, &["commit", "-m", "Initial"]).unwrap();
         git(root, &["tag", "v0.2.0"]).unwrap();
+        dir
+    }
+
+    #[test]
+    fn merge_only_compatibility_markers_select_breaking_versions_and_notes() {
+        for (subject, body, expected, warning) in [
+            (
+                "fix!: Change installer contract",
+                "",
+                "v0.3.0",
+                "fix!: Change installer contract",
+            ),
+            (
+                "Merge installer changes",
+                "BREAKING CHANGE: Installer options changed",
+                "v0.3.0",
+                "Installer options changed",
+            ),
+            ("Merge routine installer fix", "", "v0.2.1", ""),
+        ] {
+            let dir = release_fixture();
+            let root = dir.path();
+            git(root, &["checkout", "-b", "installer-change"]).unwrap();
+            fs::write(root.join("install.sh"), "echo installer").unwrap();
+            git(root, &["add", "."]).unwrap();
+            git(root, &["commit", "-m", "Adjust installer"]).unwrap();
+            git(root, &["checkout", "-b", "release-source", "v0.2.0"]).unwrap();
+            git(
+                root,
+                &[
+                    "merge",
+                    "--no-ff",
+                    "installer-change",
+                    "-m",
+                    subject,
+                    "-m",
+                    body,
+                ],
+            )
+            .unwrap();
+            assert_eq!(
+                git(root, &["rev-list", "--parents", "-1", "HEAD"])
+                    .unwrap()
+                    .split_whitespace()
+                    .count(),
+                3
+            );
+            let output = tempfile::NamedTempFile::new().unwrap();
+            prepare_at(root, "v0.2.0", "2026-10-26", "auto", output.path(), None).unwrap();
+            assert!(
+                fs::read_to_string(output.path())
+                    .unwrap()
+                    .contains(&format!("tag={expected}"))
+            );
+            let changelog = fs::read_to_string(root.join("CHANGELOG.md")).unwrap();
+            if warning.is_empty() {
+                assert!(!changelog.contains(subject));
+            } else {
+                assert!(changelog.contains("### Breaking changes"));
+                assert!(changelog.contains(warning));
+            }
+            assert!(changelog.contains("Adjust installer"));
+        }
+    }
+
+    #[test]
+    fn prepares_metadata_from_real_git_history_and_skips_generated_version_delta() {
+        let dir = release_fixture();
+        let root = dir.path();
         fs::write(root.join("README.md"), "Docs").unwrap();
         git(root, &["add", "."]).unwrap();
         git(root, &["commit", "-m", "Docs"]).unwrap();
