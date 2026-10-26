@@ -8,9 +8,15 @@ smokes the extracted archive. Initial vendoring and image acquisition can use th
 network; the build and runtime containers cannot. This prepares local files without
 publishing them.
 
-Use Git, binutils (`readelf`), GNU tar, rootless Podman, the pinned Rust 1.99.1
+Use Git, binutils (`readelf`), GNU tar and GNU timeout, rootless Podman, the pinned Rust 1.99.1
 toolchain and the Mold 3.0.0 archive, plus Rust 1.98 or later to build the release
-tool itself. Native developer-proof tests also require disk-backed `/var/tmp` with at
+tool itself. GNU timeout is a prerequisite of the reference and release tests, not
+of the installed Ripscope executable. The tool uses the default `timeout` when its
+version identifies GNU coreutils, otherwise `gnutimeout` (provided by Ubuntu's GNU
+coreutils package). It records the selected executable and version, then stages it
+as `timeout` only on its native test processes' PATH, including nested deadlines.
+Other timeout providers are refused because their descendant cleanup can differ.
+Native developer-proof tests also require disk-backed `/var/tmp` with at
 least 4 GiB free, a reachable user systemd manager, and a visible unified cgroup
 hierarchy under that manager. The tool checks those prerequisites without recording
 the manager's environment. It does not expose the host's user bus, PID namespace or
