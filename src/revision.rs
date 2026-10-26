@@ -176,9 +176,7 @@ impl Revision {
                 Index::Held(held) => unpublished(held.path()),
             });
         }
-        let root = refresh::decode_rule(reader.selection())
-            .map_err(|e| e.to_string())?
-            .root;
+        let root = units.root(&reader).map_err(|e| e.to_string())?;
         let failed = |error: StoreError| error.to_string();
         let mut postings_damaged = false;
         // For an exact name, the blocks its postings list in each unit; for anything else,
@@ -516,6 +514,8 @@ pub(crate) struct Units {
     files: Option<(RevisionId, UnitFiles)>,
     /// One revision's paths, in database order.
     paths: Option<(RevisionId, Arc<Paths>)>,
+    /// One revision's root, from its selection rule.
+    root: Option<(RevisionId, PathBuf)>,
     /// The revision the last query read.
     read: Option<RevisionId>,
 }
@@ -566,6 +566,7 @@ impl Units {
             operands: None,
             files: None,
             paths: None,
+            root: None,
             read: None,
         }
     }
@@ -681,6 +682,20 @@ impl Units {
         let paths = Arc::new(reader.paths()?);
         self.paths = Some((revision.clone(), Arc::clone(&paths)));
         Ok(paths)
+    }
+
+    /// The directory the revision `reader` reads was built in, from its selection rule,
+    /// decoded once for each revision.
+    fn root(&mut self, reader: &Reader<'_>) -> Result<PathBuf, refresh::RefreshError> {
+        let revision = reader.revision_id();
+        if let Some((read, root)) = &self.root
+            && read == revision
+        {
+            return Ok(root.clone());
+        }
+        let root = refresh::decode_rule(reader.selection())?.root;
+        self.root = Some((revision.clone(), root.clone()));
+        Ok(root)
     }
 
     /// The files whose unit is one of `wanted`, with their unit's id, in database order:
@@ -1752,6 +1767,59 @@ pub(crate) mod tests {
             "the index's selection rule cannot be read; rebuild it with -bu and the options \
              it was built with"
         );
+    }
+
+    /// A session decodes each revision's selection rule once, for its root: it keeps the
+    /// root while the revision lasts (here past a rule damaged by hand that a query without
+    /// a session refuses), an index build from another directory publishes a revision whose
+    /// root later reads use, and a revision whose rule cannot be read is refused after one
+    /// whose rule could.
+    #[test]
+    fn a_session_reads_the_root_of_each_revision() {
+        let work = tempfile::tempdir().unwrap();
+        let index = build(work.path(), &[("a.c", "int Alpha;\n")], &["a.c"]);
+        let mut session = Units::with_budget(Units::SESSION);
+        let root = |session: &mut Units| {
+            Revision::read(&index, &Reads::Every, session).map(|read| read.root().to_owned())
+        };
+        assert_eq!(root(&mut session).unwrap(), work.path());
+        let damage = |revisions: i64| {
+            rusqlite::Connection::open(&index)
+                .unwrap()
+                .execute_batch(&format!(
+                    "UPDATE meta SET value = x'00' WHERE key = 'selection';
+                     UPDATE meta SET value = value + {revisions} WHERE key = 'revision';"
+                ))
+                .unwrap();
+        };
+        damage(0);
+        assert_eq!(root(&mut session).unwrap(), work.path());
+        let refused = root(&mut Units::none()).unwrap_err();
+        assert!(refused.starts_with("the index's selection rule cannot be read"));
+        let other = work.path().join("other");
+        std::fs::create_dir(&other).unwrap();
+        std::fs::write(other.join("a.c"), "int Other;\n").unwrap();
+        std::fs::write(other.join("files"), "a.c").unwrap();
+        let selection = refresh::Selection {
+            root: other.clone(),
+            sources: Sources::List(b"files".to_vec()),
+            include_dirs: Vec::new(),
+            environment_dirs: Vec::new(),
+            system_includes: false,
+            system_dir: Vec::new(),
+        };
+        let options = Options {
+            unreadable: Unreadable::Drop,
+            trust: Trust::Metadata,
+            wait: refresh::WAIT,
+            analyzer: Analyzer::PRODUCT,
+        };
+        let mut store = Store::open(&index, Access::Write).unwrap();
+        let built = refresh::build(&mut store, &selection, options).unwrap();
+        assert!(built.published);
+        assert_eq!(root(&mut session).unwrap(), other);
+        damage(1);
+        assert_eq!(root(&mut session).unwrap_err(), refused);
     }
 
     /// A revision read for field 7 or a text search holds every path and reads no unit, so

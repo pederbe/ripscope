@@ -1009,14 +1009,14 @@ mod tests {
         std::os::unix::fs::symlink(&gnu, bin.join("gnutimeout")).unwrap();
         let staged = root.path().join("native-tools");
         assert_eq!(reference_tools(bin.as_os_str(), &staged).unwrap(), gnu);
-        let (status, version, _) = capture(
-            &[text(&staged.join("timeout")), "--version".into()],
-            Duration::from_secs(5),
-        )
-        .unwrap()
-        .unwrap();
-        assert_eq!(status, 0);
-        assert!(version.contains("(GNU coreutils)"));
+        // The staged copy is GNU's, executable, but not run here: a process another test
+        // thread starts while the copy is open for writing holds it open until that
+        // process runs its own program, and running the copy meanwhile fails with "Text
+        // file busy".
+        use std::os::unix::fs::PermissionsExt;
+        let copy = staged.join("timeout");
+        assert_eq!(fs::read(&copy).unwrap(), fs::read(&gnu).unwrap());
+        assert_ne!(fs::metadata(&copy).unwrap().permissions().mode() & 0o111, 0);
         assert_eq!(std::env::var_os("PATH").unwrap(), host_path);
     }
 
