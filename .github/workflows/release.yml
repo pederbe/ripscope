@@ -171,6 +171,8 @@ jobs:
           path: |
             ${{ runner.temp }}/windows/logs/
             ${{ runner.temp }}/windows/receipt.json
+            ${{ runner.temp }}/windows/smoke/smoke-receipt.json
+            ${{ runner.temp }}/windows/smoke/loaded-modules-*
           if-no-files-found: warn
           retention-days: 7
   publish:
