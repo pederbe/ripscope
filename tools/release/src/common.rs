@@ -4,7 +4,7 @@ use serde_json::{Map, Value};
 use sha2::{Digest, Sha256};
 use std::ffi::OsString;
 use std::fs::{self, File};
-use std::io::{self, Read};
+use std::io::{self, Read, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
 
@@ -284,6 +284,25 @@ pub enum Ended {
     Deadline,
     /// An interrupt arrived and it was killed.
     Interrupt,
+}
+
+/// Keep failures useful in hosted logs while retaining the complete capture on disk.
+/// Read only the last 32 KiB, even if a compiler produced a very large log.
+pub fn command_failure(name: &str, log: &Path) -> Box<dyn std::error::Error> {
+    let tail = (|| -> io::Result<String> {
+        let mut file = File::open(log)?;
+        let length = file.metadata()?.len();
+        file.seek(SeekFrom::Start(length.saturating_sub(32 * 1024)))?;
+        let mut bytes = Vec::new();
+        file.take(32 * 1024).read_to_end(&mut bytes)?;
+        Ok(String::from_utf8_lossy(&bytes).into_owned())
+    })()
+    .unwrap_or_else(|error| format!("Could not read captured output: {error}"));
+    format!(
+        "{name} failed; full output: {}\nLast captured output (up to 32 KiB):\n{tail}",
+        log.display()
+    )
+    .into()
 }
 
 /// Runs a command with both outputs in `log`. A deadline, or `stop` being set by an
@@ -780,6 +799,21 @@ mod tests {
         let time = std::time::UNIX_EPOCH + std::time::Duration::from_nanos(1_700_000_000_123);
         set_modified(&file, time).unwrap();
         assert_eq!(fs::metadata(&file).unwrap().modified().unwrap(), time);
+    }
+
+    #[test]
+    fn failure_diagnostic_reads_a_bounded_tail_and_preserves_the_full_log() {
+        let root = tempfile::tempdir().unwrap();
+        let log = root.path().join("large.log");
+        let mut bytes = b"OLD_PREFIX\n".to_vec();
+        bytes.extend(vec![b'x'; 64 * 1024]);
+        bytes.extend(b"\nFINAL_FAILURE\xff");
+        fs::write(&log, &bytes).unwrap();
+        let error = command_failure("build", &log).to_string();
+        assert!(error.contains("FINAL_FAILURE"));
+        assert!(!error.contains("OLD_PREFIX"));
+        assert!(error.len() < 32 * 1024 + 512);
+        assert_eq!(fs::read(log).unwrap(), bytes);
     }
 
     /// A stop flag set while the command ends, as a terminal's Ctrl-C does to the whole
