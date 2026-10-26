@@ -191,55 +191,61 @@ fn installed() -> Result<Option<PathBuf>> {
     Ok(on_path(&fresh_path()?, "ripscope.exe"))
 }
 
-/// Runs a program to completion within ten minutes, echoing it and its output, and
-/// returns its standard output once it succeeds.
-fn checked(program: &Path, args: &[&str], cwd: &Path) -> Result<String> {
-    println!("> {} {}", program.display(), args.join(" "));
-    let mut command = Command::new(program);
-    command.args(args).current_dir(cwd);
-    let (exit, out, err) = capture_command(&mut command, None, Duration::from_secs(600))?
-        .ok_or_else(|| format!("{} timed out", program.display()))?;
+/// Runs a prepared command to completion within ten minutes, echoing it and its output,
+/// and returns its standard output once it succeeds.
+fn checked(command: &mut Command) -> Result<String> {
+    let shown = std::iter::once(command.get_program())
+        .chain(command.get_args())
+        .map(|part| part.to_string_lossy())
+        .collect::<Vec<_>>()
+        .join(" ");
+    println!("> {shown}");
+    let (exit, out, err) = capture_command(command, None, Duration::from_secs(600))?
+        .ok_or_else(|| format!("{shown} timed out"))?;
     let (out, err) = (String::from_utf8_lossy(&out), String::from_utf8_lossy(&err));
     print!("{out}{err}");
     if exit != 0 {
-        return Err(format!(
-            "{} {} exited with {exit}",
-            program.display(),
-            args.join(" ")
-        )
-        .into());
+        return Err(format!("{shown} exited with {exit}").into());
     }
     Ok(out.into_owned())
 }
 
+fn ripscope(executable: &Path, args: &[&str], cwd: &Path) -> Result<String> {
+    checked(Command::new(executable).args(args).current_dir(cwd))
+}
+
+/// The version of a manifest directory, which is its name.
+fn manifest_version(directory: &str) -> Result<String> {
+    Path::new(directory)
+        .file_name()
+        .map(|name| name.to_string_lossy().into_owned())
+        .filter(|name| stable_version(name))
+        .ok_or_else(|| format!("{directory} is not a version's manifest directory").into())
+}
+
 fn expect_version(executable: &Path, version: &str, cwd: &Path) -> Result<()> {
-    let reported = checked(executable, &["--version"], cwd)?;
+    let reported = ripscope(executable, &["--version"], cwd)?;
     if reported.lines().next() != Some(&format!("ripscope {version}")) {
         return Err(format!("expected ripscope {version}, not {reported:?}").into());
     }
     Ok(())
 }
 
-/// PREVIOUS PREVIOUS_VERSION CURRENT CURRENT_VERSION INSTALLER WORK: with the WinGet
-/// client, validates the two manifest directories, installs PREVIOUS and upgrades to
-/// CURRENT, finding `ripscope` on a freshly read PATH each time. Then indexes and
-/// searches a project in the new directory WORK, checks that the editors' install
-/// command (`INSTALLER -Plugin`) keeps the WinGet executable, and removes the package.
+/// PREVIOUS CURRENT INSTALLER WORK: with the WinGet client, validates the two versions'
+/// manifest directories, installs PREVIOUS and upgrades to CURRENT, finding `ripscope`
+/// on a freshly read PATH each time. Then indexes and searches a project in the new
+/// directory WORK, checks that the editors' install command (`INSTALLER -Plugin`) keeps
+/// the WinGet executable, and removes the package.
 pub fn check(args: &[String]) -> Result<()> {
-    let [
-        previous,
-        previous_version,
-        current,
-        current_version,
-        installer,
-        work,
-    ] = args
-    else {
-        return Err("usage: ripscope-release winget-check PREVIOUS PREVIOUS_VERSION CURRENT CURRENT_VERSION INSTALLER WORK".into());
+    let [previous, current, installer, work] = args else {
+        return Err("usage: ripscope-release winget-check PREVIOUS CURRENT INSTALLER WORK".into());
     };
+    let (previous_version, current_version) =
+        (manifest_version(previous)?, manifest_version(current)?);
     let work = Path::new(work);
     fs::create_dir(work)?;
-    let winget = |arguments: &[&str]| checked(Path::new("winget"), arguments, work);
+    let winget =
+        |arguments: &[&str]| checked(Command::new("winget").args(arguments).current_dir(work));
     let agree = [
         "--accept-package-agreements",
         "--accept-source-agreements",
@@ -258,42 +264,37 @@ pub fn check(args: &[String]) -> Result<()> {
 
     winget(&[&["install", "--manifest", previous.as_str()][..], &agree].concat())?;
     let executable = installed()?.ok_or("ripscope.exe is not on PATH after installation")?;
-    expect_version(&executable, previous_version, work)?;
+    expect_version(&executable, &previous_version, work)?;
     winget(&[&["upgrade", "--manifest", current.as_str()][..], &agree].concat())?;
     let executable = installed()?.ok_or("ripscope.exe is not on PATH after the upgrade")?;
-    expect_version(&executable, current_version, work)?;
+    expect_version(&executable, &current_version, work)?;
 
     let project = work.join("project");
     fs::create_dir(&project)?;
     fs::write(project.join("source.c"), "int value;\n")?;
-    checked(&executable, &["-bk", "source.c"], &project)?;
-    let found = checked(&executable, &["-dL", "-1", "value"], &project)?;
+    ripscope(&executable, &["-bk", "source.c"], &project)?;
+    let found = ripscope(&executable, &["-dL", "-1", "value"], &project)?;
     if found.lines().collect::<Vec<_>>() != ["source.c value 1 int value;"] {
         return Err(format!("unexpected search result {found:?}").into());
     }
 
-    let powershell = Path::new("powershell.exe");
-    let plugin = [
-        "-NoProfile",
-        "-NonInteractive",
-        "-ExecutionPolicy",
-        "Bypass",
-        "-File",
-        installer.as_str(),
-        "-Plugin",
-    ];
-    let mut command = Command::new(powershell);
-    command.args(plugin).env("Path", fresh_path()?);
-    println!("> {} {}", powershell.display(), plugin.join(" "));
-    let (exit, out, err) = capture_command(&mut command, None, Duration::from_secs(600))?
-        .ok_or("the editors' install command timed out")?;
-    let said = String::from_utf8_lossy(&out);
-    print!("{said}{}", String::from_utf8_lossy(&err));
+    let said = checked(
+        Command::new("powershell.exe")
+            .args([
+                "-NoProfile",
+                "-NonInteractive",
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+            ])
+            .args([installer, "-Plugin"])
+            .env("Path", fresh_path()?),
+    )?;
     let kept = said.lines().any(|line| {
         line.strip_prefix(&format!("Ripscope {current_version} is installed: "))
             .is_some_and(|path| path.eq_ignore_ascii_case(&executable.to_string_lossy()))
     });
-    if exit != 0 || !kept || separate.exists() {
+    if !kept || separate.exists() {
         return Err("the editors' install command did not keep the WinGet ripscope.exe".into());
     }
 

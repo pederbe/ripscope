@@ -76,7 +76,7 @@ editors' install command and removes the package. The manifests are in the run's
 `winget-manifests-vX.Y.Z` artifact, laid out as in
 [microsoft/winget-pkgs](https://github.com/microsoft/winget-pkgs). The workflow
 runs after publication, so it never holds up or changes a release. Run it again for
-any published tag from the Actions tab.
+any published tag from the [WinGet workflow page](https://github.com/pederbe/ripscope/actions/workflows/winget.yml).
 
 To write the manifests for a downloaded ZIP and its `.sha256` sidecar yourself:
 

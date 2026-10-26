@@ -10,7 +10,8 @@
 //! - `check-tag TAG`, `check-environment FILE` and `profile PLATFORM FIELD`: the release
 //!   workflow's guard on its tag and protected environment, and its pinned profile values.
 //! - `winget VERSION ARCHIVE DATE OUT`: write the WinGet manifests for a checked release ZIP.
-//! - `winget-check ...`: install, upgrade, use and remove them with the WinGet client.
+//! - `winget-check PREVIOUS CURRENT INSTALLER WORK`: install, upgrade, use and remove two
+//!   versions' manifests with the WinGet client.
 
 mod archive;
 mod common;
