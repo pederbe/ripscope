@@ -1,0 +1,55 @@
+name: Website deployment
+
+# Website delivery has its own result and can be retried without a release.
+on:
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  actions: read
+
+concurrency:
+  group: website-deploy
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    if: >-
+      !github.event.repository.private &&
+      (github.event_name == 'workflow_dispatch' ||
+       github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    steps:
+      - name: Refresh the delivered website version
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
+          RELEASE_RUN_ID: ${{ github.event.workflow_run.id }}
+          CLOUDFLARE_DEPLOY_HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
+        run: |
+          set -euo pipefail
+          # Manual build-only releases must not deploy the website.
+          if [ -n "$RELEASE_RUN_ID" ]; then
+            published=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RELEASE_RUN_ID/jobs?per_page=100" \
+              --jq 'any(.jobs[]; .name == "publish" and .conclusion == "success")')
+            if [ "$published" != true ]; then
+              echo 'No publication job completed. Skipping build-only run.' >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          fi
+          # Ignore a delayed completion after another version was delivered.
+          delivered=$(gh api "repos/$GITHUB_REPOSITORY/commits/release" --jq .sha)
+          if [ -n "$RELEASE_SHA" ] && [ "$RELEASE_SHA" != "$delivered" ]; then
+            echo 'A different release is now delivered. Skipping stale completion.' >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          test -n "$CLOUDFLARE_DEPLOY_HOOK"
+          curl --proto '=https' --silent --show-error --fail --retry 2 \
+            --connect-timeout 10 --max-time 60 --request POST "$CLOUDFLARE_DEPLOY_HOOK" \
+            --output "$RUNNER_TEMP/site-build.json"
+          jq -e '.success == true and (.result.build_uuid | type == "string" and length > 0)' "$RUNNER_TEMP/site-build.json" >/dev/null
+          echo 'Cloudflare accepted the website refresh. Its build result is reported by Cloudflare.' >> "$GITHUB_STEP_SUMMARY"
