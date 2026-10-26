@@ -194,6 +194,11 @@ fn installed() -> Result<Option<PathBuf>> {
 /// Runs a prepared command to completion within ten minutes, echoing it and its output,
 /// and returns its standard output once it succeeds.
 fn checked(command: &mut Command) -> Result<String> {
+    checked_unless(command, |exit, _| exit == 0)
+}
+
+/// Like `checked`, but `accept` judges the exit code and standard output.
+fn checked_unless(command: &mut Command, accept: impl Fn(i32, &str) -> bool) -> Result<String> {
     let shown = std::iter::once(command.get_program())
         .chain(command.get_args())
         .map(|part| part.to_string_lossy())
@@ -204,10 +209,26 @@ fn checked(command: &mut Command) -> Result<String> {
         .ok_or_else(|| format!("{shown} timed out"))?;
     let (out, err) = (String::from_utf8_lossy(&out), String::from_utf8_lossy(&err));
     print!("{out}{err}");
-    if exit != 0 {
+    if !accept(exit, &out) {
         return Err(format!("{shown} exited with {exit}").into());
     }
     Ok(out.into_owned())
+}
+
+/// The exit code of `winget validate` when the manifests are valid but it warns.
+const VALIDATION_WARNINGS: i32 = 0x8A15_0028_u32 as i32;
+
+/// Whether `winget validate` accepted the manifests. A client older than the manifests'
+/// schema warns only that it does not know their schema header, and still reads them.
+fn validated(exit: i32, output: &str) -> bool {
+    let mut warnings = output
+        .lines()
+        .filter(|line| line.starts_with("Manifest Warning:"))
+        .peekable();
+    exit == 0
+        || exit == VALIDATION_WARNINGS
+            && warnings.peek().is_some()
+            && warnings.all(|line| line.contains("The schema header URL does not match"))
 }
 
 fn ripscope(executable: &Path, args: &[&str], cwd: &Path) -> Result<String> {
@@ -254,7 +275,12 @@ pub fn check(args: &[String]) -> Result<()> {
     winget(&["--version"])?;
     winget(&["settings", "--enable", "LocalManifestFiles"])?;
     for manifest in [previous, current] {
-        winget(&["validate", "--manifest", manifest])?;
+        checked_unless(
+            Command::new("winget")
+                .args(["validate", "--manifest", manifest])
+                .current_dir(work),
+            validated,
+        )?;
     }
     let home = PathBuf::from(std::env::var("USERPROFILE")?);
     let separate = home.join(r".local\bin\ripscope.exe");
@@ -451,6 +477,22 @@ mod tests {
         );
         let other = "HKEY_CURRENT_USER\\Environment\n    TEMP    REG_SZ    C:\\Temp\n";
         assert_eq!(registry_path(other, lookup), None);
+    }
+
+    #[test]
+    fn validation_accepts_only_an_older_clients_schema_header_warnings() {
+        let header = "Manifest Warning: The schema header URL does not match the expected pattern. \
+                      Value: # yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.28.0.schema.json";
+        let warned = format!("Manifest validation succeeded with warnings.\n{header}\n{header}\n");
+        assert!(validated(0, "Manifest validation succeeded.\n"));
+        assert!(validated(VALIDATION_WARNINGS, &warned));
+        let other = format!("{warned}Manifest Warning: Unknown field.\n");
+        assert!(!validated(VALIDATION_WARNINGS, &other));
+        assert!(!validated(
+            VALIDATION_WARNINGS,
+            "Manifest validation succeeded with warnings.\n"
+        ));
+        assert!(!validated(1, &warned));
     }
 
     #[test]
