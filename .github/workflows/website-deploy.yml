@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: website-deploy
@@ -27,9 +28,19 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
+          RELEASE_RUN_ID: ${{ github.event.workflow_run.id }}
           CLOUDFLARE_DEPLOY_HOOK: ${{ secrets.CLOUDFLARE_DEPLOY_HOOK }}
         run: |
           set -euo pipefail
+          # Manual build-only releases must not deploy the website.
+          if [ -n "$RELEASE_RUN_ID" ]; then
+            published=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$RELEASE_RUN_ID/jobs?per_page=100" \
+              --jq 'any(.jobs[]; .name == "publish" and .conclusion == "success")')
+            if [ "$published" != true ]; then
+              echo 'No publication job completed. Skipping build-only run.' >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+          fi
           # Ignore a delayed completion after another version was delivered.
           delivered=$(gh api "repos/$GITHUB_REPOSITORY/commits/release" --jq .sha)
           if [ -n "$RELEASE_SHA" ] && [ "$RELEASE_SHA" != "$delivered" ]; then

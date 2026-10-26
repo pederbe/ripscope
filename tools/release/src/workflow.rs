@@ -172,6 +172,7 @@ mod delivery_tests {
             .env("GITHUB_STEP_SUMMARY", root.join("summary"))
             .env("GITHUB_REPOSITORY", "fixture/ripscope")
             .env("RELEASE_SHA", sha)
+            .env("RELEASE_RUN_ID", if sha.is_empty() { "" } else { "42" })
             .env("CLOUDFLARE_DEPLOY_HOOK", "https://example.invalid/hook")
             .env("SUPERSEDE", "false")
             .env("INCREMENT", "auto")
@@ -185,7 +186,18 @@ mod delivery_tests {
     fn website_refresh_is_independent_and_skips_stale_completions() {
         let root = tempfile::tempdir().unwrap();
         fs::create_dir(root.path().join("bin")).unwrap();
-        executable(root.path(), "gh", "#!/bin/sh\nprintf delivered\n");
+        executable(
+            root.path(),
+            "gh",
+            r#"#!/bin/bash
+set -euo pipefail
+if [[ "$*" = *'/jobs?'* ]]; then
+  if [ "$FIXTURE_MODE" = build-only ]; then echo false; else echo true; fi
+else
+  printf delivered
+fi
+"#,
+        );
         executable(
             root.path(),
             "curl",
@@ -201,6 +213,7 @@ printf '{"success":true,"result":{"build_uuid":"fixture"}}' > "${!#}"
             ("stale", "success", true, false),
             ("delivered", "success", true, true),
             ("", "success", true, true),
+            ("delivered", "build-only", true, false),
             ("delivered", "failure", false, true),
         ] {
             fs::write(root.path().join("trace"), "").unwrap();
