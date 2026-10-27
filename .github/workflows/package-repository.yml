@@ -17,10 +17,8 @@ on:
   workflow_run:
     workflows: [Release]
     types: [completed]
-  pull_request:
-    paths:
-      - .github/workflows/package-repository.yml
-      - tools/release/src/repository.rs
+  # CI calls the check-only path for affected pull requests.
+  workflow_call:
   # Repeats publication of one release, such as after an interrupted upload.
   workflow_dispatch:
     inputs:
