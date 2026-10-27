@@ -7,6 +7,11 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
+### Added
+
+- Signed apt and dnf repositories provide Linux installation and updates through
+  the system package manager.
+
 ## [0.2.0] - 2026-10-20
 
 This release changes only the Emacs integration. Emacs users need to update their
