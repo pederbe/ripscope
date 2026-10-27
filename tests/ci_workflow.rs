@@ -9,7 +9,9 @@ fn root() -> PathBuf {
 }
 
 fn workflow() -> String {
-    fs::read_to_string(root().join(".github/workflows/ci.yml")).unwrap()
+    fs::read_to_string(root().join(".github/workflows/ci.yml"))
+        .unwrap()
+        .replace("\r\n", "\n")
 }
 
 #[test]
@@ -37,7 +39,7 @@ fn required_ci_waits_for_every_job_and_every_pr_workflow() {
 
     for entry in fs::read_dir(root().join(".github/workflows")).unwrap() {
         let path = entry.unwrap().path();
-        let content = fs::read_to_string(&path).unwrap();
+        let content = fs::read_to_string(&path).unwrap().replace("\r\n", "\n");
         if content.contains("\n  pull_request:") {
             assert_eq!(path.file_name().unwrap(), "ci.yml");
         }
