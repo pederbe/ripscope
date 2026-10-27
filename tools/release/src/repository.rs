@@ -774,11 +774,18 @@ const CLIENTS: &[(&str, &str)] = &[
 /// `package-repository-check REPOSITORY ARCHIVE WORK`: installs the version of the
 /// extracted release archive ARCHIVE from a generated repository in offline
 /// containers, with signature checks on, upgrading from the previous version when it
-/// is the newest, then removes it. WORK must not exist.
+/// is the newest, then removes it. Add `--published` to check the live HTTPS
+/// repository instead. WORK must not exist.
 pub fn check(args: &[String]) -> Result<()> {
+    let published = args.last().is_some_and(|arg| arg == "--published");
+    let args = if published {
+        &args[..args.len() - 1]
+    } else {
+        args
+    };
     let [repository, archive, work] = args else {
         return Err(
-            "usage: ripscope-release package-repository-check REPOSITORY ARCHIVE WORK".into(),
+            "usage: ripscope-release package-repository-check REPOSITORY ARCHIVE WORK [--published]".into(),
         );
     };
     let (repository, archive, work) = (
@@ -808,7 +815,7 @@ pub fn check(args: &[String]) -> Result<()> {
     let work = fs::canonicalize(work)?;
     fs::write(work.join("installed.sha256"), installed)?;
 
-    // Clients read the generated repository from a read-only mount instead of its URL.
+    // Offline clients read a mounted repository; published checks use its HTTPS URL.
     let local = |path: &str| -> Result<String> {
         let text = fs::read_to_string(repository.join(path))?;
         if !text.contains(BASE_URL) {
@@ -821,12 +828,23 @@ pub fn check(args: &[String]) -> Result<()> {
             )
             .replace(BASE_URL, "file:///repo"))
     };
-    let definition = local("ripscope.repo")?;
+    let definition = if published {
+        fs::read_to_string(repository.join("ripscope.repo"))?
+    } else {
+        local("ripscope.repo")?
+    };
     fs::write(work.join("mirrorlist"), local("rpm/mirrorlist")?)?;
     fs::write(work.join("ripscope.repo"), &definition)?;
     fs::write(
         work.join("wrong.repo"),
-        definition.replace("file:///repo/ripscope.asc", "file:///check/wrong.asc"),
+        definition.replace(
+            &if published {
+                format!("{BASE_URL}/ripscope.asc")
+            } else {
+                "file:///repo/ripscope.asc".into()
+            },
+            "file:///check/wrong.asc",
+        ),
     )?;
     let home = work.join("wrong-key");
     fs::create_dir(&home)?;
@@ -866,9 +884,26 @@ pub fn check(args: &[String]) -> Result<()> {
     let engine = std::env::var("CONTAINER_ENGINE").unwrap_or_else(|_| "podman".into());
     for (image, steps) in CLIENTS {
         println!("Checking {image}, from {previous:?} to {version}");
+        let mut command = Command::new(&engine);
+        command.args([
+            "run",
+            "--rm",
+            "--network",
+            if published { "bridge" } else { "none" },
+        ]);
+        if published {
+            // Minimal client images may lack CA roots. Use the hosted runner's
+            // normal trust store while keeping HTTPS verification enabled.
+            command.args(["-v", "/etc/ssl/certs:/etc/ssl/certs:ro"]);
+        }
+        let steps = if published {
+            steps.replace("file:/repo/apt", &format!("{BASE_URL}/apt"))
+        } else {
+            (*steps).into()
+        };
         run_command(
-            Command::new(&engine)
-                .args(["run", "--rm", "--network=none", "-v"])
+            command
+                .args(["-v"])
                 .arg(format!("{}:/repo:ro", repository.display()))
                 .arg("-v")
                 .arg(format!("{}:/check:ro", work.display()))

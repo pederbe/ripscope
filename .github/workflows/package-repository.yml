@@ -28,6 +28,10 @@ on:
         description: Published release tag, such as v0.2.4
         required: true
         type: string
+      verify_only:
+        description: Verify the published repository without signing or uploading
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -125,7 +129,7 @@ jobs:
         if: steps.release.outputs.selected == 'true'
         run: cargo build --locked --quiet --manifest-path tools/release/Cargo.toml
       - name: Import the signing key
-        if: steps.release.outputs.selected == 'true'
+        if: steps.release.outputs.selected == 'true' && !inputs.verify_only
         env:
           PACKAGE_SIGNING_KEY: ${{ secrets.PACKAGE_SIGNING_KEY }}
         run: |
@@ -166,7 +170,7 @@ jobs:
               { echo "$name differs from its release" >&2; exit 1; }
           done
       - name: Add the packages and sign the repository
-        if: steps.release.outputs.selected == 'true'
+        if: steps.release.outputs.selected == 'true' && !inputs.verify_only
         env:
           TAG: ${{ steps.release.outputs.tag }}
           PREVIOUS: ${{ steps.release.outputs.previous }}
@@ -190,13 +194,16 @@ jobs:
         if: steps.release.outputs.selected == 'true'
         env:
           TAG: ${{ steps.release.outputs.tag }}
+          VERIFY_ONLY: ${{ inputs.verify_only }}
         run: |
+          args=()
+          if [ "$VERIFY_ONLY" = true ]; then args+=(--published); fi
           tools/release/target/debug/ripscope-release package-repository-check "$RUNNER_TEMP/repository" \
-            "$RUNNER_TEMP/assets/ripscope-${TAG#v}-x86_64-linux-gnu" "$RUNNER_TEMP/check"
+            "$RUNNER_TEMP/assets/ripscope-${TAG#v}-x86_64-linux-gnu" "$RUNNER_TEMP/check" "${args[@]}"
       # Every package, index and snapshot goes up before the current indexes that name
       # them. Clients reading the previous generation keep working.
       - name: Upload
-        if: steps.release.outputs.selected == 'true' && env.CHECK_ONLY != 'true'
+        if: steps.release.outputs.selected == 'true' && env.CHECK_ONLY != 'true' && !inputs.verify_only
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}

@@ -152,6 +152,11 @@ access disabled. The `packages` GitHub environment permits only `main` and `v*`
 tags and has no approval or wait rule. Storage credentials and the first live
 publication must be verified before this channel is advertised to users.
 
+After publication, dispatch the same workflow with `verify_only=true` and the
+latest tag. It reuses the published packages and checks installation, upgrade,
+search and removal through the live HTTPS endpoint on all four clients, without
+signing or uploading. The default pre-publication checks remain offline.
+
 1. **Signing key.** Create a dedicated RSA 4096 key with no expiry. RSA keeps
    AlmaLinux 8 and RHEL 8 able to check RPM signatures. An expiry would strand apt
    users, who keep their own copy of the key. Keep an offline backup of the secret
