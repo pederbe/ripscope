@@ -144,6 +144,14 @@ Publication stays off until the signing key's public half is committed as
 `tools/release/package-signing-key.asc`. Until then each run reports that the
 repository is not set up and succeeds.
 
+The package signing key has fingerprint
+`3710 BE46 B974 AAB7 390D 225B FAFC E829 50BF F0D6`.
+The `ripscope-packages` bucket uses the existing Cloudflare account, Standard
+storage and `packages.ripscope.com`, with TLS 1.2 or later and public `r2.dev`
+access disabled. The `packages` GitHub environment permits only `main` and `v*`
+tags and has no approval or wait rule. Storage credentials and the first live
+publication must be verified before this channel is advertised to users.
+
 1. **Signing key.** Create a dedicated RSA 4096 key with no expiry. RSA keeps
    AlmaLinux 8 and RHEL 8 able to check RPM signatures. An expiry would strand apt
    users, who keep their own copy of the key. Keep an offline backup of the secret
