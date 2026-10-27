@@ -21,7 +21,6 @@ on:
     paths:
       - .github/workflows/package-repository.yml
       - tools/release/src/repository.rs
-      - scripts/package-linux.sh
   # Repeats publication of one release, such as after an interrupted upload.
   workflow_dispatch:
     inputs:
@@ -151,11 +150,13 @@ jobs:
           set -euo pipefail
           mkdir "$RUNNER_TEMP/repository"
           aws s3 sync --only-show-errors "s3://$BUCKET" "$RUNNER_TEMP/repository"
-          # Storage access is weaker than the signing key: every .deb already published
-          # must still be the one its release published before it is signed again.
+          # Storage access is weaker than the signing key, so every .deb already
+          # published must still be the one its release published before it is signed
+          # again.
           # Published RPMs carry the release key's signature, which is checked next.
           pool="$RUNNER_TEMP/repository/apt/pool/main/r/ripscope"
           test -d "$pool" || exit 0
+          shopt -s nullglob
           for file in "$pool"/*.deb; do
             name=$(basename "$file")
             [[ $name =~ ^ripscope_([0-9]+\.[0-9]+\.[0-9]+)_amd64\.deb$ ]]

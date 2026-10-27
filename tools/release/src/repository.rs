@@ -8,7 +8,7 @@
 //! previous generation, or a publication that stopped part way, still finds consistent
 //! files. The files in [`CURRENT`] are uploaded last.
 
-use crate::common::{Result, relative_name, sha, unique_id, walk};
+use crate::common::{Result, relative_name, set_modified, sha, under, unique_id, walk};
 use sha2::{Digest, Sha256, Sha512};
 use std::fs;
 use std::io::Write;
@@ -377,16 +377,17 @@ impl Rpm {
         }
     }
 
-    fn signed(&self, file: &Path) -> Result<bool> {
-        let checked = output(
+    /// Whether the release key signed `file`. An unsigned or tampered package makes
+    /// `rpmkeys` fail, so that is a no too.
+    fn signed(&self, file: &Path) -> bool {
+        output(
             Command::new("rpmkeys")
                 .arg("--dbpath")
                 .arg(&self.database)
                 .arg("--checksig")
                 .arg(file),
         )
-        .unwrap_or_default();
-        Ok(checked.trim_end().ends_with(": digests signatures OK"))
+        .is_ok_and(|checked| checked.trim_end().ends_with(": digests signatures OK"))
     }
 }
 
@@ -428,7 +429,7 @@ fn add_packages(
                 if rpm.identity(&signed)? != before {
                     return Err(format!("signing changed the contents of {name}").into());
                 }
-                if !rpm.signed(&signed)? {
+                if !rpm.signed(&signed) {
                     return Err(format!("{name} signature check failed").into());
                 }
                 let published = repository.join("rpm").join(name);
@@ -477,7 +478,7 @@ fn check_contents(repository: &Path, rpm: &Rpm) -> Result<()> {
                 {
                     return Err(format!("{relative} does not match its header").into());
                 }
-                if !rpm.signed(&path)? {
+                if !rpm.signed(&path) {
                     return Err(format!("{relative} is not signed by the release key").into());
                 }
             }
@@ -564,12 +565,19 @@ fn dnf_metadata(repository: &Path, signer: &Signer, rpm: &Rpm, work: &Path) -> R
     let generated = work.join("rpm");
     fs::create_dir(&generated)?;
     // The same packages give the same snapshot, so a retry completes it instead of
-    // adding another: its timestamps are the newest package's build time.
+    // adding another. The metadata records each package file's modification time,
+    // which a copy or download resets, so each is set to the package's build time,
+    // and the snapshot's own timestamps to the newest of those.
     let mut revision = 0;
     for entry in fs::read_dir(repository.join("rpm"))? {
         let path = entry?.path();
         if path.extension().is_some_and(|extension| extension == "rpm") {
-            revision = revision.max(rpm.query("%{BUILDTIME}", &path)?.parse::<u64>()?);
+            let built = rpm.query("%{BUILDTIME}", &path)?.parse::<u64>()?;
+            set_modified(
+                &path,
+                std::time::UNIX_EPOCH + std::time::Duration::from_secs(built),
+            )?;
+            revision = revision.max(built);
         }
     }
     // Package locations lead from the snapshot back to the shared rpm pool.
@@ -758,6 +766,7 @@ check_removed
 /// RHEL-family release through dnf.
 const CLIENTS: &[(&str, &str)] = &[
     ("docker.io/library/debian:12", APT),
+    ("docker.io/library/ubuntu:22.04", APT),
     ("docker.io/library/ubuntu:24.04", APT),
     ("docker.io/library/almalinux:8", DNF),
 ];
@@ -788,18 +797,16 @@ pub fn check(args: &[String]) -> Result<()> {
     // The archive's own files, checked against its manifest, are what the packages
     // must install.
     let manifest = fs::read_to_string(archive.join("MANIFEST.sha256"))?;
+    let installed = installed_manifest(&manifest)?;
     for line in manifest.lines() {
         let (hash, path) = line.split_once("  ").unwrap_or_default();
-        if sha(&archive.join(path))? != hash {
+        if sha(&under(archive, path))? != hash {
             return Err(format!("{path} does not match the archive's manifest").into());
         }
     }
     fs::create_dir(work)?;
     let work = fs::canonicalize(work)?;
-    fs::write(
-        work.join("installed.sha256"),
-        installed_manifest(&manifest)?,
-    )?;
+    fs::write(work.join("installed.sha256"), installed)?;
 
     // Clients read the generated repository from a read-only mount instead of its URL.
     let local = |path: &str| -> Result<String> {

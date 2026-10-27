@@ -1,5 +1,5 @@
 //! Build, inspect and smoke the local release archives. Apart from the package
-//! repository commands below, nothing here uploads, signs or publishes; the guarded
+//! repository commands below, nothing here uploads, signs or publishes. The guarded
 //! release workflow does that separately.
 //!
 //! - `linux`: build the glibc 2.28 x86-64 archive in pinned offline containers, test it

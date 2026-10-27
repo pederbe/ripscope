@@ -93,26 +93,26 @@ downloaded packages. Those downloads remain available either way.
 
 After each published release, the
 [Package repository workflow](https://github.com/pederbe/ripscope/actions/workflows/package-repository.yml)
-adds the release's `.deb` and `.rpm` to it. The workflow:
+adds the release's `.deb` and `.rpm` to it. The workflow takes these steps.
 
-1. downloads the packages, checks their SHA-256 files and their attestations from
-   `release.yml`, and never rebuilds the executable;
-2. fetches the published repository and checks every `.deb` already there against
+1. It downloads the packages, checks their SHA-256 files and their attestations from
+   `release.yml`, and never rebuilds the executable.
+2. It fetches the published repository and checks every `.deb` already there against
    its release's SHA-256 file, since storage credentials alone must not be able to
-   add a package;
-3. runs `package-repository`, which publishes the `.deb` unchanged, adds a header
+   add a package.
+3. It runs `package-repository`, which publishes the `.deb` unchanged, adds a header
    signature to the `.rpm` (checking that its header and payload digests stay the
    same), refuses any file that is not a Ripscope package matching its name, and
-   regenerates and signs the apt and dnf metadata;
-4. runs `package-repository-check`, which installs the release from the generated
-   repository in offline Debian 12, Ubuntu 24.04 and AlmaLinux 8 containers with
-   signature checks on. When the release is the newest, it installs the previous
-   version first and upgrades with `apt-get upgrade` or `dnf upgrade`. It checks
+   regenerates and signs the apt and dnf metadata.
+4. It runs `package-repository-check`, which installs the release from the generated
+   repository in offline Debian 12, Ubuntu 22.04, Ubuntu 24.04 and AlmaLinux 8
+   containers with signature checks on. When the release is the newest, it installs
+   the previous version first and upgrades with `apt-get upgrade` or `dnf upgrade`. It checks
    the version, every installed file against the release archive's manifest
    (including the editor sources under `/usr/share/ripscope`), indexing and search,
    and that removal leaves the project, its index and the editor configuration. A
-   client holding another key must refuse the repository;
-5. uploads packages, apt indexes by hash and complete dnf metadata snapshots, then
+   client holding another key must refuse the repository.
+5. It uploads packages, apt indexes by hash and complete dnf metadata snapshots, then
    the current apt index and dnf mirrorlist, and compares what is served with what
    it signed.
 
@@ -122,10 +122,9 @@ signed files. To repeat a publication, run the workflow from its page with the
 release tag. That signs and uploads again without changing the release or rebuilding
 anything. Runs take turns, so start the next one after the previous has finished.
 
-Pull requests that change the workflow, `tools/release/src/repository.rs` or
-`scripts/package-linux.sh` run steps 1, 3 and 4 on the two latest releases with a
-throwaway key, publish the newest twice to check that a repeat keeps every package,
-and upload nothing.
+Pull requests that change the workflow or `tools/release/src/repository.rs` run
+steps 1, 3 and 4 on the two latest releases with a throwaway key, publish the newest
+twice to check that a repeat keeps every package, and upload nothing.
 
 The repository holds:
 
@@ -181,8 +180,10 @@ repository is not set up and succeeds.
 ### For users, once published
 
 ```sh
-# Debian and Ubuntu
-curl -fsSL https://packages.ripscope.com/ripscope.gpg | sudo tee /usr/share/keyrings/ripscope.gpg >/dev/null
+# Debian and Ubuntu: check that the fingerprint matches the one in the guide
+curl -fsSLo ripscope.gpg https://packages.ripscope.com/ripscope.gpg
+gpg --show-keys --fingerprint ripscope.gpg
+sudo install -m 644 ripscope.gpg /usr/share/keyrings/ripscope.gpg
 echo "deb [signed-by=/usr/share/keyrings/ripscope.gpg] https://packages.ripscope.com/apt stable main" |
   sudo tee /etc/apt/sources.list.d/ripscope.list
 sudo apt update && sudo apt install ripscope
