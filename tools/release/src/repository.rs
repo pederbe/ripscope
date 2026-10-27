@@ -893,8 +893,14 @@ pub fn check(args: &[String]) -> Result<()> {
         ]);
         if published {
             // Minimal client images may lack CA roots. Use the hosted runner's
-            // normal trust store while keeping HTTPS verification enabled.
-            command.args(["-v", "/etc/ssl/certs:/etc/ssl/certs:ro"]);
+            // normal CA bundle at each client's path. Mounting the whole Debian
+            // certificate directory hides AlmaLinux's ca-bundle.crt link.
+            let ca = if image.contains("almalinux") {
+                "/etc/pki/tls/certs/ca-bundle.crt"
+            } else {
+                "/etc/ssl/certs/ca-certificates.crt"
+            };
+            command.args(["-v", &format!("/etc/ssl/certs/ca-certificates.crt:{ca}:ro")]);
         }
         let steps = if published {
             steps.replace("file:/repo/apt", &format!("{BASE_URL}/apt"))
