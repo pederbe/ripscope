@@ -1,0 +1,218 @@
+name: Package repository
+
+# After a release is published, adds its .deb and .rpm to the signed apt and dnf
+# repository at packages.ripscope.com. It uses the release's packages as published,
+# after checking their checksums and their attestations from release.yml, and never
+# rebuilds the executable. Before uploading, it installs the release from the signed
+# repository in Debian, Ubuntu and AlmaLinux containers, upgrades from the previous
+# version and removes it. Publication stays off until the signing key is committed
+# (docs/linux-release.md). Pull requests that change it run the same checks on the two
+# latest releases with a throwaway key, and upload nothing.
+
+on:
+  # A release the maintainer publishes from a draft.
+  release:
+    types: [published]
+  # An automated release, which the release workflow publishes itself.
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
+  pull_request:
+    paths:
+      - .github/workflows/package-repository.yml
+      - tools/release/src/repository.rs
+      - scripts/package-linux.sh
+  # Repeats publication of one release, such as after an interrupted upload.
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Published release tag, such as v0.2.4
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  attestations: read
+
+# One publication at a time, each completing before the next starts.
+concurrency:
+  group: package-repository-${{ github.event_name == 'pull_request' && github.ref || 'publish' }}
+  cancel-in-progress: false
+
+jobs:
+  repository:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    # The signing key and storage credentials live only in this environment.
+    environment: ${{ github.event_name != 'pull_request' && 'packages' || '' }}
+    env:
+      GH_TOKEN: ${{ github.token }}
+      CHECK_ONLY: ${{ github.event_name == 'pull_request' }}
+      BUCKET: ripscope-packages
+      KEY: tools/release/package-signing-key.asc
+      AWS_DEFAULT_REGION: auto
+      AWS_REQUEST_CHECKSUM_CALCULATION: when_required
+      AWS_RESPONSE_CHECKSUM_VALIDATION: when_required
+    steps:
+      # The tools come from the default branch, or the branch under test, since older
+      # release tags predate them.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.event_name == 'pull_request' && github.sha || github.event.repository.default_branch }}
+          persist-credentials: false
+      - name: Select the published release
+        id: release
+        env:
+          TAG: ${{ github.event.release.tag_name || github.event.workflow_run.head_branch || inputs.tag }}
+        run: |
+          set -euo pipefail
+          releases=$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --exclude-pre-releases \
+            --limit 100 --json tagName --jq '.[].tagName' | sort -V)
+          if [ "$CHECK_ONLY" = true ]; then
+            TAG=$(tail -n 1 <<< "$releases")
+            previous=$(tail -n 2 <<< "$releases" | head -n 1)
+          else
+            previous=
+          fi
+          [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          # A release run without publication, or one awaiting the maintainer, has no
+          # published release yet.
+          if ! grep -qxF "$TAG" <<< "$releases"; then
+            echo "$TAG is not a published release." >> "$GITHUB_STEP_SUMMARY"
+            echo "selected=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$CHECK_ONLY" != true ] && [ ! -f "$KEY" ]; then
+            echo "The package repository is not set up: $KEY is not committed." >> "$GITHUB_STEP_SUMMARY"
+            echo "selected=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          {
+            echo "selected=true"
+            echo "tag=$TAG"
+            echo "previous=$previous"
+          } >> "$GITHUB_OUTPUT"
+      - name: Download and verify the release packages
+        if: steps.release.outputs.selected == 'true'
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+          PREVIOUS: ${{ steps.release.outputs.previous }}
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/assets"
+          cd "$RUNNER_TEMP/assets"
+          for tag in $PREVIOUS $TAG; do
+            version=${tag#v}
+            for name in "ripscope_${version}_amd64.deb" "ripscope-${version}-1.x86_64.rpm" \
+              "ripscope-${version}-x86_64-linux-gnu.tar.gz"; do
+              gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "$name" --pattern "$name.sha256"
+              sha256sum -c "$name.sha256"
+              gh attestation verify "$name" --repo "$GITHUB_REPOSITORY" --source-ref "refs/tags/$tag" \
+                --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml"
+            done
+          done
+          tar -xzf "ripscope-${TAG#v}-x86_64-linux-gnu.tar.gz" --no-same-owner
+      - name: Install the repository tools
+        if: steps.release.outputs.selected == 'true'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -qy --no-install-recommends apt-utils createrepo-c rpm gnupg gpgv
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
+        if: steps.release.outputs.selected == 'true'
+        with:
+          toolchain: '1.99.1'
+      - name: Build the release tools
+        if: steps.release.outputs.selected == 'true'
+        run: cargo build --locked --quiet --manifest-path tools/release/Cargo.toml
+      - name: Import the signing key
+        if: steps.release.outputs.selected == 'true'
+        env:
+          PACKAGE_SIGNING_KEY: ${{ secrets.PACKAGE_SIGNING_KEY }}
+        run: |
+          set -euo pipefail
+          export GNUPGHOME="$RUNNER_TEMP/gnupg"
+          echo "GNUPGHOME=$GNUPGHOME" >> "$GITHUB_ENV"
+          mkdir -m 700 "$GNUPGHOME"
+          if [ "$CHECK_ONLY" = true ]; then
+            gpg --batch --passphrase '' --quick-gen-key 'Ripscope check key' rsa4096 sign never
+            gpg --batch --armor --export > "$RUNNER_TEMP/check-key.asc"
+            echo "KEY=$RUNNER_TEMP/check-key.asc" >> "$GITHUB_ENV"
+          else
+            printf '%s\n' "$PACKAGE_SIGNING_KEY" | gpg --batch --import
+          fi
+      - name: Fetch the published repository
+        if: steps.release.outputs.selected == 'true' && env.CHECK_ONLY != 'true'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_ENDPOINT_URL_S3: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/repository"
+          aws s3 sync --only-show-errors "s3://$BUCKET" "$RUNNER_TEMP/repository"
+          # Storage access is weaker than the signing key: every .deb already published
+          # must still be the one its release published before it is signed again.
+          # Published RPMs carry the release key's signature, which is checked next.
+          pool="$RUNNER_TEMP/repository/apt/pool/main/r/ripscope"
+          test -d "$pool" || exit 0
+          for file in "$pool"/*.deb; do
+            name=$(basename "$file")
+            [[ $name =~ ^ripscope_([0-9]+\.[0-9]+\.[0-9]+)_amd64\.deb$ ]]
+            expected=$(curl --proto '=https' -fsSL \
+              "https://github.com/$GITHUB_REPOSITORY/releases/download/v${BASH_REMATCH[1]}/$name.sha256")
+            test "${expected%% *}" = "$(sha256sum < "$file" | cut -d' ' -f1)" ||
+              { echo "$name differs from its release" >&2; exit 1; }
+          done
+      - name: Add the packages and sign the repository
+        if: steps.release.outputs.selected == 'true'
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+          PREVIOUS: ${{ steps.release.outputs.previous }}
+          PACKAGE_SIGNING_PASSPHRASE: ${{ secrets.PACKAGE_SIGNING_PASSPHRASE }}
+        run: |
+          set -euo pipefail
+          release=tools/release/target/debug/ripscope-release
+          add() { "$release" package-repository "$RUNNER_TEMP/repository" "$KEY" \
+            "$RUNNER_TEMP/assets/ripscope_${1}_amd64.deb" "$RUNNER_TEMP/assets/ripscope-${1}-1.x86_64.rpm"; }
+          if [ "$CHECK_ONLY" = true ]; then
+            add "${PREVIOUS#v}"
+            add "${TAG#v}"
+            # Repeating a publication keeps every published package as it was.
+            find "$RUNNER_TEMP/repository" -name '*.deb' -o -name '*.rpm' | sort | xargs sha256sum > "$RUNNER_TEMP/first"
+            add "${TAG#v}"
+            find "$RUNNER_TEMP/repository" -name '*.deb' -o -name '*.rpm' | sort | xargs sha256sum | cmp - "$RUNNER_TEMP/first"
+          else
+            add "${TAG#v}"
+          fi
+      - name: Install, upgrade, use and remove the package from the repository
+        if: steps.release.outputs.selected == 'true'
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+        run: |
+          tools/release/target/debug/ripscope-release package-repository-check "$RUNNER_TEMP/repository" \
+            "$RUNNER_TEMP/assets/ripscope-${TAG#v}-x86_64-linux-gnu" "$RUNNER_TEMP/check"
+      # Every package, index and snapshot goes up before the current indexes that name
+      # them. Clients reading the previous generation keep working.
+      - name: Upload
+        if: steps.release.outputs.selected == 'true' && env.CHECK_ONLY != 'true'
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_ENDPOINT_URL_S3: https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com
+        run: tools/release/target/debug/ripscope-release package-repository-upload "$RUNNER_TEMP/repository" "$BUCKET"
+      - name: Check the published repository
+        if: steps.release.outputs.selected == 'true' && env.CHECK_ONLY != 'true'
+        run: |
+          set -euo pipefail
+          cd "$RUNNER_TEMP/repository"
+          snapshot=$(cat rpm/mirrorlist)
+          snapshot=${snapshot#https://packages.ripscope.com/}
+          snapshot=${snapshot%/}
+          for path in apt/dists/stable/InRelease rpm/mirrorlist ripscope.asc ripscope.repo \
+            "$snapshot/repodata/repomd.xml" "$snapshot/repodata/repomd.xml.asc"; do
+            curl --proto '=https' -fsSL "https://packages.ripscope.com/$path" | cmp - "$path"
+          done
+          echo "Published $TAG to packages.ripscope.com." >> "$GITHUB_STEP_SUMMARY"
+        env:
+          TAG: ${{ steps.release.outputs.tag }}

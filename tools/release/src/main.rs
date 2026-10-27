@@ -1,5 +1,6 @@
-//! Build, inspect and smoke the local release archives. Nothing here uploads, signs or
-//! publishes; the guarded release workflow does that separately.
+//! Build, inspect and smoke the local release archives. Apart from the package
+//! repository commands below, nothing here uploads, signs or publishes; the guarded
+//! release workflow does that separately.
 //!
 //! - `linux`: build the glibc 2.28 x86-64 archive in pinned offline containers, test it
 //!   and smoke the extracted archive.
@@ -12,10 +13,16 @@
 //! - `winget VERSION ARCHIVE DATE OUT`: write the WinGet manifests for a checked release ZIP.
 //! - `winget-check PREVIOUS CURRENT INSTALLER WORK`: install, upgrade, use and remove two
 //!   versions' manifests with the WinGet client.
+//! - `package-repository REPOSITORY PUBLIC_KEY PACKAGE...`: add published packages to a
+//!   local copy of the apt and dnf repository and sign it.
+//! - `package-repository-check REPOSITORY ARCHIVE WORK`: install, upgrade, use and remove
+//!   the archive's version from that repository in offline containers.
+//! - `package-repository-upload REPOSITORY BUCKET`: upload it, current indexes last.
 
 mod archive;
 mod common;
 mod linux;
+mod repository;
 mod smoke;
 mod weekly;
 mod windows;
@@ -24,7 +31,7 @@ mod workflow;
 
 use std::process::ExitCode;
 
-const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | check-automated-environment | prepare-weekly | release-notes | winget | winget-check | profile) [OPTIONS]\n\
+const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | check-automated-environment | prepare-weekly | release-notes | winget | winget-check | package-repository | package-repository-check | package-repository-upload | profile) [OPTIONS]\n\
 Run a command with --help for its options. See docs/linux-release.md and docs/windows-release.md.";
 
 fn main() -> ExitCode {
@@ -40,6 +47,9 @@ fn main() -> ExitCode {
         Some("release-notes") => weekly::notes(&args[1..]),
         Some("winget") => winget::run(&args[1..]),
         Some("winget-check") => winget::check(&args[1..]),
+        Some("package-repository") => repository::run(&args[1..]),
+        Some("package-repository-check") => repository::check(&args[1..]),
+        Some("package-repository-upload") => repository::upload(&args[1..]),
         Some("profile") => workflow::profile(&args[1..]),
         // A native user scope runs this to show it sits under the user's manager.
         Some("native-cgroup") => linux::native_cgroup(),
