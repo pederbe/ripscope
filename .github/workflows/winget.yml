@@ -14,11 +14,8 @@ on:
   workflow_run:
     workflows: [Release]
     types: [completed]
-  # Changes to this check, against the latest release.
-  pull_request:
-    paths:
-      - .github/workflows/winget.yml
-      - tools/release/src/winget.rs
+  # CI calls this check for affected files, against the latest release.
+  workflow_call:
   workflow_dispatch:
     inputs:
       tag:
