@@ -84,6 +84,136 @@ Install, query and remove each package in its selected offline runtime before
 accepting it; leave a project index and unrelated file in place to check removal.
 The prepared workflow runs these checks on Debian 12 and AlmaLinux 8.
 
+## Signed apt and dnf repository
+
+The repository at `packages.ripscope.com` lets Debian, Ubuntu and RHEL-family users
+install Ripscope once and then receive new releases through `apt upgrade` or
+`dnf upgrade`. It is not published yet, so the user guides still describe only the
+downloaded packages. Those downloads remain available either way.
+
+After each published release, the
+[Package repository workflow](https://github.com/pederbe/ripscope/actions/workflows/package-repository.yml)
+adds the release's `.deb` and `.rpm` to it. The workflow takes these steps.
+
+1. It downloads the packages, checks their SHA-256 files and their attestations from
+   `release.yml`, and never rebuilds the executable.
+2. It fetches the published repository and checks every `.deb` already there against
+   its release's SHA-256 file, since storage credentials alone must not be able to
+   add a package.
+3. It runs `package-repository`, which publishes the `.deb` unchanged, adds a header
+   signature to the `.rpm` (checking that its header and payload digests stay the
+   same), refuses any file that is not a Ripscope package matching its name, and
+   regenerates and signs the apt and dnf metadata.
+4. It runs `package-repository-check`, which installs the release from the generated
+   repository in offline Debian 12, Ubuntu 22.04, Ubuntu 24.04 and AlmaLinux 8
+   containers with signature checks on. When the release is the newest, it installs
+   the previous version first and upgrades with `apt-get upgrade` or `dnf upgrade`. It checks
+   the version, every installed file against the release archive's manifest
+   (including the editor sources under `/usr/share/ripscope`), indexing and search,
+   and that removal leaves the project, its index and the editor configuration. A
+   client holding another key must refuse the repository.
+5. It uploads packages, apt indexes by hash and complete dnf metadata snapshots, then
+   the current apt index and dnf mirrorlist, and compares what is served with what
+   it signed.
+
+Every earlier package, index and snapshot stays published. A client that read the
+previous generation, or a publication that stopped part way, still finds consistent
+signed files. To repeat a publication, run the workflow from its page with the
+release tag. That signs and uploads again without changing the release or rebuilding
+anything. Runs take turns, so start the next one after the previous has finished.
+
+Pull requests that change the workflow or `tools/release/src/repository.rs` run
+steps 1, 3 and 4 on the two latest releases with a throwaway key, publish the newest
+twice to check that a repeat keeps every package, and upload nothing.
+
+The repository holds:
+
+```text
+ripscope.asc, ripscope.gpg   the signing key, armored and binary
+ripscope.repo                dnf repository definition
+apt/dists/stable/            InRelease, Release, Release.gpg and the Packages indexes
+apt/pool/main/r/ripscope/    every published .deb
+rpm/                         every published .rpm, signed
+rpm/snapshots/<sha256>/      permanent dnf metadata, with repomd.xml.asc
+rpm/mirrorlist               URL of the current dnf snapshot
+```
+
+### One-time setup
+
+Publication stays off until the signing key's public half is committed as
+`tools/release/package-signing-key.asc`. Until then each run reports that the
+repository is not set up and succeeds.
+
+1. **Signing key.** Create a dedicated RSA 4096 key with no expiry. RSA keeps
+   AlmaLinux 8 and RHEL 8 able to check RPM signatures. An expiry would strand apt
+   users, who keep their own copy of the key. Keep an offline backup of the secret
+   key and its revocation certificate (`openpgp-revocs.d/` in the GnuPG home), which
+   is how the key is retired if it is ever exposed.
+2. **Storage.** In [Cloudflare R2](https://dash.cloudflare.com/?to=/:account/r2/overview),
+   create the bucket `ripscope-packages` with Standard storage. Connect the custom
+   domain `packages.ripscope.com` with TLS 1.2 or later and leave public `r2.dev`
+   access off. Then
+   [create an R2 API token](https://dash.cloudflare.com/?to=/:account/r2/api-tokens)
+   with Object Read & Write access to that bucket only. Ripscope's packages are a
+   few MiB per release, well inside the
+   [free tier](https://developers.cloudflare.com/r2/pricing/).
+3. **Environment.** In the
+   [repository's environments](https://github.com/pederbe/ripscope/settings/environments),
+   create `packages` without required reviewers, limited to the `main` branch and
+   `v*` tags, with these secrets:
+
+   | Secret | Value |
+   | --- | --- |
+   | `PACKAGE_SIGNING_KEY` | the armored secret key |
+   | `PACKAGE_SIGNING_PASSPHRASE` | its passphrase |
+   | `R2_ACCOUNT_ID` | the Cloudflare account ID |
+   | `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` | the R2 token's S3 credentials |
+
+4. **Key and first publication.** Commit the public key through a pull request and
+   check its fingerprint with `gpg --show-keys --fingerprint
+   tools/release/package-signing-key.asc`. Run the workflow for the previous release,
+   then for the latest, so the newest is published last. From a clean Debian,
+   Ubuntu and AlmaLinux machine, install through `https://packages.ripscope.com`,
+   upgrade and remove with signature checks on. Only then add the setup below and
+   the key fingerprint to the user guides.
+
+### For users, once published
+
+```sh
+# Debian and Ubuntu: check that the fingerprint matches the one in the guide
+curl -fsSLo ripscope.gpg https://packages.ripscope.com/ripscope.gpg
+gpg --show-keys --fingerprint ripscope.gpg
+sudo install -m 644 ripscope.gpg /usr/share/keyrings/ripscope.gpg
+echo "deb [signed-by=/usr/share/keyrings/ripscope.gpg] https://packages.ripscope.com/apt stable main" |
+  sudo tee /etc/apt/sources.list.d/ripscope.list
+sudo apt update && sudo apt install ripscope
+
+# RHEL, AlmaLinux and Fedora
+sudo curl -fsSLo /etc/yum.repos.d/ripscope.repo https://packages.ripscope.com/ripscope.repo
+sudo dnf install ripscope
+```
+
+dnf shows the key's fingerprint and asks for confirmation the first time. To stop
+receiving updates, remove the package, then `/etc/apt/sources.list.d/ripscope.list`
+and `/usr/share/keyrings/ripscope.gpg`, or `/etc/yum.repos.d/ripscope.repo`.
+
+### Checking locally
+
+`package-repository` needs gpg, gpgv, `apt-ftparchive`, `rpm`, `rpmsign` and
+`createrepo_c`, as in Debian's `apt-utils`, `rpm`, `createrepo-c`, `gnupg` and
+`gpgv` packages. `package-repository-check` needs gpg and Podman (or set
+`CONTAINER_ENGINE=docker`). With a throwaway key in `GNUPGHOME`, its public half in
+`test-key.asc`, and two releases' packages and the newer one's extracted archive in
+the current directory:
+
+```sh
+release=tools/release/target/debug/ripscope-release
+cargo build --locked --manifest-path tools/release/Cargo.toml
+$release package-repository repo test-key.asc ripscope_0.2.3_amd64.deb ripscope-0.2.3-1.x86_64.rpm
+$release package-repository repo test-key.asc ripscope_0.2.4_amd64.deb ripscope-0.2.4-1.x86_64.rpm
+$release package-repository-check repo ripscope-0.2.4-x86_64-linux-gnu check
+```
+
 ## Installer checks
 
 Exercise the script against a loopback mirror of the exact archive:
