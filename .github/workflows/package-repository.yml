@@ -194,8 +194,16 @@ jobs:
           TAG: ${{ steps.release.outputs.tag }}
           VERIFY_ONLY: ${{ inputs.verify_only }}
         run: |
+          set -euo pipefail
           args=()
-          if [ "$VERIFY_ONLY" = true ]; then args+=(--published); fi
+          if [ "$VERIFY_ONLY" = true ]; then
+            # Live checks trust the committed key, rather than a replacement
+            # supplied by storage or the public endpoint.
+            cmp "$KEY" "$RUNNER_TEMP/repository/ripscope.asc"
+            gpg --batch --dearmor --output "$RUNNER_TEMP/trusted.gpg" "$KEY"
+            cmp "$RUNNER_TEMP/trusted.gpg" "$RUNNER_TEMP/repository/ripscope.gpg"
+            args+=(--published)
+          fi
           tools/release/target/debug/ripscope-release package-repository-check "$RUNNER_TEMP/repository" \
             "$RUNNER_TEMP/assets/ripscope-${TAG#v}-x86_64-linux-gnu" "$RUNNER_TEMP/check" "${args[@]}"
       # Every package, index and snapshot goes up before the current indexes that name
@@ -215,7 +223,7 @@ jobs:
           snapshot=$(cat rpm/mirrorlist)
           snapshot=${snapshot#https://packages.ripscope.com/}
           snapshot=${snapshot%/}
-          for path in apt/dists/stable/InRelease rpm/mirrorlist ripscope.asc ripscope.repo \
+          for path in apt/dists/stable/InRelease rpm/mirrorlist ripscope.asc ripscope.gpg ripscope.repo \
             "$snapshot/repodata/repomd.xml" "$snapshot/repodata/repomd.xml.asc"; do
             curl --proto '=https' -fsSL "https://packages.ripscope.com/$path" | cmp - "$path"
           done
