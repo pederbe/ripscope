@@ -33,6 +33,7 @@ jobs:
       media: ${{ steps.filter.outputs.media }}
       website: ${{ steps.website.outputs.changed }}
       winget: ${{ steps.website.outputs.winget }}
+      packages_repository: ${{ steps.website.outputs.packages_repository }}
     steps:
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
         id: filter
@@ -68,6 +69,9 @@ jobs:
             winget:
               - ".github/workflows/winget.yml"
               - "tools/release/src/winget.rs"
+            packages_repository:
+              - ".github/workflows/package-repository.yml"
+              - "tools/release/src/repository.rs"
 
   check:
     name: ${{ matrix.os }}
@@ -141,11 +145,21 @@ jobs:
       needs.changes.outputs.winget != 'false'
     uses: ./.github/workflows/winget.yml
 
+  packages-repository:
+    needs: changes
+    if: >-
+      !cancelled() && github.event_name == 'pull_request' &&
+      needs.changes.outputs.packages_repository != 'false'
+    uses: ./.github/workflows/package-repository.yml
+    permissions:
+      contents: read
+      attestations: read
+
   # The one required check. It passes when every check passed or was skipped as
   # unneeded, and fails otherwise.
   ci:
     name: CI
-    needs: [changes, check, website, winget]
+    needs: [changes, check, website, winget, packages-repository]
     if: always()
     runs-on: ubuntu-26.04
     steps:
