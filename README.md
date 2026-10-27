@@ -57,7 +57,10 @@ so you can get straight to exploring C.
 
 ## Install
 
-One step sets up Ripscope and your editor. Run the installer.
+On Linux, use the [signed apt or dnf repository](docs/guide/installation-options.md#apt-and-dnf-repositories)
+to install Ripscope and receive updates through your package manager.
+
+Alternatively, the installer sets up Ripscope and your editor in one step.
 
 ```sh
 curl -fsSL https://ripscope.com/install.sh | sh        # Linux
@@ -66,8 +69,8 @@ irm https://ripscope.com/install.ps1 | iex             # Windows PowerShell
 
 Vim then loads Ripscope by itself, and so does Neovim unless lazy.nvim manages its
 plugins. For Emacs, and for lazy.nvim where it finds it, the installer prints the one
-line to add. Or add one line to your plugin manager, which installs the executable
-too.
+line to add. Or add one line to your plugin manager, which also downloads the
+executable if it is not already installed.
 
 ```lua
 { 'pederbe/ripscope', branch = 'release', build = ':RipscopeInstall' },   -- Neovim, lazy.nvim

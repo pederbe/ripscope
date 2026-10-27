@@ -60,6 +60,11 @@ jobs:
         with:
           filters: |
             changed:
+              - "README.md"
+              - "docs/**"
+              - "site/**"
+              - "book.toml"
+              - "wrangler.jsonc"
               - "tools/site/**"
               - "scripts/build-site.sh"
               - ".github/workflows/ci.yml"

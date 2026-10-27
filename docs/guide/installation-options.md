@@ -31,9 +31,62 @@ In Start, open **Edit environment variables for your account**. Under user
 variables, edit **Path**, choose **New** and add `%USERPROFILE%\.local\bin`.
 Open a new terminal, then run `ripscope --version`.
 
+## apt and dnf repositories
+
+On Linux x86-64, use the signed apt or dnf repository to receive releases with
+your normal package-manager updates. Packages include the executable, notices
+and editor sources under `/usr/share/ripscope`.
+
+### Debian and Ubuntu
+
+Install the tools needed to download and inspect the repository key:
+
+```sh
+sudo apt install ca-certificates curl gnupg
+curl -fsSLo ripscope.gpg https://packages.ripscope.com/ripscope.gpg
+gpg --show-keys --fingerprint ripscope.gpg
+```
+
+Check that its fingerprint is:
+
+```text
+3710 BE46 B974 AAB7 390D 225B FAFC E829 50BF F0D6
+```
+
+Then add the repository and install:
+
+```sh
+sudo install -m 644 ripscope.gpg /usr/share/keyrings/ripscope.gpg
+echo "deb [arch=amd64 signed-by=/usr/share/keyrings/ripscope.gpg] https://packages.ripscope.com/apt stable main" |
+  sudo tee /etc/apt/sources.list.d/ripscope.list
+sudo apt update
+sudo apt install ripscope
+```
+
+Update with `sudo apt update` and `sudo apt upgrade ripscope`.
+Remove the package with `sudo apt remove ripscope`.
+Installation and upgrades are checked on Debian 12 and Ubuntu 22.04 and 24.04.
+
+### RHEL, AlmaLinux and Fedora
+
+```sh
+sudo curl -fsSLo /etc/yum.repos.d/ripscope.repo https://packages.ripscope.com/ripscope.repo
+sudo dnf install ripscope
+```
+
+On first installation, check that the signing-key fingerprint matches the one
+above before accepting it. Package and repository signature checks stay enabled.
+Update with `sudo dnf upgrade ripscope` and remove with `sudo dnf remove ripscope`.
+The RHEL-family baseline is AlmaLinux 8.
+
+Removing the package preserves your projects, indexes and editor settings.
+For editor integration, follow the [plugin-manager instructions](../getting-started/installation.md#your-plugin-manager).
+They reuse the executable installed by your package manager.
+
 ## Debian/Ubuntu and RHEL-family packages
 
-Select the version from [GitHub Releases](https://github.com/pederbe/ripscope/releases).
+For a standalone package without repository updates, select the version from
+[GitHub Releases](https://github.com/pederbe/ripscope/releases).
 Debian/Ubuntu `.deb` and RHEL-family `.rpm` packages contain the inspected Linux
 x86-64 executable, with glibc 2.28 or newer and the system GCC runtime required.
 Verify the selected package's `.sha256` sidecar, then install it:

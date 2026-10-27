@@ -88,8 +88,8 @@ The prepared workflow runs these checks on Debian 12 and AlmaLinux 8.
 
 The repository at `packages.ripscope.com` lets Debian, Ubuntu and RHEL-family users
 install Ripscope once and then receive new releases through `apt upgrade` or
-`dnf upgrade`. It is not published yet, so the user guides still describe only the
-downloaded packages. Those downloads remain available either way.
+`dnf upgrade`. Standalone package downloads remain available for users who do not
+want to add a repository.
 
 After each published release, the
 [Package repository workflow](https://github.com/pederbe/ripscope/actions/workflows/package-repository.yml)
@@ -140,17 +140,17 @@ rpm/mirrorlist               URL of the current dnf snapshot
 
 ### One-time setup
 
-Publication stays off until the signing key's public half is committed as
-`tools/release/package-signing-key.asc`. Until then each run reports that the
-repository is not set up and succeeds.
+The public key is committed as `tools/release/package-signing-key.asc`.
+The signing secrets and bucket-scoped storage credentials are configured in the
+`packages` environment. Publication requires both. The steps below also describe
+how to restore the setup.
 
 The package signing key has fingerprint
 `3710 BE46 B974 AAB7 390D 225B FAFC E829 50BF F0D6`.
 The `ripscope-packages` bucket uses the existing Cloudflare account, Standard
 storage and `packages.ripscope.com`, with TLS 1.2 or later and public `r2.dev`
 access disabled. The `packages` GitHub environment permits only `main` and `v*`
-tags and has no approval or wait rule. Storage credentials and the first live
-publication must be verified before this channel is advertised to users.
+tags and has no approval or wait rule.
 
 After publication, dispatch the same workflow with `verify_only=true` and the
 latest tag. It reuses the published packages and checks installation, upgrade,
@@ -190,7 +190,7 @@ signing or uploading. The default pre-publication checks remain offline.
    upgrade and remove with signature checks on. Only then add the setup below and
    the key fingerprint to the user guides.
 
-### For users, once published
+### User setup
 
 ```sh
 # Debian and Ubuntu: check that the fingerprint matches the one in the guide

@@ -3,6 +3,14 @@
 Install Ripscope for **x86-64 Linux or Windows** in one step, then open a C file and
 search. Pick the way you prefer.
 
+## Your Linux package manager
+
+For command-line installation and normal system updates, use the
+[signed apt or dnf repository](../guide/installation-options.md#apt-and-dnf-repositories).
+Packages include the executable and editor sources. To enable editor integration,
+follow the [plugin-manager setup](#your-plugin-manager) below, which reuses the
+executable installed by your package manager.
+
 ## The installer
 
 The installer verifies and installs Ripscope in `~/.local/bin`
@@ -40,8 +48,8 @@ line to add there too.
 
 ## Your plugin manager
 
-One line installs the editor plugin, and its build step installs the `ripscope`
-executable.
+One line installs the editor plugin. If Ripscope is not already installed, its
+build step also downloads the matching executable.
 
 | Editor | Add this |
 | --- | --- |
@@ -49,8 +57,8 @@ executable.
 | Vim, with vim-plug | `Plug 'pederbe/ripscope', { 'branch': 'release', 'do': ':RipscopeInstall' }` |
 | Emacs 30 or newer | `(use-package ripscope :vc (:url "https://github.com/pederbe/ripscope" :branch "release" :lisp-dir "contrib/emacs" :rev :newest) :config (ripscope-setup))` |
 
-The `release` branch holds the latest release, and the build step installs the
-executable of that same version.
+The `release` branch holds the latest release. An existing package-managed
+executable is kept, so continue using your package manager to update it.
 
 The [Vim](../editors/vim.md), [Neovim](../editors/neovim.md) and
 [Emacs](../editors/emacs.md) guides cover other plugin managers and Emacs 29.
