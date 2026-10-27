@@ -35,7 +35,7 @@ sha2 = "=0.11.1"
 tempfile = "=3.27.0"
 
 [target.'cfg(unix)'.dependencies]
-rustix = { version = "=1.1.5", features = ["fs"] }
+rustix = { version = "=1.1.6", features = ["fs"] }
 
 [target.'cfg(windows)'.dependencies]
 # 9.0 reports a ReadDirectoryChangesW overflow as a rescan; 8.2 drops it silently.
@@ -43,7 +43,7 @@ notify = { version = "=9.0.0-rc.6", default-features = false }
 winx = "=0.36.4"
 
 [target.'cfg(unix)'.dev-dependencies]
-rustix = { version = "=1.1.5", features = ["process"] }
+rustix = { version = "=1.1.6", features = ["process"] }
 
 [target.'cfg(windows)'.dev-dependencies]
 process-wrap = { version = "=10.0.1", default-features = false, features = ["std", "job-object"] }
