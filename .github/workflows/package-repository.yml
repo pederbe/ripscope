@@ -26,6 +26,10 @@ on:
         description: Published release tag, such as v0.2.4
         required: true
         type: string
+      verify_only:
+        description: Verify the published repository without signing or uploading
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -123,7 +127,7 @@ jobs:
         if: steps.release.outputs.selected == 'true'
         run: cargo build --locked --quiet --manifest-path tools/release/Cargo.toml
       - name: Import the signing key
-        if: steps.release.outputs.selected == 'true'
+        if: steps.release.outputs.selected == 'true' && !inputs.verify_only
         env:
           PACKAGE_SIGNING_KEY: ${{ secrets.PACKAGE_SIGNING_KEY }}
         run: |
@@ -164,7 +168,7 @@ jobs:
               { echo "$name differs from its release" >&2; exit 1; }
           done
       - name: Add the packages and sign the repository
-        if: steps.release.outputs.selected == 'true'
+        if: steps.release.outputs.selected == 'true' && !inputs.verify_only
         env:
           TAG: ${{ steps.release.outputs.tag }}
           PREVIOUS: ${{ steps.release.outputs.previous }}
@@ -188,13 +192,24 @@ jobs:
         if: steps.release.outputs.selected == 'true'
         env:
           TAG: ${{ steps.release.outputs.tag }}
+          VERIFY_ONLY: ${{ inputs.verify_only }}
         run: |
+          set -euo pipefail
+          args=()
+          if [ "$VERIFY_ONLY" = true ]; then
+            # Live checks trust the committed key, rather than a replacement
+            # supplied by storage or the public endpoint.
+            cmp "$KEY" "$RUNNER_TEMP/repository/ripscope.asc"
+            gpg --batch --dearmor --output "$RUNNER_TEMP/trusted.gpg" "$KEY"
+            cmp "$RUNNER_TEMP/trusted.gpg" "$RUNNER_TEMP/repository/ripscope.gpg"
+            args+=(--published)
+          fi
           tools/release/target/debug/ripscope-release package-repository-check "$RUNNER_TEMP/repository" \
-            "$RUNNER_TEMP/assets/ripscope-${TAG#v}-x86_64-linux-gnu" "$RUNNER_TEMP/check"
+            "$RUNNER_TEMP/assets/ripscope-${TAG#v}-x86_64-linux-gnu" "$RUNNER_TEMP/check" "${args[@]}"
       # Every package, index and snapshot goes up before the current indexes that name
       # them. Clients reading the previous generation keep working.
       - name: Upload
-        if: steps.release.outputs.selected == 'true' && env.CHECK_ONLY != 'true'
+        if: steps.release.outputs.selected == 'true' && env.CHECK_ONLY != 'true' && !inputs.verify_only
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
@@ -208,7 +223,7 @@ jobs:
           snapshot=$(cat rpm/mirrorlist)
           snapshot=${snapshot#https://packages.ripscope.com/}
           snapshot=${snapshot%/}
-          for path in apt/dists/stable/InRelease rpm/mirrorlist ripscope.asc ripscope.repo \
+          for path in apt/dists/stable/InRelease rpm/mirrorlist ripscope.asc ripscope.gpg ripscope.repo \
             "$snapshot/repodata/repomd.xml" "$snapshot/repodata/repomd.xml.asc"; do
             curl --proto '=https' -fsSL "https://packages.ripscope.com/$path" | cmp - "$path"
           done
