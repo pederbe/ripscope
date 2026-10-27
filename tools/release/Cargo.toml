@@ -22,7 +22,7 @@ toml = { version = "=1.1.8", default-features = false, features = ["parse", "ser
 [target.'cfg(unix)'.dependencies]
 # Stops the Linux build's owned containers and scopes when it is interrupted.
 ctrlc = { version = "=3.5.2", features = ["termination"] }
-rustix = { version = "=1.1.5", features = ["fs", "process"] }
+rustix = { version = "=1.1.6", features = ["fs", "process"] }
 
 [dev-dependencies]
 tempfile = "=3.27.0"
