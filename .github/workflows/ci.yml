@@ -31,6 +31,8 @@ jobs:
     outputs:
       code: ${{ steps.filter.outputs.code }}
       media: ${{ steps.filter.outputs.media }}
+      website: ${{ steps.website.outputs.changed }}
+      winget: ${{ steps.website.outputs.winget }}
     steps:
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
         id: filter
@@ -52,6 +54,20 @@ jobs:
               - '!.github/workflows/docs.yml'
               - '!.github/workflows/website-deploy.yml'
               - '!.github/ISSUE_TEMPLATE/**'
+      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
+        id: website
+        with:
+          filters: |
+            changed:
+              - "tools/site/**"
+              - "scripts/build-site.sh"
+              - ".github/workflows/ci.yml"
+              - ".github/workflows/docs.yml"
+              - ".github/workflows/website-deploy.yml"
+              - ".github/dependency-pins.json"
+            winget:
+              - ".github/workflows/winget.yml"
+              - "tools/release/src/winget.rs"
 
   check:
     name: ${{ matrix.os }}
@@ -111,11 +127,25 @@ jobs:
           cargo clippy --locked --all-targets --manifest-path tools/release/Cargo.toml -- -D warnings
           cargo test --locked --manifest-path tools/release/Cargo.toml
 
+  website:
+    needs: changes
+    if: >-
+      !cancelled() && github.event_name == 'pull_request' &&
+      needs.changes.outputs.website != 'false'
+    uses: ./.github/workflows/docs.yml
+
+  winget:
+    needs: changes
+    if: >-
+      !cancelled() && github.event_name == 'pull_request' &&
+      needs.changes.outputs.winget != 'false'
+    uses: ./.github/workflows/winget.yml
+
   # The one required check. It passes when every check passed or was skipped as
   # unneeded, and fails otherwise.
   ci:
     name: CI
-    needs: [changes, check]
+    needs: [changes, check, website, winget]
     if: always()
     runs-on: ubuntu-26.04
     steps:
@@ -123,6 +153,7 @@ jobs:
         env:
           RESULTS: ${{ join(needs.*.result, ' ') }}
         run: |
+          test -n "$RESULTS"
           for result in $RESULTS; do
             case "$result" in
               success|skipped) ;;
