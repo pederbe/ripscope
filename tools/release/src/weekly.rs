@@ -36,6 +36,7 @@ fn meaningful(path: &str) -> bool {
                 | ".github/FUNDING.yml"
                 | ".github/workflows/docs.yml"
                 | ".github/workflows/website-deploy.yml"
+                | "scripts/build-site.sh"
         )
 }
 
@@ -359,6 +360,7 @@ mod tests {
             "docs/a.html",
             "site/app.js",
             ".github/workflows/docs.yml",
+            "scripts/build-site.sh",
         ] {
             assert!(!meaningful(path));
         }

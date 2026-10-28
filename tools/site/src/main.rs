@@ -657,13 +657,8 @@ fn finish_docs(
             .into_owned();
         let url = route(&format!("{SITE}/docs/{}", chapter.html.to_string_lossy()));
         let alternate = chapter.source.file_name().unwrap().to_string_lossy();
-        let image = if root.join("site/og.png").is_file() {
-            format!("<meta property=\"og:image\" content=\"{SITE}/og.png\">\n")
-        } else {
-            String::new()
-        };
         let metadata = format!(
-            "<link rel=\"canonical\" href=\"{url}\">\n<link rel=\"alternate\" type=\"text/markdown\" href=\"{alternate}\">\n<meta property=\"og:url\" content=\"{url}\">\n<meta property=\"og:description\" content=\"{summary}\">\n{image}"
+            "<link rel=\"canonical\" href=\"{url}\">\n<link rel=\"alternate\" type=\"text/markdown\" href=\"{alternate}\">\n<meta property=\"og:url\" content=\"{url}\">\n<meta property=\"og:description\" content=\"{summary}\">\n<meta name=\"twitter:description\" content=\"{summary}\">\n"
         );
         html = html.replacen("</head>", &format!("{metadata}</head>"), 1);
         fs::write(&path, html)?;
@@ -1178,7 +1173,7 @@ mod tests {
         let root = tempfile::tempdir().unwrap();
         let root = root.path();
         write(&root.join("book.toml"), "[book]\nsrc='docs'\n").unwrap();
-        write(&root.join("CONTEXT.md"), "# Glossary\n\nA term.\n").unwrap();
+        write(&root.join("GLOSSARY.md"), "# Glossary\n\nA term.\n").unwrap();
         write(
             &root.join("docs/SUMMARY.md"),
             "[Glossary](reference/glossary.md)",
@@ -1186,7 +1181,7 @@ mod tests {
         .unwrap();
         write(
             &root.join("docs/reference/glossary.md"),
-            "{{#include ../../CONTEXT.md}}",
+            "{{#include ../../GLOSSARY.md}}",
         )
         .unwrap();
         write(&root.join("docs/internal.json"), "secret").unwrap();

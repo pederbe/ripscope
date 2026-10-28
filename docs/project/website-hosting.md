@@ -24,7 +24,7 @@ The configured values are:
 
 Build watch paths cover `docs/*`, `site/*`, `tools/site/*`,
 `scripts/build-site.sh`, `book.toml`, `wrangler.jsonc`, `Cargo.toml`, both root
-installers, `CHANGELOG.md`, `CONTRIBUTING.md`, `CONTEXT.md`, `evidence/*`, and the
+installers, `CHANGELOG.md`, `CONTRIBUTING.md`, `GLOSSARY.md`, `evidence/*`, and the
 canonical fixture directories referenced by `evidence/sources.json`. Those fixtures
 are published website evidence. Keep watch paths in sync when adding a source
 outside these locations.

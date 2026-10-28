@@ -35,7 +35,7 @@ main.c main 5 greet("world");
   commits in one transaction, so queries keep reading a complete revision and
   editor searches refresh saved source changes automatically.
 - **A design you can follow.** The [architecture guides](docs/architecture/overview.md),
-  [decisions](docs/adr/README.md) and [glossary](CONTEXT.md) explain how a result is
+  [decisions](docs/adr/README.md) and [glossary](GLOSSARY.md) explain how a result is
   obtained.
 - **Exact output when needed.** The opt-in JSON interface preserves path and line
   bytes, including spaces and non-ASCII text.
@@ -124,7 +124,7 @@ and in [`docs/`](docs/README.md).
 - [User guide](docs/guide/building.md) for building an index, queries, sessions, JSON and checking
 - [Reference](docs/reference/cli.md) for the command line, differences from cscope and the FAQ
 - [Architecture](docs/architecture/overview.md) and [design decisions](docs/adr/README.md)
-- [Glossary](CONTEXT.md)
+- [Glossary](GLOSSARY.md)
 
 ## Status
 
