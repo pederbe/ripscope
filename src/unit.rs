@@ -859,8 +859,8 @@ impl<'u> Splitter<'u> {
                     self.row(id, row(3, index, context));
                 }
                 if !caller.is_empty() {
-                    let caller = self.id(caller);
-                    self.row(caller, row(2, index, None));
+                    let caller_id = self.id(caller);
+                    self.row(caller_id, row(2, index, None));
                 }
             }
         }
@@ -965,8 +965,8 @@ impl<'u> Splitter<'u> {
                     postings.blocks.push(block);
                 }
             }
-            let first = id * ROW_FIELDS.len();
-            let rows = &ordered[starts[first]..starts[first + ROW_FIELDS.len()]];
+            let fields = id * ROW_FIELDS.len();
+            let rows = &ordered[starts[fields]..starts[fields + ROW_FIELDS.len()]];
             for rows in rows.chunk_by(|a, b| a.field == b.field) {
                 write_rows(&mut postings.rows, rows);
             }
