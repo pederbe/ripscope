@@ -687,14 +687,16 @@ struct Splitter<'u> {
     /// offset and the name's index; none for those the block starts in.
     function_at: Option<(u32, u32)>,
     macro_at: Option<(u32, u32)>,
-    /// Each name read, with its roles there and its block.
-    listed: Vec<(&'u [u8], u32, u32)>,
+    /// Each name read, by its number in `ids`, with its roles there and its block.
+    listed: Vec<(usize, u32, u32)>,
     /// Each exact-name answer row, by the number of the name it answers in `ids` and its
     /// field's place in [`ROW_FIELDS`]: line, block, offset of the line's record in the
     /// block, name index and context.
     rows: Vec<(usize, Occurrence)>,
-    /// A number for each name a row answers, in the order first met.
+    /// A number for each name read or answered, in the order first met, and the names by
+    /// their numbers.
     ids: crate::hashing::HashMap<&'u [u8], usize>,
+    numbered: Vec<&'u [u8]>,
     /// The current line's names, and the names it gave a row in fields 0 and 9 or where a
     /// field 1 row lets reading resume, kept from line to line to spare allocations.
     names: Vec<Name<'u>>,
@@ -704,10 +706,18 @@ struct Splitter<'u> {
 }
 
 impl<'u> Splitter<'u> {
-    /// Adds an exact-name answer row for `name`.
-    fn row(&mut self, name: &'u [u8], occurrence: Occurrence) {
+    /// The number of `name`, numbering it when it is new.
+    fn id(&mut self, name: &'u [u8]) -> usize {
         let next = self.ids.len();
         let id = *self.ids.entry(name).or_insert(next);
+        if id == next {
+            self.numbered.push(name);
+        }
+        id
+    }
+
+    /// Adds an exact-name answer row for the name numbered `id`.
+    fn row(&mut self, id: usize, occurrence: Occurrence) {
         let field = ROW_FIELDS
             .iter()
             .position(|&field| field == occurrence.field);
@@ -733,6 +743,7 @@ impl<'u> Splitter<'u> {
             listed: Vec::new(),
             rows: Vec::new(),
             ids: crate::hashing::HashMap::default(),
+            numbered: Vec::new(),
             names: Vec::new(),
             symbols: Vec::new(),
             assigned: Vec::new(),
@@ -766,7 +777,8 @@ impl<'u> Splitter<'u> {
                 .flatten()
             {
                 if !name.is_empty() {
-                    self.listed.push((name, 0, self.started));
+                    let id = self.id(name);
+                    self.listed.push((id, 0, self.started));
                 }
             }
             self.started += 1;
@@ -810,9 +822,11 @@ impl<'u> Splitter<'u> {
                 Mark::Define => self.macro_at = at,
                 _ => {}
             }
-            if name.mark != Mark::Include && !name.text.is_empty() {
+            let id =
+                (name.mark != Mark::Include && !name.text.is_empty()).then(|| self.id(name.text));
+            if let Some(id) = id {
                 let roles = name.mark.role(name.assigned);
-                self.listed.push((name.text, roles, block));
+                self.listed.push((id, roles, block));
             }
             let within = |name: Option<&[u8]>, at: Option<(u32, u32)>, start| {
                 name.map(|_| at.map_or(start, |(offset, index)| Within::At { offset, index }))
@@ -821,10 +835,8 @@ impl<'u> Splitter<'u> {
             let macro_name = within(self.scope.macro_name, self.macro_at, Within::StartMacro);
             let caller = self.scope.macro_name.or(self.scope.function);
             let context = macro_name.or(function);
-            if !matches!(
-                name.mark,
-                Mark::FunctionEnd | Mark::DefineEnd | Mark::Include
-            ) && !name.text.is_empty()
+            if !matches!(name.mark, Mark::FunctionEnd | Mark::DefineEnd)
+                && let Some(id) = id
             {
                 let context = if name.mark == Mark::Define {
                     function
@@ -833,20 +845,21 @@ impl<'u> Splitter<'u> {
                 };
                 if !symbols.contains(&name.text) {
                     symbols.push(name.text);
-                    self.row(name.text, row(0, index, context));
+                    self.row(id, row(0, index, context));
                 }
                 if name.assigned && !assigned.contains(&name.text) {
                     assigned.push(name.text);
-                    self.row(name.text, row(9, index, context));
+                    self.row(id, row(9, index, context));
                 }
             }
             if name.mark == Mark::Call
                 && let Some(caller) = caller
             {
-                if !name.text.is_empty() {
-                    self.row(name.text, row(3, index, context));
+                if let Some(id) = id {
+                    self.row(id, row(3, index, context));
                 }
                 if !caller.is_empty() {
+                    let caller = self.id(caller);
                     self.row(caller, row(2, index, None));
                 }
             }
@@ -878,7 +891,8 @@ impl<'u> Splitter<'u> {
             if from.is_some_and(|from| index < from) {
                 continue;
             }
-            self.row(name.text, row(1, index, None));
+            let id = self.id(name.text);
+            self.row(id, row(1, index, None));
             let after = after_row(&names, index);
             match next.iter_mut().find(|(text, _)| *text == name.text) {
                 Some(entry) => entry.1 = after,
@@ -901,8 +915,23 @@ impl<'u> Splitter<'u> {
             );
             self.blocks.push((block, self.start));
         }
-        self.listed
-            .sort_unstable_by(|a, b| a.0.cmp(b.0).then_with(|| a.2.cmp(&b.2)));
+        // Each name's listings, in the order added, which is block order: counted into place
+        // by name, so that only the distinct names are sorted.
+        let mut first = vec![0; self.numbered.len() + 1];
+        for (id, _, _) in &self.listed {
+            first[id + 1] += 1;
+        }
+        for id in 1..first.len() {
+            first[id] += first[id - 1];
+        }
+        let mut listings = vec![(0, 0); self.listed.len()];
+        let mut next = first.clone();
+        for (id, roles, block) in self.listed {
+            listings[next[id]] = (roles, block);
+            next[id] += 1;
+        }
+        let mut order: Vec<usize> = (0..self.numbered.len()).collect();
+        order.sort_unstable_by_key(|&id| self.numbered[id]);
         // Each name's rows, in field order and within a field in the order added, which is
         // line order: counted into place by name and field.
         let mut starts = vec![0; self.ids.len() * ROW_FIELDS.len() + 1];
@@ -923,29 +952,30 @@ impl<'u> Splitter<'u> {
             blocks: Vec::new(),
             rows: Vec::new(),
         };
-        for (name, roles, block) in self.listed {
-            match postings.names.last_mut() {
-                Some(last) if last.0 == name => {
-                    last.1 |= roles;
-                    if postings.blocks.last() != Some(&block) {
-                        postings.blocks.push(block);
-                        last.2 = postings.blocks.len();
-                    }
-                }
-                _ => {
+        for id in order {
+            // A name only a row answers is listed in no block.
+            let listed = &listings[first[id]..first[id + 1]];
+            if listed.is_empty() {
+                continue;
+            }
+            let mut roles = 0;
+            for (index, &(role, block)) in listed.iter().enumerate() {
+                roles |= role;
+                if index == 0 || postings.blocks.last() != Some(&block) {
                     postings.blocks.push(block);
-                    let rows = self.ids.get(name).map_or(&[][..], |id| {
-                        let first = id * ROW_FIELDS.len();
-                        &ordered[starts[first]..starts[first + ROW_FIELDS.len()]]
-                    });
-                    for rows in rows.chunk_by(|a, b| a.field == b.field) {
-                        write_rows(&mut postings.rows, rows);
-                    }
-                    postings
-                        .names
-                        .push((name, roles, postings.blocks.len(), postings.rows.len()));
                 }
             }
+            let first = id * ROW_FIELDS.len();
+            let rows = &ordered[starts[first]..starts[first + ROW_FIELDS.len()]];
+            for rows in rows.chunk_by(|a, b| a.field == b.field) {
+                write_rows(&mut postings.rows, rows);
+            }
+            postings.names.push((
+                self.numbered[id],
+                roles,
+                postings.blocks.len(),
+                postings.rows.len(),
+            ));
         }
         Split {
             blocks: self.blocks,
