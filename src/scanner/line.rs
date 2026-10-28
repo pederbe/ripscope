@@ -3,8 +3,8 @@
 
 use super::Record;
 use super::render::render;
+use crate::hashing::HashSet;
 use crate::unit::Mark;
-use std::collections::HashSet;
 
 /// A name found on the line, before rendering: `text[start..end]`.
 pub(super) struct Named {
