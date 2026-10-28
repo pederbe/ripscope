@@ -64,7 +64,7 @@ scripts/build-site.sh --dev
 | `contrib/` | The Emacs integration |
 | `examples/`, `tools/`, `scripts/` | Reference capture and comparison tools, release builders and their guides, listed in the [tool inventory](https://github.com/pederbe/ripscope/blob/main/scripts/README.md) |
 | `docs/` | This documentation site, including [architecture](https://ripscope.com/docs/architecture/overview) and [decisions](https://ripscope.com/docs/adr/) |
-| `CONTEXT.md` | The project's [glossary](https://ripscope.com/docs/reference/glossary). Please use its terms |
+| `GLOSSARY.md` | The project's [glossary](https://ripscope.com/docs/reference/glossary). Please use its terms |
 
 Code, including tests and tools, is Rust. The language check
 (`tests/language_check.rs`) names the only exceptions and the languages each allows.

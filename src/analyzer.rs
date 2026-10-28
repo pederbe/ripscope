@@ -1,4 +1,4 @@
-//! The Analyzer (CONTEXT.md): reads a captured source into its Analysis unit, with the
+//! The Analyzer (GLOSSARY.md): reads a captured source into its Analysis unit, with the
 //! Corrections it is given, and names itself, so an index knows which analyses it holds
 //! and a change to the reading analyses every file again.
 

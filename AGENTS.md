@@ -4,7 +4,7 @@ Ripscope answers cscope's searches (symbols, definitions, callees, callers, text
 egrep, files, includers, assignments), in line-oriented and one-shot mode, for C
 source on Linux and Windows, from Vim, Neovim, Emacs and scripts. C only.
 
-Start with `README.md` and `CONTRIBUTING.md`. `CONTEXT.md` defines the project's
+Start with `README.md` and `CONTRIBUTING.md`. `GLOSSARY.md` defines the project's
 terms, and `docs/adr/` records the decisions behind the design.
 
 ## Workflow
@@ -42,7 +42,7 @@ and shows both readings in a fixture.
 ## Decisions and terms
 
 Record a new or changed design decision as an ADR in `docs/adr/`, and add new
-terms to `CONTEXT.md`.
+terms to `GLOSSARY.md`.
 
 ## Agent skills
 
@@ -58,5 +58,5 @@ Use the five default triage roles. Before assigning a triage state, read
 
 ### Domain docs
 
-Use one root `CONTEXT.md` and `docs/adr/`. Before exploring or changing domain
+Use one root `GLOSSARY.md` and `docs/adr/`. Before exploring or changing domain
 behaviour, read `docs/agents/domain.md`.

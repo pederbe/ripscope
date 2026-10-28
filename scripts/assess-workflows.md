@@ -4,7 +4,7 @@ The `assess-workflows` Rust example replays independently prepared source edits,
 file selection, persistent queries and real editor jumps on disposable copies.
 It records operational outcomes and checks the declared expectations. Navigation
 accuracy needs an independently labelled Assessed scope, as described in
-[ADR 0002](../docs/adr/0002-measured-compatibility.md) and [CONTEXT.md](../CONTEXT.md). Use `assess-navigation` for source accuracy scoring.
+[ADR 0002](../docs/adr/0002-measured-compatibility.md) and [GLOSSARY.md](../GLOSSARY.md). Use `assess-navigation` for source accuracy scoring.
 
 Build the example in the checkout whose adapters will be used:
 

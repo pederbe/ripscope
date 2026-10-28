@@ -61,6 +61,8 @@ jobs:
           filters: |
             changed:
               - "README.md"
+              - "GLOSSARY.md"
+              - "GLOSSARY-MAP.md"
               - "docs/**"
               - "site/**"
               - "book.toml"
@@ -171,7 +173,20 @@ jobs:
       - name: Require passing checks
         env:
           RESULTS: ${{ join(needs.*.result, ' ') }}
+          EVENT: ${{ github.event_name }}
+          CHANGES_RESULT: ${{ needs.changes.result }}
+          WEBSITE_SELECTED: ${{ needs.changes.outputs.website }}
+          WEBSITE_RESULT: ${{ needs.website.result }}
         run: |
+          if [ "$EVENT" = pull_request ]; then
+            test "$CHANGES_RESULT" = success
+            if [ "$WEBSITE_SELECTED" = true ]; then
+              test "$WEBSITE_RESULT" = success
+            else
+              test "$WEBSITE_SELECTED" = false
+              test "$WEBSITE_RESULT" = skipped
+            fi
+          fi
           test -n "$RESULTS"
           for result in $RESULTS; do
             case "$result" in

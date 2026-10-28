@@ -234,6 +234,44 @@ printf '{"success":true,"result":{"build_uuid":"fixture"}}' > "${!#}"
     }
 
     #[test]
+    fn selected_website_ci_must_succeed() {
+        let workflow = fs::read_to_string(
+            Path::new(env!("CARGO_MANIFEST_DIR")).join("../../.github/workflows/ci.yml"),
+        )
+        .unwrap();
+        let gate = workflow.split_once("\n  ci:\n").unwrap().1;
+        let script = gate
+            .split_once("        run: |\n")
+            .unwrap()
+            .1
+            .lines()
+            .map(|line| line.strip_prefix("          ").unwrap_or(line))
+            .collect::<Vec<_>>()
+            .join("\n");
+        for (event, changes, selected, website, expected) in [
+            ("pull_request", "success", "true", "success", true),
+            ("pull_request", "success", "false", "skipped", true),
+            ("pull_request", "success", "true", "skipped", false),
+            ("pull_request", "success", "true", "failure", false),
+            ("pull_request", "success", "true", "cancelled", false),
+            ("pull_request", "success", "", "skipped", false),
+            ("pull_request", "failure", "false", "skipped", false),
+            ("schedule", "skipped", "", "skipped", true),
+        ] {
+            let result = Command::new("bash")
+                .args(["-ec", &script])
+                .env("EVENT", event)
+                .env("CHANGES_RESULT", changes)
+                .env("WEBSITE_SELECTED", selected)
+                .env("WEBSITE_RESULT", website)
+                .env("RESULTS", "success skipped")
+                .status()
+                .unwrap();
+            assert_eq!(result.success(), expected, "{event}/{selected}/{website}");
+        }
+    }
+
+    #[test]
     fn weekly_scheduler_ignores_website_failure_but_repairs_editor_delivery() {
         let root = tempfile::tempdir().unwrap();
         fs::create_dir(root.path().join("bin")).unwrap();

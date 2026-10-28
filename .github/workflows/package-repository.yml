@@ -39,6 +39,7 @@ permissions:
 concurrency:
   group: package-repository-${{ github.event_name == 'pull_request' && github.ref || 'publish' }}
   cancel-in-progress: false
+  queue: max
 
 jobs:
   repository:

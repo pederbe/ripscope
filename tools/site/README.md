@@ -22,6 +22,20 @@ control pauses the decorative effects and editor illustration. The illustration 
 hover and focus. All loops pause outside the viewport and in hidden tabs.
 Reduced-motion preferences retain a static page and the complete final result.
 
+## Link previews
+
+The homepage and documentation share `site/og.png`, a 1200 by 630 image.
+Its editable HTML source and checked rendering route are described in
+[`scripts/demo/README.md`](../../scripts/demo/README.md). Review the source,
+rendered image and image alternative text together when changing the card.
+Normal builds copy the committed image without running a browser.
+
+The documentation theme and site builder supply each chapter's title,
+description, canonical URL, Open Graph fields and Twitter large-image card.
+The homepage also describes the product, installation and help through
+SoftwareApplication structured metadata. Keep supported platforms and download
+links consistent with the actual release.
+
 ## Combined build
 
 Run `scripts/build-site.sh --dev` from a development checkout. The combined output

@@ -1,4 +1,4 @@
-//! The index revision a query reads (CONTEXT.md): the files it needs in database order and
+//! The index revision a query reads (GLOSSARY.md): the files it needs in database order and
 //! their Analysis units, read from the index in one transaction for that query, or made
 //! in memory for the compass's `--units-query` and tests. It is the one place queries
 //! read a revision: which files a query needs (looked up in the index's name postings or

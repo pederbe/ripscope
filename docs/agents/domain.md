@@ -1,11 +1,11 @@
 # Domain docs
 
-Ripscope uses a single context: the root `CONTEXT.md` is the domain glossary, and
+Ripscope uses a single context: the root `GLOSSARY.md` is the domain glossary, and
 `docs/adr/` holds architecture decisions.
 
 ## Before exploring or changing domain behaviour
 
-1. Read `CONTEXT.md` and use its defined terms in code, tests, specs and tickets.
+1. Read `GLOSSARY.md` and use its defined terms in code, tests, specs and tickets.
 2. Read `docs/adr/README.md` and the decisions relevant to the work. Follow each
    superseded decision to its replacement; retained decisions are not all current.
 
