@@ -16,7 +16,7 @@ hold the repository connection, build commands and watch paths.
 
 The configured values are:
 
-- Build command: `bash scripts/build-site.sh --cloudflare`.
+- Build command: `git fetch --depth=1 origin main && git checkout --detach FETCH_HEAD && bash scripts/build-site.sh --cloudflare`.
 - Deploy command: `node tools/site/node_modules/wrangler/bin/wrangler.js deploy`.
 - Root directory: `/`.
 - Build variable: `SKIP_DEPENDENCY_INSTALL=1`.
@@ -29,7 +29,8 @@ canonical fixture directories referenced by `evidence/sources.json`. Those fixtu
 are published website evidence. Keep watch paths in sync when adding a source
 outside these locations.
 
-The build installs Rust when absent, downloads the checked mdBook binary, installs
+The build first refreshes `main`, so retries use the current production source.
+It installs Rust when absent, downloads the checked mdBook binary, installs
 locked Node tooling and runs the existing deployment build with internal link
 checks. The package version must already have its release tag because download
 links use that version. This does not require a new release for website changes.
