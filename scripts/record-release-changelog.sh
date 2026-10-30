@@ -64,7 +64,20 @@ for attempt in 1 2 3; do
     sleep 2
   done
   test -n "$run"
-  gh run watch "$run" --repo "$repo" --exit-status --interval 10
+  run_url="https://github.com/$repo/actions/runs/$run"
+  # workflow_dispatch job checks are not evaluated by pull-request rules.
+  # Report the actual guarded workflow result as a commit status instead.
+  gh api --method POST "repos/$repo/statuses/$sha" -f context=CI -f state=pending \
+    -f target_url="$run_url" -f description='Running release changelog checks' >/dev/null
+  state=failure
+  if gh run watch "$run" --repo "$repo" --exit-status --interval 10 && \
+      result=$(gh run view "$run" --repo "$repo" --json headSha,conclusion --jq '[.headSha, .conclusion] | join(" ")') && \
+      [[ $result == "$sha success" ]]; then
+    state=success
+  fi
+  gh api --method POST "repos/$repo/statuses/$sha" -f context=CI -f state="$state" \
+    -f target_url="$run_url" -f description='Release changelog scope and maintained checks' >/dev/null
+  test "$state" = success
   git fetch origin main
   if ! git merge-base --is-ancestor origin/main HEAD; then continue; fi
   gh pr merge "$pr" --repo "$repo" --squash --match-head-commit "$sha"
