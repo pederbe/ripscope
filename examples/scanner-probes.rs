@@ -40,7 +40,7 @@ fn main() -> ExitCode {
     let mut arguments: Vec<String> = std::env::args().skip(1).collect();
     let mut root = Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/scanner");
     if arguments.first().map(String::as_str) == Some("--open") {
-        arguments.remove(0);
+        arguments.swap_remove(0);
         root.push("open");
     }
     let names: BTreeSet<String> = arguments.into_iter().collect();
