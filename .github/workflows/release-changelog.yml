@@ -51,8 +51,8 @@ jobs:
           RELEASE_RUN_COMPLETED_AT: ${{ github.event.workflow_run.updated_at }}
         run: |
           set -euo pipefail
-          latest=$(gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
-            --jq '[.[][] | select(.draft == false)] | max_by([.published_at, .id]) | .tag_name // empty')
+          latest=$(gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/releases?per_page=100" |
+            jq -r '[.[][] | select(.draft == false)] | max_by([.published_at, .id]) | .tag_name // empty')
           if [ -z "$latest" ]; then
             echo 'No published release to record.'
             exit 0
