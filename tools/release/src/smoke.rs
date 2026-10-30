@@ -318,10 +318,12 @@ fn module_inventory(system: &Path, pid: u32, work: &Path, label: &str) -> Result
     let quoted = |path: &Path| path.to_string_lossy().replace('\'', "''");
     let phase_arg = quoted(&phase);
     let listing_arg = quoted(&listing);
+    // Process inspection needs the .NET API, without Get-Process's management
+    // module discovery and first-use loading on the host.
     let script = format!(
         "$ErrorActionPreference='Stop'; \
          [IO.File]::WriteAllText('{phase_arg}','entered'); \
-         $p=Get-Process -Id {pid}; \
+         $p=[Diagnostics.Process]::GetProcessById({pid}); \
          [IO.File]::WriteAllText('{phase_arg}','process'); \
          $m=@($p.Modules | ForEach-Object {{$_.FileName}}); \
          [IO.File]::WriteAllText('{phase_arg}','modules'); \
@@ -480,7 +482,10 @@ mod tests {
     fn host_module_probe_inspects_a_real_live_process() {
         let root = tempfile::tempdir().unwrap();
         let system = PathBuf::from(std::env::var_os("SystemRoot").unwrap());
-        let modules = module_inventory(&system, std::process::id(), root.path(), "test").unwrap();
+        let modules = match module_inventory(&system, std::process::id(), root.path(), "test") {
+            Ok(modules) => modules,
+            Err(error) => panic!("{error}; probe files retained at {}", root.keep().display()),
+        };
         let executable = std::env::current_exe().unwrap().canonicalize().unwrap();
         assert!(modules.as_array().unwrap().iter().any(|module| {
             PathBuf::from(module.as_str().unwrap())
@@ -491,6 +496,45 @@ mod tests {
         assert_eq!(
             fs::read_to_string(root.path().join("loaded-modules-test.stage")).unwrap(),
             "complete"
+        );
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn host_module_probe_does_not_need_management_module_loading() {
+        let root = tempfile::tempdir().unwrap();
+        let module = root.path().join("Microsoft.PowerShell.Management");
+        fs::create_dir(&module).unwrap();
+        fs::write(
+            module.join("Microsoft.PowerShell.Management.psd1"),
+            "@{RootModule='Management.psm1';ModuleVersion='1.0.0';FunctionsToExport=@('Get-Process');CmdletsToExport=@()}",
+        )
+        .unwrap();
+        // Reproduce a host stuck loading/invoking Get-Process without depending on
+        // the runner's module cache, network paths or first-use initialization.
+        fs::write(
+            module.join("Management.psm1"),
+            "function Get-Process { [Threading.Thread]::Sleep(60000) }; Export-ModuleMember -Function Get-Process",
+        )
+        .unwrap();
+        let mut paths = vec![root.path().to_owned()];
+        if let Some(existing) = std::env::var_os("PSModulePath") {
+            paths.extend(std::env::split_paths(&existing));
+        }
+        let output = Command::new(std::env::current_exe().unwrap())
+            .args([
+                "--exact",
+                "smoke::tests::host_module_probe_inspects_a_real_live_process",
+                "--nocapture",
+            ])
+            .env("PSModulePath", std::env::join_paths(paths).unwrap())
+            .output()
+            .unwrap();
+        assert!(
+            output.status.success(),
+            "{}{}",
+            String::from_utf8_lossy(&output.stdout),
+            String::from_utf8_lossy(&output.stderr)
         );
     }
 
