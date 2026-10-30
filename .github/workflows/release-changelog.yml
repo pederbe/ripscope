@@ -1,0 +1,88 @@
+name: Release changelog
+
+on:
+  release:
+    types: [published]
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Published tag, or empty for the latest release
+        type: string
+        default: ''
+      check_only:
+        description: Show the proposed update without creating a pull request
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-changelog
+  cancel-in-progress: false
+
+jobs:
+  record:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-26.04
+    timeout-minutes: 40
+    permissions:
+      contents: write
+      pull-requests: write
+      actions: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          toolchain: '1.99.1'
+      - name: Select an actually published release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REQUESTED_TAG: ${{ inputs.tag || github.event.release.tag_name }}
+          RELEASE_RUN_SHA: ${{ github.event.workflow_run.head_sha }}
+          RELEASE_RUN_STARTED_AT: ${{ github.event.workflow_run.run_started_at }}
+          RELEASE_RUN_COMPLETED_AT: ${{ github.event.workflow_run.updated_at }}
+        run: |
+          set -euo pipefail
+          latest=$(gh api --paginate --slurp "repos/$GITHUB_REPOSITORY/releases?per_page=100" \
+            --jq '[.[][] | select(.draft == false)] | max_by([.published_at, .id]) | .tag_name // empty')
+          if [ -z "$latest" ]; then
+            echo 'No published release to record.'
+            exit 0
+          fi
+          tag=${REQUESTED_TAG:-$latest}
+          if [ "$tag" != "$latest" ]; then
+            echo 'A later release has already been published.'
+            exit 0
+          fi
+          [[ "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]
+          test "$(gh release view "$tag" --json isDraft --jq .isDraft)" = false
+          if [ -n "$RELEASE_RUN_SHA" ] && [ "$(git rev-parse "refs/tags/$tag^{commit}")" != "$RELEASE_RUN_SHA" ]; then
+            echo 'This run did not publish the selected release.'
+            exit 0
+          fi
+          if [ -n "$RELEASE_RUN_SHA" ]; then
+            published=$(gh release view "$tag" --json publishedAt --jq .publishedAt)
+            if ! cargo run --quiet --locked --manifest-path tools/release-changelog/Cargo.toml -- \
+              publication-window "$published" "$RELEASE_RUN_STARTED_AT" "$RELEASE_RUN_COMPLETED_AT"; then
+              exit 0
+            fi
+          fi
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+      - name: Record the published notes through a checked pull request
+        if: steps.release.outputs.tag != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.release.outputs.tag }}
+          CHECK_ONLY: ${{ inputs.check_only }}
+        run: |
+          mode=record
+          if [ "$CHECK_ONLY" = true ]; then mode=check-only; fi
+          bash scripts/record-release-changelog.sh "$TAG" "$mode"

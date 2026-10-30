@@ -24,6 +24,41 @@ fn version(text: &str) -> Result<[u64; 3]> {
     Ok([a.parse()?, b.parse()?, c.parse()?])
 }
 
+fn release_date(date: &str) -> bool {
+    date.len() == 10
+        && date.bytes().enumerate().all(|(index, byte)| {
+            if index == 4 || index == 7 {
+                byte == b'-'
+            } else {
+                byte.is_ascii_digit()
+            }
+        })
+}
+
+// Finalized changelogs need no placeholder for work that has not happened yet.
+// Older tags may still have one, so keep authored entries separate from history.
+fn changelog_sections(changelog: &str) -> Result<(&str, &str, &str)> {
+    let (intro, first) = changelog
+        .split_once("## [")
+        .ok_or("missing changelog release section")?;
+    let (authored, history) = if let Some(rest) = first.strip_prefix("Unreleased]\n") {
+        rest.split_once("\n## [")
+            .ok_or("missing previous changelog section")?
+    } else {
+        ("", first)
+    };
+    let (released, date) = history
+        .lines()
+        .next()
+        .and_then(|heading| heading.split_once("] - "))
+        .ok_or("missing dated changelog release section")?;
+    version(released)?;
+    if !release_date(date) || history.contains("\n## [Unreleased]") {
+        return Err("invalid changelog release history".into());
+    }
+    Ok((intro, authored, history))
+}
+
 fn meaningful(path: &str) -> bool {
     !path.ends_with(".md")
         && !path.starts_with("docs/")
@@ -83,15 +118,7 @@ fn prepare_at(
     minimum: Option<&str>,
 ) -> Result<()> {
     let old = version(previous)?;
-    if date.len() != 10
-        || !date.chars().enumerate().all(|(i, c)| {
-            if i == 4 || i == 7 {
-                c == '-'
-            } else {
-                c.is_ascii_digit()
-            }
-        })
-    {
+    if !release_date(date) {
         return Err("expected release date YYYY-MM-DD".into());
     }
     if !["auto", "minor", "major"].contains(&mode) {
@@ -191,28 +218,13 @@ fn prepare_at(
         &format!("name = \"ripscope\"\nversion = \"{next}\""),
     );
     let changelog = read_metadata(root.join("CHANGELOG.md"))?;
-    let (intro, rest) = changelog
-        .split_once("## [Unreleased]\n")
-        .ok_or("missing Unreleased changelog heading")?;
-    let (authored, _) = rest
-        .split_once("\n## [")
-        .ok_or("missing previous changelog section")?;
+    let (intro, authored, _) = changelog_sections(&changelog)?;
     let previous_changelog = git(root, &["show", &format!("{previous}:CHANGELOG.md")])?;
-    let previous_rest = previous_changelog
-        .split_once("## [Unreleased]\n")
-        .ok_or("previous release lacks Unreleased heading")?
-        .1;
-    let history = previous_rest
-        .split_once("\n## [")
-        .ok_or("previous release lacks version history")?
-        .1;
+    let (_, _, history) = changelog_sections(&previous_changelog)?;
     // Compare authored entries against the previous development snapshot, not
     // the finalized tag. Main retains those entries after publication.
     let prior_source_changelog = git(root, &["show", &format!("{base}:CHANGELOG.md")])?;
-    let prior_authored = prior_source_changelog
-        .split_once("## [Unreleased]\n")
-        .and_then(|(_, rest)| rest.split_once("\n## ["))
-        .map_or("", |(authored, _)| authored);
+    let (_, prior_authored, _) = changelog_sections(&prior_source_changelog)?;
     let mut notes = authored_delta(authored, prior_authored);
     notes.push_str("\n\n");
     for (heading, entries) in ["Breaking changes", "Added", "Fixed", "Other changes"]
@@ -227,7 +239,7 @@ fn prepare_at(
         "[Full comparison](https://github.com/pederbe/ripscope/compare/{previous}...v{next})\n"
     ));
     let changelog = format!(
-        "{intro}## [Unreleased]\n\n## [{next}] - {date}\n\n{}\n\n## [{history}",
+        "{intro}## [{next}] - {date}\n\n{}\n\n## [{history}",
         notes.trim()
     );
     let emacs_path = root.join("contrib/emacs/ripscope.el");
@@ -409,6 +421,70 @@ mod tests {
     }
 
     #[test]
+    fn dated_changelogs_prepare_against_legacy_and_dated_release_tags() {
+        for legacy in [true, false] {
+            let dir = release_fixture();
+            let root = dir.path();
+            let (previous, next) = if legacy {
+                ("v0.2.0", "0.2.1")
+            } else {
+                fs::write(root.join("CHANGELOG.md"), "# Changelog\n\n## [0.2.1] - 2026-10-30\n\nFirst fix.\n\n## [0.2.0] - 2026-10-20\n\nOld\n").unwrap();
+                git(root, &["add", "."]).unwrap();
+                git(root, &["commit", "-m", "Release 0.2.1"]).unwrap();
+                git(root, &["tag", "v0.2.1"]).unwrap();
+                ("v0.2.1", "0.2.2")
+            };
+            let dated = read_metadata(root.join("CHANGELOG.md"))
+                .unwrap()
+                .replace("## [Unreleased]\n\n", "");
+            fs::write(root.join("CHANGELOG.md"), dated).unwrap();
+            fs::write(root.join("install.sh"), "echo installer").unwrap();
+            git(root, &["add", "."]).unwrap();
+            git(root, &["commit", "-m", "fix: Handle the next change"]).unwrap();
+            let output = dir.path().join("plan");
+            prepare_at(root, previous, "2026-11-02", "auto", &output, None).unwrap();
+            let changelog = read_metadata(root.join("CHANGELOG.md")).unwrap();
+            assert!(changelog.starts_with(&format!("# Changelog\n\n## [{next}] - 2026-11-02\n")));
+            assert!(!changelog.contains("## [Unreleased]"));
+            assert_eq!(changelog.matches("\nOld\n").count(), 1);
+            if !legacy {
+                assert_eq!(changelog.matches("First fix.").count(), 1);
+            }
+        }
+    }
+
+    #[test]
+    fn malformed_changelogs_do_not_modify_release_metadata() {
+        for changelog in [
+            "# Changelog\n",
+            "# Changelog\n\n## [Unreleased]\n\n- A pending fix.\n",
+            "# Changelog\n\n## [Soon] - 2026-10-30\n\nA fix.\n",
+            "# Changelog\n\n## [0.2.0] - not-a-date\n\nA fix.\n",
+            "# Changelog\n\n## [0.2.0] - 2026-10-20\n\nOld\n\n## [Unreleased]\n",
+        ] {
+            let dir = release_fixture();
+            let root = dir.path();
+            fs::write(root.join("CHANGELOG.md"), changelog).unwrap();
+            fs::write(root.join("install.sh"), "echo installer").unwrap();
+            git(root, &["add", "."]).unwrap();
+            git(root, &["commit", "-m", "fix: Handle the next change"]).unwrap();
+            let manifest = read_metadata(root.join("Cargo.toml")).unwrap();
+            let lock = read_metadata(root.join("Cargo.lock")).unwrap();
+            let emacs = read_metadata(root.join("contrib/emacs/ripscope.el")).unwrap();
+            let output = dir.path().join("plan");
+            assert!(prepare_at(root, "v0.2.0", "2026-11-02", "auto", &output, None).is_err());
+            assert_eq!(read_metadata(root.join("Cargo.toml")).unwrap(), manifest);
+            assert_eq!(read_metadata(root.join("Cargo.lock")).unwrap(), lock);
+            assert_eq!(
+                read_metadata(root.join("contrib/emacs/ripscope.el")).unwrap(),
+                emacs
+            );
+            assert_eq!(read_metadata(root.join("CHANGELOG.md")).unwrap(), changelog);
+            assert!(!output.exists());
+        }
+    }
+
+    #[test]
     fn merge_only_compatibility_markers_select_breaking_versions_and_notes() {
         for (subject, body, expected, warning) in [
             (
@@ -510,6 +586,8 @@ mod tests {
         .unwrap();
         prepare_at(root, "v0.3.0", "2026-11-02", "auto", &output, None).unwrap();
         let changelog = fs::read_to_string(root.join("CHANGELOG.md")).unwrap();
+        assert!(changelog.starts_with("# Changelog\n\n## [0.3.1] - 2026-11-02\n"));
+        assert!(!changelog.contains("## [Unreleased]"));
         assert!(changelog.contains("## [0.3.1]"));
         assert!(changelog.contains("## [0.3.0]"));
         assert!(changelog.contains("## [0.2.0]"));
