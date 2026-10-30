@@ -148,6 +148,26 @@ const EXCEPTIONS: &[Exception] = &[
         "dependency updater glue synchronizes download metadata before CI",
     ),
     only(
+        "scripts/check-release-changelog.sh",
+        &["shell"],
+        "short CI glue runs the Rust changelog tool's maintained checks",
+    ),
+    only(
+        "scripts/configure-release-changelog.sh",
+        &["shell"],
+        "repository setup glue configures the release workflow's GitHub setting",
+    ),
+    only(
+        "scripts/prepare-release.sh",
+        &["shell"],
+        "short release glue invokes the Rust changelog finalizer",
+    ),
+    only(
+        "scripts/record-release-changelog.sh",
+        &["shell"],
+        "CI glue coordinates Git, GitHub checks and the Rust changelog tool",
+    ),
+    only(
         "install.sh",
         &["shell"],
         "the Linux installer runs before Ripscope or Rust is present",

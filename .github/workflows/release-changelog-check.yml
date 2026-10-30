@@ -1,0 +1,55 @@
+name: Release changelog checks
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-changelog-check-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  scope:
+    name: Changelog scope and tooling
+    runs-on: ubuntu-26.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Require a single-file changelog update
+        run: |
+          set -euo pipefail
+          [[ "$GITHUB_REF_NAME" == contrib/release-changelog-v* ]]
+          git fetch origin main
+          test "$(git diff --name-only origin/main...HEAD)" = CHANGELOG.md
+          git diff --check origin/main...HEAD
+      - uses: dtolnay/rust-toolchain@b725eda525362e7cf34af9a7243cac1e3f01a7ec # stable
+        with:
+          toolchain: '1.99.1'
+          components: rustfmt, clippy
+      - name: Check changelog tooling
+        run: bash scripts/check-release-changelog.sh
+
+  documentation:
+    needs: scope
+    uses: ./.github/workflows/docs.yml
+
+  ci:
+    name: CI
+    needs: [scope, documentation]
+    if: always()
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    steps:
+      - name: Require scope, tooling and documentation checks
+        env:
+          SCOPE_RESULT: ${{ needs.scope.result }}
+          DOCUMENTATION_RESULT: ${{ needs.documentation.result }}
+        run: |
+          set -euo pipefail
+          test "$SCOPE_RESULT" = success
+          test "$DOCUMENTATION_RESULT" = success

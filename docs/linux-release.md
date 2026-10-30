@@ -263,6 +263,16 @@ version on `main` unchanged. Each changelog carries all previous release section
 new authored entries and grouped commit summaries with comparison links. The next
 release compares the two development snapshots, excluding generated metadata.
 
+The release tool replaces the shipping Unreleased heading with its version and
+UTC release date. Dated-only changelogs and older tags with an empty Unreleased
+section are both accepted. New candidates omit the empty pending heading.
+
+After publication, `Release changelog` records the dated notes on `main` through
+a pull request and the maintained documentation checks. It preserves later
+pending entries and historical edits. Publication events and completed Release
+workflows trigger it. Draft and check-only runs do not update `main`. Its manual
+check-only mode and retry use the published tag without rebuilding packages.
+
 Before preparing a release, compare the Unreleased entries with all merged
 changes since the previous published release. Check capabilities, fixes,
 installation, editor setup, support boundaries, format changes and upgrade
