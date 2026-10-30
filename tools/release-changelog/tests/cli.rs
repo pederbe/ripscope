@@ -211,3 +211,124 @@ fn failed_finalization_does_not_modify_the_file_and_notes_are_version_scoped() {
         "Initial release.\n"
     );
 }
+
+#[cfg(unix)]
+#[test]
+fn production_ci_status_bridge_reports_only_verified_success() {
+    let fixture = Fixture::new();
+    let repository = Path::new(env!("CARGO_MANIFEST_DIR"))
+        .parent()
+        .unwrap()
+        .parent()
+        .unwrap();
+    let script =
+        fs::read_to_string(repository.join("scripts/record-release-changelog.sh")).unwrap();
+    let reporting = &script[script.find("  run_url=").unwrap()..];
+    let end = "  test \"$state\" = success";
+    let reporting = &reporting[..reporting.find(end).unwrap() + end.len()];
+    let fake_source = fixture.path().join("fake-gh.rs");
+    fs::write(
+        &fake_source,
+        r#"#![forbid(unsafe_code)]
+use std::{env, fs::OpenOptions, io::Write, process};
+
+fn field(args: &[String], name: &str) -> String {
+    let prefix = format!("{name}=");
+    args.windows(2)
+        .filter(|pair| matches!(pair[0].as_str(), "-f" | "--field" | "--raw-field"))
+        .find_map(|pair| pair[1].strip_prefix(&prefix))
+        .expect("missing API field")
+        .to_owned()
+}
+
+fn main() {
+    let args: Vec<_> = env::args().skip(1).collect();
+    match args.first().map(String::as_str) {
+        Some("api") => {
+            assert!(args.windows(2).any(|pair| pair == ["--method", "POST"]));
+            let endpoint = args.iter().find(|arg| arg.starts_with("repos/")).unwrap();
+            let mut log = OpenOptions::new()
+                .create(true)
+                .append(true)
+                .open(env::var_os("STATUS_LOG").unwrap())
+                .unwrap();
+            writeln!(log, "{}\t{}\t{}\t{endpoint}",
+                field(&args, "state"), field(&args, "context"), field(&args, "target_url"))
+                .unwrap();
+        }
+        Some("run") if args.get(1).map(String::as_str) == Some("watch") => {
+            process::exit(env::var("WATCH_EXIT").unwrap().parse().unwrap());
+        }
+        Some("run") if args.get(1).map(String::as_str) == Some("view") => {
+            println!("{} {}", env::var("VIEW_SHA").unwrap(), env::var("VIEW_CONCLUSION").unwrap());
+            process::exit(env::var("VIEW_EXIT").unwrap().parse().unwrap());
+        }
+        _ => panic!("unexpected gh arguments: {args:?}"),
+    }
+}
+"#,
+    )
+    .unwrap();
+    let fake_bin = fixture.path().join("bin");
+    fs::create_dir(&fake_bin).unwrap();
+    let compiled = Command::new("rustc")
+        .args(["--edition=2024", "--crate-name", "fake_gh"])
+        .arg(&fake_source)
+        .arg("-o")
+        .arg(fake_bin.join("gh"))
+        .output()
+        .unwrap();
+    assert!(
+        compiled.status.success(),
+        "{}",
+        String::from_utf8_lossy(&compiled.stderr)
+    );
+    let path = std::env::join_paths(
+        std::iter::once(fake_bin).chain(std::env::split_paths(&std::env::var_os("PATH").unwrap())),
+    )
+    .unwrap();
+    let sha = "1111111111111111111111111111111111111111";
+    let other = "2222222222222222222222222222222222222222";
+    for (name, watch_exit, view_exit, reported_sha, conclusion, success) in [
+        ("success", "0", "0", sha, "success", true),
+        ("failed check", "1", "0", sha, "success", false),
+        ("wrong source", "0", "0", other, "success", false),
+        ("failed conclusion", "0", "0", sha, "failure", false),
+        ("incomplete conclusion", "0", "0", sha, "", false),
+        ("failed API read", "0", "1", sha, "success", false),
+    ] {
+        let log = fixture.path().join("status-log");
+        fs::write(&log, "").unwrap();
+        let output = Command::new("bash")
+            .args(["-euc", &format!("set -o pipefail\n{reporting}")])
+            .env("PATH", &path)
+            .env_remove("GH_TOKEN")
+            .env_remove("GITHUB_TOKEN")
+            .env("repo", "example/project")
+            .env("sha", sha)
+            .env("run", "42")
+            .env("STATUS_LOG", &log)
+            .env("WATCH_EXIT", watch_exit)
+            .env("VIEW_EXIT", view_exit)
+            .env("VIEW_SHA", reported_sha)
+            .env("VIEW_CONCLUSION", conclusion)
+            .current_dir(fixture.path())
+            .output()
+            .unwrap();
+        assert_eq!(
+            output.status.success(),
+            success,
+            "{name}: {}",
+            String::from_utf8_lossy(&output.stderr)
+        );
+        let final_state = if success { "success" } else { "failure" };
+        assert_eq!(
+            fs::read_to_string(&log).unwrap(),
+            format!(
+                "pending\tCI\thttps://github.com/example/project/actions/runs/42\trepos/example/project/statuses/{sha}\n\
+                 {final_state}\tCI\thttps://github.com/example/project/actions/runs/42\trepos/example/project/statuses/{sha}\n"
+            ),
+            "incorrect published status sequence for {name}"
+        );
+    }
+}
