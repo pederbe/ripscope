@@ -154,40 +154,31 @@ impl Sources {
 
 impl Selection {
     pub(crate) fn encode(&self) -> Vec<u8> {
-        let bytes = |value: &[u8]| Value::from(value.to_vec());
         let sources = match &self.sources {
-            Sources::Files(files) => {
-                json!({"files": files.iter().map(|f| bytes(f)).collect::<Vec<_>>()})
-            }
-            Sources::List(list) => json!({"list": bytes(list)}),
+            Sources::Files(files) => json!({"files": files}),
+            Sources::List(list) => json!({"list": list}),
             Sources::Automatic { recursive } => json!({"automatic": recursive}),
         };
         json!({
-            "root": bytes(self.root.as_os_str().as_encoded_bytes()),
+            "root": self.root.as_os_str().as_encoded_bytes(),
             "sources": sources,
-            "include_dirs": self.include_dirs.iter().map(|d| bytes(d)).collect::<Vec<_>>(),
-            "environment_dirs": self.environment_dirs.iter().map(|d| bytes(d)).collect::<Vec<_>>(),
+            "include_dirs": self.include_dirs,
+            "environment_dirs": self.environment_dirs,
             "system_includes": self.system_includes,
-            "system_dir": bytes(&self.system_dir),
+            "system_dir": self.system_dir,
         })
         .to_string()
         .into_bytes()
     }
 
     pub(crate) fn decode(encoded: &[u8]) -> Option<Self> {
-        let value: Value = serde_json::from_slice(encoded).ok()?;
-        let bytes = |value: &Value| -> Option<Vec<u8>> {
-            value
-                .as_array()?
-                .iter()
-                .map(|byte| byte.as_u64().and_then(|b| u8::try_from(b).ok()))
-                .collect()
-        };
-        let sources = &value["sources"];
-        let sources = if let Some(files) = sources.get("files") {
-            Sources::Files(files.as_array()?.iter().map(bytes).collect::<Option<_>>()?)
-        } else if let Some(list) = sources.get("list") {
-            Sources::List(bytes(list)?)
+        let mut value: Value = serde_json::from_slice(encoded).ok()?;
+        let fields = value.as_object_mut()?;
+        let sources = fields.get_mut("sources")?.as_object_mut()?;
+        let sources = if let Some(files) = sources.remove("files") {
+            Sources::Files(serde_json::from_value(files).ok()?)
+        } else if let Some(list) = sources.remove("list") {
+            Sources::List(serde_json::from_value(list).ok()?)
         } else {
             Sources::Automatic {
                 recursive: sources.get("automatic")?.as_bool()?,
@@ -195,20 +186,12 @@ impl Selection {
         };
         Some(Self {
             // The root was written from this platform's own path bytes.
-            root: path_of(&bytes(&value["root"])?),
+            root: path_of(&serde_json::from_value::<Vec<u8>>(fields.remove("root")?).ok()?),
             sources,
-            include_dirs: value["include_dirs"]
-                .as_array()?
-                .iter()
-                .map(bytes)
-                .collect::<Option<_>>()?,
-            environment_dirs: value["environment_dirs"]
-                .as_array()?
-                .iter()
-                .map(bytes)
-                .collect::<Option<_>>()?,
-            system_includes: value["system_includes"].as_bool()?,
-            system_dir: bytes(&value["system_dir"])?,
+            include_dirs: serde_json::from_value(fields.remove("include_dirs")?).ok()?,
+            environment_dirs: serde_json::from_value(fields.remove("environment_dirs")?).ok()?,
+            system_includes: fields.get("system_includes")?.as_bool()?,
+            system_dir: serde_json::from_value(fields.remove("system_dir")?).ok()?,
         })
     }
 }

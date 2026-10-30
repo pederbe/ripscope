@@ -19,6 +19,94 @@ fn selection(root: &Path, sources: Sources, include_dirs: &[&str]) -> Selection 
     }
 }
 
+#[test]
+fn selection_codec_preserves_stored_json_for_each_source_kind() {
+    for (sources, stored_sources) in [
+        (
+            Sources::Files(vec![b"a.c".to_vec(), b"b\xff.c".to_vec()]),
+            r#"{"files":[[97,46,99],[98,255,46,99]]}"#,
+        ),
+        (
+            Sources::List(b"list".to_vec()),
+            r#"{"list":[108,105,115,116]}"#,
+        ),
+        (
+            Sources::Automatic { recursive: false },
+            r#"{"automatic":false}"#,
+        ),
+        (
+            Sources::Automatic { recursive: true },
+            r#"{"automatic":true}"#,
+        ),
+    ] {
+        let rule = Selection {
+            root: PathBuf::from("root"),
+            sources,
+            include_dirs: vec![b"inc".to_vec()],
+            environment_dirs: vec![b"env".to_vec()],
+            system_includes: true,
+            system_dir: b"sys".to_vec(),
+        };
+        // These pre-refactor bytes also feed observing()'s hash.
+        let stored = format!(
+            r#"{{"environment_dirs":[[101,110,118]],"include_dirs":[[105,110,99]],"root":[114,111,111,116],"sources":{stored_sources},"system_dir":[115,121,115],"system_includes":true}}"#
+        );
+        assert_eq!(rule.encode(), stored.as_bytes());
+        assert_eq!(Selection::decode(stored.as_bytes()), Some(rule));
+    }
+}
+
+#[cfg(unix)]
+#[test]
+fn selection_codec_preserves_non_utf8_root_bytes() {
+    let rule = selection(
+        &path_of(b"/workspace/\xff"),
+        Sources::Automatic { recursive: false },
+        &[],
+    );
+    let stored = rule.encode();
+    let json: serde_json::Value = serde_json::from_slice(&stored).expect("stored JSON");
+    assert_eq!(json["root"], serde_json::json!(b"/workspace/\xff"));
+    assert_eq!(Selection::decode(&stored), Some(rule));
+}
+
+#[test]
+fn selection_codec_rejects_missing_fields_and_invalid_values() {
+    let rule = selection(Path::new("root"), Sources::List(b"list".to_vec()), &["inc"]);
+    let stored: serde_json::Value = serde_json::from_slice(&rule.encode()).expect("stored JSON");
+    for field in [
+        "root",
+        "sources",
+        "include_dirs",
+        "environment_dirs",
+        "system_includes",
+        "system_dir",
+    ] {
+        let mut missing = stored.clone();
+        missing.as_object_mut().expect("object").remove(field);
+        assert!(Selection::decode(&serde_json::to_vec(&missing).expect("JSON")).is_none());
+    }
+    for (field, value) in [
+        ("root", serde_json::json!("root")),
+        ("root", serde_json::json!([256])),
+        ("root", serde_json::json!([-1])),
+        ("root", serde_json::json!([1.0])),
+        ("root", serde_json::json!([1.5])),
+        ("sources", serde_json::json!({"files": ["a.c"]})),
+        ("sources", serde_json::json!({"list": [256]})),
+        ("sources", serde_json::json!({"automatic": "true"})),
+        ("sources", serde_json::json!({"unknown": true})),
+        ("include_dirs", serde_json::json!([256])),
+        ("environment_dirs", serde_json::json!([[256]])),
+        ("system_includes", serde_json::json!(1)),
+        ("system_dir", serde_json::json!([256])),
+    ] {
+        let mut invalid = stored.clone();
+        invalid[field] = value;
+        assert!(Selection::decode(&serde_json::to_vec(&invalid).expect("JSON")).is_none());
+    }
+}
+
 fn run(store: &mut Store, rule: &Selection) -> Report {
     build(store, rule, options(Trust::Metadata)).expect("index built")
 }
