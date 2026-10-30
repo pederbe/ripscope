@@ -109,10 +109,18 @@ create a branch in their fork. Open the pull request against `main` once the che
 above pass, and link the issue when there is one. A pull request merges after the
 required CI check passes on Linux and Windows, with the branch current with `main`.
 
-- Keep each pull request focused on one change, and update the documentation and
-  `CHANGELOG.md` when user-visible behavior changes.
+- Keep each pull request focused on one change, and update the documentation when
+  user-visible behavior changes.
 - Write commit subjects in the imperative ("Preserve UTF-8 literal bytes"), and
   explain *why* in the body when it is not obvious.
+
+Include a concise entry under `[Unreleased]` in
+[CHANGELOG.md](https://github.com/pederbe/ripscope/blob/main/CHANGELOG.md) in
+the same pull request as a user-visible change. Cover capabilities, fixes,
+installation, editor setup and changes to command-line behavior, result formats
+or the index. Explain compatibility consequences and any action users need to
+take. Keep performance claims tied to their measured workloads. If no entry is
+needed, explain why in the pull request's Changelog section.
 
 Contributions are dual-licensed under MIT or Apache-2.0, like the rest of Ripscope,
 unless explicitly stated otherwise.
