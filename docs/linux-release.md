@@ -263,6 +263,14 @@ version on `main` unchanged. Each changelog carries all previous release section
 new authored entries and grouped commit summaries with comparison links. The next
 release compares the two development snapshots, excluding generated metadata.
 
+Before preparing a release, compare the Unreleased entries with all merged
+changes since the previous published release. Check capabilities, fixes,
+installation, editor setup, support boundaries, format changes and upgrade
+instructions. Resolve omissions before freezing the notes. Generated commit
+history supplements the user-facing summary rather than replacing it. For the
+scheduled workflow, account for this coverage in each change review so it can
+reuse the maintained entries without a separate manual approval.
+
 The scheduler dispatches `.github/workflows/release.yml` at the exact tag and source
 SHA. That workflow builds, tests, inspects and packages both platform archives before
 attesting their provenance and publishing. Failed runs keep their tag. The next
