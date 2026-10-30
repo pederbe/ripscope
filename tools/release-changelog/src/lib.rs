@@ -240,8 +240,11 @@ fn records(text: &str) -> Vec<(String, String)> {
     result
 }
 
-fn pending_delta(current: &str, shipped: &str) -> String {
-    let shipped = records(shipped);
+fn pending_delta(current: &str, source: &str, published: &str) -> String {
+    let shipped: Vec<_> = records(source)
+        .into_iter()
+        .chain(records(published))
+        .collect();
     let mut result = String::new();
     let mut previous_heading = String::new();
     for (heading, body) in records(current) {
@@ -271,10 +274,7 @@ pub fn record(current: &str, source: &str, released: &str, tag: &str) -> Result<
         .iter()
         .find(|s| s.version == name)
         .unwrap();
-    current.pending = pending_delta(
-        &current.pending,
-        &format!("{}\n\n{}", source.pending, selected.body),
-    );
+    current.pending = pending_delta(&current.pending, &source.pending, &selected.body);
     let mut releases = Vec::new();
     for section in published.releases {
         let mut merged = current
@@ -340,6 +340,18 @@ mod tests {
                 OLD
             );
         }
+    }
+
+    #[test]
+    fn published_prose_does_not_remain_pending() {
+        let source = "# Changelog\n\n## [Unreleased]\n\nA shipping capability.\n";
+        let released = finalize(source, "v0.1.0", "2026-10-30").unwrap();
+        let recorded = record(source, source, &released, "v0.1.0").unwrap();
+        assert_eq!(recorded, released);
+        assert_eq!(
+            record(&recorded, source, &released, "v0.1.0").unwrap(),
+            recorded
+        );
     }
 
     #[test]
