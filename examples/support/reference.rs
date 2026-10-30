@@ -11,6 +11,11 @@ use std::time::{Duration, Instant};
 
 pub const CSCOPE_SHA256: &str = "c2b68c8d216835b5b0637fcf41a40c59d6b73a81cc411136ec224cfcff01401c";
 
+// Ubuntu exposes GNU timeout under this name when its default timeout is uutils.
+// uutils 0.10 fails to send SIGKILL to the group because it tries to ignore SIGKILL
+// first. Select the GNU provider inside Linux, including when reached through WSL.
+const GROUP_TIMEOUT: &str = "if command -v gnutimeout >/dev/null 2>&1; then exec gnutimeout \"$@\"; else exec timeout \"$@\"; fi";
+
 /// The pinned executable and how commands reach it.
 pub struct Reference {
     pub cscope: PathBuf,
@@ -83,7 +88,10 @@ impl Reference {
             command.extend(["wsl", "-d", "Ubuntu", "--exec"].map(str::to_owned));
         }
         command.extend([
-            "timeout".to_owned(),
+            "bash".to_owned(),
+            "-c".to_owned(),
+            GROUP_TIMEOUT.to_owned(),
+            "reference-timeout".to_owned(),
             "--signal=KILL".to_owned(),
             seconds_text(seconds),
         ]);
@@ -354,7 +362,17 @@ mod tests {
             } else {
                 Vec::new()
             };
-            expected.extend(["timeout", "--signal=KILL", "1900", "bash", "-c", "cat"]);
+            expected.extend([
+                "bash",
+                "-c",
+                GROUP_TIMEOUT,
+                "reference-timeout",
+                "--signal=KILL",
+                "1900",
+                "bash",
+                "-c",
+                "cat",
+            ]);
             assert_eq!(
                 reference.arguments(&["bash", "-c", "cat"], 1900.0),
                 expected
