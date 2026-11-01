@@ -364,8 +364,8 @@ fn workspace_symbols_search_the_projects_opened_so_far_and_see_saved_edits() {
         json!([])
     );
     let main = fixture.file("main.c");
+    // Opening a file starts its Project.
     server.open(&main, MAIN);
-    server.request("textDocument/definition", at(&main, 4, 1));
     let found = server.request("workspace/symbol", json!({"query": "GREE"}));
     let found = found.as_array().unwrap();
     assert_eq!(found.len(), 1, "{found:?}");
@@ -435,5 +435,34 @@ fn unknown_requests_are_refused_and_the_server_keeps_going() {
     // A file the editor never opened is read from disk.
     let found = server.request("textDocument/definition", at(&fixture.file("main.c"), 4, 1));
     assert_eq!(found, json!([location(&fixture.file("greet.c"), 4, 5, 10)]));
+    server.stop();
+}
+
+#[test]
+fn a_first_index_builds_warnings_go_to_the_editors_log() {
+    let fixture = Fixture::new();
+    fs::write(
+        fixture.root.join("cscope.files"),
+        "greet.c\nmain.c\nshout.c\nmissing.c\n",
+    )
+    .unwrap();
+    let mut server = fixture.server();
+    let main = fixture.file("main.c");
+    server.open(&main, MAIN);
+    let found = server.request("textDocument/definition", at(&main, 4, 1));
+    assert_eq!(found, json!([location(&fixture.file("greet.c"), 4, 5, 10)]));
+    assert!(
+        server.logs.iter().any(|log| log.contains("indexing")),
+        "{:?}",
+        server.logs
+    );
+    assert!(
+        server
+            .logs
+            .iter()
+            .any(|log| log.contains("cannot find file missing.c")),
+        "{:?}",
+        server.logs
+    );
     server.stop();
 }

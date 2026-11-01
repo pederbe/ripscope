@@ -1,14 +1,19 @@
 //! The Language server's Projects: one JSON Session per Project, run on a thread of its
 //! own over a pipe, so that each request is answered as an editor integration's session
-//! answers it, from the same index and kept up to date the same way (ADR 0014).
+//! answers it, from the same index and kept up to date the same way (ADR 0016).
+//!
+//! A Project's first index build runs on that thread before its Session starts, so
+//! the server goes on serving other Projects meanwhile.
 
 use crate::cli::pipeline;
 use crate::project::{self, Places, Project};
 use serde_json::Value;
 use std::ffi::OsString;
-use std::io::{self, BufRead, BufReader, PipeReader, PipeWriter, Write};
+use std::io::{self, BufRead, BufReader, PipeWriter, Write};
 use std::path::{Path, PathBuf};
+use std::sync::mpsc::{self, Receiver, RecvTimeoutError};
 use std::thread::JoinHandle;
+use std::time::Instant;
 
 /// One row of an answer.
 pub(super) struct Row {
@@ -32,11 +37,6 @@ pub(super) struct Projects {
     sessions: Vec<Session>,
 }
 
-/// What the server tells the editor while opening a Project.
-pub(super) trait Progress {
-    fn note(&mut self, message: &str);
-}
-
 impl Projects {
     pub(super) fn new(places: Places) -> Self {
         Self {
@@ -46,15 +46,9 @@ impl Projects {
         }
     }
 
-    /// The Session of FILE's Project, as an editor in CWD finds it: started, after the
-    /// Project's first index build if nothing is published yet, when this is its first
-    /// request.
-    pub(super) fn of(
-        &mut self,
-        file: &Path,
-        cwd: &Path,
-        progress: &mut dyn Progress,
-    ) -> Result<&mut Session, String> {
+    /// The Session of FILE's Project, as an editor in CWD finds it, and whether it was
+    /// started for this call, with a first index build if nothing is published yet.
+    pub(super) fn of(&mut self, file: &Path, cwd: &Path) -> Result<(&mut Session, bool), String> {
         let places = Places {
             cwd: cwd.to_owned(),
             home: self.home.clone(),
@@ -63,19 +57,17 @@ impl Projects {
         let found = project::find(file, &places)?;
         // A Session that ended, as when its index could no longer be read, starts again.
         self.sessions.retain(|session| !session.ended());
-        let at = match self
+        match self
             .sessions
             .iter()
             .position(|session| session.index == found.index)
         {
-            Some(at) => at,
+            Some(at) => Ok((&mut self.sessions[at], false)),
             None => {
-                self.sessions
-                    .push(Session::start(&found, &self.cache, progress)?);
-                self.sessions.len() - 1
+                self.sessions.push(Session::start(&found, &self.cache)?);
+                Ok((self.sessions.last_mut().expect("just pushed"), true))
             }
-        };
-        Ok(&mut self.sessions[at])
+        }
     }
 
     /// Every Session started so far.
@@ -85,55 +77,66 @@ impl Projects {
 }
 
 pub(super) struct Session {
-    root: PathBuf,
+    pub root: PathBuf,
     index: PathBuf,
+    /// Whether its Project's first index build runs before it starts.
+    pub building: bool,
+    /// What its first index build and its start had to tell, until the server tells it.
+    pub warnings: Vec<String>,
     requests: PipeWriter,
-    replies: BufReader<PipeReader>,
-    /// What the Session wrote on standard error, once it ends.
+    /// Its lines, read on a thread of their own so that the server can wait for the
+    /// first one with a deadline.
+    replies: Receiver<String>,
+    /// Whether its first `ready` came.
+    started: bool,
+    /// What the index build or the Session wrote on standard error, once it ends.
     thread: Option<JoinHandle<String>>,
     caseless: bool,
 }
 
 impl Session {
-    fn start(found: &Project, cache: &Path, progress: &mut dyn Progress) -> Result<Self, String> {
+    fn start(found: &Project, cache: &Path) -> Result<Self, String> {
         std::fs::create_dir_all(cache)
             .map_err(|error| format!("cannot make {}: {error}", cache.display()))?;
         let mut selection: Vec<OsString> = found.selection.iter().map(OsString::from).collect();
         selection.extend(["-f".into(), found.index.clone().into()]);
-        if !pipeline::published(found) {
-            progress.note(&format!(
-                "indexing {} for the first time",
-                found.root.display()
-            ));
-            let mut errors = Vec::new();
-            let args: Vec<OsString> = std::iter::once("-b".into())
-                .chain(selection.iter().cloned())
-                .collect();
-            let status = pipeline::run_in(
-                &args,
-                &found.root,
-                &mut io::empty(),
-                &mut io::sink(),
-                &mut errors,
-            );
-            let errors = String::from_utf8_lossy(&errors);
-            if status != std::process::ExitCode::SUCCESS {
-                return Err(last_line(&errors));
-            }
-            for warning in errors.lines() {
-                progress.note(warning);
-            }
-        }
+        let building = !pipeline::published(found);
         let pipe = |error: io::Error| format!("cannot start a session: {error}");
         let (session_input, requests) = io::pipe().map_err(pipe)?;
         let (replies, mut session_output) = io::pipe().map_err(pipe)?;
-        let args: Vec<OsString> = ["--json".into(), "-l".into()]
-            .into_iter()
-            .chain(selection)
-            .collect();
         let root = found.root.clone();
+        let (lines, received) = mpsc::channel();
+        let built = lines.clone();
         let thread = std::thread::spawn(move || {
             let mut errors = Vec::new();
+            if building {
+                let build: Vec<OsString> = std::iter::once("-b".into())
+                    .chain(selection.iter().cloned())
+                    .collect();
+                let status = pipeline::run_in(
+                    &build,
+                    &root,
+                    &mut io::empty(),
+                    &mut io::sink(),
+                    &mut errors,
+                );
+                if status != std::process::ExitCode::SUCCESS {
+                    return String::from_utf8_lossy(&errors).into_owned();
+                }
+                // Files the build could not use are told as the Session tells warnings: the
+                // process holds standard error.
+                for warning in String::from_utf8_lossy(&errors).lines() {
+                    let warning = warning.strip_prefix("ripscope: ").unwrap_or(warning);
+                    let _ = built.send(
+                        serde_json::json!({"type": "warning", "message": warning}).to_string(),
+                    );
+                }
+                errors.clear();
+            }
+            let args: Vec<OsString> = ["--json".into(), "-l".into()]
+                .into_iter()
+                .chain(selection)
+                .collect();
             pipeline::run_in(
                 &args,
                 &root,
@@ -143,23 +146,52 @@ impl Session {
             );
             String::from_utf8_lossy(&errors).into_owned()
         });
-        let mut session = Self {
+        std::thread::spawn(move || {
+            for line in BufReader::new(replies).lines() {
+                let Ok(line) = line else { break };
+                if lines.send(line).is_err() {
+                    break;
+                }
+            }
+        });
+        Ok(Self {
             root: found.root.clone(),
             index: found.index.clone(),
+            building,
+            warnings: Vec::new(),
             requests,
-            replies: BufReader::new(replies),
+            replies: received,
+            started: false,
             thread: Some(thread),
             caseless: false,
-        };
-        session.ready(&mut Vec::new())?;
-        Ok(session)
+        })
     }
 
     fn ended(&self) -> bool {
         self.thread.as_ref().is_none_or(JoinHandle::is_finished)
     }
 
-    /// The rows of a query of FIELD for PATTERN, ignoring letter case if CASELESS.
+    /// Whether the Session is ready for queries by DEADLINE: its first index build, if
+    /// any, is done, and it has started. Its failure to start is an error.
+    pub(super) fn ready_by(&mut self, deadline: Instant) -> Result<bool, String> {
+        while !self.started {
+            let wait = deadline.saturating_duration_since(Instant::now());
+            match self.replies.recv_timeout(wait) {
+                Ok(line) => {
+                    let frame = frame(&line)?;
+                    self.started = frame["type"] == "ready";
+                    self.warnings
+                        .extend(message(&frame).filter(|_| !self.started));
+                }
+                Err(RecvTimeoutError::Timeout) => return Ok(false),
+                Err(RecvTimeoutError::Disconnected) => return Err(self.end()),
+            }
+        }
+        Ok(true)
+    }
+
+    /// The rows of a query of FIELD for PATTERN, ignoring letter case if CASELESS, once
+    /// the Session is ready.
     pub(super) fn query(
         &mut self,
         field: u8,
@@ -215,11 +247,9 @@ impl Session {
     }
 
     fn frame(&mut self) -> Result<Value, String> {
-        let mut line = String::new();
-        match self.replies.read_line(&mut line) {
-            Ok(0) | Err(_) => Err(self.end()),
-            Ok(_) => serde_json::from_str(&line)
-                .map_err(|error| format!("unexpected session output: {error}")),
+        match self.replies.recv() {
+            Ok(line) => frame(&line),
+            Err(_) => Err(self.end()),
         }
     }
 
@@ -230,11 +260,12 @@ impl Session {
             .take()
             .and_then(|thread| thread.join().ok())
             .unwrap_or_default();
-        let reason = last_line(&errors);
+        let line = errors.lines().last().unwrap_or_default();
+        let reason = line.strip_prefix("ripscope: ").unwrap_or(line);
         if reason.is_empty() {
             "the session ended".to_owned()
         } else {
-            reason
+            reason.to_owned()
         }
     }
 
@@ -260,13 +291,12 @@ impl Session {
     }
 }
 
-fn message(frame: &Value) -> Option<String> {
-    frame["message"].as_str().map(str::to_owned)
+fn frame(line: &str) -> Result<Value, String> {
+    serde_json::from_str(line).map_err(|error| format!("unexpected session output: {error}"))
 }
 
-fn last_line(errors: &str) -> String {
-    let line = errors.lines().last().unwrap_or_default();
-    line.strip_prefix("ripscope: ").unwrap_or(line).to_owned()
+fn message(frame: &Value) -> Option<String> {
+    frame["message"].as_str().map(str::to_owned)
 }
 
 /// A JSON row's byte array.

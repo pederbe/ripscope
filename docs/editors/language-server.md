@@ -96,12 +96,14 @@ use the same one.
 The editor's workspace folder matters only where that rule would use the editor's
 current directory: a file outside any `cscope.files` project or Git repository
 belongs to the innermost workspace folder holding it. A workspace symbol search names
-no file, so it searches every project the server has opened so far. Before the first
-request in a file of a project, it finds nothing there.
+no file, so it searches every project you have opened a file in.
 
-The first request in a project indexes it when nothing is indexed yet, and the editor
-shows `ripscope: indexing ... for the first time` in its log. Later requests see your
-saved edits, as a session does.
+When you open the first file of a project that has no index yet, the server starts
+indexing it in the background, and the editor's log shows
+`ripscope: indexing ... for the first time`. A request waits up to 10 seconds for
+that to finish. On a large project it may say `still indexing ... for the first time`
+instead, so try again a little later. Later requests see your saved edits, as a
+session does.
 
 ## Names and ranges
 

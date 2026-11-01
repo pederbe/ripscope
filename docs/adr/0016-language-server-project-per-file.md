@@ -25,8 +25,9 @@ line as saved, and covers the whole line when it cannot.
 - A file in a Git repository nested inside a workspace folder is searched in that
   repository, as in Vim, and not in the folder.
 - The language server and the Neovim plugin share one index for a Project.
-- Workspace symbols find nothing in a Project until a request names one of its
-  files.
+- Workspace symbols find nothing in a Project until the editor opens one of its files.
+  Opening it starts the Session, and the Project's first index build runs on the
+  Session's thread, so the server keeps answering for other Projects meanwhile.
 - A result whose line changed since the last refresh can point at the wrong place in
   that line. Results follow the saved files, as every other search does.
 
