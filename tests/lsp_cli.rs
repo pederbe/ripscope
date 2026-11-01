@@ -470,3 +470,28 @@ fn a_first_index_builds_warnings_go_to_the_editors_log() {
     );
     server.stop();
 }
+
+#[test]
+fn outgoing_calls_are_those_of_the_items_own_definition() {
+    let fixture = Fixture::new();
+    fs::write(fixture.file("idle_a.c"), "static void idle(void)\n{\n}\n").unwrap();
+    fs::write(
+        fixture.file("idle_b.c"),
+        "static void idle(void)\n{\n\tshout(\"\");\n}\n",
+    )
+    .unwrap();
+    let mut server = fixture.server();
+    let quiet = fixture.file("idle_a.c");
+    server.open(&quiet, "static void idle(void)\n{\n}\n");
+    let items = server.request("textDocument/prepareCallHierarchy", at(&quiet, 0, 13));
+    let item = items
+        .as_array()
+        .unwrap()
+        .iter()
+        .find(|item| item["uri"] == uri(&quiet))
+        .unwrap()
+        .clone();
+    let outgoing = server.request("callHierarchy/outgoingCalls", json!({"item": item}));
+    assert_eq!(outgoing, json!([]));
+    server.stop();
+}

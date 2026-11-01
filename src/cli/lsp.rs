@@ -519,10 +519,9 @@ impl<O: Write> Server<'_, O> {
     fn outgoing_calls(&mut self, params: &Value) -> Answered {
         let (file, name) = Self::item(params)?;
         let mut rows = self.query(&file, FIELD_CALLEES, &name)?;
-        // Functions of one name in several files are told apart by the item's file.
-        if rows.iter().any(|row| row.path == file) {
-            rows.retain(|row| row.path == file);
-        }
+        // A function's calls are in its definition's file, the item's, which tells it
+        // apart from functions of the same name elsewhere.
+        rows.retain(|row| row.path == file);
         self.calls(&rows, Direction::Outgoing, &name)
     }
 
@@ -604,16 +603,29 @@ fn names(line: &str) -> impl Iterator<Item = &str> {
 
 /// The name a definition's LINE defines that holds LOWERED, ignoring case. A definition
 /// row's context is the pattern, so the name is read from the line: the first such name
-/// that a `(` follows, as a function's or a macro's, else the last before any `=`, `(`
-/// or `{`, past type names such as `struct greeter`.
+/// that a `(` follows, as a function's or a macro's, else the first in a pointer
+/// declarator such as `(*handler)`, else the last before any `=`, `(` or `{`, past type
+/// names such as `struct greeter`.
 fn defined_name<'l>(line: &'l str, lowered: &str) -> Option<&'l str> {
     let declarator = line.split(['=', '(', '{']).next().unwrap_or(line);
     let matching = |name: &&str| name.to_ascii_lowercase().contains(lowered);
-    let called = names(line).filter(matching).find(|name| {
-        let (_, end) = text::find_name(line, name).unwrap_or_default();
-        line[end..].trim_start().starts_with('(')
-    });
-    called.or_else(|| names(declarator).filter(matching).last())
+    let around = |name: &str| {
+        let (start, end) = text::find_name(line, name).unwrap_or_default();
+        (line[..start].trim_end(), line[end..].trim_start())
+    };
+    let called = names(line)
+        .filter(matching)
+        .find(|name| around(name).1.starts_with('('));
+    let pointed = || {
+        names(line).filter(matching).find(|name| {
+            let (before, after) = around(name);
+            let stars = before.trim_end_matches(['*', ' ', '\t']);
+            before.ends_with('*') && stars.ends_with('(') && after.starts_with(')')
+        })
+    };
+    called
+        .or_else(pointed)
+        .or_else(|| names(declarator).filter(matching).last())
 }
 
 /// The saved files' lines that results' ranges are found in, each file read once.
@@ -713,5 +725,13 @@ mod tests {
         assert_eq!(defined_name("#define GREET(x) x", "gree"), Some("GREET"));
         assert_eq!(defined_name("#define GREETING 1", "gree"), Some("GREETING"));
         assert_eq!(defined_name("int count;", "gree"), None);
+        assert_eq!(
+            defined_name("typedef int (*handler)(int);", "hand"),
+            Some("handler")
+        );
+        assert_eq!(
+            defined_name("int (*greet_cb)(int gree) = 0;", "gree"),
+            Some("greet_cb")
+        );
     }
 }
