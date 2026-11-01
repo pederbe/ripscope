@@ -23,7 +23,8 @@ again.
 
 The indexes the editors made stay in your cache directory, `~/.cache/ripscope` on
 Linux and `%LOCALAPPDATA%\ripscope` on Windows, or the folder `RIPSCOPE_CACHE_DIR`
-names when you set it. Delete them too if you no longer need them. Indexes you built
+names when you set it. Where your home directory is on NFS or another network file
+system, they are in `/var/tmp/ripscope-UID`, with your user number. Delete them too if you no longer need them. Indexes you built
 in your projects stay there.
 
 ## Installed with a plugin manager

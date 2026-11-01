@@ -41,7 +41,11 @@ and so one index per project.
   project reached through a link shares its index. On Windows the path has forward
   slashes and is lower-cased first. The project gets no Ripscope file, though
   on Windows a session briefly makes its marker file there
-  ([ADR 0008](0008-sessions-refresh-on-watched-changes.md)).
+  ([ADR 0008](0008-sessions-refresh-on-watched-changes.md)). Where that cache is on a
+  file system an index cannot live on ([ADR 0005](0005-one-sqlite-file-per-index.md)),
+  as a home directory on NFS often is, the cache is `/var/tmp/ripscope-UID` on Unix,
+  made private to the user. A directory there that another user made, or that others
+  can reach, is not taken, and the index build then reports the remote cache.
 - **First search.** The editor builds the index when nothing is published in it yet,
   then searches through a session, which keeps the index current. xcscope runs a
   process per search and a one-shot query refreshes first, so the Emacs adapter keeps
@@ -68,6 +72,10 @@ sources, for an editor whose settings choose them.
   running and cannot repair integrations that ignore exit status.
 - **Adapt an existing Neovim plugin such as cscope_maps.nvim.** It accepts only
   executables named `cscope` or `gtags-cscope`, and swallows failures.
+- **Refuse a remote cache and ask for `RIPSCOPE_CACHE_DIR`.** The first search in an
+  editor would fail for everyone whose home directory is on NFS, common on shared build
+  servers, before they had seen a result. `$XDG_RUNTIME_DIR` is local too, but it is
+  usually in memory and emptied at logout, so a large index would be rebuilt each time.
 - **An index in the project, as cscope's `cscope.out`.** It writes into a tree the user
   may not own or want changed, and shows up in version control. Explicit settings still
   allow it.
