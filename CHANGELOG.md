@@ -15,8 +15,8 @@ index format or command-line behavior, and its entry says so.
 ### Fixed
 
 - Editor searches work when your home directory is on NFS or another network file
-  system. The project index now goes to `/var/tmp/ripscope-UID`, where it used to
-  fail unless `RIPSCOPE_CACHE_DIR` was set.
+  system. The project index now goes to `/var/tmp/ripscope-UID`. Before, the first
+  search failed unless `RIPSCOPE_CACHE_DIR` was set.
 
 ## [0.2.4] - 2026-10-26
 

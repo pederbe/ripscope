@@ -54,8 +54,8 @@ Ripscope picks the project and keeps its index for you:
 - **The index** lives in your cache directory, `~/.cache/ripscope` on Linux and
   `%LOCALAPPDATA%\ripscope` on Windows, named after the project. When your home
   directory is on a network file system such as NFS, it lives in
-  `/var/tmp/ripscope-UID` instead. On Windows a search
-  briefly makes a marker file in the project directory.
+  `/var/tmp/ripscope-UID` instead. On Windows a search briefly makes a marker file
+  in the project directory.
 
 A Git repository in your home directory, such as one for dotfiles, is not taken as a
 project. Where the project is your home directory or a drive, only the files directly

@@ -45,7 +45,9 @@ and so one index per project.
   file system an index cannot live on ([ADR 0005](0005-one-sqlite-file-per-index.md)),
   as a home directory on NFS often is, the cache is `/var/tmp/ripscope-UID` on Unix,
   made private to the user. A directory there that another user made, or that others
-  can reach, is not taken, and the index build then reports the remote cache.
+  can reach, is not taken, and the index build then reports the remote cache. A
+  system that clears old files from `/var/tmp` only makes the next search build the
+  index again.
 - **First search.** The editor builds the index when nothing is published in it yet,
   then searches through a session, which keeps the index current. xcscope runs a
   process per search and a one-shot query refreshes first, so the Emacs adapter keeps

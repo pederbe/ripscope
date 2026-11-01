@@ -55,8 +55,8 @@ Ripscope picks the project and keeps its index for you:
 - **The index** lives in your cache directory, `~/.cache/ripscope` on Linux and
   `%LOCALAPPDATA%\ripscope` on Windows, named after the project. When your home
   directory is on a network file system such as NFS, it lives in
-  `/var/tmp/ripscope-UID` instead. On Windows a search
-  briefly makes a marker file in the project directory.
+  `/var/tmp/ripscope-UID` instead. On Windows a search briefly makes a marker file
+  in the project directory.
 
 Each search goes to the current file's project, so several projects can be open at
 once, each with its own session. A search from a window with no file, such as the
