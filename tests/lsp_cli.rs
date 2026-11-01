@@ -258,7 +258,11 @@ fn definition_builds_the_index_on_first_use_and_finds_the_name_under_the_cursor(
     let found = server.request("textDocument/definition", at(&main, 4, 3));
     assert_eq!(found, json!([location(&fixture.file("greet.c"), 4, 5, 10)]));
     // The index lives in the user's cache, shared with the editor integrations.
-    let cache = fixture.home.join("cache").join("ripscope");
+    let cache = if cfg!(windows) {
+        fixture.home.join("local").join("ripscope")
+    } else {
+        fixture.home.join("cache").join("ripscope")
+    };
     assert!(fs::read_dir(&cache).unwrap().any(|entry| {
         entry
             .unwrap()
