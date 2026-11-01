@@ -114,7 +114,9 @@ The index is `ripscope.db`, and `-f INDEX` names another.
 
 Start with the [quick start](docs/getting-started/quick-start.md). The
 [Vim](docs/editors/vim.md), [Neovim](docs/editors/neovim.md) and
-[Emacs](docs/editors/emacs.md) guides cover the editors.
+[Emacs](docs/editors/emacs.md) guides cover the editors. Helix and other editors
+that speak the Language Server Protocol use the
+[language server](docs/editors/language-server.md), `ripscope lsp`.
 
 ## Documentation
 
