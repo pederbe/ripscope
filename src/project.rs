@@ -17,9 +17,11 @@ pub(crate) struct Places {
 
 impl Places {
     /// The places this process's environment names: `$HOME` and `$XDG_CACHE_HOME` (else
-    /// `~/.cache`) on Unix, `%USERPROFILE%` and `%LOCALAPPDATA%` on Windows. An absolute
-    /// `RIPSCOPE_CACHE_DIR` is the cache directory itself on both, for a user whose usual
-    /// cache path an editor cannot pass on, such as Vim with a space in it on Windows.
+    /// `~/.cache`) on Unix, `%USERPROFILE%` and `%LOCALAPPDATA%` on Windows. Where that
+    /// cache is on a file system an index cannot live on, such as a home directory on NFS,
+    /// Unix uses `/var/tmp/ripscope-UID` instead. An absolute `RIPSCOPE_CACHE_DIR` is the
+    /// cache directory itself on both, for a user whose usual cache path an editor cannot
+    /// pass on, such as Vim with a space in it on Windows.
     pub(crate) fn from_environment(cwd: &Path) -> Result<Self, String> {
         let variable = |name: &str| {
             std::env::var_os(name)
@@ -37,14 +39,49 @@ impl Places {
                 .unwrap_or_else(|| home.join(".cache"));
             (home, cache.join("ripscope"))
         };
-        let cache = variable("RIPSCOPE_CACHE_DIR")
-            .filter(|cache| cache.is_absolute())
-            .unwrap_or(cache);
+        let cache = match variable("RIPSCOPE_CACHE_DIR").filter(|cache| cache.is_absolute()) {
+            Some(chosen) => absolute(&chosen, cwd),
+            None => local_cache(absolute(&cache, cwd)),
+        };
         Ok(Self {
             cwd: cwd.to_owned(),
             home: absolute(&home, cwd),
-            cache: absolute(&cache, cwd),
+            cache,
         })
+    }
+}
+
+/// CACHE, or this user's own directory in `/var/tmp` when CACHE is on a file system an
+/// index cannot live on (ADR 0005) and `/var/tmp` is not.
+#[cfg(unix)]
+fn local_cache(cache: PathBuf) -> PathBuf {
+    let remote = |directory: &Path| matches!(crate::store::unsafe_place(directory), Ok(Some(_)));
+    local_cache_in(cache, Path::new("/var/tmp"), remote)
+}
+
+#[cfg(not(unix))]
+fn local_cache(cache: PathBuf) -> PathBuf {
+    cache
+}
+
+/// CACHE, or `ripscope-UID` in TEMPORARY when REMOTE says CACHE's nearest existing
+/// directory is remote and TEMPORARY is not. The directory is made private to this user,
+/// and one that another user made, or that others can reach, is not taken: CACHE stays,
+/// and making an index there reports why it cannot.
+#[cfg(unix)]
+fn local_cache_in(cache: PathBuf, temporary: &Path, remote: impl Fn(&Path) -> bool) -> PathBuf {
+    use std::os::unix::fs::{DirBuilderExt, MetadataExt};
+    let existing = cache.ancestors().find(|directory| directory.is_dir());
+    if !existing.is_some_and(&remote) || !temporary.is_dir() || remote(temporary) {
+        return cache;
+    }
+    let uid = rustix::process::getuid().as_raw();
+    let local = temporary.join(format!("ripscope-{uid}"));
+    // Not recursive, and checked without following a link, since others write here too.
+    let _ = std::fs::DirBuilder::new().mode(0o700).create(&local);
+    match std::fs::symlink_metadata(&local) {
+        Ok(found) if found.is_dir() && found.uid() == uid && found.mode() & 0o077 == 0 => local,
+        _ => cache,
     }
 }
 
@@ -321,6 +358,51 @@ mod tests {
         file(&f.places.home.join("top.c"));
         let project = find(&linked.join("top.c"), &f.places).unwrap();
         assert_eq!((project.root, project.selection), (linked, vec!["-k"]));
+    }
+
+    #[cfg(unix)]
+    #[test]
+    fn a_remote_cache_moves_to_a_private_local_directory() {
+        use std::os::unix::fs::PermissionsExt;
+        let f = fixture("");
+        let temporary = f.top.join("var-tmp");
+        fs::create_dir(&temporary).unwrap();
+        let uid = rustix::process::getuid().as_raw();
+        let local = temporary.join(format!("ripscope-{uid}"));
+        let home = f.places.home.clone();
+        let remote_home = |directory: &Path| directory.starts_with(&home);
+        // A cache directory not made yet is judged by the nearest one that exists.
+        let cache = f.places.home.join(".cache/ripscope");
+        assert_eq!(
+            local_cache_in(cache.clone(), &temporary, remote_home),
+            local
+        );
+        let mode = fs::metadata(&local).unwrap().permissions().mode();
+        assert_eq!(mode & 0o777, 0o700);
+        // Taken again as it is, and a local cache stays where it is.
+        assert_eq!(
+            local_cache_in(cache.clone(), &temporary, remote_home),
+            local
+        );
+        let nearby = f.places.cache.clone();
+        assert_eq!(
+            local_cache_in(nearby.clone(), &temporary, remote_home),
+            nearby
+        );
+        // Nowhere better when the temporary directory is remote too.
+        assert_eq!(local_cache_in(cache.clone(), &temporary, |_| true), cache);
+        // A directory others can reach, or a link in its place, is not taken.
+        fs::set_permissions(&local, fs::Permissions::from_mode(0o755)).unwrap();
+        assert_eq!(
+            local_cache_in(cache.clone(), &temporary, remote_home),
+            cache
+        );
+        fs::remove_dir(&local).unwrap();
+        std::os::unix::fs::symlink(&f.places.home, &local).unwrap();
+        assert_eq!(
+            local_cache_in(cache.clone(), &temporary, remote_home),
+            cache
+        );
     }
 
     #[test]

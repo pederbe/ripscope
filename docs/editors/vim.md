@@ -47,8 +47,10 @@ Ripscope picks the project and keeps its index for you:
 - **The sources** are the files `cscope.files` names, when there is one. Otherwise
   Ripscope finds the C sources in the project and its subdirectories.
 - **The index** lives in your cache directory, `~/.cache/ripscope` on Linux and
-  `%LOCALAPPDATA%\ripscope` on Windows, named after the project. On Windows a search
-  briefly makes a marker file in the project directory.
+  `%LOCALAPPDATA%\ripscope` on Windows, named after the project. When your home
+  directory is on a network file system such as NFS, it lives in
+  `/var/tmp/ripscope-UID` instead. On Windows a search briefly makes a marker file
+  in the project directory.
 
 Your home directory and a drive are never taken from Vim's current directory, and a
 Git repository there, such as one for dotfiles, is not taken as a project. Where the

@@ -27,6 +27,12 @@ mod postings;
 #[cfg(test)]
 mod tests;
 
+/// Why an index in DIRECTORY would be unsafe, if it would (ADR 0005).
+#[cfg(unix)]
+pub(crate) fn unsafe_place(directory: &Path) -> std::io::Result<Option<&'static str>> {
+    location::unsafe_place(directory)
+}
+
 #[cfg(test)]
 std::thread_local! {
     static BEFORE_UPDATE: std::cell::RefCell<Option<Box<dyn FnOnce()>>> = const {

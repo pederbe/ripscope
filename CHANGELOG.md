@@ -12,6 +12,12 @@ index format or command-line behavior, and its entry says so.
 - Signed apt and dnf repositories provide Linux installation and updates through
   the system package manager.
 
+### Fixed
+
+- Editor searches work when your home directory is on NFS or another network file
+  system. The project index now goes to `/var/tmp/ripscope-UID`. Before, the first
+  search failed unless `RIPSCOPE_CACHE_DIR` was set.
+
 ## [0.2.4] - 2026-10-26
 
 ### Other changes

@@ -69,7 +69,9 @@ $ ripscope --project src/main.c
   directory at the home directory or a file system root are skipped.
 - `index` is in the cache directory, `$XDG_CACHE_HOME/ripscope` (else
   `~/.cache/ripscope`) on Linux and `%LOCALAPPDATA%\ripscope` on Windows, or the
-  absolute directory `RIPSCOPE_CACHE_DIR` names. Its name is
+  absolute directory `RIPSCOPE_CACHE_DIR` names. Where the Linux cache directory is
+  on NFS or another file system an index cannot live on, it is
+  `/var/tmp/ripscope-UID` instead, private to your user. Its name is
   the root's name, with every character other than ASCII letters, digits, `.`, `_`
   and `-` made `_` and at most 40 of them, then `-` and the first 16 hexadecimal
   digits of the SHA-256 of the root's path. On Windows that path has forward slashes

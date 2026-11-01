@@ -129,7 +129,7 @@ The plugin or package an editor searches through, which Ripscope ships with each
 _Avoid_: adapter (for the Emacs package)
 
 **Project**:
-The directory an editor search covers when no setting names one: the nearest directory upward from the file holding `cscope.files`, else the nearest Git repository, else the editor's current directory when the file is inside it and it is neither the home directory nor a file system root, else the nearest existing directory holding the file. A Git repository at the home directory or a file system root is not taken as one. Its index lives in the user's cache directory, named after the project's path with links resolved, and every editor uses the same one (ADR 0014).
+The directory an editor search covers when no setting names one: the nearest directory upward from the file holding `cscope.files`, else the nearest Git repository, else the editor's current directory when the file is inside it and it is neither the home directory nor a file system root, else the nearest existing directory holding the file. A Git repository at the home directory or a file system root is not taken as one. Its index lives in the user's cache directory, or on Unix in the user's own directory in `/var/tmp` when that cache is on a network file system, named after the project's path with links resolved, and every editor uses the same one (ADR 0014).
 _Avoid_: workspace, root (on its own)
 
 ## Compatibility
