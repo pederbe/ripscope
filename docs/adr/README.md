@@ -34,3 +34,4 @@ the earlier record names its replacement.
 - [0013 A JSON interface beside the cscope line protocol](0013-json-interface.md)
 - [0014 Ripscope ships its own editor integrations, set up in one step](0014-own-editor-integrations.md)
 - [0015 Emacs searches through xref, with no package dependencies](0015-native-emacs-package.md)
+- [0016 The language server chooses each request's Project from its file](0016-language-server-project-per-file.md)

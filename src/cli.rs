@@ -2,6 +2,7 @@
 
 mod dump_units;
 mod hidden;
+mod lsp;
 mod pipeline;
 mod store_commands;
 mod units_query;
@@ -29,6 +30,9 @@ pub(crate) fn run(
     }
     if args.first().is_some_and(|first| first == "--store-query") {
         return store_commands::query(&args[1..], &mut std::io::stdin().lock(), stdout, stderr);
+    }
+    if args.first().is_some_and(|first| first == "lsp") {
+        return lsp::run(&args[1..], &mut std::io::stdin().lock(), stdout, stderr);
     }
     pipeline::run(&args, &mut std::io::stdin().lock(), stdout, stderr)
 }

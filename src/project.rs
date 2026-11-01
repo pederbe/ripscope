@@ -233,7 +233,7 @@ fn same(left: &Path, right: &Path) -> bool {
     }
 }
 
-fn inside(path: &Path, directory: &Path) -> Result<bool, String> {
+pub(crate) fn inside(path: &Path, directory: &Path) -> Result<bool, String> {
     let (path, directory) = (key(path)?, key(directory)?);
     let prefix = format!("{}/", directory.trim_end_matches('/'));
     Ok(path == directory || path.starts_with(&prefix))

@@ -16,6 +16,7 @@ ripscope -L [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json] [-
 ripscope -l [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json | --vim-errors] [-f INDEX]
 ripscope --verify [-d] [-f INDEX]
 ripscope --project PATH
+ripscope lsp
 ripscope -h | --help
 ripscope -V | --version
 ```
@@ -83,6 +84,14 @@ $ ripscope --project src/main.c
 - `published` says whether the index has a published revision made with that
   selection. An index build that stopped before publishing leaves one that has none,
   and adding or removing `cscope.files` changes the selection.
+
+## Language server
+
+`ripscope lsp` serves the Language Server Protocol on standard input and output, for
+editors such as Helix and Neovim. It takes no options, apart from an ignored `--stdio`
+that some editors add. Each request goes to the project `--project` would report for
+its file. The [language server guide](../editors/language-server.md) covers setup and
+what it answers.
 
 ## Environment
 

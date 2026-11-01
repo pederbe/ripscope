@@ -30,9 +30,26 @@ pub(super) fn run(
     stdout: &mut impl Write,
     stderr: &mut impl Write,
 ) -> ExitCode {
+    match std::env::current_dir() {
+        Ok(root) => run_in(args, &root, stdin, stdout, stderr),
+        Err(error) => {
+            let _ = writeln!(stderr, "ripscope: working directory: {error}");
+            ExitCode::FAILURE
+        }
+    }
+}
+
+/// As [`run`], with ROOT for the working directory: the Language server runs index
+/// builds and sessions in each Project's root without changing directory.
+pub(super) fn run_in(
+    args: &[OsString],
+    root: &Path,
+    stdin: &mut impl BufRead,
+    stdout: &mut impl Write,
+    stderr: &mut impl Write,
+) -> ExitCode {
     let result = invocation::parse(args).and_then(|invocation| {
-        let root =
-            std::env::current_dir().map_err(|error| format!("working directory: {error}"))?;
+        let root = root.to_owned();
         match &invocation.action {
             Action::Help => stdout
                 .write_all(HELP.as_bytes())
@@ -71,6 +88,7 @@ Usage:
   ripscope -l [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json | --vim-errors] [-f INDEX]
   ripscope --verify [-d] [-f INDEX]
   ripscope --project PATH [-f INDEX] [-kR] [-i LIST] [FILE...]
+  ripscope lsp
   ripscope -h | --help
   ripscope -V | --version
 
@@ -88,7 +106,8 @@ repairs a damaged index. In a session, send the field and the pattern on one lin
 (1main), r to update, q to quit. --project reports, as JSON for editor integrations,
 the project of a file: its root, index in the cache directory, selection, and whether
 that index is published with that selection. After it, an index build's -f names
-another index and its -k, -R, -i and files other sources.
+another index and its -k, -R, -i and files other sources. lsp serves the Language
+Server Protocol on standard input and output, in each file's project.
 ";
 
 /// `--project PATH`, for editor integrations: one JSON object naming the Project's
@@ -114,24 +133,28 @@ fn project(
     if let Some(sources) = sources {
         found.sources = sources.clone();
     }
-    // A session keeps the rule the index was built with, so an index built before a
-    // `cscope.files` was added or removed counts as unpublished, and the editor builds
-    // it again with the selection the project calls for now.
-    let published = found.index.is_file()
+    let report = serde_json::json!({
+        "root": crate::project::text(&found.root)?,
+        "index": crate::project::text(&found.index)?,
+        "selection": found.selection,
+        "published": published(&found),
+    });
+    writeln!(stdout, "{report}").map_err(|error| format!("output failed: {error}"))
+}
+
+/// Whether the Project's index has a published revision built with its sources. A
+/// session keeps the rule the index was built with, so an index built before a
+/// `cscope.files` was added or removed counts as unpublished, and the editor builds it
+/// again with the selection the project calls for now.
+pub(super) fn published(found: &crate::project::Project) -> bool {
+    found.index.is_file()
         && Store::open(&found.index, Access::Read)
             .ok()
             .and_then(|store| {
                 let snapshot = store.snapshot().ok()?;
                 refresh::stored_rule(&snapshot).ok().flatten()
             })
-            .is_some_and(|rule| rule.sources == found.sources);
-    let report = serde_json::json!({
-        "root": crate::project::text(&found.root)?,
-        "index": crate::project::text(&found.index)?,
-        "selection": found.selection,
-        "published": published,
-    });
-    writeln!(stdout, "{report}").map_err(|error| format!("output failed: {error}"))
+            .is_some_and(|rule| rule.sources == found.sources)
 }
 
 fn case(invocation: &Invocation) -> IdentifierCase {

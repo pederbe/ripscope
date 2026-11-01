@@ -24,6 +24,7 @@
 - [Vim](editors/vim.md)
 - [Neovim](editors/neovim.md)
 - [Emacs](editors/emacs.md)
+- [Language server](editors/language-server.md)
 
 # Reference
 
@@ -59,6 +60,7 @@
   - [0013 JSON interface](adr/0013-json-interface.md)
   - [0014 Own editor integrations](adr/0014-own-editor-integrations.md)
   - [0015 Native Emacs package](adr/0015-native-emacs-package.md)
+  - [0016 Language server Project per file](adr/0016-language-server-project-per-file.md)
 
 # Project
 

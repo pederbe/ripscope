@@ -11,6 +11,10 @@ index format or command-line behavior, and its entry says so.
 
 - Signed apt and dnf repositories provide Linux installation and updates through
   the system package manager.
+- `ripscope lsp` is a language server for C. Helix, Neovim's built-in client and other
+  editors that speak the Language Server Protocol can go to definitions, find
+  references, show incoming and outgoing calls and search workspace symbols with no
+  plugin. It shares each project's index with the Vim, Neovim and Emacs integrations.
 
 ### Fixed
 

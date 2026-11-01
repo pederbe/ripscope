@@ -128,6 +128,10 @@ _Avoid_: native interface
 The plugin or package an editor searches through, which Ripscope ships with each release: the Vim plugin over Vim's built-in cscope support, the Neovim plugin, and the Emacs package, which is an xref backend. The Neovim and Emacs ones keep one session per index over the JSON interface (ADR 0014, ADR 0015).
 _Avoid_: adapter (for the Emacs package)
 
+**Language server**:
+`ripscope lsp`, which answers go to definition, find references, call hierarchy and workspace symbols over the Language Server Protocol for editors that need no plugin of their own. It keeps one session per Project, found from each request's file, and shares the index with the editor integrations (ADR 0016).
+_Avoid_: LSP plugin, editor integration (for this)
+
 **Project**:
 The directory an editor search covers when no setting names one: the nearest directory upward from the file holding `cscope.files`, else the nearest Git repository, else the editor's current directory when the file is inside it and it is neither the home directory nor a file system root, else the nearest existing directory holding the file. A Git repository at the home directory or a file system root is not taken as one. Its index lives in the user's cache directory, or on Unix in the user's own directory in `/var/tmp` when that cache is on a network file system, named after the project's path with links resolved, and every editor uses the same one (ADR 0014).
 _Avoid_: workspace, root (on its own)
