@@ -145,7 +145,7 @@ jobs:
       - name: Build exact Windows archive and check installer
         env:
           TAG: ${{ inputs.tag }}
-        shell: powershell
+        shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
