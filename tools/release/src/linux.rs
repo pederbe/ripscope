@@ -591,11 +591,7 @@ pub fn run(args: &[String]) -> Result<()> {
         300,
         None,
     )?;
-    if !rust.contains(&format!("release: {}", field("rust_version")?))
-        || !rust.contains(&field("rust_commit")?)
-    {
-        return Err("Unexpected Rust toolchain".into());
-    }
+    build.receipt.insert("rustc".into(), json!(rust.trim()));
     fs::create_dir(work.join("mold"))?;
     build.run(
         "mold-extract",
@@ -734,7 +730,7 @@ pub fn run(args: &[String]) -> Result<()> {
         Ok(arguments)
     };
     let owned = || format!("ripscope-release-{}", unique_id());
-    build.container(
+    let tools = build.container(
         "build-tools",
         script(
             &owned(),
@@ -742,6 +738,9 @@ pub fn run(args: &[String]) -> Result<()> {
         )?,
         300,
     )?;
+    build
+        .receipt
+        .insert("build_tools".into(), json!(tools.trim()));
     build.container(
         "release-build",
         script(

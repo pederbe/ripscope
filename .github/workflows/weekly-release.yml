@@ -30,7 +30,7 @@ jobs:
           fetch-depth: 0
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
         with:
-          toolchain: '1.99.1'
+          toolchain: stable
       - name: Prepare or resume a frozen release
         env:
           GH_TOKEN: ${{ github.token }}
