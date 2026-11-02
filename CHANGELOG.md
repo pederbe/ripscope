@@ -7,6 +7,10 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
+### Development
+
+- Follow rolling stable Rust and install the standard analysis, source, formatting and lint components with the project toolchain.
+
 ### Added
 
 - Signed apt and dnf repositories provide Linux installation and updates through
