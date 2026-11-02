@@ -99,6 +99,21 @@ The Windows driver isolates HOME/AppData/XDG paths, restricts PATH to System32,
 uses a deny-write ACL and reserves an unused SUBST drive for working-directory
 checks, then restores both. Linux retains separate shell and signal controls.
 
+## Language server
+
+The `check-language-server` Cargo example runs `ripscope lsp` through Neovim 0.11 or
+newer's built-in client, on a fresh project with its own home and cache directories:
+
+```sh
+cargo run --locked --example check-language-server -- --backend /absolute/path/ripscope \
+  --nvim /absolute/path/nvim --output /absolute/path/lsp-linux.json
+```
+
+The script, `neovim-lsp.lua`, checks go to definition, references, incoming and
+outgoing calls and workspace symbols, then saves edits and checks that the next
+requests see them. Each step prints `ok` or `FAIL` with what it found, and the exit
+code counts the failures. Helix has no headless mode, so its checks remain manual.
+
 ## One-step setup
 
 The `check-editor-setup` Cargo example checks the setup a new user makes, in fresh
