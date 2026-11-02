@@ -223,6 +223,11 @@ const EXCEPTIONS: &[Exception] = &[
         "runs inside Neovim for the Neovim check",
     ),
     only(
+        "tests/editor/neovim-lsp.lua",
+        &["Lua"],
+        "runs inside Neovim for the language server check",
+    ),
+    only(
         "tests/editor/emacs-workflow.el",
         &["Emacs Lisp"],
         "runs inside Emacs for the Emacs check",
