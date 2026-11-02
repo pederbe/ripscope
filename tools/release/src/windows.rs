@@ -193,13 +193,6 @@ pub fn run(args: &[String]) -> Result<()> {
             return Err(format!("Ancestor Cargo configuration at {}", parent.display()).into());
         }
     }
-    if msvc
-        .file_name()
-        .map(|name| name.to_string_lossy().into_owned())
-        != Some(field("msvc_directory")?)
-    {
-        return Err("MSVC directory differs from the recorded profile".into());
-    }
     fs::create_dir_all(&work)?;
     let logs = work.join("logs");
     fs::create_dir(&logs)?;
@@ -254,7 +247,14 @@ pub fn run(args: &[String]) -> Result<()> {
         .receipt
         .insert("source_inputs".into(), Value::Object(source_inputs.clone()));
     let native_bin = under(&msvc, "bin/Hostx64/x64");
-    let sdk_version = field("sdk_version")?;
+    let sdk_version = std::env::var("WindowsSDKVersion")
+        .map_err(|_| "Run from the Visual Studio developer command environment")?
+        .trim_end_matches(['\\', '/'])
+        .to_owned();
+    build.receipt.insert(
+        "native_toolchain".into(),
+        json!({"msvc_directory": msvc.file_name().map(|name| name.to_string_lossy()), "sdk_version": sdk_version}),
+    );
     let input_roots: Vec<(&str, PathBuf)> = vec![
         ("rust-bin", toolchain.join("bin")),
         ("rust-lib", toolchain.join("lib")),
@@ -386,26 +386,24 @@ pub fn run(args: &[String]) -> Result<()> {
         env,
         &[0],
     )?;
-    if !rust.contains(&format!("release: {}", field("rust_version")?))
-        || !rust.contains(&field("rust_commit")?)
-    {
-        return Err("Unexpected Rust toolchain".into());
-    }
-    build.run(
+    build.receipt.insert("rustc".into(), json!(rust.trim()));
+    let compiler = build.run(
         "msvc-version",
         &[text(&native_bin.join("cl.exe"))],
         None,
         env,
         &[0],
     )?;
-    // This pinned MSVC linker returns 1100 after printing its help/version banner.
-    build.run(
+    build.receipt.insert("msvc".into(), json!(compiler.trim()));
+    // MSVC linkers can return 1100 after printing their help/version banner.
+    let linker = build.run(
         "linker-version",
         &[text(&native_bin.join("link.exe")), "/?".into()],
         None,
         env,
         &[0, 1100],
     )?;
+    build.receipt.insert("linker".into(), json!(linker.trim()));
     let cargo = text(&under(&toolchain, "bin/cargo.exe"));
     let vendor = work.join("vendor");
     build.run(

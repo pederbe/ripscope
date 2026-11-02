@@ -39,7 +39,7 @@ jobs:
           fetch-depth: 0
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
         with:
-          toolchain: '1.99.1'
+          toolchain: stable
       # Built with no token in the environment or in .git/config. Only the next step,
       # which runs the guard, is given one.
       - name: Build the release guard
@@ -88,14 +88,15 @@ jobs:
           ref: ${{ inputs.source_sha }}
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
         with:
-          toolchain: '1.99.1'
+          toolchain: stable
       - name: Build exact Linux archive
         run: |
           set -euo pipefail
           release="cargo run --locked --quiet --manifest-path tools/release/Cargo.toml --"
           curl --proto '=https' --tlsv1.2 -fL "$($release profile linux mold_url)" -o "$RUNNER_TEMP/mold.tar.gz"
+          toolchain=$(dirname "$(dirname "$(rustup which --toolchain stable rustc)")")
           $release linux --work "$RUNNER_TEMP/linux" \
-            --toolchain "$HOME/.rustup/toolchains/1.99.1-x86_64-unknown-linux-gnu" --mold-archive "$RUNNER_TEMP/mold.tar.gz"
+            --toolchain "$toolchain" --mold-archive "$RUNNER_TEMP/mold.tar.gz"
       - name: Package the inspected executable and smoke-test the packages
         env:
           TAG: ${{ inputs.tag }}
@@ -140,20 +141,21 @@ jobs:
           ref: ${{ inputs.source_sha }}
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
         with:
-          toolchain: '1.99.1'
+          toolchain: stable
       - name: Build exact Windows archive and check installer
         env:
           TAG: ${{ inputs.tag }}
-        shell: powershell
+        shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
-          $profile = Get-Content tools/release/windows-release-profile.json -Raw | ConvertFrom-Json
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
           $vs = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
-          $msvc = Join-Path $vs "VC\Tools\MSVC\$($profile.msvc_directory)"
-          if (-not (Test-Path -LiteralPath $msvc)) { throw 'Pinned MSVC is unavailable; install the recorded profile before release.' }
-          $toolchain = Join-Path $HOME '.rustup\toolchains\1.99.1-x86_64-pc-windows-msvc'
-          cargo run --locked --manifest-path tools/release/Cargo.toml -- windows --work "$env:RUNNER_TEMP\windows" --toolchain $toolchain --msvc $msvc --sdk "${env:ProgramFiles(x86)}\Windows Kits\10"
+          cmd /d /s /c "`"`"$vs\Common7\Tools\VsDevCmd.bat`" -no_logo -arch=x64 -host_arch=x64 && set`"" | ForEach-Object {
+            if ($_ -match '^([^=]+)=(.*)$') { [Environment]::SetEnvironmentVariable($matches[1], $matches[2], 'Process') }
+          }
+          if ($LASTEXITCODE) { throw 'Visual Studio developer environment setup failed' }
+          $toolchain = Split-Path (Split-Path (& rustup which --toolchain stable rustc))
+          cargo run --locked --manifest-path tools/release/Cargo.toml -- windows --work "$env:RUNNER_TEMP\windows" --toolchain $toolchain --msvc $env:VCToolsInstallDir --sdk $env:WindowsSdkDir
           if ($LASTEXITCODE) { throw 'Windows archive build failed' }
           $version = $env:TAG.Substring(1)
           cargo run --locked --example check-installers -- --archive "$env:RUNNER_TEMP\windows\dist\ripscope-$version-x86_64-windows-msvc.zip" --installer "$PWD\install.ps1" --work "$env:RUNNER_TEMP\windows-installer"
@@ -191,7 +193,7 @@ jobs:
           fetch-depth: 0
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
         with:
-          toolchain: '1.99.1'
+          toolchain: stable
       - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
         with:
           pattern: '*-release'

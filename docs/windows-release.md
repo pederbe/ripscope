@@ -1,20 +1,24 @@
 # Windows release preparation
 
 The `windows` command of the release tool in `tools/release` builds, inspects and
-smokes the exact x86-64 MSVC archive. Its toolchain, MSVC directory, SDK and static C
-runtime flags are pinned in `tools/release/windows-release-profile.json`. It bundles
+smokes the exact x86-64 MSVC archive. It uses rolling stable Rust and the installed
+stable Visual Studio developer environment. The target and static C runtime flags
+are recorded in `tools/release/windows-release-profile.json`. It bundles
 SQLite and the C runtime; the executable still needs Windows system DLLs.
 
-Use native Windows, Git and the recorded Rust/MSVC/SDK tools, plus Rust 1.98 or later
-to build the release tool itself. Run from an ordinary shell, selecting a new external
-directory on local NTFS:
+Use native Windows, Git, stable Rust and Visual Studio's C++ build tools. Run from
+Developer PowerShell for the installed stable Visual Studio, selecting a new
+external directory on local NTFS. The hosted workflow selects this environment
+automatically with Visual Studio's `VsDevCmd.bat`:
 
 ```powershell
+rustup update stable
+$toolchain = Split-Path (Split-Path (rustup which --toolchain stable rustc))
 cargo run --locked --manifest-path tools/release/Cargo.toml -- windows `
   --work C:/builds/ripscope-candidate `
-  --toolchain C:/Users/USER/.rustup/toolchains/1.99.1-x86_64-pc-windows-msvc `
-  --msvc 'C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.44.35207' `
-  --sdk 'C:/Program Files (x86)/Windows Kits/10'
+  --toolchain $toolchain `
+  --msvc $env:VCToolsInstallDir `
+  --sdk $env:WindowsSdkDir
 ```
 
 Use the actual installed tool paths. `--target-dir` can reuse an external Cargo
@@ -24,7 +28,8 @@ change global Cargo configuration. Vendoring can download missing locked crates;
 compilation and tests use Cargo's offline mode. The Windows host itself is not
 network-sandboxed.
 
-The tool records exact source, dependency and tool inventories, selects the
+The tool records actual compiler and SDK versions and exact source, dependency
+and tool inventories, selects the
 compiler/linker explicitly, and runs serial release tests. PE inspection rejects
 dynamic CRT and foreign DLL imports, including delayed imports. Runtime smoke
 uses only Windows system directories on PATH and checks actual loaded DLL paths

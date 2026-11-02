@@ -9,6 +9,8 @@ index format or command-line behavior, and its entry says so.
 
 ### Development
 
+- Release builds follow stable Rust and the hosted Windows developer toolchain,
+  recording the actual versions in each archive instead of requiring old versions.
 - Follow rolling stable Rust and install the standard analysis, source, formatting and lint components with the project toolchain.
 
 ### Added

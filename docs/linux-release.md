@@ -1,17 +1,19 @@
 # Linux release preparation
 
 The `linux` command of the release tool in `tools/release` builds an x86-64 archive
-against glibc 2.28 with the Rust, Mold and image identities in
-`tools/release/linux-release-profile.json`. It records the exact source, dependency and
-tool inputs, runs locked offline product release tests, inspects ELF imports, and
+against glibc 2.28 with rolling stable Rust and the Mold and image identities in
+`tools/release/linux-release-profile.json`. It records the actual compiler and
+exact source, dependency and tool inputs, runs locked offline product release tests,
+inspects ELF imports, and
 smokes the extracted archive. Initial vendoring and image acquisition can use the
 network; the build and runtime containers cannot. This prepares local files without
 publishing them.
 
-Use Git, binutils (`readelf`), GNU tar and GNU timeout, rootless Podman, the pinned Rust 1.99.1
-toolchain and the Mold 3.0.0 archive, plus Rust 1.98 or later to build the release
-tool itself. GNU timeout is a prerequisite of the reference and release tests, not
-of the installed Ripscope executable. The tool uses the default `timeout` when its
+Use Git, binutils (`readelf`), GNU tar and GNU timeout, rootless Podman, the stable Rust
+toolchain and the Mold archive identified by the profile. The workflow updates
+stable through rustup before building. GNU timeout is a prerequisite of the
+reference and release tests, not of the installed Ripscope executable.
+The tool uses the default `timeout` when its
 version identifies GNU coreutils, otherwise `gnutimeout` (provided by Ubuntu's GNU
 coreutils package). It records the selected executable and version, then stages it
 as `timeout` only on its native test processes' PATH, including nested deadlines.
@@ -24,10 +26,12 @@ cgroup controls to a container. Download Mold from the profile's `mold_url`; the
 checks `mold_archive_sha256` before extraction. Select a new external work directory:
 
 ```sh
+rustup update stable
+toolchain=$(dirname "$(dirname "$(rustup which --toolchain stable rustc)")")
 cargo run --locked --manifest-path tools/release/Cargo.toml -- linux \
   --work /var/tmp/ripscope-linux-candidate \
-  --toolchain "$HOME/.rustup/toolchains/1.99.1-x86_64-unknown-linux-gnu" \
-  --mold-archive /path/to/mold-3.0.0-x86_64-linux.tar.gz
+  --toolchain "$toolchain" \
+  --mold-archive /path/to/mold-archive.tar.gz
 ```
 
 The tool preserves logs and `receipt.json` there. The archive contains the
@@ -37,7 +41,7 @@ notices, Rust and SQLite notices, and editor integration sources.
 
 The pinned container builds the artifact and runs release tests for the product
 binary and integration targets. All auxiliary examples are separately built and
-tested in native debug mode, using the same copied source, vendor tree and pinned
+tested in native debug mode, using the same copied source, vendor tree and selected
 Rust toolchain. The native tests include ignored checks and run in uniquely named
 user scopes. The receipt labels the two phases separately; native proof coverage
 is not artifact-baseline coverage. Both generated Cargo configurations are saved
@@ -295,7 +299,7 @@ Automatic publication uses the `automated-release` environment with no approval 
 wait rules and exactly one custom deployment policy, tag `v*`. Its preflight checks
 those settings, the public repository, the existing tag and exact dispatch SHA.
 Configure the environment once before enabling the schedule. The Windows runner
-must provide the pinned MSVC/SDK profile. Linux must satisfy the release tool's disk,
+uses its installed stable Visual Studio developer environment. Linux must satisfy the release tool's disk,
 user-manager and cgroup prerequisites. Missing prerequisites stop publication.
 
 Configure the crates.io trusted publisher for owner `pederbe`, repository `ripscope`,
