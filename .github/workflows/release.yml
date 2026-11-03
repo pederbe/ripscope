@@ -150,10 +150,7 @@ jobs:
           $ErrorActionPreference = 'Stop'
           $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
           $vs = & $vswhere -latest -products '*' -requires Microsoft.VisualStudio.Component.VC.Tools.x86.x64 -property installationPath
-          cmd /d /s /c "`"`"$vs\Common7\Tools\VsDevCmd.bat`" -no_logo -arch=x64 -host_arch=x64 && set`"" | ForEach-Object {
-            if ($_ -match '^([^=]+)=(.*)$') { [Environment]::SetEnvironmentVariable($matches[1], $matches[2], 'Process') }
-          }
-          if ($LASTEXITCODE) { throw 'Visual Studio developer environment setup failed' }
+          & "$vs\Common7\Tools\Launch-VsDevShell.ps1" -Arch amd64 -HostArch amd64 -SkipAutomaticLocation
           $toolchain = Split-Path (Split-Path (& rustup which --toolchain stable rustc))
           cargo run --locked --manifest-path tools/release/Cargo.toml -- windows --work "$env:RUNNER_TEMP\windows" --toolchain $toolchain --msvc $env:VCToolsInstallDir --sdk $env:WindowsSdkDir
           if ($LASTEXITCODE) { throw 'Windows archive build failed' }
