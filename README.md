@@ -130,8 +130,9 @@ and in [`docs/`](docs/README.md).
 
 ## Status
 
-Ripscope 0.2.0 is the current release. It reads C only and runs on Linux and
-Windows. Before 1.0, a minor version may change the index format or command-line
+Ripscope reads C only and runs on Linux and Windows. Find the latest version on
+the [releases page](https://github.com/pederbe/ripscope/releases).
+Before 1.0, a minor version may change the index format or command-line
 behavior, and the [changelog](CHANGELOG.md) says when it does. Reports of wrong
 answers and failed setups help most.
 

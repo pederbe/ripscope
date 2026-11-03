@@ -9,6 +9,8 @@ index format or command-line behavior, and its entry says so.
 
 ### Changed
 
+- Link the README's status section to the latest releases instead of naming a
+  fixed current version.
 - Use plain Linux and Windows names throughout the README, website and
   documentation. Supported build targets are unchanged.
 
