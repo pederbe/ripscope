@@ -9,6 +9,8 @@ index format or command-line behavior, and its entry says so.
 
 ### Changed
 
+- Update package and archive installation examples to the published 0.2.4
+  release, and remove the fixed version from the installer-option explanation.
 - Link the README's status section to the latest releases instead of naming a
   fixed current version.
 - Use plain Linux and Windows names throughout the README, website and
