@@ -155,6 +155,9 @@ jobs:
           cargo run --locked --manifest-path tools/release/Cargo.toml -- windows --work "$env:RUNNER_TEMP\windows" --toolchain $toolchain --msvc $env:VCToolsInstallDir --sdk $env:WindowsSdkDir
           if ($LASTEXITCODE) { throw 'Windows archive build failed' }
           $version = $env:TAG.Substring(1)
+          # The Rust harness starts Windows PowerShell 5.1, which needs its own
+          # default module paths rather than the inherited PowerShell 7 paths.
+          Remove-Item Env:PSModulePath
           cargo run --locked --example check-installers -- --archive "$env:RUNNER_TEMP\windows\dist\ripscope-$version-x86_64-windows-msvc.zip" --installer "$PWD\install.ps1" --work "$env:RUNNER_TEMP\windows-installer"
           if ($LASTEXITCODE) { throw 'Windows installer checks failed' }
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
@@ -172,6 +175,9 @@ jobs:
             ${{ runner.temp }}/windows/receipt.json
             ${{ runner.temp }}/windows/smoke/smoke-receipt.json
             ${{ runner.temp }}/windows/smoke/loaded-modules-*
+            ${{ runner.temp }}/windows-installer/*.json
+            ${{ runner.temp }}/windows-installer/*.stdout
+            ${{ runner.temp }}/windows-installer/*.stderr
           if-no-files-found: warn
           retention-days: 7
   publish:
