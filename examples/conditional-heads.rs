@@ -1,6 +1,10 @@
 //! Candidate discovery, preservation and fixed sampling, without correctness labels.
 //! See scripts/conditional-heads.md for the CLI and inspection limits.
 
+#[cfg(all(test, unix))]
+#[path = "support/executable_fixture.rs"]
+mod executable_fixture;
+
 use regex::bytes::Regex;
 use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
@@ -920,7 +924,7 @@ mod tests {
     use super::*;
     use serde_json::{Value, json};
     use sha2::{Digest, Sha256};
-    use std::{fs, os::unix::fs::PermissionsExt, path::Path, process::Command};
+    use std::{fs, path::Path, process::Command};
 
     fn digest(path: &Path) -> String {
         base16ct::lower::encode_string(&Sha256::digest(fs::read(path).unwrap()))
@@ -970,8 +974,15 @@ mod tests {
             fs::write(temp.path().join(name), format!("{value}\n")).unwrap();
         }
         let program = temp.path().join("product");
-        fs::write(&program, format!("#!/bin/sh\ncase \"$*\" in *'--corrections enabled'*) cat '{}' ;; *) cat '{}' ;; esac\n",temp.path().join("enabled").display(),temp.path().join("baseline").display())).unwrap();
-        fs::set_permissions(&program, fs::Permissions::from_mode(0o700)).unwrap();
+        executable_fixture::write(
+            &program,
+            &format!(
+                "#!/bin/sh\ncase \"$*\" in *'--corrections enabled'*) cat '{}' ;; *) cat '{}' ;; esac\n",
+                temp.path().join("enabled").display(),
+                temp.path().join("baseline").display()
+            ),
+            0o700,
+        );
         let frame = json!({"method":"conditional-heads-v2","method_sha256":"fixture-method",
             "binary_sha256":digest(&program),"enabled_corrections":"enabled","memory_scope":false,
             "projects":[{"name":"fixture","root":root,"manifest":temp.path().join("manifest.json"),
@@ -1201,7 +1212,7 @@ mod tests {
     fn cli_retains_a_failed_command_as_incomplete_without_a_sample() {
         let temp = fixture("int x;\n", dump(&[], 1), dump(&[], 1));
         let program = temp.path().join("product");
-        fs::write(&program, "#!/bin/sh\nprintf partial\nexit 1\n").unwrap();
+        executable_fixture::write(&program, "#!/bin/sh\nprintf partial\nexit 1\n", 0o700);
         let frame_path = temp.path().join("frame.json");
         let mut frame: Value = serde_json::from_slice(&fs::read(&frame_path).unwrap()).unwrap();
         frame["binary_sha256"] = json!(digest(&program));
@@ -1380,7 +1391,7 @@ mod tests {
     fn cli_deadline_keeps_partial_evidence_and_invalidates_the_sample() {
         let temp = fixture("int x;\n", dump(&[], 1), dump(&[], 1));
         let program = temp.path().join("product");
-        fs::write(&program, "#!/bin/sh\nprintf partial\nsleep 5\n").unwrap();
+        executable_fixture::write(&program, "#!/bin/sh\nprintf partial\nsleep 5\n", 0o700);
         let frame_path = temp.path().join("frame.json");
         let mut frame: Value = serde_json::from_slice(&fs::read(&frame_path).unwrap()).unwrap();
         frame["binary_sha256"] = json!(digest(&program));

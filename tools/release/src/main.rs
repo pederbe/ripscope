@@ -19,6 +19,10 @@
 //!   the archive's version from that repository in offline containers.
 //! - `package-repository-upload REPOSITORY BUCKET`: upload it, current indexes last.
 
+#[cfg(all(test, unix))]
+#[path = "../../../examples/support/executable_fixture.rs"]
+mod executable_fixture;
+
 mod archive;
 mod common;
 mod linux;
