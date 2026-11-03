@@ -1,6 +1,6 @@
 # Linux archives and source builds
 
-The x86-64 Linux archive targets glibc 2.28 or newer. It includes SQLite and
+The Linux archive targets glibc 2.28 or newer. It includes SQLite and
 its notices. It requires the GNU loader and system C libraries, including
 `libgcc_s`. It does not need a separate SQLite installation.
 
@@ -69,7 +69,7 @@ Project indexes and unrelated files are outside the package.
 
 ## Source build
 
-Source builds need Rust/Cargo and a C compiler for bundled SQLite. On x86-64 Linux,
+Source builds need Rust/Cargo and a C compiler for bundled SQLite. On Linux,
 the ordinary command is:
 
 ```sh

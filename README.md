@@ -10,7 +10,7 @@ Find definitions, follow callers and trace assignments in unfamiliar C. Ripscope
 is written in purely safe Rust and needs no compiler, preprocessor or compile
 database to read your source. It speaks cscope's command line and query protocol, works with
 Vim's built-in cscope support and `cscope -Rbqk` scripts, and ships integrations
-for Neovim and Emacs on x86-64 Linux and Windows.
+for Neovim and Emacs on Linux and Windows.
 
 ```console
 $ ripscope -bk -I include          # index the C files here
@@ -52,7 +52,7 @@ is already in the results.
 ## Your editor. Your source.
 
 Use all nine cscope searches from the command line or directly in Vim, Neovim and
-Emacs. Ripscope creates and manages the project index on x86-64 Linux and Windows,
+Emacs. Ripscope creates and manages the project index on Linux and Windows,
 so you can get straight to exploring C.
 
 ## Install
@@ -130,7 +130,7 @@ and in [`docs/`](docs/README.md).
 
 ## Status
 
-Ripscope 0.2.0 is the current release. It reads C only and runs on x86-64 Linux and
+Ripscope 0.2.0 is the current release. It reads C only and runs on Linux and
 Windows. Before 1.0, a minor version may change the index format or command-line
 behavior, and the [changelog](CHANGELOG.md) says when it does. Reports of wrong
 answers and failed setups help most.

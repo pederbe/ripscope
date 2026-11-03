@@ -33,7 +33,7 @@ Open a new terminal, then run `ripscope --version`.
 
 ## apt and dnf repositories
 
-On Linux x86-64, use the signed apt or dnf repository to receive releases with
+On Linux, use the signed apt or dnf repository to receive releases with
 your normal package-manager updates. Packages include the executable, notices
 and editor sources under `/usr/share/ripscope`.
 
@@ -88,7 +88,7 @@ They reuse the executable installed by your package manager.
 For a standalone package without repository updates, select the version from
 [GitHub Releases](https://github.com/pederbe/ripscope/releases).
 Debian/Ubuntu `.deb` and RHEL-family `.rpm` packages contain the inspected Linux
-x86-64 executable, with glibc 2.28 or newer and the system GCC runtime required.
+executable, with glibc 2.28 or newer and the system GCC runtime required.
 Verify the selected package's `.sha256` sidecar, then install it:
 
 ```sh
@@ -109,8 +109,8 @@ Select the version from [GitHub Releases](https://github.com/pederbe/ripscope/re
 
 | Platform | Archive | Runtime |
 | --- | --- | --- |
-| Linux x86-64 | `ripscope-<version>-x86_64-linux-gnu.tar.gz` | glibc 2.28 or newer and the system GCC runtime; not musl/Alpine |
-| Windows x86-64 | `ripscope-<version>-x86_64-windows-msvc.zip` | Windows system DLLs; the C runtime is bundled |
+| Linux | `ripscope-<version>-x86_64-linux-gnu.tar.gz` | glibc 2.28 or newer and the system GCC runtime; not musl/Alpine |
+| Windows | `ripscope-<version>-x86_64-windows-msvc.zip` | Windows system DLLs; the C runtime is bundled |
 
 The archives include their executable, licences, editor sources and build
 manifest. Compare the archive against its individual `.sha256` sidecar before

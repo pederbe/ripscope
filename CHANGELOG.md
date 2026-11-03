@@ -7,6 +7,11 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
+### Changed
+
+- Use plain Linux and Windows names throughout the README, website and
+  documentation. Supported build targets are unchanged.
+
 ### Development
 
 - Release builds follow stable Rust and the hosted Windows developer toolchain,
@@ -120,7 +125,7 @@ the command line, the JSON interface and the Vim and Neovim plugins are unchange
 ## [0.1.0] - 2026-10-20
 
 The first release. Ripscope answers cscope's searches over C source from the command
-line, Vim, Neovim and Emacs, on x86-64 Linux and Windows.
+line, Vim, Neovim and Emacs, on Linux and Windows.
 
 ### Searches
 
@@ -168,7 +173,7 @@ and the [benchmarks](https://ripscope.com/docs/reference/benchmarks).
 
 ### Platforms
 
-- x86-64 Linux with glibc 2.28 or newer, and x86-64 Windows.
+- Linux with glibc 2.28 or newer, and Windows.
 - The index lives on local storage. The
   [limitations](https://ripscope.com/docs/reference/limitations) list the details.
 

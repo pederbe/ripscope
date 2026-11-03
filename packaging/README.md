@@ -2,7 +2,7 @@
 
 The [Linux release tooling](../docs/linux-release.md#debian-and-rpm-packages)
 builds Debian/Ubuntu `.deb` and RHEL-family `.rpm` packages from the checked Linux
-x86-64 glibc archive. It verifies the byte-identical executable and complete
+glibc archive. It verifies the byte-identical executable and complete
 notices/editor sources after package extraction, and writes individual SHA-256
 sidecars. Runtime dependencies are glibc 2.28 or newer and the system GCC runtime.
 A workflow installs, queries and removes them on Debian 12 and AlmaLinux 8.
