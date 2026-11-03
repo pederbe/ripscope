@@ -39,7 +39,7 @@ This reference describes Ripscope’s supported platforms and C reading. See the
 
 ## Platforms and storage
 
-- x86-64 Linux and x86-64 Windows. No macOS or ARM64 builds.
+- Linux and Windows. No macOS or ARM64 builds.
 - The index must be on local storage. Network, cluster and shared-folder file systems,
   WSL's view of Windows drives, FUSE mounts other than a block device's (`fuseblk`, such
   as ntfs-3g) and Windows shares are refused. gocryptfs or mergerfs over a local disk

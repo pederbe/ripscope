@@ -1,6 +1,6 @@
 # Windows archives and source builds
 
-The x86-64 MSVC archive bundles the C runtime and SQLite. Archive users need
+The Windows archive bundles the C runtime and SQLite. Archive users need
 Windows system DLLs, but no Rust toolchain, C compiler, Visual C++ Redistributable
 or separate SQLite installation. The current native smoke runs on Windows 11;
 it does not establish qualification of every Windows release or processor.

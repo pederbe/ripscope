@@ -1,6 +1,6 @@
 # Installation
 
-Install Ripscope for **x86-64 Linux or Windows** in one step, then open a C file and
+Install Ripscope for **Linux or Windows** in one step, then open a C file and
 search. Pick the way you prefer.
 
 ## Your Linux package manager
