@@ -133,12 +133,48 @@ mod tests {
 
 #[cfg(all(test, unix))]
 mod delivery_tests {
-    use std::{fs, os::unix::fs::PermissionsExt, path::Path, process::Command};
+    use std::{fs, path::Path, process::Command};
 
     fn executable(root: &Path, name: &str, script: &str) {
         let path = root.join("bin").join(name);
-        fs::write(&path, script).unwrap();
-        fs::set_permissions(path, fs::Permissions::from_mode(0o755)).unwrap();
+        crate::executable_fixture::write(&path, script, 0o755);
+    }
+
+    #[test]
+    #[cfg(target_os = "linux")]
+    fn executable_script_starts_during_parallel_launches() {
+        use std::sync::atomic::{AtomicBool, Ordering};
+
+        let stop = AtomicBool::new(false);
+        std::thread::scope(|scope| {
+            for _ in 0..8 {
+                let stop = &stop;
+                scope.spawn(move || {
+                    while !stop.load(Ordering::Relaxed) {
+                        assert!(Command::new("/bin/true").status().unwrap().success());
+                    }
+                });
+            }
+            let result = std::panic::catch_unwind(|| {
+                for attempt in 0..1000 {
+                    let root = tempfile::tempdir().unwrap();
+                    fs::create_dir(root.path().join("bin")).unwrap();
+                    executable(root.path(), "probe", "#!/bin/true\n");
+                    let output = Command::new(root.path().join("bin/probe"))
+                        .output()
+                        .unwrap_or_else(|error| {
+                            panic!("script startup attempt={attempt}: {error}")
+                        });
+                    assert!(output.status.success(), "attempt={attempt}: {output:?}");
+                    assert!(output.stdout.is_empty(), "attempt={attempt}: {output:?}");
+                    assert!(output.stderr.is_empty(), "attempt={attempt}: {output:?}");
+                }
+            });
+            stop.store(true, Ordering::Relaxed);
+            if let Err(error) = result {
+                std::panic::resume_unwind(error);
+            }
+        });
     }
 
     fn workflow_script(name: &str) -> String {

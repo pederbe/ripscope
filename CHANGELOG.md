@@ -18,6 +18,9 @@ index format or command-line behavior, and its entry says so.
 
 ### Development
 
+- Create executable test scripts in an isolated process so parallel launches
+  cannot retain writable handles and cause intermittent "Text file busy" failures.
+
 - Release builds follow stable Rust and the hosted Windows developer toolchain,
   recording the actual versions in each archive instead of requiring old versions.
 - Follow rolling stable Rust and install the standard analysis, source, formatting and lint components with the project toolchain.
