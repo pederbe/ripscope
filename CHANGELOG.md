@@ -10,6 +10,7 @@ index format or command-line behavior, and its entry says so.
 ### Development
 
 - Use Windows PowerShell's default module paths for loaded-module inspection.
+
 - Dispatch package delivery, Windows package checks, website refresh and release
   notes directly after automated publication, using their existing workflows.
 
