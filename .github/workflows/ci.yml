@@ -68,7 +68,6 @@ jobs:
               - '!.github/workflows/package-repository.yml'
               - '!.github/workflows/website-deploy.yml'
               - '!.github/workflows/release-changelog.yml'
-              - '!.github/workflows/release-changelog-check.yml'
               - '!.github/ISSUE_TEMPLATE/**'
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
         id: website
@@ -89,7 +88,6 @@ jobs:
               - "scripts/configure-release-changelog.sh"
               - "scripts/prepare-release.sh"
               - ".github/workflows/release-changelog.yml"
-              - ".github/workflows/release-changelog-check.yml"
               - ".github/workflows/ci.yml"
             changed:
               - "README.md"

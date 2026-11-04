@@ -4,6 +4,11 @@ name: Website verification
 # Cloudflare Workers Builds handles production deployment.
 on:
   workflow_call:
+    inputs:
+      ref:
+        description: Exact source revision to verify
+        type: string
+        default: ''
   workflow_dispatch:
     inputs:
       check_external:
@@ -26,6 +31,7 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
+          ref: ${{ inputs.ref || github.sha }}
       - name: Select Rust
         run: |
           rustup toolchain install stable --profile minimal --component rustfmt,clippy
@@ -57,7 +63,7 @@ jobs:
           node tools/site/node_modules/wrangler/bin/wrangler.js deploy --dry-run --config wrangler.jsonc --outdir "$RUNNER_TEMP/site-dry-run"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
-          name: website-verification-${{ github.sha }}
+          name: website-verification-${{ inputs.ref || github.sha }}
           path: target/site
           if-no-files-found: error
           retention-days: 7

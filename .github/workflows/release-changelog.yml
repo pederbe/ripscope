@@ -22,14 +22,15 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  record:
+  prepare:
     runs-on: ubuntu-26.04
     timeout-minutes: 40
     permissions:
       contents: write
       pull-requests: write
-      actions: write
-      statuses: write
+    outputs:
+      sha: ${{ steps.prepare.outputs.sha }}
+      pr: ${{ steps.prepare.outputs.pr }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -59,7 +60,8 @@ jobs:
           [[ "$tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?(\+[0-9A-Za-z.-]+)?$ ]]
           test "$(gh release view "$tag" --json isDraft --jq .isDraft)" = false
           echo "tag=$tag" >> "$GITHUB_OUTPUT"
-      - name: Record the published notes through a checked pull request
+      - name: Prepare the published notes pull request
+        id: prepare
         if: steps.release.outputs.tag != ''
         env:
           GH_TOKEN: ${{ github.token }}
@@ -69,3 +71,49 @@ jobs:
           mode=record
           if [ "$CHECK_ONLY" = true ]; then mode=check-only; fi
           bash scripts/record-release-changelog.sh "$TAG" "$mode"
+
+  documentation:
+    needs: prepare
+    if: needs.prepare.outputs.sha != ''
+    uses: ./.github/workflows/docs.yml
+    with:
+      ref: ${{ needs.prepare.outputs.sha }}
+
+  merge:
+    needs: [prepare, documentation]
+    if: always() && needs.prepare.result == 'success' && needs.prepare.outputs.sha != ''
+    runs-on: ubuntu-26.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+      pull-requests: write
+      statuses: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ needs.prepare.outputs.sha }}
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Report checks and merge the checked changelog
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ needs.prepare.outputs.sha }}
+          PR: ${{ needs.prepare.outputs.pr }}
+          DOCUMENTATION_RESULT: ${{ needs.documentation.result }}
+        run: |
+          set -euo pipefail
+          # Only the generated changelog receives this workflow's CI status.
+          git fetch origin main
+          git merge-base --is-ancestor origin/main HEAD
+          test "$(git diff --name-only origin/main...HEAD)" = CHANGELOG.md
+          git diff --check origin/main...HEAD
+          state=failure
+          if [ "$DOCUMENTATION_RESULT" = success ]; then state=success; fi
+          # Dispatch job checks do not satisfy pull-request rules. Report the
+          # actual result for the exact revision the documentation job checked.
+          gh api --method POST "repos/$GITHUB_REPOSITORY/statuses/$SHA" \
+            -f context=CI -f state="$state" \
+            -f target_url="$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID" \
+            -f description='Release changelog documentation checks' >/dev/null
+          test "$state" = success
+          gh pr merge "$PR" --repo "$GITHUB_REPOSITORY" --squash --match-head-commit "$SHA"

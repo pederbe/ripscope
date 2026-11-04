@@ -60,27 +60,6 @@ fn valid_date(date: &str) -> bool {
     year > 0 && day > 0 && day <= days
 }
 
-/// GitHub timestamps use UTC seconds. A validation rerun is not publication.
-pub fn published_during_run(published: &str, started: &str, completed: &str) -> bool {
-    fn timestamp(value: &str) -> bool {
-        value.len() == 20
-            && value.bytes().enumerate().all(|(index, byte)| match index {
-                4 | 7 => byte == b'-',
-                10 => byte == b'T',
-                13 | 16 => byte == b':',
-                19 => byte == b'Z',
-                _ => byte.is_ascii_digit(),
-            })
-            && valid_date(&value[..10])
-            && value[11..13].parse::<u8>().is_ok_and(|hour| hour < 24)
-            && value[14..16].parse::<u8>().is_ok_and(|minute| minute < 60)
-            && value[17..19].parse::<u8>().is_ok_and(|second| second < 60)
-    }
-    [published, started, completed].into_iter().all(timestamp)
-        && started <= published
-        && published <= completed
-}
-
 fn parse(text: &str) -> Result<Document> {
     let text = text.replace("\r\n", "\n");
     let mut starts = Vec::new();
