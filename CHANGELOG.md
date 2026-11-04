@@ -5,16 +5,19 @@ All notable changes are recorded here. The format follows
 [Semantic Versioning](https://semver.org/). Before 1.0, a minor version may change the
 index format or command-line behavior, and its entry says so.
 
-## [Unreleased]
+## [0.2.6] - 2026-11-04
 
 ### Changed
 
 - Reduce repeated copying and decoding when building indexes, running editor
   sessions and writing search results.
+
 - Update package and archive installation examples to the published 0.2.4
   release, and remove the fixed version from the installer-option explanation.
+
 - Link the README's status section to the latest releases instead of naming a
   fixed current version.
+
 - Use plain Linux and Windows names throughout the README, website and
   documentation. Supported build targets are unchanged.
 
@@ -22,19 +25,23 @@ index format or command-line behavior, and its entry says so.
 
 - Check Windows package installation, upgrades and removal through WinGet
   against the published archives.
+
 - Include workflow fixtures in release test sources and initialize the Windows
   compiler environment directly through PowerShell.
+
 - Create executable test scripts in an isolated process so parallel launches
   cannot retain writable handles and cause intermittent "Text file busy" failures.
 
 - Release builds follow stable Rust and the hosted Windows developer toolchain,
   recording the actual versions in each archive instead of requiring old versions.
+
 - Follow rolling stable Rust and install the standard analysis, source, formatting and lint components with the project toolchain.
 
 ### Added
 
 - Signed apt and dnf repositories provide Linux installation and updates through
   the system package manager.
+
 - `ripscope lsp` is a language server for C. Helix, Neovim's built-in client and other
   editors that speak the Language Server Protocol can go to definitions, find
   references, show incoming and outgoing calls and search workspace symbols with no
@@ -45,6 +52,51 @@ index format or command-line behavior, and its entry says so.
 - Editor searches work when your home directory is on NFS or another network file
   system. The project index now goes to `/var/tmp/ripscope-UID`. Before, the first
   search failed unless `RIPSCOPE_CACHE_DIR` was set.
+
+### Other changes
+
+- Complete replacement release notes (#95) ([dd8e7a5](https://github.com/pederbe/ripscope/commit/dd8e7a5))
+- Repair Linux and Windows release verification (#93) ([2e4981f](https://github.com/pederbe/ripscope/commit/2e4981f))
+- Update Rust crate toml to v1.2.0 (#94) ([6f59a71](https://github.com/pederbe/ripscope/commit/6f59a71))
+- Update daily dependencies (#88) ([2b96eea](https://github.com/pederbe/ripscope/commit/2b96eea))
+- Isolate executable test-script creation (#92) ([c024419](https://github.com/pederbe/ripscope/commit/c024419))
+- Update installation examples to the published release (#91) ([1326c65](https://github.com/pederbe/ripscope/commit/1326c65))
+- Make README release status version-neutral (#90) ([eab6cbb](https://github.com/pederbe/ripscope/commit/eab6cbb))
+- Use plain Linux and Windows names in documentation (#89) ([256c341](https://github.com/pederbe/ripscope/commit/256c341))
+- Use stable Rust and installed Windows release tools (#86) ([c434dac](https://github.com/pederbe/ripscope/commit/c434dac))
+- Update daily dependencies (#87) ([a83cc32](https://github.com/pederbe/ripscope/commit/a83cc32))
+- Follow rolling stable Rust for development and CI (#85) ([fad7229](https://github.com/pederbe/ripscope/commit/fad7229))
+- Check the language server through Neovim's built-in client (#84) ([f4237a7](https://github.com/pederbe/ripscope/commit/f4237a7))
+- Serve editors over the Language Server Protocol (#83) ([4dda991](https://github.com/pederbe/ripscope/commit/4dda991))
+- Keep the editor index local when the home directory is on a network file system (#80) ([4bd1ead](https://github.com/pederbe/ripscope/commit/4bd1ead))
+- Update quay.io/pypa/manylinux_2_28_x86_64:latest Docker digest to 43f7ce1 (#79) ([42c9420](https://github.com/pederbe/ripscope/commit/42c9420))
+- Update daily dependencies (#78) ([cb2fccc](https://github.com/pederbe/ripscope/commit/cb2fccc))
+- Record published changelog for v0.2.4 (#76) ([6c55338](https://github.com/pederbe/ripscope/commit/6c55338))
+- Report validated changelog checks on the checked commit (#77) ([9419cfe](https://github.com/pederbe/ripscope/commit/9419cfe))
+- Finalize release notes and record publications on main (#75) ([0c41c6f](https://github.com/pederbe/ripscope/commit/0c41c6f))
+- Simplify stored selection rule JSON conversions (#74) ([83ee57d](https://github.com/pederbe/ripscope/commit/83ee57d))
+- Account for changelog coverage in changes and release preparation (#73) ([19491dd](https://github.com/pederbe/ripscope/commit/19491dd))
+- Use swap removal for unordered scanner probe arguments (#71) ([8c76576](https://github.com/pederbe/ripscope/commit/8c76576))
+- Repair reference cleanup and Windows module probe CI failures (#72) ([89913ef](https://github.com/pederbe/ripscope/commit/89913ef))
+- Document the current production website build command ([14b7d3b](https://github.com/pederbe/ripscope/commit/14b7d3b))
+- Align glossary, website metadata and delivery checks ([fe251b7](https://github.com/pederbe/ripscope/commit/fe251b7))
+- Check a line's names for repeats with the fast hasher (#68) ([d6790ff](https://github.com/pederbe/ripscope/commit/d6790ff))
+- Order the splitter's listed names without comparing their bytes repeatedly (#66) ([0f09837](https://github.com/pederbe/ripscope/commit/0f09837))
+- Update daily dependencies (#65) ([67d7b6c](https://github.com/pederbe/ripscope/commit/67d7b6c))
+- Document signed package-manager installation and verify website sources (#64) ([215bdac](https://github.com/pederbe/ripscope/commit/215bdac))
+- Use each package client certificate bundle path in live checks (#63) ([7a45b41](https://github.com/pederbe/ripscope/commit/7a45b41))
+- Activate the signed apt and dnf repository (#62) ([7a88b71](https://github.com/pederbe/ripscope/commit/7a88b71))
+- Update daily dependencies (#58) ([979ebd7](https://github.com/pederbe/ripscope/commit/979ebd7))
+- Include package repository checks in required CI (#61) ([db17186](https://github.com/pederbe/ripscope/commit/db17186))
+- Prepare a signed apt and dnf repository for Linux packages (#59) ([715741e](https://github.com/pederbe/ripscope/commit/715741e))
+- Gate native dependency auto-merge on all applicable checks (#60) ([a02918c](https://github.com/pederbe/ripscope/commit/a02918c))
+- Borrow scanner spans from the source instead of copying them (#57) ([efdd813](https://github.com/pederbe/ripscope/commit/efdd813))
+- Generate and check WinGet manifests after each release (#56) ([21450db](https://github.com/pederbe/ripscope/commit/21450db))
+- Separate website refresh from package and editor delivery (#52) ([10d4963](https://github.com/pederbe/ripscope/commit/10d4963))
+- Decode each revision's selection rule once in a Session (#51) ([3cc942d](https://github.com/pederbe/ripscope/commit/3cc942d))
+- Write Line protocol rows with less work per byte (#50) ([35f0a7a](https://github.com/pederbe/ripscope/commit/35f0a7a))
+
+[Full comparison](https://github.com/pederbe/ripscope/compare/v0.2.4...v0.2.6)
 
 ## [0.2.4] - 2026-10-26
 
@@ -199,7 +251,7 @@ and the [benchmarks](https://ripscope.com/docs/reference/benchmarks).
   SHA-256 checksum.
 - Source builds with Cargo.
 
-[Unreleased]: https://github.com/pederbe/ripscope/compare/v0.2.4...HEAD
+[Unreleased]: https://github.com/pederbe/ripscope/compare/v0.2.6...HEAD
 [0.2.0]: https://github.com/pederbe/ripscope/releases/tag/v0.2.0
 [0.1.1]: https://github.com/pederbe/ripscope/releases/tag/v0.1.1
 [0.1.0]: https://github.com/pederbe/ripscope/releases/tag/v0.1.0
