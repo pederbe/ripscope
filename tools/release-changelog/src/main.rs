@@ -17,11 +17,6 @@ fn git(args: &[&str]) -> Result<String, String> {
 
 fn run(args: &[String]) -> Result<(), String> {
     match args.iter().map(String::as_str).collect::<Vec<_>>().as_slice() {
-        ["publication-window", published, started, completed] => {
-            if !release_changelog::published_during_run(published, started, completed) {
-                return Err("this run did not publish the selected release".into());
-            }
-        }
         ["finalize", tag, date] => {
             let current = fs::read_to_string("CHANGELOG.md").map_err(|e| e.to_string())?;
             let result = release_changelog::finalize(&current, tag, date)?;
