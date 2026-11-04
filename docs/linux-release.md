@@ -273,9 +273,9 @@ section are both accepted. New candidates omit the empty pending heading.
 
 After publication, `Release changelog` records the dated notes on `main` through
 a pull request and the maintained documentation checks. It preserves later
-pending entries and historical edits. Publication events and completed Release
-workflows trigger it. Draft and check-only runs do not update `main`. Its manual
-check-only mode and retry use the published tag without rebuilding packages.
+pending entries and historical edits. The publisher dispatches it after publication.
+Publishing a draft also triggers it. Draft and check-only runs do not update `main`.
+Its manual check-only mode and retry use the published tag without rebuilding packages.
 
 Before preparing a release, compare the Unreleased entries with all merged
 changes since the previous published release. Check capabilities, fixes,

@@ -184,7 +184,7 @@ mod delivery_tests {
                 .join(name),
         )
         .unwrap()
-        .split_once("        run: |\n")
+        .rsplit_once("        run: |\n")
         .unwrap()
         .1
         .lines()
@@ -193,7 +193,7 @@ mod delivery_tests {
         .join("\n")
     }
 
-    fn run(root: &Path, script: &str, sha: &str, mode: &str) -> std::process::Output {
+    fn run(root: &Path, script: &str, mode: &str) -> std::process::Output {
         Command::new("bash")
             .args(["-c", script])
             .env(
@@ -207,8 +207,7 @@ mod delivery_tests {
             .env("RUNNER_TEMP", root)
             .env("GITHUB_STEP_SUMMARY", root.join("summary"))
             .env("GITHUB_REPOSITORY", "fixture/ripscope")
-            .env("RELEASE_SHA", sha)
-            .env("RELEASE_RUN_ID", if sha.is_empty() { "" } else { "42" })
+            .env("TAG", "v0.2.6")
             .env("CLOUDFLARE_DEPLOY_HOOK", "https://example.invalid/hook")
             .env("SUPERSEDE", "false")
             .env("INCREMENT", "auto")
@@ -219,7 +218,7 @@ mod delivery_tests {
     }
 
     #[test]
-    fn website_refresh_is_independent_and_skips_stale_completions() {
+    fn published_release_dispatches_existing_followups_and_reports_failure() {
         let root = tempfile::tempdir().unwrap();
         fs::create_dir(root.path().join("bin")).unwrap();
         executable(
@@ -227,13 +226,41 @@ mod delivery_tests {
             "gh",
             r#"#!/bin/bash
 set -euo pipefail
-if [[ "$*" = *'/jobs?'* ]]; then
-  if [ "$FIXTURE_MODE" = build-only ]; then echo false; else echo true; fi
-else
-  printf delivered
-fi
+echo "$*" >> "$FIXTURE_TRACE"
+if [ "$FIXTURE_MODE" = failure ] && [ "$3" = winget.yml ]; then exit 1; fi
 "#,
         );
+        let workflow = fs::read_to_string(
+            Path::new(env!("CARGO_MANIFEST_DIR")).join("../../.github/workflows/release.yml"),
+        )
+        .unwrap();
+        let publish = workflow.split_once("\n  publish:\n").unwrap().1;
+        assert!(publish.contains("if: needs.preflight.outputs.publish == 'true'"));
+        assert!(
+            publish.contains("- name: Dispatch release follow-ups\n        if: inputs.automatic\n")
+        );
+        let script = workflow_script("release.yml");
+        let expected = [
+            "workflow run package-repository.yml --repo fixture/ripscope --ref main -f tag=v0.2.6\n",
+            "workflow run winget.yml --repo fixture/ripscope --ref main -f tag=v0.2.6\n",
+            "workflow run release-changelog.yml --repo fixture/ripscope --ref main -f tag=v0.2.6\n",
+            "workflow run website-deploy.yml --repo fixture/ripscope --ref main\n",
+        ];
+        for (mode, success) in [("success", true), ("failure", false)] {
+            fs::write(root.path().join("trace"), "").unwrap();
+            let output = run(root.path(), &script, mode);
+            assert_eq!(output.status.success(), success, "{output:?}");
+            assert_eq!(
+                fs::read_to_string(root.path().join("trace")).unwrap(),
+                expected.concat()
+            );
+        }
+    }
+
+    #[test]
+    fn website_refresh_reports_hook_failure() {
+        let root = tempfile::tempdir().unwrap();
+        fs::create_dir(root.path().join("bin")).unwrap();
         executable(
             root.path(),
             "curl",
@@ -245,15 +272,9 @@ printf '{"success":true,"result":{"build_uuid":"fixture"}}' > "${!#}"
 "#,
         );
         let script = workflow_script("website-deploy.yml");
-        for (sha, mode, success, requested) in [
-            ("stale", "success", true, false),
-            ("delivered", "success", true, true),
-            ("", "success", true, true),
-            ("delivered", "build-only", true, false),
-            ("delivered", "failure", false, true),
-        ] {
+        for (mode, success) in [("success", true), ("failure", false)] {
             fs::write(root.path().join("trace"), "").unwrap();
-            let output = run(root.path(), &script, sha, mode);
+            let output = run(root.path(), &script, mode);
             assert_eq!(
                 output.status.success(),
                 success,
@@ -261,10 +282,8 @@ printf '{"success":true,"result":{"build_uuid":"fixture"}}' > "${!#}"
                 String::from_utf8_lossy(&output.stderr)
             );
             assert_eq!(
-                !fs::read_to_string(root.path().join("trace"))
-                    .unwrap()
-                    .is_empty(),
-                requested
+                fs::read_to_string(root.path().join("trace")).unwrap(),
+                "requested\n"
             );
         }
     }
@@ -349,7 +368,7 @@ esac
         let script = workflow_script("weekly-release.yml");
         for (branch, expected) in [("delivered", "prepared\n"), ("older", "repaired\n")] {
             fs::write(root.path().join("trace"), "").unwrap();
-            let output = run(root.path(), &script, "", branch);
+            let output = run(root.path(), &script, branch);
             assert!(
                 output.status.success(),
                 "{}",

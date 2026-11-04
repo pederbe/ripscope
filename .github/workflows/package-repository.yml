@@ -13,10 +13,6 @@ on:
   # A release the maintainer publishes from a draft.
   release:
     types: [published]
-  # An automated release, which the release workflow publishes itself.
-  workflow_run:
-    workflows: [Release]
-    types: [completed]
   # CI calls the check-only path for affected pull requests.
   workflow_call:
   # Repeats publication of one release, such as after an interrupted upload.
@@ -43,7 +39,6 @@ concurrency:
 
 jobs:
   repository:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-26.04
     timeout-minutes: 30
     # The signing key and storage credentials live only in this environment.
@@ -66,7 +61,7 @@ jobs:
       - name: Select the published release
         id: release
         env:
-          TAG: ${{ github.event.release.tag_name || github.event.workflow_run.head_branch || inputs.tag }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
           set -euo pipefail
           releases=$(gh release list --repo "$GITHUB_REPOSITORY" --exclude-drafts --exclude-pre-releases \
