@@ -251,9 +251,8 @@ jobs:
           # uniquely named sidecars, excluding the colliding merged manifests.
           assets=(artifacts/*.tar.gz artifacts/*.zip artifacts/*.deb artifacts/*.rpm artifacts/*.sha256)
           for artifact in "${assets[@]}"; do test -f "$artifact"; done
-          if gh release view "$TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+          if draft=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft 2>/dev/null); then
             # A published release is immutable. Re-running must never replace it.
-            draft=$(gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json isDraft --jq .isDraft)
             if [ "$draft" = true ]; then
               mkdir "$RUNNER_TEMP/frozen-assets"
               gh release view "$TAG" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' > "$RUNNER_TEMP/asset-names"

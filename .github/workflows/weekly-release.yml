@@ -71,11 +71,10 @@ jobs:
           fi
           sha=$(git rev-parse "$tag^{commit}")
           # GITHUB_TOKEN tag pushes do not trigger workflows. Dispatch explicitly.
-          gh run list --workflow release.yml --commit "$sha" --limit 1 --json databaseId,status,conclusion > "$RUNNER_TEMP/runs.json"
-          run_id=$(jq -r '.[0].databaseId // empty' "$RUNNER_TEMP/runs.json")
-          status=$(jq -r '.[0].status // empty' "$RUNNER_TEMP/runs.json")
-          conclusion=$(jq -r '.[0].conclusion // empty' "$RUNNER_TEMP/runs.json")
-          if [ -z "$run_id" ]; then
+          run=$(gh run list --workflow release.yml --commit "$sha" --limit 1 --json databaseId,status,conclusion \
+            --jq '.[0] | [.databaseId // 0, .status // "none", .conclusion // "none"] | @tsv')
+          read -r run_id status conclusion <<< "$run"
+          if [ "$run_id" = 0 ]; then
             gh workflow run release.yml --ref "$tag" -f tag="$tag" -f source_sha="$sha" -f publish=true -f automatic=true
           elif [ "$status" != completed ]; then
             echo "Release $tag already has an active run." >> "$GITHUB_STEP_SUMMARY"

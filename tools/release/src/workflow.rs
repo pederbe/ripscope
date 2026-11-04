@@ -354,7 +354,7 @@ case "$*" in
   'run list'*)
     # A delivered version must not query a release failure caused by its website.
     test "$FIXTURE_MODE" != delivered
-    echo '[{"databaseId":42,"status":"completed","conclusion":"failure"}]';;
+    printf '42\tcompleted\tfailure\n';;
   'run rerun 42 --failed') echo repaired >> "$FIXTURE_TRACE";;
   *) exit 1;;
 esac
