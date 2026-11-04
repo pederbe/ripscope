@@ -2,6 +2,7 @@ name: CI
 
 # Every pull request runs this workflow, so the required "CI" check always reports.
 # Changes to documentation alone skip the build and test jobs.
+# Release-tool changes use the same native jobs without rebuilding the application.
 
 on:
   pull_request:
@@ -30,6 +31,7 @@ jobs:
       pull-requests: read
     outputs:
       code: ${{ steps.filter.outputs.code }}
+      release_tools: ${{ steps.website.outputs.release_tools }}
       media: ${{ steps.filter.outputs.media }}
       website: ${{ steps.website.outputs.changed }}
       winget: ${{ steps.website.outputs.winget }}
@@ -49,6 +51,7 @@ jobs:
               - '!book.toml'
               - '!site/**'
               - '!tools/site/**'
+              - '!tools/release/**'
               - '!tools/release-changelog/**'
               - '!scripts/build-site.sh'
               - '!scripts/check-release-changelog.sh'
@@ -59,6 +62,10 @@ jobs:
               - '!.gitignore'
               - '!.github/workflows/ci.yml'
               - '!.github/workflows/docs.yml'
+              - '!.github/workflows/release.yml'
+              - '!.github/workflows/weekly-release.yml'
+              - '!.github/workflows/winget.yml'
+              - '!.github/workflows/package-repository.yml'
               - '!.github/workflows/website-deploy.yml'
               - '!.github/workflows/release-changelog.yml'
               - '!.github/workflows/release-changelog-check.yml'
@@ -67,6 +74,14 @@ jobs:
         id: website
         with:
           filters: |
+            release_tools:
+              - "tools/release/**"
+              - ".github/workflows/release.yml"
+              - ".github/workflows/weekly-release.yml"
+              - ".github/workflows/winget.yml"
+              - ".github/workflows/package-repository.yml"
+              - ".github/workflows/website-deploy.yml"
+              - ".github/workflows/ci.yml"
             release_changelog:
               - "tools/release-changelog/**"
               - "scripts/check-release-changelog.sh"
@@ -103,7 +118,8 @@ jobs:
     # Scheduled and manual runs skip the classification and always check.
     if: >-
       !cancelled() &&
-      (github.event_name != 'pull_request' || needs.changes.outputs.code != 'false')
+      (github.event_name != 'pull_request' || needs.changes.outputs.code != 'false' ||
+       needs.changes.outputs.release_tools != 'false')
     strategy:
       fail-fast: false
       matrix:
@@ -122,21 +138,26 @@ jobs:
       - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
 
       - name: Format
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && (github.event_name != 'pull_request' || needs.changes.outputs.code != 'false')
         run: cargo fmt --all --check
 
       - name: Clippy
+        if: github.event_name != 'pull_request' || needs.changes.outputs.code != 'false'
         run: cargo clippy --locked --all-targets -- -D warnings
 
       - name: Test
+        if: github.event_name != 'pull_request' || needs.changes.outputs.code != 'false'
         run: cargo test --locked
 
       - name: Session diagnostics
+        if: github.event_name != 'pull_request' || needs.changes.outputs.code != 'false'
         run: cargo test --locked --features session-profile --test session_profile
 
       - name: Latency tooling
         # Runs only in a checkout that includes the latency tool.
-        if: runner.os == 'Linux' && hashFiles('tools/latency/Cargo.toml') != ''
+        if: >-
+          runner.os == 'Linux' && hashFiles('tools/latency/Cargo.toml') != '' &&
+          (github.event_name != 'pull_request' || needs.changes.outputs.code != 'false')
         run: |
           cargo fmt --manifest-path tools/latency/Cargo.toml --check
           cargo clippy --locked --all-targets --manifest-path tools/latency/Cargo.toml -- -D warnings
