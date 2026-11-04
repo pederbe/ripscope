@@ -57,7 +57,7 @@ jobs:
           gh release download "v$VERSION" --repo pederbe/ripscope --dir "$RUNNER_TEMP/archive" \
             --pattern "$name.$FORMAT" --pattern "$name.$FORMAT.sha256"
           cd "$RUNNER_TEMP/archive"
-          sha256sum -c "$name.$FORMAT.sha256"
+          tr -d '\r' < "$name.$FORMAT.sha256" | sha256sum -c
           if [ "$FORMAT" = zip ]; then unzip -q "$name.$FORMAT"; else tar -xzf "$name.$FORMAT"; fi
       - name: Verify published discovery and candidate mappings
         env:
