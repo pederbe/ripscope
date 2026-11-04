@@ -18,6 +18,8 @@ index format or command-line behavior, and its entry says so.
 
 ### Development
 
+- Include workflow fixtures in release test sources and initialize the Windows
+  compiler environment directly through PowerShell.
 - Create executable test scripts in an isolated process so parallel launches
   cannot retain writable handles and cause intermittent "Text file busy" failures.
 

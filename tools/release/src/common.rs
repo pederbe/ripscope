@@ -478,7 +478,8 @@ pub fn copy_tree(origin: &Path, target: &Path) -> Result<()> {
 }
 
 /// The checkout paths every release build copies and records.
-pub const SOURCE_INPUTS: [&str; 12] = [
+pub const SOURCE_INPUTS: [&str; 13] = [
+    ".github/workflows",
     "src",
     "tests",
     "examples",
@@ -632,6 +633,7 @@ mod tests {
         for name in SOURCE_INPUTS {
             let path = repo.join(name);
             if [
+                ".github/workflows",
                 "src",
                 "tests",
                 "examples",
@@ -642,12 +644,14 @@ mod tests {
             ]
             .contains(&name)
             {
-                fs::create_dir(path).unwrap();
+                fs::create_dir_all(path).unwrap();
             } else {
                 fs::write(path, "input").unwrap();
             }
         }
         let inputs = [
+            ".github/workflows/ci.yml",
+            ".github/workflows/release.yml",
             "examples/assessment.rs",
             "examples/support/shared.rs",
             "tests/support/fixture.rs",
