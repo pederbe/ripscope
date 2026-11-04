@@ -37,12 +37,18 @@ jobs:
       winget: ${{ steps.filter.outputs.winget }}
       packages_repository: ${{ steps.filter.outputs.packages_repository }}
       release_changelog: ${{ steps.filter.outputs.release_changelog }}
+      binstall: ${{ steps.filter.outputs.binstall }}
     steps:
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
         id: filter
         with:
           predicate-quantifier: some-with-excludes
           filters: |
+            binstall:
+              - Cargo.toml
+              - examples/check-binstall.rs
+              - .github/workflows/cargo-binstall.yml
+              - .github/workflows/ci.yml
             media:
               - "tools/media/**"
             code:
@@ -212,11 +218,18 @@ jobs:
       contents: read
       attestations: read
 
+  binstall:
+    needs: changes
+    if: >-
+      !cancelled() &&
+      (github.event_name != 'pull_request' || needs.changes.outputs.binstall != 'false')
+    uses: ./.github/workflows/cargo-binstall.yml
+
   # The one required check. It passes when every check passed or was skipped as
   # unneeded, and fails otherwise.
   ci:
     name: CI
-    needs: [changes, check, release-changelog, website, winget, packages-repository]
+    needs: [changes, check, release-changelog, website, winget, packages-repository, binstall]
     if: always()
     runs-on: ubuntu-26.04
     steps:

@@ -13,6 +13,16 @@ keywords = ["cscope", "c", "code-navigation", "cross-reference", "vim"]
 categories = ["command-line-utilities", "development-tools"]
 include = ["/src", "/README.md", "/CHANGELOG.md", "/LICENSE-MIT", "/LICENSE-APACHE"]
 
+[package.metadata.binstall.overrides.x86_64-unknown-linux-gnu]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ version }-x86_64-linux-gnu.tar.gz"
+bin-dir = "{ name }-{ version }-x86_64-linux-gnu/bin/{ bin }{ binary-ext }"
+pkg-fmt = "tgz"
+
+[package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
+pkg-url = "{ repo }/releases/download/v{ version }/{ name }-{ version }-x86_64-windows-msvc.zip"
+bin-dir = "{ name }-{ version }-x86_64-windows-msvc/bin/{ bin }{ binary-ext }"
+pkg-fmt = "zip"
+
 [features]
 session-profile = []
 

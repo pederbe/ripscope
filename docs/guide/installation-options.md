@@ -133,7 +133,16 @@ Checksums identify the downloaded bytes. For repository and workflow provenance,
 use the exact-tag/source
 [attestation verification instructions](https://github.com/pederbe/ripscope/blob/main/docs/linux-release.md#attestation-verification).
 
-## Building from source
+## Cargo installation
+
+To build and install the latest stable crates.io release:
+
+```sh
+cargo install --locked ripscope
+```
+
+Cargo installs the executable into `~/.cargo/bin` by default. Make sure that
+directory is on your `PATH`, including the path your editor uses.
 
 You need a recent stable [Rust toolchain](https://rustup.rs/) and a C compiler
 for bundled SQLite: GCC or Clang on Linux; Microsoft's MSVC Build Tools and the
@@ -145,11 +154,21 @@ cd ripscope
 cargo build --release --locked
 ```
 
-Or install directly from the repository:
+To build the development version instead of the stable release:
 
 ```sh
 cargo install --locked --git https://github.com/pederbe/ripscope.git
 ```
+
+Cargo installs the executable only. Add your editor's integration using
+[your plugin manager](../getting-started/installation.md#your-plugin-manager).
+The plugins reuse an executable on `PATH`. Updating a plugin leaves that
+executable under Cargo's control. Run `cargo install --locked ripscope` again
+to update it, or `cargo uninstall ripscope` to remove it.
+
+The cargo-binstall mappings in this source tree need a new crates.io release
+before they are available to ordinary binary installations. For now, use the
+[archives](#archives-and-system-packages) to install a prebuilt executable.
 
 A binary built on a newer Linux distribution can require that distribution's
 newer glibc. The pinned archive recipes and their inspection limits are documented
