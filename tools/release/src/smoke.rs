@@ -338,10 +338,15 @@ fn module_inventory(system: &Path, pid: u32, work: &Path, label: &str) -> Result
         "-Command".into(),
         script,
     ];
+    // A native child of PowerShell 7 inherits its incompatible module paths.
+    // Windows PowerShell must construct its own defaults for ConvertTo-Json.
+    let environment = std::env::vars_os()
+        .filter(|(name, _)| !name.to_string_lossy().eq_ignore_ascii_case("PSModulePath"))
+        .collect::<Vec<_>>();
     let ended = run_logged(
         &arguments,
         None,
-        None,
+        Some(&environment),
         &log,
         Some(Duration::from_secs(30)),
         None,
@@ -501,20 +506,20 @@ mod tests {
 
     #[cfg(windows)]
     #[test]
-    fn host_module_probe_does_not_need_management_module_loading() {
+    fn host_module_probe_uses_windows_powershell_module_paths() {
         let root = tempfile::tempdir().unwrap();
-        let module = root.path().join("Microsoft.PowerShell.Management");
+        let module = root.path().join("Microsoft.PowerShell.Utility");
         fs::create_dir(&module).unwrap();
         fs::write(
-            module.join("Microsoft.PowerShell.Management.psd1"),
-            "@{RootModule='Management.psm1';ModuleVersion='1.0.0';FunctionsToExport=@('Get-Process');CmdletsToExport=@()}",
+            module.join("Microsoft.PowerShell.Utility.psd1"),
+            "@{RootModule='Utility.psm1';ModuleVersion='1.0.0';FunctionsToExport=@('ConvertTo-Json');CmdletsToExport=@()}",
         )
         .unwrap();
-        // Reproduce a host stuck loading/invoking Get-Process without depending on
-        // the runner's module cache, network paths or first-use initialization.
+        // Reproduce a host stuck loading/invoking ConvertTo-Json through inherited
+        // module paths, without depending on the runner's module cache.
         fs::write(
-            module.join("Management.psm1"),
-            "function Get-Process { [Threading.Thread]::Sleep(60000) }; Export-ModuleMember -Function Get-Process",
+            module.join("Utility.psm1"),
+            "function ConvertTo-Json { [Threading.Thread]::Sleep(60000) }; Export-ModuleMember -Function ConvertTo-Json",
         )
         .unwrap();
         let mut paths = vec![root.path().to_owned()];

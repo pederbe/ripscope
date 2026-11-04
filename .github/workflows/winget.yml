@@ -10,10 +10,6 @@ on:
   # A release the maintainer publishes from a draft.
   release:
     types: [published]
-  # An automated release, which the release workflow publishes itself.
-  workflow_run:
-    workflows: [Release]
-    types: [completed]
   # CI calls this check for affected files, against the latest release.
   workflow_call:
   workflow_dispatch:
@@ -27,12 +23,11 @@ permissions:
   contents: read
 
 concurrency:
-  group: winget-${{ github.event.release.tag_name || github.event.workflow_run.head_branch || inputs.tag || github.ref }}
+  group: winget-${{ github.event.release.tag_name || inputs.tag || github.ref }}
   cancel-in-progress: false
 
 jobs:
   manifests:
-    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: windows-2025
     timeout-minutes: 45
     steps:
@@ -50,7 +45,7 @@ jobs:
         shell: bash
         env:
           GH_TOKEN: ${{ github.token }}
-          TAG: ${{ github.event.release.tag_name || github.event.workflow_run.head_branch || inputs.tag }}
+          TAG: ${{ github.event.release.tag_name || inputs.tag }}
         run: |
           set -euo pipefail
           if [ -z "$TAG" ]; then

@@ -5,6 +5,14 @@ All notable changes are recorded here. The format follows
 [Semantic Versioning](https://semver.org/). Before 1.0, a minor version may change the
 index format or command-line behavior, and its entry says so.
 
+## [Unreleased]
+
+### Development
+
+- Use Windows PowerShell's default module paths for loaded-module inspection.
+- Dispatch package delivery, Windows package checks, website refresh and release
+  notes directly after automated publication, using their existing workflows.
+
 ## [0.2.6] - 2026-11-04
 
 ### Changed

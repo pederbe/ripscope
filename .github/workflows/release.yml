@@ -187,6 +187,7 @@ jobs:
     environment: ${{ inputs.automatic && 'automated-release' || 'release' }}
     permissions:
       contents: write
+      actions: write
       id-token: write
       attestations: write
     steps:
@@ -277,3 +278,16 @@ jobs:
             old=$(git ls-remote origin refs/heads/release | cut -f1)
             git push --force-with-lease="refs/heads/release:$old" origin "$SOURCE_SHA:refs/heads/release"
           fi
+      - name: Dispatch release follow-ups
+        if: inputs.automatic
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          result=0
+          for workflow in package-repository.yml winget.yml release-changelog.yml; do
+            gh workflow run "$workflow" --repo "$GITHUB_REPOSITORY" --ref main -f tag="$TAG" || result=1
+          done
+          gh workflow run website-deploy.yml --repo "$GITHUB_REPOSITORY" --ref main || result=1
+          exit "$result"
