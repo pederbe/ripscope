@@ -7,6 +7,12 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
+### Changed
+
+- Document stable source installation with `cargo install --locked ripscope`.
+  Prepare cargo-binstall mappings for the Linux and Windows release archives.
+  These mappings become available when the updated crate is published.
+
 ### Development
 
 - Check generated release notes in the recording workflow, avoiding duplicate CI

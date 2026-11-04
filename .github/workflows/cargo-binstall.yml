@@ -1,0 +1,79 @@
+name: cargo-binstall installation
+
+on:
+  workflow_call:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact published stable version to test
+        type: string
+        default: '0.2.6'
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  install:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-26.04
+            archive-target: x86_64-linux-gnu
+            format: tar.gz
+            suffix: ''
+          - os: windows-latest
+            archive-target: x86_64-windows-msvc
+            format: zip
+            suffix: .exe
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    env:
+      VERSION: ${{ inputs.version || '0.2.6' }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
+        with:
+          toolchain: stable
+      - uses: taiki-e/install-action@b80e2bb2635f28eb98b9fce1e2f0887e1535c6b2 # v2
+        with:
+          tool: cargo-binstall
+      - name: Download the selected upstream archive
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ARCHIVE_TARGET: ${{ matrix.archive-target }}
+          FORMAT: ${{ matrix.format }}
+        run: |
+          set -euo pipefail
+          [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          name="ripscope-$VERSION-$ARCHIVE_TARGET"
+          mkdir "$RUNNER_TEMP/archive"
+          gh release download "v$VERSION" --repo pederbe/ripscope --dir "$RUNNER_TEMP/archive" \
+            --pattern "$name.$FORMAT" --pattern "$name.$FORMAT.sha256"
+          cd "$RUNNER_TEMP/archive"
+          sha256sum -c "$name.$FORMAT.sha256"
+          if [ "$FORMAT" = zip ]; then unzip -q "$name.$FORMAT"; else tar -xzf "$name.$FORMAT"; fi
+      - name: Verify published discovery and candidate mappings
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          ARCHIVE_TARGET: ${{ matrix.archive-target }}
+          SUFFIX: ${{ matrix.suffix }}
+        run: |
+          cargo run --locked --example check-binstall -- "$VERSION" \
+            "$RUNNER_TEMP/archive/ripscope-$VERSION-$ARCHIVE_TARGET/bin/ripscope$SUFFIX" \
+            "$RUNNER_TEMP/binstall-check"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: binstall-discovery-${{ matrix.os }}
+          path: |
+            ${{ runner.temp }}/binstall-check/published.stdout
+            ${{ runner.temp }}/binstall-check/published.stderr
+          if-no-files-found: ignore
+          retention-days: 7
