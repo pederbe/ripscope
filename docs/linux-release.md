@@ -326,10 +326,11 @@ be non-fast-forward. The Emacs version header and crate version match on every t
 
 ## Website deployment
 
-After a successful Release run, the separate Website deployment workflow requests
-Cloudflare's website build. It follows the delivered `release` branch and skips
-stale release completions. Cloudflare reports the actual build and deployment
-result after accepting the request.
+After automatic publication and editor delivery, Release dispatches the separate
+Website deployment workflow. Publishing a release manually also triggers it.
+The workflow requests a Cloudflare build of current `main`, with download links
+from the delivered `release` branch. Cloudflare reports the actual build and
+deployment result after accepting the request.
 
 A website failure does not fail package publication or block the next weekly
 release. Retry Website deployment manually in GitHub Actions, without rebuilding
