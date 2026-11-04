@@ -31,21 +31,22 @@ jobs:
       pull-requests: read
     outputs:
       code: ${{ steps.filter.outputs.code }}
-      release_tools: ${{ steps.website.outputs.release_tools }}
+      release_tools: ${{ steps.filter.outputs.release_tools }}
       media: ${{ steps.filter.outputs.media }}
-      website: ${{ steps.website.outputs.changed }}
-      winget: ${{ steps.website.outputs.winget }}
-      packages_repository: ${{ steps.website.outputs.packages_repository }}
-      release_changelog: ${{ steps.website.outputs.release_changelog }}
+      website: ${{ steps.filter.outputs.website }}
+      winget: ${{ steps.filter.outputs.winget }}
+      packages_repository: ${{ steps.filter.outputs.packages_repository }}
+      release_changelog: ${{ steps.filter.outputs.release_changelog }}
     steps:
       - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
         id: filter
         with:
-          predicate-quantifier: every
+          predicate-quantifier: some-with-excludes
           filters: |
             media:
               - "tools/media/**"
             code:
+              - "**"
               - '!docs/**'
               - '!**/*.md'
               - '!book.toml'
@@ -69,10 +70,6 @@ jobs:
               - '!.github/workflows/website-deploy.yml'
               - '!.github/workflows/release-changelog.yml'
               - '!.github/ISSUE_TEMPLATE/**'
-      - uses: dorny/paths-filter@ceb8a2b8f2d89434be7ff52d3de7ec3738c5cc9d # v4
-        id: website
-        with:
-          filters: |
             release_tools:
               - "tools/release/**"
               - ".github/workflows/release.yml"
@@ -89,7 +86,7 @@ jobs:
               - "scripts/prepare-release.sh"
               - ".github/workflows/release-changelog.yml"
               - ".github/workflows/ci.yml"
-            changed:
+            website:
               - "README.md"
               - "GLOSSARY.md"
               - "GLOSSARY-MAP.md"
