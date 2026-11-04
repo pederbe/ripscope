@@ -9,6 +9,9 @@ index format or command-line behavior, and its entry says so.
 
 ### Development
 
+- Check generated release notes in the recording workflow, avoiding duplicate CI
+  approval failures and a separate dispatched check workflow.
+
 - Run existing release-tool checks without application rebuilds for release-tool-only
   changes, retaining broader coverage for application and shared-fixture changes.
 
