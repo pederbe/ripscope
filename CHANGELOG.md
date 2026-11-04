@@ -9,6 +9,8 @@ index format or command-line behavior, and its entry says so.
 
 ### Changed
 
+- Reduce repeated copying and decoding when building indexes, running editor
+  sessions and writing search results.
 - Update package and archive installation examples to the published 0.2.4
   release, and remove the fixed version from the installer-option explanation.
 - Link the README's status section to the latest releases instead of naming a
@@ -18,6 +20,8 @@ index format or command-line behavior, and its entry says so.
 
 ### Development
 
+- Check Windows package installation, upgrades and removal through WinGet
+  against the published archives.
 - Include workflow fixtures in release test sources and initialize the Windows
   compiler environment directly through PowerShell.
 - Create executable test scripts in an isolated process so parallel launches
