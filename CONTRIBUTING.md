@@ -35,6 +35,11 @@ cargo clippy --locked --all-targets -- -D warnings
 cargo test --locked
 ```
 
+CI selects these application checks for application and shared-fixture changes.
+Release-tool-only changes run the existing release-tool checks on Linux and
+Windows. Mixed changes retain both sets of checks. Scheduled and manual CI runs
+keep their full native coverage.
+
 Ripscope forbids `unsafe` code and pins every dependency to an exact version. Adding
 a dependency needs a good reason in the pull request.
 

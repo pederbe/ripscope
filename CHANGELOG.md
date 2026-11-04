@@ -9,6 +9,9 @@ index format or command-line behavior, and its entry says so.
 
 ### Development
 
+- Run existing release-tool checks without application rebuilds for release-tool-only
+  changes, retaining broader coverage for application and shared-fixture changes.
+
 - Use Windows PowerShell's default module paths for loaded-module inspection.
 
 - Dispatch package delivery, Windows package checks, website refresh and release
