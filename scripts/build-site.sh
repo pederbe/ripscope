@@ -23,7 +23,7 @@ if [ "${1:-}" = --cloudflare ]; then
     RIPSCOPE_SITE_RELEASE_TAG=$(git describe --tags --exact-match refs/remotes/origin/release)
     export RIPSCOPE_SITE_RELEASE_TAG
     # The image's npm 10 does not honor the lockfile's scoped overrides.
-    npx --yes --package npm@12.2.1 npm ci --ignore-scripts --no-audit --no-fund --prefix tools/site
+    npx --yes --package npm@12.2.2 npm ci --ignore-scripts --no-audit --no-fund --prefix tools/site
     set -- --deploy
 fi
 exec cargo run --quiet --locked --manifest-path tools/site/Cargo.toml -- "$@"
