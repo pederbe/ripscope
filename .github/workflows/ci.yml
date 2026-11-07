@@ -78,6 +78,7 @@ jobs:
               - '!.github/ISSUE_TEMPLATE/**'
             release_tools:
               - "tools/release/**"
+              - "examples/support/executable_fixture.rs"
               - ".github/workflows/release.yml"
               - ".github/workflows/weekly-release.yml"
               - ".github/workflows/winget.yml"
@@ -172,6 +173,7 @@ jobs:
           cargo test --locked --manifest-path tools/media/Cargo.toml
 
       - name: Release tooling
+        if: github.event_name != 'pull_request' || needs.changes.outputs.release_tools != 'false'
         run: |
           cargo fmt --manifest-path tools/release/Cargo.toml --check
           cargo clippy --locked --all-targets --manifest-path tools/release/Cargo.toml -- -D warnings
