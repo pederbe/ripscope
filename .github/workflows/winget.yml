@@ -128,6 +128,15 @@ jobs:
           if ((Get-FileHash $client -Algorithm SHA256).Hash.ToLower() -ne $asset.digest.Substring(7)) { throw 'Komac checksum mismatch' }
           & $client --version
           if ($LASTEXITCODE -ne 0) { throw 'Komac cannot start' }
+      - name: Synchronize the WinGet submission fork
+        if: inputs.submit && steps.release.outputs.published == 'true'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.WINGET_FORK_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$GH_TOKEN" || { echo 'WINGET_FORK_TOKEN is not configured in distribution' >&2; exit 1; }
+          gh repo sync "$GITHUB_REPOSITORY_OWNER/winget-pkgs" --source microsoft/winget-pkgs
       - name: Prepare or complete the WinGet pull request
         if: steps.release.outputs.published == 'true'
         shell: bash
