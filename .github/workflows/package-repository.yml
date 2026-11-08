@@ -121,6 +121,8 @@ jobs:
           toolchain: stable
       - name: Build the release tools
         if: steps.release.outputs.selected == 'true'
+        env:
+          RUSTFLAGS: ''
         run: cargo build --locked --quiet --manifest-path tools/release/Cargo.toml
       - name: Import the signing key
         if: steps.release.outputs.selected == 'true' && !inputs.verify_only

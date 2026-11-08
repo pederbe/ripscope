@@ -33,6 +33,7 @@ jobs:
           toolchain: stable
       - name: Prepare or resume a frozen release
         env:
+          RUSTFLAGS: ''
           GH_TOKEN: ${{ github.token }}
           SUPERSEDE: ${{ inputs.supersede_failed || false }}
           INCREMENT: ${{ inputs.increment || 'auto' }}

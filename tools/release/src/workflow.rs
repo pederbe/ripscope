@@ -242,7 +242,7 @@ if [ "$FIXTURE_MODE" = failure ] && [ "$3" = winget.yml ]; then exit 1; fi
         let script = workflow_script("release.yml");
         let expected = [
             "workflow run package-repository.yml --repo fixture/ripscope --ref main -f tag=v0.2.6\n",
-            "workflow run winget.yml --repo fixture/ripscope --ref main -f tag=v0.2.6\n",
+            "workflow run winget.yml --repo fixture/ripscope --ref main -f tag=v0.2.6 -f submit=true\n",
             "workflow run release-changelog.yml --repo fixture/ripscope --ref main -f tag=v0.2.6\n",
             "workflow run website-deploy.yml --repo fixture/ripscope --ref main\n",
         ];

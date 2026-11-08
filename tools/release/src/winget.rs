@@ -336,6 +336,20 @@ pub fn check(args: &[String]) -> Result<()> {
     if !project.join("ripscope.db").is_file() {
         return Err("removing the package removed the project's index".into());
     }
+    // Check a fresh current-version install as well as the upgrade above. This
+    // is the exact install command named by the upstream submission checklist.
+    winget(&[&["install", "--manifest", current.as_str()][..], &agree].concat())?;
+    let executable = installed()?.ok_or("ripscope.exe is not on PATH after fresh installation")?;
+    expect_version(&executable, &current_version, work)?;
+    winget(&[
+        "uninstall",
+        "--manifest",
+        current,
+        "--disable-interactivity",
+    ])?;
+    if installed()?.is_some() {
+        return Err("ripscope.exe remains on PATH after fresh-install removal".into());
+    }
     println!("WinGet installation, upgrade, search, editor setup and removal passed.");
     Ok(())
 }

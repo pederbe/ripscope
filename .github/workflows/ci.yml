@@ -174,6 +174,9 @@ jobs:
 
       - name: Release tooling
         if: github.event_name != 'pull_request' || needs.changes.outputs.release_tools != 'false'
+        # Product startup flags do not apply to the host tool's compiler plugins.
+        env:
+          RUSTFLAGS: ''
         run: |
           cargo fmt --manifest-path tools/release/Cargo.toml --check
           cargo clippy --locked --all-targets --manifest-path tools/release/Cargo.toml -- -D warnings

@@ -3,8 +3,8 @@ name: WinGet
 # After a release is published, generates its WinGet manifests from the published
 # Windows ZIP and checks them with the WinGet client: installing the previous release,
 # upgrading to this one, a search, the editors' install command and removal. It never
-# changes a release, and submission to microsoft/winget-pkgs stays a separate step
-# (docs/windows-release.md).
+# changes a release. Automatic release dispatches also submit and complete the
+# WinGet PR. CI and manual preparation remain read-only by default.
 
 on:
   # A release the maintainer publishes from a draft.
@@ -18,6 +18,10 @@ on:
         description: Published release tag, such as v0.2.4
         required: true
         type: string
+      submit:
+        description: Submit or complete this version's WinGet pull request
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -30,7 +34,17 @@ jobs:
   manifests:
     runs-on: windows-2025
     timeout-minutes: 45
+    environment: ${{ inputs.submit && 'distribution' || '' }}
     steps:
+      - name: Require submission setup
+        if: inputs.submit
+        shell: bash
+        env:
+          ENABLED: ${{ vars.WINGET_ENABLED }}
+          TOKEN: ${{ secrets.WINGET_TOKEN }}
+        run: |
+          test "$ENABLED" = true || { echo 'WinGet submission is disabled' >&2; exit 1; }
+          test -n "$TOKEN" || { echo 'WINGET_TOKEN is not configured in distribution' >&2; exit 1; }
       # The tools come from the default branch, or the branch under test, since older
       # release tags predate them.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -96,3 +110,39 @@ jobs:
           name: winget-manifests-${{ steps.release.outputs.tag }}
           path: ${{ runner.temp }}/winget/${{ steps.release.outputs.tag }}/manifests
           if-no-files-found: error
+      - name: Check the official WinGet Create client
+        if: inputs.submit && steps.release.outputs.published == 'true'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $release = gh api repos/microsoft/winget-create/releases/latest | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot select WinGetCreate' }
+          $asset = $release.assets | Where-Object name -eq wingetcreate.exe
+          if (!$asset -or $asset.digest -notmatch '^sha256:([0-9a-f]{64})$') { throw 'WinGetCreate checksum unavailable' }
+          $client = "$env:RUNNER_TEMP/wingetcreate.exe"
+          Invoke-WebRequest $asset.browser_download_url -OutFile $client
+          if ((Get-FileHash $client -Algorithm SHA256).Hash.ToLower() -ne $asset.digest.Substring(7)) { throw 'WinGetCreate checksum mismatch' }
+      - name: Prepare or complete the WinGet pull request
+        if: steps.release.outputs.published == 'true'
+        shell: bash
+        env:
+          TAG: ${{ steps.release.outputs.tag }}
+          SUBMIT: ${{ inputs.submit || false }}
+          GH_TOKEN: ${{ inputs.submit && secrets.WINGET_TOKEN || github.token }}
+          WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_TOKEN }}
+          WINGET_CHECKED: 'true'
+        run: |
+          set -euo pipefail
+          export WINGET_CREATE="$RUNNER_TEMP/wingetcreate.exe"
+          mode=--prepare
+          if [ "$SUBMIT" = true ]; then mode=--submit; fi
+          cargo run --locked --manifest-path tools/release/Cargo.toml -- winget-submit \
+            "$RUNNER_TEMP/winget/$TAG/manifests/p/PederBergan/Ripscope/${TAG#v}" PederBergan.Ripscope "${TAG#v}" "$mode"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: winget-description-${{ steps.release.outputs.tag || github.run_id }}
+          path: winget-pr-body.md
+          if-no-files-found: ignore
