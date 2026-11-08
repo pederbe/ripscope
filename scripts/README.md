@@ -98,7 +98,8 @@ release tool nor the installer harness is a runtime dependency.
 
 See [Linux preparation](../docs/linux-release.md) and
 [Windows preparation](../docs/windows-release.md). The release tool's own checks run
-with `cargo test --locked --manifest-path tools/release/Cargo.toml`. Local commands
+with `cargo test --locked --manifest-path tools/release/Cargo.toml` on Windows and
+`env RUSTFLAGS='' cargo test --locked --manifest-path tools/release/Cargo.toml` on Linux. Local commands
 do not upload or publish, apart from `package-repository-upload`, which the Package
 repository workflow runs. The manual release workflow checks that the tag matches the
 source, and its publication step is off by default.

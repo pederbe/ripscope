@@ -28,7 +28,7 @@ checks `mold_archive_sha256` before extraction. Select a new external work direc
 ```sh
 rustup update stable
 toolchain=$(dirname "$(dirname "$(rustup which --toolchain stable rustc)")")
-cargo run --locked --manifest-path tools/release/Cargo.toml -- linux \
+env RUSTFLAGS='' cargo run --locked --manifest-path tools/release/Cargo.toml -- linux \
   --work /var/tmp/ripscope-linux-candidate \
   --toolchain "$toolchain" \
   --mold-archive /path/to/mold-archive.tar.gz
@@ -225,7 +225,7 @@ the current directory:
 
 ```sh
 release=tools/release/target/debug/ripscope-release
-cargo build --locked --manifest-path tools/release/Cargo.toml
+env RUSTFLAGS='' cargo build --locked --manifest-path tools/release/Cargo.toml
 $release package-repository repo test-key.asc ripscope_0.2.3_amd64.deb ripscope-0.2.3-1.x86_64.rpm
 $release package-repository repo test-key.asc ripscope_0.2.4_amd64.deb ripscope-0.2.4-1.x86_64.rpm
 $release package-repository-check repo ripscope-0.2.4-x86_64-linux-gnu check
