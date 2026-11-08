@@ -110,6 +110,10 @@ submission or an unfinished description, run the workflow on `main` with the sam
 published tag and submission enabled. An existing same-version PR is reused, and
 manual description edits are preserved. The `distribution` environment needs
 `WINGET_TOKEN`, and the repository variable `WINGET_ENABLED` must be `true`.
+Keep that token public-only. A separate `WINGET_FORK_TOKEN` in the same environment,
+restricted to the submission fork with Contents and Workflows write permissions,
+synchronizes the fork before submission. Preparation does not use that credential.
+Synchronization does not force or overwrite a divergent fork.
 The CLA checkbox reflects Microsoft's successful check and does not sign an agreement.
 Once WinGet's source lists the version, check
 `winget install PederBergan.Ripscope` from that source on a clean Windows account
