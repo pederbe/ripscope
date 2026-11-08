@@ -94,12 +94,24 @@ The date is the release's publication date. The command refuses an archive that
 does not match its sidecar or has no `bin/ripscope.exe`, and an existing output
 directory.
 
+When running release-tool commands on Linux, use `env RUSTFLAGS='' cargo ...`.
+The product's Linux executable flags do not apply to compiler plugins used by
+the release tool.
+
 ### Submission
 
 The package identifier is `PederBergan.Ripscope`. Submitting a version means opening
 a pull request in `microsoft/winget-pkgs` with that version's manifest directory.
-WinGet's own validation and moderators review it there. Submission is a separate,
-manual step after the workflow passes. Once WinGet's source lists the version, check
+WinGet's own validation and moderators review it there. Automatic releases dispatch
+the WinGet workflow with submission enabled after publication. It uses the checked
+ZIP, completes the PR checklist from check evidence, and verifies the published
+description. Manual runs default to preparation without public changes. To retry
+submission or an unfinished description, run the workflow on `main` with the same
+published tag and submission enabled. An existing same-version PR is reused, and
+manual description edits are preserved. The `distribution` environment needs
+`WINGET_TOKEN`, and the repository variable `WINGET_ENABLED` must be `true`.
+The CLA checkbox reflects Microsoft's successful check and does not sign an agreement.
+Once WinGet's source lists the version, check
 `winget install PederBergan.Ripscope` from that source on a clean Windows account
 before the user documentation mentions WinGet.
 

@@ -31,6 +31,7 @@ mod smoke;
 mod weekly;
 mod windows;
 mod winget;
+mod winget_submission;
 mod workflow;
 
 use std::process::ExitCode;
@@ -51,6 +52,7 @@ fn main() -> ExitCode {
         Some("release-notes") => weekly::notes(&args[1..]),
         Some("winget") => winget::run(&args[1..]),
         Some("winget-check") => winget::check(&args[1..]),
+        Some("winget-submit") => winget_submission::run(&args[1..]),
         Some("package-repository") => repository::run(&args[1..]),
         Some("package-repository-check") => repository::check(&args[1..]),
         Some("package-repository-upload") => repository::upload(&args[1..]),
