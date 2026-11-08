@@ -111,7 +111,7 @@ jobs:
           path: ${{ runner.temp }}/winget/${{ steps.release.outputs.tag }}/manifests
           if-no-files-found: error
       - name: Check the official WinGet Create client
-        if: inputs.submit && steps.release.outputs.published == 'true'
+        if: steps.release.outputs.published == 'true'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
@@ -122,8 +122,11 @@ jobs:
           $asset = $release.assets | Where-Object name -eq wingetcreate.exe
           if (!$asset -or $asset.digest -notmatch '^sha256:([0-9a-f]{64})$') { throw 'WinGetCreate checksum unavailable' }
           $client = "$env:RUNNER_TEMP/wingetcreate.exe"
-          Invoke-WebRequest $asset.browser_download_url -OutFile $client
+          gh release download $release.tag_name --repo microsoft/winget-create --pattern wingetcreate.exe --dir $env:RUNNER_TEMP
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot download WinGetCreate' }
           if ((Get-FileHash $client -Algorithm SHA256).Hash.ToLower() -ne $asset.digest.Substring(7)) { throw 'WinGetCreate checksum mismatch' }
+          & $client
+          if ($LASTEXITCODE -ne 0) { throw 'WinGetCreate cannot start' }
       - name: Prepare or complete the WinGet pull request
         if: steps.release.outputs.published == 'true'
         shell: bash
