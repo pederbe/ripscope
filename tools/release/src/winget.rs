@@ -70,7 +70,7 @@ pub fn manifests(version: &str, sha256: &str, date: &str) -> Result<Vec<(String,
          PublisherSupportUrl: https://github.com/pederbe/ripscope/issues\n\
          Author: Peder Bergan\n\
          PackageName: Ripscope\n\
-         PackageUrl: https://ripscope.com\n\
+         PackageUrl: https://ripscope.com/\n\
          License: MIT OR Apache-2.0\n\
          LicenseUrl: https://github.com/pederbe/ripscope/blob/v{version}/README.md#license\n\
          ShortDescription: Cscope-compatible code navigation for C with content-aware, atomic index updates\n\

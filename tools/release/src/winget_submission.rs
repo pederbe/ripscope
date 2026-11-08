@@ -1,4 +1,4 @@
-//! Submit checked manifests with WinGetCreate, then complete the upstream template.
+//! Submit checked manifests with Komac, then complete the upstream template.
 use serde_json::{Value, json};
 use std::{
     fs,
@@ -9,41 +9,6 @@ use std::{
 
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 const REPO: &str = "microsoft/winget-pkgs";
-
-fn submission_text(text: &str) -> String {
-    // The stable SDK rejects newer schema comment URLs, although the data is
-    // valid. The original files are validated by the current WinGet client.
-    // WinGetCreate restores the headers from ManifestVersion when publishing.
-    let lines: Vec<_> = text
-        .lines()
-        .filter(|line| !line.starts_with("# yaml-language-server: $schema="))
-        .collect();
-    format!("{}\n", lines.join("\n"))
-}
-
-struct SubmissionCopy(std::path::PathBuf);
-
-impl SubmissionCopy {
-    fn new(files: &[(String, String)]) -> Result<Self> {
-        let nonce = std::time::SystemTime::now()
-            .duration_since(std::time::UNIX_EPOCH)?
-            .as_nanos();
-        let path =
-            std::env::temp_dir().join(format!("winget-submit-{}-{nonce}", std::process::id()));
-        fs::create_dir(&path)?;
-        let copy = Self(path);
-        for (name, text) in files {
-            fs::write(copy.0.join(name), submission_text(text))?;
-        }
-        Ok(copy)
-    }
-}
-
-impl Drop for SubmissionCopy {
-    fn drop(&mut self) {
-        let _ = fs::remove_dir_all(&self.0);
-    }
-}
 
 fn gh(args: &[&str], input: Option<&Value>) -> Result<String> {
     let mut command = Command::new("gh");
@@ -84,6 +49,36 @@ fn same_manifest(expected: &str, actual: &str) -> Result<bool> {
     let expected: Value = serde_saphyr::from_str(expected)?;
     let actual: Value = serde_saphyr::from_str(actual)?;
     Ok(expected == actual)
+}
+
+fn seed_body(body: &str, template: &str) -> Result<String> {
+    const PREFIX: &str =
+        "### Pull request has been created with [komac](https://github.com/russellbanks/Komac)";
+    if body.contains("## 📖 Description") {
+        return Ok(body.to_owned());
+    }
+    let (first, rest) = body.split_once('\n').unwrap_or((body, ""));
+    let Some(generated) = first.strip_prefix(PREFIX) else {
+        return Ok(body.to_owned());
+    };
+    let mut parts = generated.trim_start().splitn(3, ' ');
+    let version = parts.next().ok_or("missing Komac introduction version")?;
+    let emoji = parts.next().ok_or("missing Komac introduction marker")?;
+    if !version.strip_prefix('v').is_some_and(|v| {
+        v.split('.').count() == 3
+            && v.split('.')
+                .all(|part| !part.is_empty() && part.bytes().all(|b| b.is_ascii_digit()))
+    }) || !emoji
+        .strip_prefix(':')
+        .and_then(|s| s.strip_suffix(':'))
+        .is_some_and(|s| !s.is_empty() && s.bytes().all(|b| b.is_ascii_lowercase() || b == b'_'))
+    {
+        return Err("unrecognized Komac introduction, preserve it for review".into());
+    }
+    Ok(format!(
+        "{template}\n{}\n{rest}",
+        parts.next().unwrap_or("")
+    ))
 }
 
 fn manifests(
@@ -299,18 +294,19 @@ pub fn run(args: &[String]) -> Result<()> {
         if std::env::var("WINGET_CHECKED").as_deref() != Ok("true") {
             return Err("Windows manifest checks have not passed".into());
         }
-        let client = std::env::var("WINGET_CREATE")
-            .map_err(|_| "WINGET_CREATE must name the verified WinGetCreate executable")?;
-        let copy = SubmissionCopy::new(&files)?;
+        let client = std::env::var("WINGET_SUBMIT")
+            .map_err(|_| "WINGET_SUBMIT must name the verified Komac executable")?;
         let status = Command::new(client)
-            .args(["submit", "--no-open"])
-            .arg(&copy.0)
+            .args(["submit", directory, "--yes"])
+            .env(
+                "GITHUB_TOKEN",
+                std::env::var("GH_TOKEN").map_err(|_| "GH_TOKEN is required for submission")?,
+            )
             .status()?;
         // Even if the client fails after creating the PR, a retry will find it.
         if !status.success() {
             return Err(
-                "WinGetCreate submission failed, retry this version after inspecting its result"
-                    .into(),
+                "Komac submission failed, retry this version after inspecting its result".into(),
             );
         }
         for _ in 0..12 {
@@ -424,7 +420,25 @@ pub fn run(args: &[String]) -> Result<()> {
         std::thread::sleep(std::time::Duration::from_secs(5));
     }
     let body = pr["body"].as_str().ok_or("missing PR body")?;
-    let completed = complete_body(body, package, version, &schema, &evidence, cla)?;
+    // Komac creates its own short introduction. Replace only that recognized
+    // generated line with the upstream template, retaining any appended notes.
+    let seeded = if body.starts_with(
+        "### Pull request has been created with [komac](https://github.com/russellbanks/Komac)",
+    ) {
+        let template = gh(
+            &[
+                "api",
+                &format!("repos/{REPO}/contents/.github/PULL_REQUEST_TEMPLATE.md"),
+                "-H",
+                "Accept: application/vnd.github.raw+json",
+            ],
+            None,
+        )?;
+        seed_body(body, &template)?
+    } else {
+        body.to_owned()
+    };
+    let completed = complete_body(&seeded, package, version, &schema, &evidence, cla)?;
     fs::write("winget-pr-body.md", &completed)?;
     if mode == "--submit" && completed.trim_end() != body.trim_end() {
         if std::env::var("WINGET_CHECKED").as_deref() != Ok("true") {
@@ -461,19 +475,14 @@ pub fn run(args: &[String]) -> Result<()> {
 mod tests {
     use super::*;
     #[test]
-    fn temporary_submission_keeps_all_data_and_original_files() {
-        let original = "# yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.28.0.schema.json\n# Keep this note\nPackageIdentifier: Publisher.Tool\nManifestType: version\nManifestVersion: 1.28.0\n";
-        let files = vec![("Publisher.Tool.yaml".into(), original.into())];
-        let copy = SubmissionCopy::new(&files).unwrap();
-        let path = copy.0.clone();
-        let input = fs::read_to_string(path.join("Publisher.Tool.yaml")).unwrap();
-        assert!(!input.contains("yaml-language-server"));
-        assert!(input.contains("# Keep this note"));
-        assert!(input.contains("ManifestVersion: 1.28.0"));
-        assert!(same_manifest(original, &input).unwrap());
-        assert_eq!(files[0].1, original);
-        drop(copy);
-        assert!(!path.exists());
+    fn komac_template_seeding_preserves_same_line_and_later_edits() {
+        let body = "### Pull request has been created with [komac](https://github.com/russellbanks/Komac) v2.17.2 :rocket: Same-line note.\n\nLater note.\n";
+        let seeded = seed_body(body, "## 📖 Description\n## 📦 Manifest Checklist").unwrap();
+        assert!(seeded.contains("Same-line note."));
+        assert!(seeded.contains("Later note."));
+        assert!(!seeded.contains("Pull request has been created"));
+        assert_eq!(seed_body(&seeded, "replacement").unwrap(), seeded);
+        assert!(seed_body(&body.replace("v2.17.2", "custom-version"), "template").is_err());
     }
     #[test]
     fn comparison_accepts_wingetcreate_formatting_but_rejects_changed_content() {

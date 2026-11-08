@@ -110,23 +110,24 @@ jobs:
           name: winget-manifests-${{ steps.release.outputs.tag }}
           path: ${{ runner.temp }}/winget/${{ steps.release.outputs.tag }}/manifests
           if-no-files-found: error
-      - name: Check the official WinGet Create client
+      - name: Check the current stable Komac client
         if: steps.release.outputs.published == 'true'
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           $ErrorActionPreference = 'Stop'
-          $release = gh api repos/microsoft/winget-create/releases/latest | ConvertFrom-Json
-          if ($LASTEXITCODE -ne 0) { throw 'Cannot select WinGetCreate' }
-          $asset = $release.assets | Where-Object name -eq wingetcreate.exe
-          if (!$asset -or $asset.digest -notmatch '^sha256:([0-9a-f]{64})$') { throw 'WinGetCreate checksum unavailable' }
-          $client = "$env:RUNNER_TEMP/wingetcreate.exe"
-          gh release download $release.tag_name --repo microsoft/winget-create --pattern wingetcreate.exe --dir $env:RUNNER_TEMP
-          if ($LASTEXITCODE -ne 0) { throw 'Cannot download WinGetCreate' }
-          if ((Get-FileHash $client -Algorithm SHA256).Hash.ToLower() -ne $asset.digest.Substring(7)) { throw 'WinGetCreate checksum mismatch' }
-          & $client
-          if ($LASTEXITCODE -ne 0) { throw 'WinGetCreate cannot start' }
+          $release = gh api repos/russellbanks/Komac/releases/latest | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot select Komac' }
+          $name = "komac-$($release.tag_name.TrimStart('v'))-x86_64-pc-windows-msvc.exe"
+          $asset = $release.assets | Where-Object name -eq $name
+          if (!$asset -or $asset.digest -notmatch '^sha256:([0-9a-f]{64})$') { throw 'Komac checksum unavailable' }
+          $client = "$env:RUNNER_TEMP/komac.exe"
+          gh release download $release.tag_name --repo russellbanks/Komac --pattern $name --output $client
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot download Komac' }
+          if ((Get-FileHash $client -Algorithm SHA256).Hash.ToLower() -ne $asset.digest.Substring(7)) { throw 'Komac checksum mismatch' }
+          & $client --version
+          if ($LASTEXITCODE -ne 0) { throw 'Komac cannot start' }
       - name: Prepare or complete the WinGet pull request
         if: steps.release.outputs.published == 'true'
         shell: bash
@@ -134,13 +135,13 @@ jobs:
           TAG: ${{ steps.release.outputs.tag }}
           SUBMIT: ${{ inputs.submit || false }}
           GH_TOKEN: ${{ inputs.submit && secrets.WINGET_TOKEN || github.token }}
-          WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_TOKEN }}
           WINGET_CHECKED: 'true'
         run: |
           set -euo pipefail
-          export WINGET_CREATE="$RUNNER_TEMP/wingetcreate.exe"
+          export WINGET_SUBMIT="$RUNNER_TEMP/komac.exe"
           mode=--prepare
           if [ "$SUBMIT" = true ]; then mode=--submit; fi
+          GITHUB_TOKEN="$GH_TOKEN" "$WINGET_SUBMIT" submit "$RUNNER_TEMP/winget/$TAG/manifests/p/PederBergan/Ripscope/${TAG#v}" --dry-run
           cargo run --locked --manifest-path tools/release/Cargo.toml -- winget-submit \
             "$RUNNER_TEMP/winget/$TAG/manifests/p/PederBergan/Ripscope/${TAG#v}" PederBergan.Ripscope "${TAG#v}" "$mode"
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
