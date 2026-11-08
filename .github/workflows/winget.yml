@@ -125,7 +125,7 @@ jobs:
           gh release download $release.tag_name --repo microsoft/winget-create --pattern wingetcreate.exe --dir $env:RUNNER_TEMP
           if ($LASTEXITCODE -ne 0) { throw 'Cannot download WinGetCreate' }
           if ((Get-FileHash $client -Algorithm SHA256).Hash.ToLower() -ne $asset.digest.Substring(7)) { throw 'WinGetCreate checksum mismatch' }
-          & $client --help
+          & $client
           if ($LASTEXITCODE -ne 0) { throw 'WinGetCreate cannot start' }
       - name: Prepare or complete the WinGet pull request
         if: steps.release.outputs.published == 'true'
