@@ -10,7 +10,9 @@ use std::process::Command;
 use std::time::Duration;
 
 const IDENTIFIER: &str = "PederBergan.Ripscope";
-const SCHEMA: &str = "1.28.0";
+// The current stable WinGetCreate SDK accepts schema 1.12 headers. All fields
+// below are supported by that schema; newer headers fail its pre-submit check.
+const SCHEMA: &str = "1.12.0";
 const RELEASES: &str = "https://github.com/pederbe/ripscope/releases";
 
 fn stable_version(version: &str) -> bool {
@@ -374,17 +376,17 @@ mod tests {
         );
         assert_eq!(
             files[0].1,
-            "# yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.28.0.schema.json\n\
+            "# yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.12.0.schema.json\n\
              \n\
              PackageIdentifier: PederBergan.Ripscope\n\
              PackageVersion: 0.2.4\n\
              DefaultLocale: en-US\n\
              ManifestType: version\n\
-             ManifestVersion: 1.28.0\n"
+             ManifestVersion: 1.12.0\n"
         );
         assert_eq!(
             files[1].1,
-            "# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.28.0.schema.json\n\
+            "# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.12.0.schema.json\n\
              \n\
              PackageIdentifier: PederBergan.Ripscope\n\
              PackageVersion: 0.2.4\n\
@@ -399,7 +401,7 @@ mod tests {
              \x20 InstallerUrl: https://github.com/pederbe/ripscope/releases/download/v0.2.4/ripscope-0.2.4-x86_64-windows-msvc.zip\n\
              \x20 InstallerSha256: DD9C28A413ED2EEF10C5780C1250230A8CA4EC22938539E4B3B8CBF2FD4E8C9A\n\
              ManifestType: installer\n\
-             ManifestVersion: 1.28.0\n"
+             ManifestVersion: 1.12.0\n"
         );
         let locale = &files[2].1;
         for line in [
@@ -409,7 +411,7 @@ mod tests {
             "License: MIT OR Apache-2.0\n",
             "Moniker: ripscope\n",
             "ReleaseNotesUrl: https://github.com/pederbe/ripscope/releases/tag/v0.2.4\n",
-            "ManifestType: defaultLocale\nManifestVersion: 1.28.0\n",
+            "ManifestType: defaultLocale\nManifestVersion: 1.12.0\n",
         ] {
             assert!(locale.contains(line), "{line:?} missing from\n{locale}");
         }
