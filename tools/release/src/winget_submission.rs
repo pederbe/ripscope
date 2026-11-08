@@ -10,6 +10,41 @@ use std::{
 type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 const REPO: &str = "microsoft/winget-pkgs";
 
+fn submission_text(text: &str) -> String {
+    // The stable SDK rejects newer schema comment URLs, although the data is
+    // valid. The original files are validated by the current WinGet client.
+    // WinGetCreate restores the headers from ManifestVersion when publishing.
+    let lines: Vec<_> = text
+        .lines()
+        .filter(|line| !line.starts_with("# yaml-language-server: $schema="))
+        .collect();
+    format!("{}\n", lines.join("\n"))
+}
+
+struct SubmissionCopy(std::path::PathBuf);
+
+impl SubmissionCopy {
+    fn new(files: &[(String, String)]) -> Result<Self> {
+        let nonce = std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)?
+            .as_nanos();
+        let path =
+            std::env::temp_dir().join(format!("winget-submit-{}-{nonce}", std::process::id()));
+        fs::create_dir(&path)?;
+        let copy = Self(path);
+        for (name, text) in files {
+            fs::write(copy.0.join(name), submission_text(text))?;
+        }
+        Ok(copy)
+    }
+}
+
+impl Drop for SubmissionCopy {
+    fn drop(&mut self) {
+        let _ = fs::remove_dir_all(&self.0);
+    }
+}
+
 fn gh(args: &[&str], input: Option<&Value>) -> Result<String> {
     let mut command = Command::new("gh");
     command
@@ -258,13 +293,18 @@ pub fn run(args: &[String]) -> Result<()> {
     }
     let mut number = find_pr(package, version)?;
     if number.is_none() && mode == "--submit" {
+        if schema != "1.28.0" {
+            return Err("new submissions require the repository's current 1.28 schema; regenerate the manifests before submitting".into());
+        }
         if std::env::var("WINGET_CHECKED").as_deref() != Ok("true") {
             return Err("Windows manifest checks have not passed".into());
         }
         let client = std::env::var("WINGET_CREATE")
             .map_err(|_| "WINGET_CREATE must name the verified WinGetCreate executable")?;
+        let copy = SubmissionCopy::new(&files)?;
         let status = Command::new(client)
-            .args(["submit", "--no-open", directory])
+            .args(["submit", "--no-open"])
+            .arg(&copy.0)
             .status()?;
         // Even if the client fails after creating the PR, a retry will find it.
         if !status.success() {
@@ -349,6 +389,13 @@ pub fn run(args: &[String]) -> Result<()> {
         if !same_manifest(expected, &actual)? {
             return Err("existing PR manifest content differs from the checked release".into());
         }
+        let kind = field(expected, "ManifestType").ok_or("missing manifest type")?;
+        let header = format!(
+            "# yaml-language-server: $schema=https://aka.ms/winget-manifest.{kind}.{schema}.schema.json"
+        );
+        if !actual.lines().any(|line| line == header) {
+            return Err("submitted manifest is missing its matching schema header".into());
+        }
     }
     let mut cla = false;
     for attempt in 0..12 {
@@ -413,6 +460,21 @@ pub fn run(args: &[String]) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn temporary_submission_keeps_all_data_and_original_files() {
+        let original = "# yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.28.0.schema.json\n# Keep this note\nPackageIdentifier: Publisher.Tool\nManifestType: version\nManifestVersion: 1.28.0\n";
+        let files = vec![("Publisher.Tool.yaml".into(), original.into())];
+        let copy = SubmissionCopy::new(&files).unwrap();
+        let path = copy.0.clone();
+        let input = fs::read_to_string(path.join("Publisher.Tool.yaml")).unwrap();
+        assert!(!input.contains("yaml-language-server"));
+        assert!(input.contains("# Keep this note"));
+        assert!(input.contains("ManifestVersion: 1.28.0"));
+        assert!(same_manifest(original, &input).unwrap());
+        assert_eq!(files[0].1, original);
+        drop(copy);
+        assert!(!path.exists());
+    }
     #[test]
     fn comparison_accepts_wingetcreate_formatting_but_rejects_changed_content() {
         let original = "PackageIdentifier: Publisher.Tool\nPackageVersion: 1.2.3\nInstallerType: portable\nInstallers:\n- Architecture: x64\n  InstallerSha256: ABCDEF123\n";
