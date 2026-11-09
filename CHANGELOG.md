@@ -5,7 +5,7 @@ All notable changes are recorded here. The format follows
 [Semantic Versioning](https://semver.org/). Before 1.0, a minor version may change the
 index format or command-line behavior, and its entry says so.
 
-## [Unreleased]
+## [0.2.7] - 2026-11-09
 
 ### Changed
 
@@ -25,6 +25,30 @@ index format or command-line behavior, and its entry says so.
 
 - Dispatch package delivery, Windows package checks, website refresh and release
   notes directly after automated publication, using their existing workflows.
+
+### Other changes
+
+- Update taiki-e/install-action digest to cfdb7ed (#116) ([1b336f5](https://github.com/pederbe/ripscope/commit/1b336f5))
+- ci: Synchronize the WinGet fork with a restricted credential (#115) ([3346843](https://github.com/pederbe/ripscope/commit/3346843))
+- ci: Submit current WinGet schemas with Komac (#114) ([11fe2df](https://github.com/pederbe/ripscope/commit/11fe2df))
+- ci: Preserve current schemas through stable WinGetCreate (#113) ([40b633a](https://github.com/pederbe/ripscope/commit/40b633a))
+- ci: Download WinGetCreate through the authenticated CLI (#112) ([63b5828](https://github.com/pederbe/ripscope/commit/63b5828))
+- ci: Submit and complete WinGet releases automatically (#111) ([ca97dba](https://github.com/pederbe/ripscope/commit/ca97dba))
+- Update quay.io/pypa/manylinux_2_28_x86_64:latest Docker digest to 9555ba6 (#110) ([caa4ea9](https://github.com/pederbe/ripscope/commit/caa4ea9))
+- Select release-tool checks only for their inputs (#109) ([a05593c](https://github.com/pederbe/ripscope/commit/a05593c))
+- Update daily dependencies (#108) ([c0b29ce](https://github.com/pederbe/ripscope/commit/c0b29ce))
+- Update daily dependencies (#106) ([00a5c8b](https://github.com/pederbe/ripscope/commit/00a5c8b))
+- Update daily dependencies (#105) ([c4413a2](https://github.com/pederbe/ripscope/commit/c4413a2))
+- Prepare cargo-binstall discovery and stable Cargo installation (#104) ([f687856](https://github.com/pederbe/ripscope/commit/f687856))
+- Remove redundant reads from release recovery (#103) ([1e8cd3b](https://github.com/pederbe/ripscope/commit/1e8cd3b))
+- Classify CI changes in one paths-filter pass (#102) ([cc11973](https://github.com/pederbe/ripscope/commit/cc11973))
+- Simplify generated changelog checks and suppress duplicate CI (#100) ([b9f1954](https://github.com/pederbe/ripscope/commit/b9f1954))
+- Select existing release-tool checks without application rebuilds (#99) ([536fe06](https://github.com/pederbe/ripscope/commit/536fe06))
+- Record published changelog for v0.2.6 (#98) ([fa3f6fa](https://github.com/pederbe/ripscope/commit/fa3f6fa))
+- Dispatch automatic release follow-ups explicitly (#97) ([83f37c6](https://github.com/pederbe/ripscope/commit/83f37c6))
+- Record published changelog for v0.2.6 (#96) ([9084765](https://github.com/pederbe/ripscope/commit/9084765))
+
+[Full comparison](https://github.com/pederbe/ripscope/compare/v0.2.6...v0.2.7)
 
 ## [0.2.6] - 2026-11-04
 
@@ -272,7 +296,7 @@ and the [benchmarks](https://ripscope.com/docs/reference/benchmarks).
   SHA-256 checksum.
 - Source builds with Cargo.
 
-[Unreleased]: https://github.com/pederbe/ripscope/compare/v0.2.6...HEAD
+[Unreleased]: https://github.com/pederbe/ripscope/compare/v0.2.7...HEAD
 [0.2.0]: https://github.com/pederbe/ripscope/releases/tag/v0.2.0
 [0.1.1]: https://github.com/pederbe/ripscope/releases/tag/v0.1.1
 [0.1.0]: https://github.com/pederbe/ripscope/releases/tag/v0.1.0
