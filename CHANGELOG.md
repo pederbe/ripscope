@@ -7,6 +7,10 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
+### Changed
+
+- Document cargo-binstall installation from the published Linux and Windows binaries.
+
 ### Fixed
 
 - Refuse pipes and devices used as file lists, live source files or indexes without
