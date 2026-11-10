@@ -15,8 +15,8 @@ Results are the same rows the searches give, with Ripscope's paths and lines. Ot
 requests, such as hover and completion, are not answered.
 
 **Requirements:** the `ripscope` executable on PATH, from the
-[installer](../getting-started/installation.md) or a system package. It has been
-checked with Helix 25.07.1 and Neovim 0.12.6 on Linux and Windows.
+[installer](../getting-started/installation.md) or a system package. It is checked
+with Helix and Neovim on Linux and Windows.
 
 ## Helix
 

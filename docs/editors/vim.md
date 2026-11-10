@@ -4,7 +4,7 @@ Ripscope works with Vim's built-in cscope support. Its plugin connects Vim to yo
 project as soon as you open a C file, so `:cs find` works right away.
 
 **Requirements:** Vim with `+cscope` and `+quickfix` (and `+job` on Windows). The
-workflows are checked with Vim 9.2.1164 on Linux and Windows 11.
+workflows are checked with Vim on Linux and Windows.
 
 ## Set up in one step
 
