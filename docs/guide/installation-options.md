@@ -135,6 +135,13 @@ use the exact-tag/source
 
 ## Cargo installation
 
+If you already use [cargo-binstall](https://github.com/cargo-bins/cargo-binstall),
+install the published Linux or Windows binary without compiling:
+
+```sh
+cargo binstall ripscope
+```
+
 To build and install the latest stable crates.io release:
 
 ```sh
@@ -144,9 +151,10 @@ cargo install --locked ripscope
 Cargo installs the executable into `~/.cargo/bin` by default. Make sure that
 directory is on your `PATH`, including the path your editor uses.
 
-You need a recent stable [Rust toolchain](https://rustup.rs/) and a C compiler
-for bundled SQLite: GCC or Clang on Linux; Microsoft's MSVC Build Tools and the
-Windows SDK on Windows. Use an x64 developer shell for an MSVC build.
+For source builds, you need a recent stable [Rust toolchain](https://rustup.rs/)
+and a C compiler for bundled SQLite. Use GCC or Clang on Linux. On Windows,
+install Microsoft's MSVC Build Tools and the Windows SDK, then use an x64
+developer shell.
 
 ```sh
 git clone https://github.com/pederbe/ripscope.git
@@ -160,15 +168,11 @@ To build the development version instead of the stable release:
 cargo install --locked --git https://github.com/pederbe/ripscope.git
 ```
 
-Cargo installs the executable only. Add your editor's integration using
+These commands install the executable only. Add your editor's integration using
 [your plugin manager](../getting-started/installation.md#your-plugin-manager).
 The plugins reuse an executable on `PATH`. Updating a plugin leaves that
-executable under Cargo's control. Run `cargo install --locked ripscope` again
+executable under Cargo's control. Run the same installation command again
 to update it, or `cargo uninstall ripscope` to remove it.
-
-The cargo-binstall mappings in this source tree need a new crates.io release
-before they are available to ordinary binary installations. For now, use the
-[archives](#archives-and-system-packages) to install a prebuilt executable.
 
 A binary built on a newer Linux distribution can require that distribution's
 newer glibc. The pinned archive recipes and their inspection limits are documented
