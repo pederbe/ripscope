@@ -1571,4 +1571,61 @@ mod tests {
         assert!(page.contains("href=\"guide#example\""));
         assert!(page.contains("Skip to content"));
     }
+
+    /// Exact phrases the release-number check lets through: another product's version
+    /// that a reader needs, such as a minimum requirement, and sample data.
+    const ALLOWED_VERSIONS: &[&str] = &[];
+
+    /// The user documentation describes the current release, so it names none. The
+    /// changelog, contributor and architecture chapters and the measurement pages may.
+    #[test]
+    fn user_documentation_names_no_release_number() {
+        let root = Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("../..")
+            .canonicalize()
+            .unwrap();
+        let summary = fs::read_to_string(root.join("docs/SUMMARY.md")).unwrap();
+        let user = summary.split("\n# Project\n").next().unwrap();
+        let mut files = vec![
+            PathBuf::from("README.md"),
+            PathBuf::from("docs/linux-install.md"),
+            PathBuf::from("docs/windows-install.md"),
+        ];
+        files.extend(INSTALLERS.map(PathBuf::from));
+        files.extend(
+            chapters(user)
+                .unwrap()
+                .into_iter()
+                .map(|chapter| Path::new("docs").join(chapter.source))
+                .filter(|path| !path.ends_with("benchmarks.md"))
+                .filter(|path| !path.ends_with("benchmark-answers.md")),
+        );
+        let number = Regex::new(r"\bv?[0-9]+\.[0-9]+\.[0-9]+\b").unwrap();
+        let mut found = Vec::new();
+        for file in files {
+            // A chapter that includes another file is read as the book shows it.
+            let text = expand(&root, &root.join(&file), &mut Vec::new()).unwrap();
+            for (index, line) in text.lines().enumerate() {
+                let mut line = line.to_owned();
+                for phrase in ALLOWED_VERSIONS {
+                    line = line.replace(phrase, "");
+                }
+                if let Some(token) = number.find(&line) {
+                    found.push(format!(
+                        "{}:{}: {}",
+                        file.display(),
+                        index + 1,
+                        token.as_str()
+                    ));
+                }
+            }
+        }
+        assert!(
+            found.is_empty(),
+            "user documentation names a release number. Remove the number, or add its \
+             exact phrase to ALLOWED_VERSIONS when it is another product's version or \
+             sample data:\n{}",
+            found.join("\n")
+        );
+    }
 }
