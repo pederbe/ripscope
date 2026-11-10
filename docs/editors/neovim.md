@@ -5,8 +5,8 @@ It keeps one Ripscope session per project through the [JSON interface](../guide/
 so paths with spaces and Unicode work. It needs no cscope executable, shell or
 Python.
 
-**Requirements:** Neovim 0.10 or newer on Linux or Windows. Workflow checks cover
-Neovim 0.12.5 on Windows and a 0.13.0 development build on Linux, with lazy.nvim too.
+**Requirements:** Neovim 0.10 or newer on Linux or Windows. The workflows are
+checked with Neovim on Linux and Windows, with lazy.nvim too.
 
 ## Set up in one step
 
