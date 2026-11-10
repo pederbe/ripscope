@@ -41,8 +41,10 @@ links consistent with the actual release.
 Run `scripts/build-site.sh --dev` from a development checkout. The combined output
 is `target/site`, with the landing page at `/` and documentation at `/docs/`.
 The build requires Rust and mdBook 0.5.4 (`MDBOOK` can select an installed binary).
-It never deploys. `--docs-only` checks documentation during page development;
-it cannot be combined with a deployment build.
+It never deploys. `scripts/build-site.sh --dev --docs-only` checks documentation
+during page development. It omits the landing page and skips links to `/`, while
+checking the documentation's other internal links and anchors. It cannot be
+combined with a deployment build.
 
 `scripts/build-site.sh --deploy` requires a clean checkout whose root package version
 already has its `vVERSION` tag, so the page's download links exist. Cloudflare
