@@ -79,35 +79,55 @@ pub(super) fn run_in(
 }
 
 const HELP: &str = "\
-ripscope: cscope's searches for C, from an index kept up to date
+Ripscope finds definitions, callers and assignments in C code, as cscope does.
+
+Examples:
+  ripscope -R -L -1 main     Where is main defined? The first search indexes
+                             the C files in this directory and below.
+  ripscope -L -3 malloc      Who calls malloc?
 
 Usage:
-  ripscope -b [-R] [-k] [-u] [-I DIR]... [-f INDEX] [--] [SOURCE...]
-  ripscope -b [-R] [-k] [-u] [-I DIR]... [-f INDEX] -i LIST
-  ripscope -L [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json] [-f INDEX] -FIELD PATTERN
-  ripscope -l [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json | --vim-errors] [-f INDEX]
-  ripscope --verify [-d] [-f INDEX]
+  ripscope -L -N PATTERN [OPTIONS]        Run search N and print its rows
+  ripscope -l [OPTIONS]                   Answer a search per line, for editors
+  ripscope -b [OPTIONS] [--] [SOURCE...]  Build or update the index, then stop
+  ripscope --verify [-d] [-f INDEX]       Check the index
   ripscope --project PATH [-f INDEX] [-kR] [-i LIST] [FILE...]
-  ripscope lsp
-  ripscope -h | --help
-  ripscope -V | --version
+                                          Report a file's project, as JSON
+  ripscope lsp                            Serve the Language Server Protocol
 
-Fields: 0 symbol, 1 definition, 2 functions called by, 3 functions calling, 4 text,
-5 text (as cscope's line mode), 6 egrep pattern, 7 file, 8 files including,
-9 assignments to.
+Searches:
+  -0  uses of a symbol                    -5  text, as in cscope's line mode
+  -1  definitions                         -6  a regular expression
+  -2  functions called by a function      -7  files by name
+  -3  callers of a function               -8  files that include a file
+  -4  text                                -9  assignments to a symbol
 
-The index is ripscope.db unless -f names another. -b builds it from the sources given,
-or those a list names (-i), or else cscope.files if present, or else the C sources in
-this directory (-R: and below); each update applies the same rule again. -L and -l
-update the index first unless -d, and a session updates it again before the first query
-after its sources change. --auto-refresh updates despite -d and --no-auto-refresh never
-does, in either argument order. -u reads every file again at startup and on r. -bu
-repairs a damaged index. In a session, send the field and the pattern on one line
-(1main), r to update, q to quit. --project reports, as JSON for editor integrations,
-the project of a file: its root, index in the cache directory, selection, and whether
-that index is published with that selection. After it, an index build's -f names
-another index and its -k, -R, -i and files other sources. lsp serves the Language
-Server Protocol on standard input and output, in each file's project.
+Options:
+  -R                 Include the C files in subdirectories
+  -d                 Answer from the index as it is, without updating it
+  -f INDEX           Use this index file instead of ripscope.db
+  -C                 Ignore ASCII case
+  --json             Print each row as a JSON array (-L, -l)
+  -k                 Leave out the system headers in /usr/include
+  -I DIR             Look for included headers in DIR too (repeatable)
+  -i LIST            Read the source file names from the file LIST
+  -u                 Read every file again. With -b, repairs a damaged index
+  -P PATH            Text searches read and show relative names under PATH
+  --auto-refresh     Update the index even with -d (-L, -l)
+  --no-auto-refresh  Never update the index, as -d (-L, -l)
+  --vim-errors       Show problems through Vim's prompt (-l, not with --json)
+  -h, --help         Show this help
+  -V, --version      Show the version
+
+-L and -l bring the index up to date before they answer. The index remembers
+its sources. -R, -k, -I and -i choose them when a search first makes the
+index, and afterwards only -b changes them, so repeat them there. Without
+SOURCE or -i, -b takes the files cscope.files names, or else the C files in
+this directory. In a session (-l), send the search number and pattern on one
+line (1main), r to update and q to quit. cscope's -q, -e, -U, -v, -c, -p N
+and -F FILE are accepted and change nothing. -T and -s are refused.
+
+Full reference: https://ripscope.com/docs/reference/cli
 ";
 
 /// `--project PATH`, for editor integrations: one JSON object naming the Project's
