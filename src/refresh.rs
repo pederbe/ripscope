@@ -140,7 +140,7 @@ impl Sources {
             Self::List(list) => Chosen::List(list),
             Self::Automatic { recursive } => {
                 let list = root.join(path_of(AUTOMATIC_LIST));
-                if list.is_dir() || std::fs::File::open(&list).is_ok() {
+                if list.is_dir() || crate::files::open(&list).is_ok() {
                     Chosen::List(AUTOMATIC_LIST)
                 } else {
                     Chosen::Directory {
@@ -694,6 +694,7 @@ impl Work<'_, '_> {
     /// and gives each of those files its stored unit. Splitting units into blocks took most
     /// of the time this thread spent storing them, so each run of them is split on every
     /// core first, a run at a time to bound the blocks held at once.
+    #[cfg_attr(feature = "hotpath", hotpath::measure)]
     fn store_units(&mut self, probes: &[Probe]) -> Result<Vec<Option<i64>>, RefreshError> {
         profile_span!("refresh_store_units");
         let mut stored = Vec::with_capacity(probes.len());
@@ -912,7 +913,7 @@ pub(crate) fn check_sources(selection: &Selection) -> Result<(), RefreshError> {
             }
             return false;
         }
-        match std::fs::File::open(&full) {
+        match crate::files::open_regular(&full) {
             Ok(_) => true,
             Err(error) => {
                 report.unreadable.push((name, error.to_string()));
@@ -946,7 +947,7 @@ pub(crate) fn check_sources(selection: &Selection) -> Result<(), RefreshError> {
 
 /// The file list `list`, read from `root`.
 fn read_list(root: &Path, list: &[u8]) -> Result<ListContents, RefreshError> {
-    let bytes = std::fs::read(root.join(path_of(list))).map_err(|error| {
+    let bytes = crate::files::read(&root.join(path_of(list))).map_err(|error| {
         RefreshError::Selection(format!(
             "cannot read the file list {}: {error}",
             String::from_utf8_lossy(list)
@@ -1362,6 +1363,9 @@ pub(crate) fn entry_of(full: &Path) -> std::io::Result<Entry> {
         .access_mode(0)
         .custom_flags(Flags::FILE_FLAG_BACKUP_SEMANTICS.bits())
         .open(full)?;
+    if !winx::winapi_util::file::typ(&file)?.is_disk() {
+        return Ok(Entry::Other);
+    }
     let information = winx::winapi_util::file::information(&file)?;
     let nanoseconds = |time: Option<u64>| {
         time.and_then(|time| time.checked_sub(FROM_1601))
@@ -1397,7 +1401,7 @@ fn read_bytes(full: &Path, opened: Option<std::fs::File>) -> std::io::Result<Vec
     use std::os::windows::io::AsHandle;
     use winx::file::{AccessMode, Flags, ShareMode};
     let Some(file) = opened else {
-        return std::fs::read(full);
+        return crate::files::read(full);
     };
     let mut reader = winx::file::reopen_file(
         file.as_handle(),
@@ -1412,7 +1416,7 @@ fn read_bytes(full: &Path, opened: Option<std::fs::File>) -> std::io::Result<Vec
 
 #[cfg(not(windows))]
 fn read_bytes(full: &Path, _opened: Option<std::fs::File>) -> std::io::Result<Vec<u8>> {
-    std::fs::read(full)
+    crate::files::read(full)
 }
 
 #[cfg(not(any(unix, windows)))]

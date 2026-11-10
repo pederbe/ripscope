@@ -2020,14 +2020,14 @@ enum FileState {
 /// What is at `path`, judged from the file's first bytes alone: a SQLite header with
 /// ripscope's application id is an index.
 fn state_at(path: &Path) -> Result<FileState, StoreError> {
-    let mut file = match std::fs::File::open(path) {
+    let mut file = match crate::files::open(path) {
         Ok(file) => file,
         Err(error) if error.kind() == std::io::ErrorKind::NotFound => {
             return Ok(FileState::Absent);
         }
         Err(error) => return Err(StoreError::Io(error)),
     };
-    if !file.metadata().map_err(StoreError::Io)?.is_file() {
+    if !crate::files::is_regular(&file).map_err(StoreError::Io)? {
         return Ok(FileState::Foreign);
     }
     let mut header = [0u8; 100];

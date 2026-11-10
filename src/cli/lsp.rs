@@ -588,7 +588,7 @@ fn folders(list: &Value) -> Option<Vec<PathBuf>> {
 
 /// FILE's text, as best it reads as UTF-8.
 fn read(file: &Path) -> io::Result<String> {
-    std::fs::read(file).map(|bytes| String::from_utf8_lossy(&bytes).into_owned())
+    crate::files::read(file).map(|bytes| String::from_utf8_lossy(&bytes).into_owned())
 }
 
 /// The C names in LINE, in order.

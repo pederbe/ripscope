@@ -5,6 +5,21 @@ All notable changes are recorded here. The format follows
 [Semantic Versioning](https://semver.org/). Before 1.0, a minor version may change the
 index format or command-line behavior, and its entry says so.
 
+## [Unreleased]
+
+### Fixed
+
+- Refuse pipes and devices used as file lists, live source files or indexes without
+  waiting for input. Symbolic links to regular files remain supported.
+- Avoid repeated scans when recording navigation answers for source lines with many
+  distinct names, preserving the index format and query results.
+
+### Development
+
+- Validate query fields in reference recapture and constrain intended-answer fixture
+  reconstruction to its selected directories.
+- Add opt-in Hotpath timing for index posting construction.
+
 ## [0.2.7] - 2026-11-09
 
 ### Changed

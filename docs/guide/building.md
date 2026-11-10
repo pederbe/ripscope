@@ -68,6 +68,8 @@ src/util.c
 - A name the list gives twice is indexed twice, as cscope does.
 - The list is read again at every update, so editing it changes what is indexed.
   Reading a list from standard input (`-i -`) is not supported.
+- File lists must be regular files or symbolic links to them. Pipes and devices,
+  including process-substitution paths, are refused.
 
 ## Include directories
 

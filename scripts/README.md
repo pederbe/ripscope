@@ -84,6 +84,27 @@ run the process-group deadline for real, with a stand-in for the reference:
 cargo test --locked --example scanner-probes --example query-probes --example compass-scale
 ```
 
+## Index posting profiles
+
+Hotpath timing is optional and disabled in normal builds. It measures index posting
+construction, including each analysis unit's split into blocks. Build with the feature,
+then index the fixed query fixture and check the resulting index:
+
+```sh
+cargo build --locked --release --features hotpath --target x86_64-unknown-linux-gnu
+HOTPATH_METRICS_SERVER_OFF=true HOTPATH_OUTPUT_FORMAT=json-pretty \
+  HOTPATH_OUTPUT_PATH=/var/tmp/ripscope-postings.json \
+  target/x86_64-unknown-linux-gnu/release/ripscope -buk -f /var/tmp/ripscope-postings.db \
+  tests/fixtures/queries/03-calls/calls.c
+HOTPATH_METRICS_SERVER_OFF=true HOTPATH_OUTPUT_PATH=/var/tmp/ripscope-verify.txt \
+  target/x86_64-unknown-linux-gnu/release/ripscope --verify -f /var/tmp/ripscope-postings.db
+```
+
+The explicit Linux target keeps the application's static relocation flags off the
+profiler's compiler plugins. The JSON report contains posting split and storage timing. Keep
+instrumented diagnostics separate from ordinary release-build timing comparisons.
+Rebuild without `--features hotpath` for those comparisons.
+
 ## Release preparation
 
 The `tools/release` crate builds local archives with the pinned profiles beside it,

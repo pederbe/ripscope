@@ -1095,9 +1095,7 @@ fn events_lost_from_a_full_queue_leave_the_next_query_to_refresh() {
 
 #[cfg(unix)]
 #[test]
-fn an_edit_made_while_automatic_refresh_waits_for_its_list_is_read() {
-    use std::os::unix::fs::OpenOptionsExt;
-    use std::time::Instant;
+fn automatic_refresh_refuses_a_pipe_list_and_retries_a_regular_list() {
     let work = tempfile::tempdir().unwrap();
     write(work.path().join("a.c"), "int Alpha;\n").unwrap();
     write(work.path().join("files"), "a.c\n").unwrap();
@@ -1113,30 +1111,12 @@ fn an_edit_made_while_automatic_refresh_waits_for_its_list_is_read() {
             .status
             .success()
     );
-    session.send(b"1Beta\n");
-    // The real Selection rule's FIFO holds Refresh after it began and before source
-    // capture. A nonblocking writer connects only once Refresh is reading that list.
-    let start = Instant::now();
-    let mut list = loop {
-        match std::fs::OpenOptions::new()
-            .write(true)
-            .custom_flags(rustix::fs::OFlags::NONBLOCK.bits() as i32)
-            .open(work.path().join("files"))
-        {
-            Ok(list) => break list,
-            Err(error) => {
-                assert!(
-                    start.elapsed() < Duration::from_secs(20),
-                    "Refresh did not read the list: {error}"
-                );
-                std::thread::sleep(Duration::from_millis(1));
-            }
-        }
-    };
     write(work.path().join("a.c"), "int Beta;\n").unwrap();
-    list.write_all(b"a.c\n").unwrap();
-    drop(list);
-    session.expect(b"cscope: 1 lines\na.c Beta 1 int Beta;\n>> ");
+    session.send(b"1Alpha\n");
+    session.expect_line(|line| {
+        line.contains("cannot read the file list files") && line.contains("not a regular file")
+    });
+    session.expect(b"cscope: 1 lines\na.c Alpha 1 int Alpha;\n>> ");
     std::fs::remove_file(work.path().join("files")).unwrap();
     write(work.path().join("files"), "a.c\n").unwrap();
     write(work.path().join("a.c"), "int Gamma;\n").unwrap();
