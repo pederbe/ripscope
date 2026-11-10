@@ -106,6 +106,11 @@ cargo clippy --locked --all-targets --manifest-path tools/site/Cargo.toml -- -D 
 cargo test --locked --manifest-path tools/site/Cargo.toml
 ```
 
+The tests also read the README, the user chapters of the book and the install scripts,
+and fail when one names a release number such as `1.2.3`. Remove the number, or add
+its exact phrase to `ALLOWED_VERSIONS` in `src/main.rs` when it is another product's
+version or sample data.
+
 Combined development and deployment builds also copy the canonical root `install.sh`
 and `install.ps1` to the site root. Documentation-only builds omit those scripts.
 `--list-inputs` includes both canonical installers for the public source closure.
