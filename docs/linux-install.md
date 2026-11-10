@@ -6,7 +6,7 @@ its notices. It requires the GNU loader and system C libraries, including
 
 ## Installer
 
-After a release is published, the installer downloads its archive and sidecar
+The installer downloads the latest release's archive and sidecar
 SHA-256 checksum, verifies every archive file, and replaces the executable by
 renaming a staged file on the destination filesystem:
 
@@ -15,8 +15,8 @@ curl -fsSL https://ripscope.com/install.sh | sh
 ```
 
 It needs curl, GNU tar, gzip and ordinary GNU coreutils. The default destination
-is `~/.local/bin/ripscope`. Set `RIPSCOPE_VERSION` to select a version,
-`RIPSCOPE_INSTALL_DIR` for another directory, or `RIPSCOPE_RELEASES` for an
+is `~/.local/bin/ripscope`. Set `RIPSCOPE_INSTALL_DIR` for another directory,
+or `RIPSCOPE_RELEASES` for an
 explicit mirror. An HTTPS mirror must keep redirects on HTTPS. The checksum
 checks the download against the release's checksum, and the separate attestation
 check in [release preparation](linux-release.md#attestation-verification) checks
@@ -55,12 +55,15 @@ and project indexes and source are untouched.
 
 The `.deb` and `.rpm` contain the same inspected executable as the tar archive.
 They place it in `/usr/bin/ripscope` and retain notices and editor source under
-`/usr/share/ripscope`. Download the package and its `.sha256` file from the chosen
-release, check it with `sha256sum -c`, then install with your package manager:
+`/usr/share/ripscope`. Download the package and its `.sha256` file from the
+[latest release](https://github.com/pederbe/ripscope/releases/latest) into an empty
+directory, check it with `sha256sum -c`, then install with your package manager:
 
 ```sh
+sha256sum -c ripscope_*_amd64.deb.sha256 &&
 sudo apt install ./ripscope_*_amd64.deb
 # Or, on an RPM distribution:
+sha256sum -c ripscope-*.x86_64.rpm.sha256 &&
 sudo dnf install ./ripscope-*.x86_64.rpm
 ```
 
@@ -73,8 +76,8 @@ Source builds need Rust/Cargo and a C compiler for bundled SQLite. On Linux,
 the ordinary command is:
 
 ```sh
-cargo build --release --locked
-./target/release/ripscope --help
+cargo install --locked ripscope
+ripscope --help
 ```
 
 A binary built against a newer host glibc can require that version at runtime.

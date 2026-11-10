@@ -18,7 +18,7 @@ list. It installs the plugin and the `ripscope` executable.
 ```
 
 The `release` branch holds the latest release, and `:RipscopeInstall` installs the
-executable of that same version.
+latest executable.
 
 Or run the [installer](../getting-started/installation.md). It installs the
 executable and puts the plugin where Neovim loads packages by itself, so there is
@@ -72,7 +72,7 @@ picks for a file.
 | `:RipscopeFind FIELD PATTERN` | Search. `FIELD` is a number or letter (`s g d c t e f i a`). The pattern is the rest of the line. |
 | `:RipscopeBuild` | Update the current project's index now (or build it), in the background. |
 | `:RipscopeLog` | Show the last operation's output. |
-| `:RipscopeInstall` | Install the `ripscope` executable of the plugin's version, when it is missing or the one the installer put there is older. `:RipscopeInstall!` installs it anyway. |
+| `:RipscopeInstall` | Install the latest `ripscope` executable when it is missing or the one the installer put there needs updating. `:RipscopeInstall!` installs it anyway. |
 
 | Field | Letter | Finds |
 | --- | --- | --- |

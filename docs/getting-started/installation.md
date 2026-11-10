@@ -66,7 +66,7 @@ installed by your package manager.
 ## Your plugin manager
 
 One line installs the editor plugin. If Ripscope is not already installed, its
-build step also downloads the matching executable.
+build step also downloads the latest executable.
 
 | Editor | Add this |
 | --- | --- |

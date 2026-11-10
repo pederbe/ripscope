@@ -16,7 +16,7 @@ Plug 'pederbe/ripscope', { 'branch': 'release', 'do': ':RipscopeInstall' }
 ```
 
 The `release` branch holds the latest release, and `:RipscopeInstall` installs the
-executable of that same version.
+latest executable.
 
 Or run the [installer](../getting-started/installation.md). It installs the
 executable and puts the plugin where Vim loads packages by itself, so there is
@@ -89,7 +89,7 @@ nnoremap <Leader>ca :cs find a <C-R><C-W><CR>
 | `:RipscopeConnect` | Connect to the current file's project, indexing it first if needed. |
 | `:RipscopeBuild` | Update the index now (or build it), then connect. |
 | `:RipscopeDisconnect` | Close Ripscope's connection. |
-| `:RipscopeInstall` | Install the `ripscope` executable of the plugin's version, when it is missing or the one the installer put there is older. `:RipscopeInstall!` installs it anyway. |
+| `:RipscopeInstall` | Install the latest `ripscope` executable when it is missing or the one the installer put there needs updating. `:RipscopeInstall!` installs it anyway. |
 
 Vim searches one project at a time, the project of the first C file you open.
 `:RipscopeConnect` switches to the current file's project. Ripscope leaves Vim alone

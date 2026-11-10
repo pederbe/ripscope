@@ -26,8 +26,8 @@ On Emacs 29, use this line instead:
 The `release` branch holds the latest release. `:rev :newest` takes that branch as it
 is, because `use-package`'s own release lookup cannot find the package in
 `contrib/emacs` on Emacs 31.1. The next time Emacs starts, it installs the package, and
-`ripscope-setup` installs the `ripscope` executable of the same version in the
-background when it is missing, or when the one the installer put there is older.
+`ripscope-setup` installs the latest `ripscope` executable in the
+background when it is missing, or when the one the installer put there needs updating.
 `M-x ripscope-install` does that too.
 
 Or run the [installer](../getting-started/installation.md). It installs the

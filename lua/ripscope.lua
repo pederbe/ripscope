@@ -321,8 +321,8 @@ function M.build()
   end)
 end
 
--- Installs the executable of this checkout's version with the repository's installer,
--- which leaves a ripscope of that version or newer alone, and one it did not put there,
+-- Installs the latest executable with the repository's installer,
+-- which leaves a current ripscope alone, and one it did not put there,
 -- unless FORCE is set.
 function M.install(force)
   local source = debug.getinfo(1, 'S').source:sub(2)

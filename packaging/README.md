@@ -20,16 +20,15 @@ a conda channel. Generating recipes does not publish a package.
 
 ## Prepare additional recipes
 
-First select a validated archive and independently verify its release checksum
+Use the latest validated Linux release archive and independently verify its checksum
 and, when available, its attestation. The preparation command records the bytes
-you select. It does not check where they came from. Its version must
-match the archive's filename and executable. Use a new output directory whose
+you provide. It does not check where they came from. It derives the package version
+from the archive's filename. Use a new output directory whose
 parent exists:
 
 ```sh
 cargo run --locked --example prepare-packages -- \
-  --version 0.1.0 \
-  --archive /path/to/ripscope-0.1.0-x86_64-linux-gnu.tar.gz \
+  --archive /path/to/latest-release/ripscope-*-x86_64-linux-gnu.tar.gz \
   --out /path/to/new-recipes
 ```
 
@@ -132,5 +131,5 @@ submission.
 ## AUR template
 
 The preparation command does not use `templates/PKGBUILD` and generates no `aur/`
-directory. To use the template, pin it to the selected release archive, generate
+directory. To use the template, fill its metadata from the latest validated release archive, generate
 `.SRCINFO` and repeat package creation, installed checks and removal checks.

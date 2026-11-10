@@ -1,11 +1,11 @@
 #!/bin/sh
 # curl -fsSL https://ripscope.com/install.sh | sh
 # Uninstall: curl -fsSL https://ripscope.com/install.sh | sh -s -- --uninstall
-# Settings: RIPSCOPE_VERSION, RIPSCOPE_INSTALL_DIR, RIPSCOPE_RELEASES (mirror),
+# Settings: RIPSCOPE_INSTALL_DIR, RIPSCOPE_RELEASES (mirror),
 # RIPSCOPE_EDITORS (all, the default, or none to leave the editors alone).
 # From a checkout, as the editors' install commands run it: sh install.sh --plugin
-# installs the checkout's version for its plugins, unless the ripscope found is that
-# version or newer, or not one this installer put there. --plugin --force installs anyway.
+# installs the latest release, unless it is already installed or the ripscope found
+# is not one this installer put there. --plugin --force installs anyway.
 # The complete function must arrive before installation can begin.
 ripscope_install() (
     set -eu
@@ -69,27 +69,11 @@ ripscope_install() (
         case $0 in */install.sh|install.sh) ;; *) fail '--plugin runs the install.sh of a checkout.' ;; esac
         checkout=$(cd "$(dirname "$0")" && pwd -P)
         [ -f "$checkout/Cargo.toml" ] || fail '--plugin installs for a checkout of the repository.'
-        # The plugins are in place already, and want the executable of their own version.
+        # The plugins are in place already.
         editors=none
-        RIPSCOPE_VERSION=$(sed -n 's/^version = "\([^"]*\)".*/\1/p' "$checkout/Cargo.toml" | head -n 1)
     fi
     case $editors in all|none) ;; *) fail 'set RIPSCOPE_EDITORS to all or none.' ;; esac
-    # Whether release $1 comes before $2: by the numbers before any suffix, then a
-    # prerelease, with a suffix, before its release. An unknown version comes first.
-    # Two prereleases of one release count as equal: the release branch carries none.
-    older() {
-        [ -n "$1" ] || return 0
-        a=${1%%[!0-9.]*}
-        b=${2%%[!0-9.]*}
-        while [ -n "$a$b" ]; do
-            x=${a%%.*}
-            y=${b%%.*}
-            [ "${x:-0}" -eq "${y:-0}" ] || { [ "${x:-0}" -lt "${y:-0}" ]; return; }
-            case $a in *.*) a=${a#*.} ;; *) a= ;; esac
-            case $b in *.*) b=${b#*.} ;; *) b= ;; esac
-        done
-        [ "$1" != "${1%%[!0-9.]*}" ] && [ "$2" = "${2%%[!0-9.]*}" ]
-    }
+    have=
     if [ "$plugin" = yes ] && [ "$force" = no ]; then
         # The ripscope the editors find: on PATH, else where this installer puts it.
         destination=${RIPSCOPE_INSTALL_DIR:-$HOME/.local/bin}/ripscope
@@ -98,7 +82,7 @@ ripscope_install() (
         if [ -n "$found" ]; then
             have=$("$found" --version 2>/dev/null | sed -n 's/^ripscope //p' | head -n 1) || have=
             # A system package's or a build's ripscope stays as it is.
-            if [ ! "$found" -ef "$destination" ] || ! older "$have" "${RIPSCOPE_VERSION#v}"; then
+            if [ ! "$found" -ef "$destination" ]; then
                 say "Ripscope ${have:-of unknown version} is installed: $found"
                 exit 0
             fi
@@ -120,16 +104,19 @@ ripscope_install() (
         *) [ -n "${RIPSCOPE_RELEASES:-}" ] || fail 'a release mirror must be explicit.'
            fetch() { curl -fsSL "$1" -o "$2"; } ;;
     esac
-    version=${RIPSCOPE_VERSION:-}
-    if [ -z "$version" ]; then
-        case $releases in
-            https://*) latest=$(curl --proto '=https' --proto-redir '=https' --tlsv1.2 -fsSLI -o /dev/null -w '%{url_effective}' "$releases/latest") ;;
-            *) latest=$(curl -fsSLI -o /dev/null -w '%{url_effective}' "$releases/latest") ;;
-        esac
-        case $latest in */tag/v*) version=${latest##*/tag/v} ;; esac
+    case $releases in
+        https://*) latest=$(curl --proto '=https' --proto-redir '=https' --tlsv1.2 -fsSLI -o /dev/null -w '%{url_effective}' "$releases/latest") ;;
+        *) latest=$(curl -fsSLI -o /dev/null -w '%{url_effective}' "$releases/latest") ;;
+    esac
+    case $latest in
+        */tag/v*) version=${latest##*/tag/v} ;;
+        *) fail 'cannot find the latest release.' ;;
+    esac
+    case $version in ''|.*|*[!A-Za-z0-9.-]*) fail 'cannot find the latest release.' ;; esac
+    if [ "$plugin" = yes ] && [ "$force" = no ] && [ "$have" = "$version" ]; then
+        say "Ripscope $have is installed: $found"
+        exit 0
     fi
-    version=${version#v}
-    case $version in ''|.*|*[!A-Za-z0-9.-]*) fail 'set RIPSCOPE_VERSION to a release version, such as 0.1.0.' ;; esac
     dir=${RIPSCOPE_INSTALL_DIR:-$HOME/.local/bin}
     mkdir -p "$dir"
     dir=$(cd "$dir" && pwd -P)
