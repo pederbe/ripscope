@@ -38,10 +38,10 @@ Ripscope reads its options as cscope does, so it accepts what Vim, Neovim, Emacs
 | --- | --- | --- |
 | `-f INDEX` | all | The index file. `ripscope.db` when not given. |
 | `-b` | index build | Build or update the index, then stop. |
-| `-R` | index build | Discover sources in subdirectories too. |
-| `-k` | index build | Leave out the system include directory (`/usr/include`, or `INCDIR`). |
-| `-I DIR` | index build | Add an include directory. Repeatable, searched in order. |
-| `-i LIST` | index build | Read the sources from a [file list](../guide/building.md#file-lists). File names beside it are not read. |
+| `-R` | index build, or a query or session that creates the index | Discover sources in subdirectories too. |
+| `-k` | index build, or a query or session that creates the index | Leave out the system include directory (`/usr/include`, or `INCDIR`). |
+| `-I DIR` | index build, or a query or session that creates the index | Add an include directory. Repeatable, searched in order. |
+| `-i LIST` | index build, or a query or session that creates the index | Read the sources from a [file list](../guide/building.md#file-lists). File names beside it are not read. |
 | `-u` | index build, query, session | Update unconditionally. Every file is read and analysed again, and nothing is kept. With `-b`, repairs a damaged index. In a session it applies at startup and to `r`. |
 | `--` | index build | End of options. Later arguments are sources even if they start with `-`. |
 | `-L` | query | Run one query and print its rows. Updates the index first unless `-d`. |
@@ -59,6 +59,11 @@ Ripscope reads its options as cscope does, so it accepts what Vim, Neovim, Emacs
 | `-q`, `-e`, `-U`, `-v`, `-c` | any | Accepted and change nothing. Ripscope always has a fast index, these concern cscope's screen, timestamps and progress messages, and `-c` only stops cscope compressing its own database. |
 | `-p N`, `-F FILE` | any | Accepted with their value and change nothing. Only cscope's full-screen display reads them. |
 | `-T`, `-s DIR` | | Refused. They change cscope's answers (symbols cut to eight characters, more source directories) in ways Ripscope does not follow. |
+
+`-R`, `-k`, `-I` and `-i` are also accepted with `-L` and `-l`, as in
+`ripscope -R -L -1 main`, and take effect when that command creates the index. A
+query or session on an existing index keeps the selection rule it was built with,
+and only `-b` replaces it.
 
 ## Editor integrations
 

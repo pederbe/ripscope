@@ -14,6 +14,10 @@ index format or command-line behavior, and its entry says so.
   on its own. The book gains guides for switching from cscope and for scripts, and a
   troubleshooting page. Decision records and the website hosting guide are read in
   the repository, and their old book addresses redirect there.
+- Rewrite `ripscope --help`. It now opens with a one-line description and two
+  examples, lists the searches and the most used options first, and links to the
+  command line reference. The options Ripscope accepts are unchanged, and help
+  still prints to standard output with exit status 0.
 
 ### Fixed
 

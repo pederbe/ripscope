@@ -4,8 +4,9 @@ Ripscope answers cscope's searches (symbols, definitions, callees, callers, text
 egrep, files, includers, assignments), in line-oriented and one-shot mode, for C
 source on Linux and Windows, from Vim, Neovim, Emacs and scripts. C only.
 
-Start with `README.md` and `CONTRIBUTING.md`. `GLOSSARY.md` defines the project's
-terms, and `docs/adr/` records the decisions behind the design.
+Start with `README.md` and `CONTRIBUTING.md`. `ARCHITECTURE.md` maps the code,
+`GLOSSARY.md` defines the project's terms, and `docs/adr/` records the decisions
+behind the design.
 
 ## Workflow
 

@@ -2485,8 +2485,20 @@ fn help_and_version_are_printed_and_end_the_command_line() {
         assert!(help.status.success(), "{args:?}: {help:?}");
         let text = String::from_utf8_lossy(&help.stdout);
         assert!(
-            text.contains("\nUsage:\n  ripscope -b "),
+            text.starts_with("Ripscope finds definitions, callers and assignments in C code"),
             "{args:?}: {text}"
+        );
+        for part in [
+            "\nExamples:\n  ripscope -R -L -1 main ",
+            "\nUsage:\n  ripscope -L -N PATTERN ",
+            "\nOptions:\n  -R ",
+            "\nFull reference: https://ripscope.com/docs/reference/cli\n",
+        ] {
+            assert!(text.contains(part), "{args:?}: {part:?} in {text}");
+        }
+        assert!(
+            text.lines().all(|line| line.len() < 80),
+            "{args:?}: fits a terminal: {text}"
         );
         assert!(help.stderr.is_empty(), "{args:?}: {help:?}");
     }
