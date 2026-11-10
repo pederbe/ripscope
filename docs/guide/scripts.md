@@ -45,12 +45,15 @@ like when a path or line is not valid UTF-8.
 ## Fail a job when a function is still called
 
 A search exits with status 0 whether or not it finds anything, so test the output.
+Keep the search on its own line, so a search that could not run fails the job too.
 
 ```sh
-test -z "$(ripscope -dL -3 old_api)"
+callers=$(ripscope -dL -3 old_api) || exit 1
+test -z "$callers"
 ```
 
-The job fails while any caller of `old_api` remains.
+The job fails while any caller of `old_api` remains, and when the index is missing
+or damaged.
 
 ## Tell an empty answer from a mistake
 
