@@ -9,6 +9,9 @@ index format or command-line behavior, and its entry says so.
 
 ### Changed
 
+- Install scripts always resolve the latest release, including editor install
+  commands. Remove release-version overrides and checkout-based selection.
+  Installation pages and package commands now follow the latest release.
 - Document cargo-binstall installation from the published Linux and Windows binaries.
 - Reorganise the documentation. The README now covers installation and everyday use
   on its own. The book gains guides for switching from cscope and for scripts, and a

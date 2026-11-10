@@ -8,7 +8,7 @@ reference outputs and help maintain the checked-in fixtures:
 | Tools | Purpose |
 |---|---|
 | `tools/release` | Build, inspect and smoke the Linux and Windows release archives. See [Linux preparation](../docs/linux-release.md) and [Windows preparation](../docs/windows-release.md). |
-| `cargo run --example prepare-packages` | Pin local Homebrew Linux, Nix and conda recipes to a selected Linux archive. See [package-manager preparation](../packaging/README.md). |
+| `cargo run --example prepare-packages` | Generate local Homebrew Linux, Nix and conda recipes from the latest validated Linux archive. See [package-manager preparation](../packaging/README.md). |
 | `cargo run --example assess-navigation` | Source-labelled definition and caller/callee accuracy, independently of the reference. See [navigation assessment](navigation-assessment.md). |
 | `cargo run --example assess-workflows` | Replay frozen editing and navigation workflows on disposable copies. See [workflow replay](assess-workflows.md). |
 | `cargo run --example coverage-campaign` | Acquire pinned C selections and draw a repeatable source sample. See [coverage campaigns](coverage-campaign.md). |
@@ -114,7 +114,9 @@ inventory and notice delivery. `package-linux.sh` turns the inspected Linux exec
 into Debian and RPM packages without rewriting it.
 
 The `check-installers` example drives `install.sh` or `install.ps1` against a loopback
-mirror of an exact archive, and checks refusal, replacement and removal. Neither the
+mirror of an exact archive, and checks refusal, replacement and removal. The mirror's
+`/latest` endpoint serves the candidate before publication. The harness derives its
+identity from the archive filename and passes no version override to the installer. Neither the
 release tool nor the installer harness is a runtime dependency.
 
 See [Linux preparation](../docs/linux-release.md) and

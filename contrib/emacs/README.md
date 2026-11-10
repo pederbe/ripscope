@@ -20,8 +20,8 @@ and load it:
 ```
 
 `ripscope-setup` turns on `ripscope-mode` in C buffers. Installed from the repository,
-it also installs the `ripscope` executable of the same version when it is missing, or
-when the one the installer put there is older. `M-x ripscope-install` does that too.
+it also installs the latest `ripscope` executable when it is missing, or
+when the one the installer put there needs updating. `M-x ripscope-install` does that too.
 Otherwise run the one-line installer from [ripscope.com](https://ripscope.com).
 
 ## Searching

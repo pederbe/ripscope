@@ -643,7 +643,7 @@ it into your cache directory.
 
 EXECUTABLE, when given, sets `ripscope-executable'.  Otherwise, in a
 copy installed from the repository, `ripscope-install' installs the
-executable when it is missing or older than this copy."
+latest executable when it is missing or needs updating."
   (when executable (setq ripscope-executable executable))
   (dolist (hook '(c-mode-hook c-ts-mode-hook))
     (add-hook hook #'ripscope-mode))
@@ -668,8 +668,8 @@ executable when it is missing or older than this copy."
 ;;;###autoload
 (defun ripscope-install (&optional force)
   "Install the ripscope executable with Ripscope's verifying installer.
-It installs this copy's version, but leaves an executable of that version
-or newer alone, and one it did not install, unless FORCE, the prefix
+It installs the latest release, but leaves a current executable alone,
+and one it did not install, unless FORCE, the prefix
 argument, is given.  The installer runs in the background and reports in
 the *ripscope-install* buffer."
   (interactive "P")

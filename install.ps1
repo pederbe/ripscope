@@ -1,10 +1,10 @@
 # irm https://ripscope.com/install.ps1 | iex
 # Uninstall: & ([scriptblock]::Create((irm https://ripscope.com/install.ps1))) -Uninstall
-# Settings: RIPSCOPE_VERSION, RIPSCOPE_INSTALL_DIR, RIPSCOPE_RELEASES (mirror),
+# Settings: RIPSCOPE_INSTALL_DIR, RIPSCOPE_RELEASES (mirror),
 # RIPSCOPE_EDITORS (all, the default, or none to leave the editors alone).
 # From a checkout, as the editors' install commands run it: install.ps1 -Plugin installs
-# the checkout's version for its plugins, unless the ripscope.exe found is that version
-# or newer, or not one this installer put there. -Plugin -Force installs anyway.
+# the latest release, unless it is already installed or the ripscope.exe found is
+# not one this installer put there. -Plugin -Force installs anyway.
 # Dot sourcing defines the filesystem helpers for the native installer checks.
 function Get-RipscopeAttributes([string] $Path) {
     try { return [IO.File]::GetAttributes($Path) }
@@ -66,22 +66,6 @@ function Complete-RipscopePublication([string] $Destination, [string] $Backup, [
         }
     }
     return $true
-}
-function Test-RipscopeOlder([string] $Have, [string] $Wanted) {
-    # Whether release Have comes before Wanted: by the numbers before any suffix, then a
-    # prerelease, with a suffix, before its release. An unknown version comes first.
-    # Two prereleases of one release count as equal: the release branch carries none.
-    if (-not $Have) { return $true }
-    $a = $Have -replace '[^0-9.].*$', ''
-    $b = $Wanted -replace '[^0-9.].*$', ''
-    $x = $a.Split('.')
-    $y = $b.Split('.')
-    for ($i = 0; $i -lt [Math]::Max($x.Count, $y.Count); $i++) {
-        $p = if ($i -lt $x.Count -and $x[$i]) { [decimal] $x[$i] } else { [decimal] 0 }
-        $q = if ($i -lt $y.Count -and $y[$i]) { [decimal] $y[$i] } else { [decimal] 0 }
-        if ($p -ne $q) { return $p -lt $q }
-    }
-    return ($Have -ne $a) -and ($Wanted -eq $b)
 }
 function Get-RipscopeEditorPaths {
     # Where Vim and Neovim load packages from on their own, and Emacs's integration.
@@ -150,7 +134,6 @@ function Uninstall-Ripscope([string] $InstallDir) {
 function Install-Ripscope {
     [CmdletBinding()]
     param(
-        [string] $Version = $env:RIPSCOPE_VERSION,
         [string] $InstallDir = $env:RIPSCOPE_INSTALL_DIR,
         [string] $Releases = $env:RIPSCOPE_RELEASES,
         [string] $Editors = $env:RIPSCOPE_EDITORS,
@@ -165,12 +148,11 @@ function Install-Ripscope {
     if ($Plugin) {
         $manifest = if ($PSScriptRoot) { Join-Path $PSScriptRoot 'Cargo.toml' } else { '' }
         if (-not $manifest -or -not (Test-RipscopeRegularFile $manifest)) { throw '-Plugin installs for a checkout of the repository.' }
-        # The plugins are in place already, and want the executable of their own version.
+        # The plugins are in place already.
         $Editors = 'none'
-        $line = Select-String -LiteralPath $manifest -Pattern '^version = "([^"]+)"$' | Select-Object -First 1
-        $Version = if ($line) { $line.Matches[0].Groups[1].Value } else { '' }
     }
     if ($Editors -notin @('all', 'none')) { throw 'Set RIPSCOPE_EDITORS to all or none.' }
+    $have = ''
     if ($Plugin -and -not $Force) {
         # The ripscope.exe the editors find: on PATH, else where this installer puts it.
         $destination = Join-Path $(if ($InstallDir) { $InstallDir } else { Join-Path $HOME '.local\bin' }) 'ripscope.exe'
@@ -185,7 +167,7 @@ function Install-Ripscope {
             catch { }
             # A system package's or a build's ripscope.exe stays as it is.
             $ours = [IO.Path]::GetFullPath($found) -eq [IO.Path]::GetFullPath($destination)
-            if (-not $ours -or -not (Test-RipscopeOlder $have ($Version -replace '^v', ''))) {
+            if (-not $ours) {
                 Write-Output "Ripscope $(if ($have) { $have } else { 'of unknown version' }) is installed: $found"
                 return
             }
@@ -208,15 +190,15 @@ function Install-Ripscope {
         $response = Invoke-WebRequest -UseBasicParsing -Uri $Url -OutFile $Path -PassThru
         if ($secure -and (Get-ResponseUri $response).Scheme -ne 'https') { throw 'HTTPS download redirected to an insecure URL.' }
     }
-    if (-not $Version) {
-        $response = Invoke-WebRequest -UseBasicParsing -Uri "$Releases/latest" -Method Head
-        $uri = Get-ResponseUri $response
-        if ($secure -and $uri.Scheme -ne 'https') { throw 'HTTPS release lookup redirected to an insecure URL.' }
-        if ($uri.AbsolutePath -notmatch '/tag/v([^/]+)$') { throw 'Cannot find the latest release; set RIPSCOPE_VERSION.' }
-        $Version = $Matches[1]
+    $response = Invoke-WebRequest -UseBasicParsing -Uri "$Releases/latest" -Method Head
+    $uri = Get-ResponseUri $response
+    if ($secure -and $uri.Scheme -ne 'https') { throw 'HTTPS release lookup redirected to an insecure URL.' }
+    if ($uri.AbsolutePath -notmatch '/tag/v([0-9]+\.[0-9]+\.[0-9]+(?:[-.][0-9A-Za-z]+)*)$') { throw 'Cannot find the latest release.' }
+    $Version = $Matches[1]
+    if ($Plugin -and -not $Force -and $have -eq $Version) {
+        Write-Output "Ripscope $have is installed: $found"
+        return
     }
-    $Version = $Version -replace '^v', ''
-    if ($Version -notmatch '^[0-9]+\.[0-9]+\.[0-9]+(?:[-.][0-9A-Za-z]+)*$') { throw 'Invalid release version.' }
     if (-not $InstallDir) { $InstallDir = Join-Path $HOME '.local\bin' }
     [IO.Directory]::CreateDirectory($InstallDir) | Out-Null
     $InstallDir = [IO.Path]::GetFullPath($InstallDir)

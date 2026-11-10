@@ -58,8 +58,8 @@ On Debian, Ubuntu, Fedora and RHEL-family systems you can install from the
 [signed apt or dnf repository](https://ripscope.com/docs/guide/installation-options#apt-and-dnf-repositories)
 instead and receive updates through your package manager.
 [Other installation methods](https://ripscope.com/docs/guide/installation-options)
-covers Cargo, standalone packages, archives and source builds, and every version
-is on the [releases page](https://github.com/pederbe/ripscope/releases).
+covers Cargo, standalone packages, archives and source builds. Downloads are on
+the [latest release page](https://github.com/pederbe/ripscope/releases/latest).
 
 If you would rather start from your editor, add one line to your plugin manager.
 It installs the plugin and downloads the executable when it is missing.

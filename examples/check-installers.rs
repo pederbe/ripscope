@@ -196,7 +196,6 @@ impl Checks {
         self.profile.apply(&mut command);
         command
             .arg(&self.installer)
-            .env("RIPSCOPE_VERSION", &self.version)
             .env("RIPSCOPE_INSTALL_DIR", self.work.join("installation"))
             .env("RIPSCOPE_RELEASES", &self.mirror.url);
         if let Some(path) = path {
@@ -238,7 +237,6 @@ impl Checks {
         };
         self.profile.apply(&mut command);
         command
-            .env_remove("RIPSCOPE_VERSION")
             .env("RIPSCOPE_INSTALL_DIR", self.work.join("installation"))
             .env("RIPSCOPE_RELEASES", &self.mirror.url);
         if let Some(path) = path {
@@ -413,23 +411,9 @@ fn tar_entry(name: &str, kind: u8) -> Vec<u8> {
     archive.resize(1536, 0);
     archive
 }
-/// Release orderings the editors' install command decides by: whether the first version,
-/// installed, is older than the second, wanted.
-const ORDERINGS: &[(&str, &str, bool)] = &[
-    ("0.0.1", "0.1.0", true),
-    ("0.1.0", "0.1.0", false),
-    ("0.2.0", "0.1.0", false),
-    ("0.9.0", "0.10.0", true),
-    ("0.10.0", "0.9.0", false),
-    ("1", "1.0.1", true),
-    ("0.1.0-rc1", "0.1.0", true),
-    ("0.1.0", "0.1.0-rc1", false),
-    ("0.1.0-rc1", "0.1.0-rc2", false),
-    ("", "0.1.0", true),
-];
 /// The editors' install command: the installer of a checkout with `--plugin`, which
-/// installs the checkout's version unless the ripscope the editors find is that version
-/// or newer, or not one the installer put there.
+/// installs the latest release unless it is already installed or the ripscope the
+/// editors find is not one the installer put there.
 fn plugin_checks(
     checks: &mut Checks,
     executable: &Path,
@@ -457,17 +441,18 @@ fn plugin_checks(
             &format!("{label}: the installed executable changed"),
         )
     };
-    // Every download fails, so what the installer keeps it keeps without one.
+    // The latest lookup works but archive checksums fail, so a current executable
+    // is kept without downloading it again, regardless of the checkout's version.
     checks
         .mirror
         .archive(&checks.version, archive_name, archive, false);
-    manifest(&checks.version)?;
+    manifest("0.0.0")?;
     checks.plugin("plugin-current", &script, false, true, None)?;
     unchanged("plugin-current")?;
-    // A newer checkout: the installer's own executable is upgraded, so it downloads.
+    // A development checkout must not select an unpublished executable either.
     manifest("9.9.9")?;
-    checks.plugin("plugin-older", &script, false, false, None)?;
-    unchanged("plugin-older")?;
+    checks.plugin("plugin-development", &script, false, true, None)?;
+    unchanged("plugin-development")?;
     // Another ripscope first on PATH, such as a system package's, is left alone.
     let other = checks.work.join("other-bin");
     fs::create_dir_all(&other)?;
@@ -494,86 +479,21 @@ fn plugin_checks(
         Some(Path::new(&search)),
     )?;
     unchanged("plugin-other")?;
-    // Forced, and with the release served, it installs the checkout's version.
+    // Forced, and with the release served, it installs latest even from an old checkout.
     checks
         .mirror
         .archive(&checks.version, archive_name, archive, true);
-    manifest(&checks.version)?;
+    manifest("0.0.0")?;
+    fs::write(executable, b"outdated installation")?;
+    checks.plugin("plugin-update", &script, false, true, None)?;
+    unchanged("plugin-update")?;
     checks.plugin("plugin-force", &script, true, true, None)?;
     unchanged("plugin-force")?;
-    checks
-        .mirror
-        .archive(&checks.version, archive_name, archive, false);
-    plugin_orderings(checks, &script, executable, &manifest)?;
-    checks
-        .mirror
-        .archive(&checks.version, archive_name, archive, true);
+    // A missing executable is installed from latest through the same route.
+    fs::remove_file(executable)?;
+    checks.plugin("plugin-missing", &script, false, true, None)?;
+    unchanged("plugin-missing")?;
     Ok(())
-}
-#[cfg(unix)]
-fn plugin_orderings(
-    checks: &mut Checks,
-    script: &Path,
-    executable: &Path,
-    manifest: &dyn Fn(&str) -> io::Result<()>,
-) -> Result<()> {
-    use std::os::unix::fs::PermissionsExt;
-    let kept = checks.work.join("kept-ripscope");
-    fs::rename(executable, &kept)?;
-    for (index, (have, wanted, older)) in ORDERINGS.iter().enumerate() {
-        // An installed executable that reports HAVE, or nothing, while no download works.
-        let said = if have.is_empty() {
-            "exit 1".to_owned()
-        } else {
-            format!("echo 'ripscope {have}'")
-        };
-        fs::write(executable, format!("#!/bin/sh\n{said}\n"))?;
-        fs::set_permissions(executable, fs::Permissions::from_mode(0o755))?;
-        manifest(wanted)?;
-        checks.plugin(
-            &format!("plugin-order-{index}"),
-            script,
-            false,
-            !older,
-            None,
-        )?;
-    }
-    fs::rename(kept, executable)?;
-    Ok(())
-}
-#[cfg(windows)]
-fn plugin_orderings(
-    checks: &mut Checks,
-    _script: &Path,
-    _executable: &Path,
-    _manifest: &dyn Fn(&str) -> io::Result<()>,
-) -> Result<()> {
-    let table = ORDERINGS
-        .iter()
-        .map(|(have, wanted, older)| format!("@('{have}', '{wanted}', ${older})"))
-        .collect::<Vec<_>>()
-        .join(", ");
-    let path = checks.work.join("plugin-orderings.ps1");
-    fs::write(
-        &path,
-        format!(
-            "param($Installer)\n$ErrorActionPreference = 'Stop'\n. $Installer\nforeach ($row in @({table})) {{\n    if ((Test-RipscopeOlder $row[0] $row[1]) -ne $row[2]) {{ throw \"Ordering of '$($row[0])' before '$($row[1])' is not $($row[2])\" }}\n}}\n"
-        ),
-    )?;
-    let mut command = Command::new(powershell());
-    command
-        .args([
-            "-NoProfile",
-            "-NonInteractive",
-            "-ExecutionPolicy",
-            "Bypass",
-            "-File",
-        ])
-        .arg(&path)
-        .arg("-Installer")
-        .arg(&checks.installer);
-    checks.profile.apply(&mut command);
-    checks.command("plugin-orderings", command, true)
 }
 #[cfg(unix)]
 fn linux_checks(
@@ -584,18 +504,14 @@ fn linux_checks(
     expected_hash: &str,
 ) -> Result<()> {
     use std::os::unix::fs::{PermissionsExt, symlink};
+    let package_name = archive_name
+        .strip_suffix(".tar.gz")
+        .ok_or("expected tar.gz archive")?;
+    let binary_path = format!("{package_name}/bin/ripscope");
     for (label, name, kind) in [
         ("traversal", "../escaped", b'0'),
-        (
-            "symlink-entry",
-            "ripscope-0.1.0-x86_64-linux-gnu/bin/ripscope",
-            b'2',
-        ),
-        (
-            "hardlink-entry",
-            "ripscope-0.1.0-x86_64-linux-gnu/bin/ripscope",
-            b'1',
-        ),
+        ("symlink-entry", binary_path.as_str(), b'2'),
+        ("hardlink-entry", binary_path.as_str(), b'1'),
     ] {
         let input = checks.work.join(format!("{label}.tar"));
         fs::write(&input, tar_entry(name, kind))?;
@@ -616,9 +532,6 @@ fn linux_checks(
     )?;
     let original = checks.work.join("original.tar.gz");
     fs::write(&original, archive)?;
-    let package_name = archive_name
-        .strip_suffix(".tar.gz")
-        .ok_or("expected tar.gz archive")?;
     for kind in NOTICE_FIXTURES {
         let fixture = checks.work.join(kind);
         fs::create_dir(&fixture)?;
@@ -803,9 +716,7 @@ fn windows_checks(
         .arg("-Executable")
         .arg(executable)
         .arg("-Mirror")
-        .arg(&checks.mirror.url)
-        .arg("-Version")
-        .arg(&checks.version);
+        .arg(&checks.mirror.url);
     // Its installs place editor integrations too: in the check's own profile.
     checks.profile.apply(&mut command);
     checks.command("native-filesystem", command, true)
@@ -873,7 +784,7 @@ try {
 "#;
 #[cfg(windows)]
 const WINDOWS_CHECKS: &str = r#"
-param($Installer, $Work, $Executable, $Mirror, $Version)
+param($Installer, $Work, $Executable, $Mirror)
 $ErrorActionPreference = 'Stop'
 . $Installer
 function Check($Condition, $Message) { if (-not $Condition) { throw $Message } }
@@ -881,7 +792,7 @@ $old = Get-RipscopeHash $Executable
 $lock = [IO.File]::Open($Executable, 'Open', 'Read', 'Read')
 try {
     $failed = $false
-    try { Install-Ripscope -Version $Version -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror }
+    try { Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror }
     catch { $failed = $true; Write-Output $_ }
     Check $failed 'Locked executable replacement unexpectedly succeeded'
     Check ((Get-RipscopeHash $Executable) -eq $old) 'Locked executable changed'
@@ -911,11 +822,11 @@ try {
 [IO.Directory]::CreateDirectory($Executable) | Out-Null
 try {
     $failed = $false
-    try { Install-Ripscope -Version $Version -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror }
+    try { Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror }
     catch { $failed = $true }
     Check $failed 'Directory destination accepted'
 } finally { [IO.Directory]::Delete($Executable) }
-Install-Ripscope -Version $Version -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror
+Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror
 # Uninstalling while an editor runs Ripscope says so and removes everything else.
 $editors = Get-RipscopeEditorPaths
 Check ([IO.Directory]::Exists($editors.Vim)) 'Vim package not placed'
@@ -930,7 +841,7 @@ try {
         Check (-not [IO.Directory]::Exists($directory)) "Uninstall in use kept $directory"
     }
 } finally { $lock.Dispose() }
-Install-Ripscope -Version $Version -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror
+Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror
 Write-Output 'Native locked/directory/recovery/postcommit-cleanup/uninstall-in-use checks passed'
 "#;
 fn main() {
@@ -944,12 +855,21 @@ fn run() -> Result<()> {
     let mut args = std::env::args_os().skip(1);
     while let Some(key) = args.next() {
         if key == "--help" {
-            println!(
-                "check-installers --archive FILE --installer FILE --work NEW_DIRECTORY [--version VERSION]"
-            );
+            println!("check-installers --archive FILE --installer FILE --work NEW_DIRECTORY");
             return Ok(());
         }
-        options.insert(key, args.next().ok_or("missing option value")?);
+        ensure(
+            ["--archive", "--installer", "--work"]
+                .iter()
+                .any(|name| key == *name),
+            "unknown option",
+        )?;
+        ensure(
+            options
+                .insert(key, args.next().ok_or("missing option value")?)
+                .is_none(),
+            "duplicate option",
+        )?;
     }
     let path = |name: &str| -> Result<PathBuf> {
         Ok(PathBuf::from(
@@ -964,16 +884,19 @@ fn run() -> Result<()> {
     ensure(!work.exists(), "work directory must be new")?;
     fs::create_dir_all(&work)?;
     let work = script_path(&work)?;
-    let version = options
-        .get(std::ffi::OsStr::new("--version"))
-        .map_or(env!("CARGO_PKG_VERSION").to_owned(), |value| {
-            value.to_string_lossy().into_owned()
-        });
     let archive_name = archive_path
         .file_name()
         .ok_or("archive filename missing")?
         .to_string_lossy()
         .into_owned();
+    let version = archive_name
+        .strip_prefix("ripscope-")
+        .and_then(|name| {
+            name.strip_suffix("-x86_64-linux-gnu.tar.gz")
+                .or_else(|| name.strip_suffix("-x86_64-windows-msvc.zip"))
+        })
+        .ok_or("unexpected release archive filename")?
+        .to_owned();
     let archive = fs::read(&archive_path)?;
     let mirror = Mirror::start(&version)?;
     mirror.archive(&version, &archive_name, &archive, true);

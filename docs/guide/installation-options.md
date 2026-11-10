@@ -87,48 +87,54 @@ They reuse the executable installed by your package manager.
 ## Debian/Ubuntu and RHEL-family packages
 
 For a standalone package without repository updates, download the `.deb` or `.rpm`
-and its `.sha256` file from
-[GitHub Releases](https://github.com/pederbe/ripscope/releases). The packages need
+and its `.sha256` file from the
+[latest release](https://github.com/pederbe/ripscope/releases/latest) into an empty directory. The packages need
 glibc 2.28 or newer and the system GCC runtime. Check the package against its
-`.sha256` file, then install it. Replace `<version>` with the version you downloaded:
+`.sha256` file, then install it:
 
 ```sh
-sha256sum -c ripscope_<version>_amd64.deb.sha256
-sudo apt install ./ripscope_<version>_amd64.deb
+sha256sum -c ripscope_*_amd64.deb.sha256 &&
+sudo apt install ./ripscope_*_amd64.deb
 ```
 
 ```sh
-sha256sum -c ripscope-<version>-1.x86_64.rpm.sha256
-sudo dnf install ./ripscope-<version>-1.x86_64.rpm
+sha256sum -c ripscope-*-1.x86_64.rpm.sha256 &&
+sudo dnf install ./ripscope-*-1.x86_64.rpm
 ```
 
 Notices and editor sources are installed in `/usr/share/ripscope`.
 
 ## Archives and system packages
 
-Select the version from [GitHub Releases](https://github.com/pederbe/ripscope/releases):
+Download the archive and its `.sha256` sidecar from the
+[latest release](https://github.com/pederbe/ripscope/releases/latest) into an empty directory:
 
 | Platform | Archive | Runtime |
 | --- | --- | --- |
-| Linux | `ripscope-<version>-x86_64-linux-gnu.tar.gz` | glibc 2.28 or newer and the system GCC runtime. Not musl or Alpine |
-| Windows | `ripscope-<version>-x86_64-windows-msvc.zip` | Windows system DLLs. The C runtime is bundled |
+| Linux | `.tar.gz` | glibc 2.28 or newer and the system GCC runtime. Not musl or Alpine |
+| Windows | `.zip` | Windows system DLLs. The C runtime is bundled |
 
 The archives include their executable, licences, editor sources and build
 manifest. Compare the archive against its individual `.sha256` sidecar before
-extracting it. Keep the complete extracted directory. Replace `<version>` with the
-version you downloaded:
+extracting it. Keep the complete extracted directory:
 
 ```sh
-sha256sum -c ripscope-<version>-x86_64-linux-gnu.tar.gz.sha256
-tar -xzf ripscope-<version>-x86_64-linux-gnu.tar.gz
-./ripscope-<version>-x86_64-linux-gnu/bin/ripscope --help
+sha256sum -c ripscope-*-x86_64-linux-gnu.tar.gz.sha256 &&
+tar -xzf ripscope-*-x86_64-linux-gnu.tar.gz &&
+./ripscope-*-x86_64-linux-gnu/bin/ripscope --help
 ```
 
 ```powershell
-Get-FileHash .\ripscope-<version>-x86_64-windows-msvc.zip -Algorithm SHA256
-Get-Content .\ripscope-<version>-x86_64-windows-msvc.zip.sha256
-Expand-Archive .\ripscope-<version>-x86_64-windows-msvc.zip -DestinationPath .\ripscope-install
-.\ripscope-install\ripscope-<version>-x86_64-windows-msvc\bin\ripscope.exe --help
+$archive = Get-ChildItem -File -Filter 'ripscope-*-x86_64-windows-msvc.zip'
+Get-FileHash $archive.FullName -Algorithm SHA256
+Get-Content "$($archive.FullName).sha256"
+```
+
+After the two hashes match, extract and run it:
+
+```powershell
+Expand-Archive $archive.FullName -DestinationPath .\ripscope-install
+& (Get-ChildItem .\ripscope-install\*\bin\ripscope.exe).FullName --help
 ```
 
 Checksums identify the downloaded bytes. For repository and workflow provenance,
@@ -158,18 +164,6 @@ and a C compiler for bundled SQLite. Use GCC or Clang on Linux. On Windows,
 install Microsoft's MSVC Build Tools and the Windows SDK, then use an x64
 developer shell.
 
-```sh
-git clone https://github.com/pederbe/ripscope.git
-cd ripscope
-cargo build --release --locked
-```
-
-To build the development version instead of the stable release:
-
-```sh
-cargo install --locked --git https://github.com/pederbe/ripscope.git
-```
-
 These commands install the executable only. Add your editor's integration using
 [your plugin manager](../getting-started/installation.md#your-plugin-manager).
 The plugins reuse an executable on `PATH`. Updating a plugin leaves that
@@ -186,11 +180,11 @@ A separate Rust toolchain or SQLite installation is unnecessary for archive user
 ## Installer options
 
 The install scripts select the latest release and install into your user account.
-Set these environment variables before running a script to change that behavior.
+Set these environment variables before running a script to change its destination,
+download source or editor setup.
 
 | Variable | Purpose |
 | --- | --- |
-| `RIPSCOPE_VERSION` | Select a release version |
 | `RIPSCOPE_INSTALL_DIR` | Choose another executable directory |
 | `RIPSCOPE_RELEASES` | Use a release mirror |
 | `RIPSCOPE_EDITORS` | `all` (the default) sets up the editors. `none` leaves them alone |

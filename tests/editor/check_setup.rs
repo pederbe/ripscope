@@ -528,7 +528,6 @@ impl Route<'_> {
             profile.set("RIPSCOPE_CACHE_DIR", self.cache(&profile));
         }
         profile.set("RIPSCOPE_RELEASES", self.mirror);
-        profile.set("RIPSCOPE_VERSION", self.version);
         let mut steps = Vec::new();
         let mut passed = true;
         let emacs_init = self.prepare(&profile, &directory, &mut steps, &mut passed)?;
@@ -549,7 +548,7 @@ impl Route<'_> {
             steps.push(json!({"step": format!("search-{kind}"), "result": result}));
         }
         if !["path", "interrupted", "home", "spaces"].contains(&self.route) {
-            // The executable the route installed, of this checkout's version.
+            // The executable the route installed from the mirror's latest release.
             let installed = profile.installed_executable();
             let version = reported_version(&installed);
             let current = version.as_deref() == Some(self.version);

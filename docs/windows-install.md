@@ -7,18 +7,18 @@ it does not establish qualification of every Windows release or processor.
 
 ## Installer
 
-After a release is published, run in PowerShell 5.1 or newer:
+To install the latest release, run in PowerShell 5.1 or newer:
 
 ```powershell
 irm https://ripscope.com/install.ps1 | iex
 ```
 
-The installer downloads the selected ZIP and its SHA-256 sidecar, validates its
+The installer downloads the latest ZIP and its SHA-256 sidecar, validates its
 paths, file inventory and hashes, then stages on the destination volume. It
 refuses directory and reparse-point executable destinations. The default is
 `$HOME\.local\bin\ripscope.exe`; administrator rights are unnecessary.
-Set `$env:RIPSCOPE_VERSION`, `$env:RIPSCOPE_INSTALL_DIR` or
-`$env:RIPSCOPE_RELEASES` before invoking it to select a version, destination or
+Set `$env:RIPSCOPE_INSTALL_DIR` or `$env:RIPSCOPE_RELEASES` before invoking it
+to select a destination or
 explicit mirror. The checksum checks the download against the release's checksum;
 use the separate [attestation check](linux-release.md#attestation-verification)
 when verifying its provenance.
@@ -64,7 +64,7 @@ Studio C++ Build Tools and the Windows SDK. In an x64 MSVC developer shell:
 ```powershell
 $env:RUSTFLAGS = '-C target-cpu=x86-64 -C target-feature=+crt-static'
 $env:CFLAGS = '/MT'
-cargo build --release --locked --target x86_64-pc-windows-msvc
+cargo install --locked ripscope --target x86_64-pc-windows-msvc
 ```
 
 See [Windows release preparation](windows-release.md) for the pinned tool and

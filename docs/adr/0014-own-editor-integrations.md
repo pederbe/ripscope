@@ -2,6 +2,8 @@
 
 [ADR 0015](0015-native-emacs-package.md), "Emacs searches through xref, with no
 package dependencies", supersedes the vendored xcscope and its adapter described here.
+[ADR 0017](0017-install-latest-release.md), "Installers resolve the latest release",
+supersedes the checkout-version selection described here.
 
 Ripscope is used from Vim, Neovim and Emacs. Their cscope integrations expect an
 executable named `cscope`, ignore its exit status or swallow its failures, and each

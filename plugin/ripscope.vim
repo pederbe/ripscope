@@ -384,8 +384,8 @@ function! s:Opened(file) abort
   endtry
 endfunction
 
-" Installs the executable of this checkout's version with the repository's installer,
-" which leaves a ripscope of that version or newer alone, and one it did not put there,
+" Installs the latest executable with the repository's installer,
+" which leaves a current ripscope alone, and one it did not put there,
 " unless FORCE is set.
 function! s:Install(force) abort
   let script = s:repository . (has('win32') ? '/install.ps1' : '/install.sh')

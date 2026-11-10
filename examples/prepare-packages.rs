@@ -1,4 +1,4 @@
-//! Pin package-manager recipes to an explicitly selected Linux release archive.
+//! Generate package-manager recipes from the latest validated Linux release archive.
 use serde_json::json;
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
@@ -52,13 +52,17 @@ fn sha256(path: &Path) -> Result<String> {
     }
 }
 
-fn prepare(version: &str, archive: &Path, out: &Path) -> Result<()> {
+fn prepare(archive: &Path, out: &Path) -> Result<()> {
+    let filename = archive
+        .file_name()
+        .and_then(|name| name.to_str())
+        .ok_or("Expected a Linux release archive filename")?;
+    let version = filename
+        .strip_prefix("ripscope-")
+        .and_then(|name| name.strip_suffix("-x86_64-linux-gnu.tar.gz"))
+        .ok_or("Expected a Linux release archive filename")?;
     if !numeric_version(version) {
-        return Err("Use a numeric release version such as 0.1.0".into());
-    }
-    let filename = format!("ripscope-{version}-x86_64-linux-gnu.tar.gz");
-    if archive.file_name().and_then(|name| name.to_str()) != Some(&filename) {
-        return Err(format!("Expected archive filename {filename}").into());
+        return Err("Expected a stable Linux release archive filename".into());
     }
     let archive_hash = sha256(archive)?;
     let check_hash = base16ct::lower::encode_string(&Sha256::digest(CHECK.as_bytes()));
@@ -105,20 +109,16 @@ fn prepare(version: &str, archive: &Path, out: &Path) -> Result<()> {
 
 fn run() -> Result<()> {
     let mut args = std::env::args_os().skip(1);
-    let (mut version, mut archive, mut out) = (None, None, None);
+    let (mut archive, mut out) = (None, None);
     while let Some(key) = args.next() {
         let value = args.next().ok_or("Missing option value")?;
         match key.to_str() {
-            Some("--version") if version.is_none() => {
-                version = Some(value.into_string().map_err(|_| "Version must be UTF-8")?);
-            }
             Some("--archive") if archive.is_none() => archive = Some(PathBuf::from(value)),
             Some("--out") if out.is_none() => out = Some(PathBuf::from(value)),
             _ => return Err("Unknown or duplicate option".into()),
         }
     }
     prepare(
-        &version.ok_or("--version is required")?,
         &archive.ok_or("--archive is required")?,
         &out.ok_or("--out is required")?,
     )
@@ -127,9 +127,7 @@ fn run() -> Result<()> {
 fn main() {
     if let Err(error) = run() {
         eprintln!("{error}");
-        eprintln!(
-            "usage: prepare-packages --version VERSION --archive LINUX_TARBALL --out NEW_DIRECTORY"
-        );
+        eprintln!("usage: prepare-packages --archive LINUX_TARBALL --out NEW_DIRECTORY");
         std::process::exit(1);
     }
 }
@@ -146,10 +144,13 @@ mod tests {
         let out = work.path().join("recipes");
         fs::create_dir(&out).unwrap();
         fs::write(out.join("keep"), b"unrelated work").unwrap();
-        assert!(prepare("0.1.0", &archive, &out).is_err());
+        assert!(prepare(&archive, &out).is_err());
         assert_eq!(fs::read(out.join("keep")).unwrap(), b"unrelated work");
         for version in ["v0.1.0", "0.1", "0.1.0-test", "0.01.0", "0.1.0\n"] {
-            assert!(prepare(version, &archive, &work.path().join("unused")).is_err());
+            let archive = work
+                .path()
+                .join(format!("ripscope-{version}-x86_64-linux-gnu.tar.gz"));
+            assert!(prepare(&archive, &work.path().join("unused")).is_err());
         }
         assert!(!work.path().join("unused").exists());
     }
@@ -160,7 +161,7 @@ mod tests {
         let archive = work.path().join("ripscope-0.1.0-x86_64-linux-gnu.tar.gz");
         fs::write(&archive, b"abc").unwrap();
         let out = work.path().join("recipes");
-        prepare("0.1.0", &archive, &out).unwrap();
+        prepare(&archive, &out).unwrap();
         let receipt: serde_json::Value =
             serde_json::from_slice(&fs::read(out.join("PREPARATION.json")).unwrap()).unwrap();
         assert_eq!(
@@ -182,6 +183,6 @@ mod tests {
             assert!(!contents.contains(work.path().to_str().unwrap()));
         }
         // A recipe change needs a fresh preparation; never update a pinned output in place.
-        assert!(prepare("0.1.0", &archive, &out).is_err());
+        assert!(prepare(&archive, &out).is_err());
     }
 }
