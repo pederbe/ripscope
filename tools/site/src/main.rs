@@ -109,7 +109,7 @@ fn run() -> Result<()> {
         )?;
     }
     write_indexes(&site, &chapters, !options.docs_only)?;
-    let external = validate(&site)?;
+    let external = validate(&site, options.docs_only)?;
     if options.external {
         check_external(work.path(), &external)?;
     }
@@ -1009,7 +1009,7 @@ fn resolve(site: &Path, page: &Path, url: &str) -> Result<Option<PathBuf>> {
     .into())
 }
 
-fn validate(site: &Path) -> Result<BTreeSet<String>> {
+fn validate(site: &Path, docs_only: bool) -> Result<BTreeSet<String>> {
     let attrs = Regex::new(r#"\b(?:href|src|poster)=["']([^"']+)["']"#)?;
     let tags = Regex::new(r"(?s)<[a-zA-Z][^>]*>")?;
     let mut external = BTreeSet::new();
@@ -1022,6 +1022,17 @@ fn validate(site: &Path) -> Result<BTreeSet<String>> {
         for tag in tags.find_iter(&html) {
             for attr in attrs.captures_iter(tag.as_str()) {
                 let url = unescape(&attr[1]);
+                // Documentation keeps its homepage links when the landing page is omitted.
+                if docs_only
+                    && url
+                        .strip_prefix(SITE)
+                        .unwrap_or(&url)
+                        .split(['?', '#'])
+                        .next()
+                        == Some("/")
+                {
+                    continue;
+                }
                 if url.starts_with("http://")
                     || (url.starts_with("https://") && !url.starts_with(&format!("{SITE}/")))
                 {
@@ -1393,29 +1404,68 @@ mod tests {
             "<h1 id=\"example\">Example</h1>",
         )
         .unwrap();
-        assert!(validate(root).is_ok());
+        assert!(validate(root, false).is_ok());
+        assert!(validate(root, true).is_ok());
         write(
             &root.join("index.html"),
             "<a href=\"/docs/guide#missing\">Guide</a>",
         )
         .unwrap();
         assert!(
-            validate(root)
+            validate(root, false)
                 .unwrap_err()
                 .to_string()
                 .contains("missing anchor")
         );
+        assert!(validate(root, true).is_err());
         write(
             &root.join("index.html"),
             "<a href=\"/docs/internal.json\">Internal</a>",
         )
         .unwrap();
         assert!(
-            validate(root)
+            validate(root, false)
                 .unwrap_err()
                 .to_string()
                 .contains("missing internal link")
         );
+        assert!(validate(root, true).is_err());
+    }
+
+    #[test]
+    fn docs_only_validation_omits_only_homepage_links() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path();
+        let page = root.join("docs/index.html");
+        let homepage_links = format!(
+            "<a href=\"/\">Home</a><a href=\"/?from=docs#install\">Install</a><a href=\"{SITE}/\">Home</a>"
+        );
+        write(&page, &homepage_links).unwrap();
+        validate(root, true).unwrap();
+        assert!(
+            validate(root, false)
+                .unwrap_err()
+                .to_string()
+                .contains("missing internal link /")
+        );
+        for missing in [
+            "/docs/missing",
+            "/evidence/missing.json",
+            "/missing.css",
+            "/install.sh",
+        ] {
+            write(
+                &page,
+                &format!("{homepage_links}<a href=\"{missing}\">Missing</a>"),
+            )
+            .unwrap();
+            assert!(
+                validate(root, true)
+                    .unwrap_err()
+                    .to_string()
+                    .contains(&format!("missing internal link {missing}"))
+            );
+        }
     }
 
     #[test]
@@ -1432,12 +1482,12 @@ mod tests {
     }
 
     #[test]
-    fn combined_fixture_build_uses_real_mdbook_and_validates_complete_output() {
+    fn fixture_build_uses_real_mdbook_and_validates_docs_only_and_combined_output() {
         let temp = tempfile::tempdir().unwrap();
         let root = temp.path();
         write(
             &root.join("book.toml"),
-            "[book]\ntitle='Fixture'\nsrc='docs'\n[output.html]\nsite-url='/docs/'\n",
+            "[book]\ntitle='Ripscope'\nsrc='docs'\n[output.html]\nsite-url='/docs/'\n",
         )
         .unwrap();
         write(
@@ -1483,6 +1533,10 @@ mod tests {
         );
         finish_docs(root, &staged, &docs, &chapters, false).unwrap();
         stage_evidence(root, &site).unwrap();
+        assert!(!site.join("index.html").exists());
+        assert!(!site.join("install.sh").exists());
+        assert!(!site.join("install.ps1").exists());
+        validate(&site, true).unwrap();
         write(&root.join("install.sh"), "shell installer").unwrap();
         write(&root.join("install.ps1"), "PowerShell installer").unwrap();
         copy_site(&root.join("site"), &site).unwrap();
@@ -1496,7 +1550,7 @@ mod tests {
             b"PowerShell installer"
         );
         write_indexes(&site, &chapters, true).unwrap();
-        validate(&site).unwrap();
+        validate(&site, false).unwrap();
         assert_eq!(
             fs::read(site.join("evidence/captures/example.c")).unwrap(),
             b"int proof;\n"

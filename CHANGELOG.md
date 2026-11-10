@@ -20,6 +20,7 @@ index format or command-line behavior, and its entry says so.
 
 ### Development
 
+- Fix homepage link checks in `scripts/build-site.sh --dev --docs-only`.
 - Validate query fields in reference recapture and constrain intended-answer fixture
   reconstruction to its selected directories.
 - Add opt-in Hotpath timing for index posting construction.
