@@ -23,7 +23,26 @@ no-section-label = true
 # mdBook renders README.md chapters as index.html; keep GitHub-friendly README.md links working.
 [output.html.redirect]
 "/README.html" = "index.html"
-"/adr/README.html" = "index.html"
+# Decision records and maintainer guides live in the repository, not in the book.
+"/adr/README.html" = "https://github.com/pederbe/ripscope/tree/main/docs/adr"
+"/adr/index.html" = "https://github.com/pederbe/ripscope/tree/main/docs/adr"
+"/adr/0001-pinned-reference-cscope.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0001-pinned-reference-cscope.md"
+"/adr/0002-measured-compatibility.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0002-measured-compatibility.md"
+"/adr/0003-read-source-as-written.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0003-read-source-as-written.md"
+"/adr/0004-own-scanner.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0004-own-scanner.md"
+"/adr/0005-one-sqlite-file-per-index.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0005-one-sqlite-file-per-index.md"
+"/adr/0006-one-update-one-revision-per-query.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0006-one-update-one-revision-per-query.md"
+"/adr/0007-metadata-based-refresh.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0007-metadata-based-refresh.md"
+"/adr/0008-sessions-refresh-on-watched-changes.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0008-sessions-refresh-on-watched-changes.md"
+"/adr/0009-stored-and-live-queries.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0009-stored-and-live-queries.md"
+"/adr/0010-own-query-semantics.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0010-own-query-semantics.md"
+"/adr/0011-blocks-of-lines-with-their-scope.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0011-blocks-of-lines-with-their-scope.md"
+"/adr/0012-written-assignment-search.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0012-written-assignment-search.md"
+"/adr/0013-json-interface.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0013-json-interface.md"
+"/adr/0014-own-editor-integrations.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0014-own-editor-integrations.md"
+"/adr/0015-native-emacs-package.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0015-native-emacs-package.md"
+"/adr/0016-language-server-project-per-file.html" = "https://github.com/pederbe/ripscope/blob/main/docs/adr/0016-language-server-project-per-file.md"
+"/project/website-hosting.html" = "https://github.com/pederbe/ripscope/blob/main/docs/project/website-hosting.md"
 
 [output.html.fold]
 enable = true

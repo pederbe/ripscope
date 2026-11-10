@@ -43,7 +43,7 @@ Open a C file in your project and find a definition:
 
 The first time, Neovim says `Ripscope: indexing ... for the first time` and indexes
 the project in the background before it searches. Press Enter on a quickfix result
-to open its source. Save an edit and search again: the results include it.
+to open its source. Save an edit and search again, and the results include it.
 
 Ripscope picks the project and keeps its index for you:
 
@@ -53,10 +53,9 @@ Ripscope picks the project and keeps its index for you:
 - **The sources** are the files `cscope.files` names, when there is one. Otherwise
   Ripscope finds the C sources in the project and its subdirectories.
 - **The index** lives in your cache directory, `~/.cache/ripscope` on Linux and
-  `%LOCALAPPDATA%\ripscope` on Windows, named after the project. When your home
-  directory is on a network file system such as NFS, it lives in
-  `/var/tmp/ripscope-UID` instead. On Windows a search briefly makes a marker file
-  in the project directory.
+  `%LOCALAPPDATA%\ripscope` on Windows, named after the project. The
+  [command line reference](../reference/cli.md#editor-integrations) gives the exact
+  rule and its exceptions.
 
 Each search goes to the current file's project, so several projects can be open at
 once, each with its own session. A search from a window with no file, such as the
@@ -70,7 +69,7 @@ picks for a file.
 
 | Command | Effect |
 | --- | --- |
-| `:RipscopeFind FIELD PATTERN` | Search; `FIELD` is a number or letter (`s g d c t e f i a`). The pattern is the rest of the line. |
+| `:RipscopeFind FIELD PATTERN` | Search. `FIELD` is a number or letter (`s g d c t e f i a`). The pattern is the rest of the line. |
 | `:RipscopeBuild` | Update the current project's index now (or build it), in the background. |
 | `:RipscopeLog` | Show the last operation's output. |
 | `:RipscopeInstall` | Install the `ripscope` executable of the plugin's version, when it is missing or the one the installer put there is older. `:RipscopeInstall!` installs it anyway. |
@@ -88,7 +87,7 @@ picks for a file.
 | 9 | `a` | Assignments |
 
 For example, `:RipscopeFind c main` finds the callers of `main`. From Lua, call
-`require('ripscope').find(field, pattern)`; `require('ripscope').status()` returns the
+`require('ripscope').find(field, pattern)`. `require('ripscope').status()` returns the
 last result. These optional mappings search for the word under the cursor:
 
 ```lua
@@ -148,12 +147,13 @@ device namespace paths and batch or cmd backends.
   external saves and header edits. Discovery follows file additions, removals and
   renames. Explicit sources stay fixed, and new file-list entries must be added to
   the list. Saves and searches never rewrite it.
-- Use `:RipscopeBuild` for a Selection rule change or an explicit update.
+- Use `:RipscopeBuild` after changing which files the project covers, or for an
+  explicit update.
   `auto_refresh = false` keeps manual updates.
 - Successive searches in a project reuse one backend process, including after index
   builds.
-- Query warnings accompany the results; an invalid query reports its error and the
-  session stays usable. A timeout or broken connection fails that search; the next
+- Query warnings accompany the results. An invalid query reports its error and the
+  session stays usable. A timeout or broken connection fails that search, and the next
   search opens a new session. Results are published only after a complete reply.
 - See [results, warnings and failures](diagnostics.md) for the shared behavior and
   recovery steps.

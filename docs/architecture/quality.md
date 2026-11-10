@@ -2,7 +2,7 @@
 
 Ripscope keeps cscope's line protocol, measures its baseline reading against the
 Reference cscope, and answers queries with its own per-occurrence contexts
-([ADR 0010](../adr/0010-own-query-semantics.md), "Ripscope's own query semantics give
+([ADR 0010](https://github.com/pederbe/ripscope/blob/main/docs/adr/0010-own-query-semantics.md), "Ripscope's own query semantics give
 each name the context it sits in"). Corrections change selected C readings, and every
 query uses one complete index revision. This page explains how compatibility and
 Navigation accuracy are checked separately.
@@ -10,7 +10,7 @@ Navigation accuracy are checked separately.
 ## The reference decides baseline compatibility expectations
 
 Expectations are captured from a pinned cscope executable, verified by checksum before
-each capture ([ADR 0001](../adr/0001-pinned-reference-cscope.md)). Reading cscope's
+each capture ([ADR 0001](https://github.com/pederbe/ripscope/blob/main/docs/adr/0001-pinned-reference-cscope.md)). Reading cscope's
 source explains *why* it behaves as it does, and the executable decides *what* the
 output is.
 
@@ -19,7 +19,7 @@ output is.
   expected reading. Where an enabled Correction reads a probe differently, its reading is
   kept beside cscope's in `intended/`. A probe in `open/` keeps cscope's records of a
   reading the baseline does not reproduce, where Ripscope defines its own behaviour
-  ([ADR 0004](../adr/0004-own-scanner.md)), and a unit test pins Ripscope's reading
+  ([ADR 0004](https://github.com/pederbe/ripscope/blob/main/docs/adr/0004-own-scanner.md)), and a unit test pins Ripscope's reading
   against them.
 - **Query probes** (`tests/fixtures/queries/`): small projects queried by the reference,
   every field and pattern kind. The sequential oracle must reproduce the captured
@@ -29,7 +29,7 @@ output is.
 ## The compass
 
 Compatibility is measured against the reference
-([ADR 0002](../adr/0002-measured-compatibility.md)). The compass compares Ripscope
+([ADR 0002](https://github.com/pederbe/ripscope/blob/main/docs/adr/0002-measured-compatibility.md)). The compass compares Ripscope
 with the reference on declared selections of real C source. Some projects are held out
 from designing Corrections and only measured. The comparison views are:
 
@@ -46,7 +46,7 @@ Each Correction is measured on the corpus: rows gained and lost, false readings
 removed and real definitions lost. A clear fix is enabled once its kept readings are
 checked and no real definition is lost. A Correction that trades off a correct
 reading, or changes displayed text or the protocol, is a product decision
-([ADR 0002](../adr/0002-measured-compatibility.md), "Compatibility with cscope is
+([ADR 0002](https://github.com/pederbe/ripscope/blob/main/docs/adr/0002-measured-compatibility.md), "Compatibility with cscope is
 measured, and its misreadings are corrected").
 
 ## Accuracy independently of the reference

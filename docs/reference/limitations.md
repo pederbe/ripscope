@@ -1,7 +1,9 @@
 # Limitations
 
-This reference describes Ripscope’s supported platforms and C reading. See the
-[roadmap](../project/roadmap.md) for what comes next.
+Ripscope reads C only, recognises names by their shape without a compiler, runs on
+Linux and Windows and keeps its index on local storage. Each of those limits has
+details worth knowing, and the [roadmap](../project/roadmap.md) says what may come
+next.
 
 ## Language and analysis
 

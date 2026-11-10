@@ -1,56 +1,84 @@
-# How Ripscope is built
+# How Ripscope works
+
+Ripscope answers quickly and stays current because of three choices: it reads C as
+it is written, it keeps what it found in one indexed file, and it replaces that
+file's contents in complete steps. Each choice shapes what your searches find and
+how fresh the answers are.
+
+## It reads source as written
+
+Ripscope's scanner reads each C file on its own, without a compiler or
+preprocessor. It records where names occur, where they are declared and defined,
+which functions call which, and where variables are assigned.
+
+That is why Ripscope needs no build setup and why it works on code that does not
+compile. It also reads every `#if` branch, so code for other platforms and
+configurations is searchable.
+
+The tradeoff is that Ripscope recognises names by their shape. It does not resolve
+types, expand arbitrary macros or work out which calls actually run. Where one
+construct is unclear, only that spot loses accuracy, and the rest of the file is
+still indexed. [Limitations](../reference/limitations.md) lists what this means in
+practice, and [How Ripscope reads C](../architecture/reading-c.md) gives every rule
+the scanner follows.
+
+## It answers from an index
+
+The index is one SQLite file. Symbol, definition, caller, callee, file, include and
+assignment searches read it directly, which is what makes them fast. On Linux, with 3,579 files of the Linux kernel, symbol, definition, callee and
+caller lookups take about a tenth of a millisecond, and repeated file, include and
+assignment searches between half a millisecond and about two. The [benchmarks](../reference/benchmarks.md) have every
+number. These searches keep working even when the source files have moved or been
+deleted.
+
+Text and regular-expression searches read the current source files instead, as
+cscope does, so they always show what is on disk. [Queries](../guide/queries.md#stored-and-live-fields)
+says which search reads what.
+
+## It updates in complete steps
+
+An update looks at each file's size, times and identity, and hashes files that
+were modified very recently. Only files whose bytes changed are read again, so an
+update after a small edit is quick even in a large project.
+
+Each update is one transaction. A search reads one complete revision of the index,
+never a half-written one, and a search that runs during an update answers from the
+revision before it. If an update is interrupted, the previous revision stays.
+
+In an editor, Ripscope watches the files the index was built from. The first
+search after a save updates the index, and searches between saves answer at once.
+[Sessions](../guide/sessions.md#seeing-updates) describes the watch.
+
+`--verify` reads every source file again and checks the whole index. See
+[Check and repair an index](../guide/recovery.md).
+[Index storage and lifecycle](../architecture/storage.md) describes the index file
+and its updates in full.
+
+## It is measured against cscope
+
+Ripscope's starting point is what cscope reports. The project captures the output
+of one fixed cscope release on a set of test sources and compares Ripscope with it.
+
+Ripscope reads C the way cscope does, except for specific constructs that cscope
+gets wrong. Each such change is called a Correction. It changes the reading of
+that one construct, and the project keeps the source, cscope's answer and
+Ripscope's answer for it side by side. Other misreadings of cscope's remain.
+[Differences from cscope](../reference/differences-from-cscope.md) shows examples.
+
+Separate expectations, written from the C source alone, check that the answers are
+right and not only that they agree with cscope. The [benchmarks](../reference/benchmarks.md)
+apply the same idea to real projects. Every row where the two tools differ there
+was checked against the source.
+
+## It is safe Rust
+
+Ripscope is written in Rust with `unsafe` code forbidden, exact dependency pins and
+a locked build. The `ripscope` executable never uses the network.
+
+## More detail
 
 Ripscope is designed and maintained by [Peder Bergan](https://github.com/pederbe).
-It combines a scanner for written C, a SQLite index and cscope's line-oriented
-query protocol. The source and documentation explain how a result is obtained
-and where the reading has limits.
-
-## Written source, without a build
-
-The scanner reads files without invoking a compiler or preprocessor. It records
-occurrences, declarations, calls and their contexts, including inactive `#if`
-branches. It does not resolve types, expand arbitrary macros or prove which calls
-execute. Every readable file contributes the facts the scanner recognises;
-uncertainty in one construct does not discard the whole file. See
-[how Ripscope reads C](../architecture/reading-c.md) and
-[limitations](../reference/limitations.md).
-
-## A complete revision for each query
-
-The index is one SQLite file. Updates commit through a transaction, while queries
-read a complete revision. Stored symbol queries use the index; text searches
-read the current source files. Ordinary Refresh uses file metadata and identity,
-plus content hashes for recent edits. `--verify` reads every source file, including
-Windows edits that preserve size and restore modification time. The
-[storage and lifecycle guide](../architecture/storage.md) explains these choices.
-
-## Evidence for specific behavior
-
-- **A pinned reference.** Baseline observations come from a checksum-verified
-  cscope executable. Source reading explains behavior; the executable supplies
-  the captured output.
-- **Separate intended readings.** A Correction changes a bounded reading where
-  cscope is wrong. Paired fixtures keep both the reference observation and the
-  intended result. Ambiguous cases and disabled candidates stay visible.
-- **Independent source labels.** Navigation expectations from written C check
-  correctness separately from agreement with cscope. Unassessed source remains
-  unassessed, and a retained expectation does not mean the product passes it.
-
-The [evidence index](../../evidence/claims.json) links these inputs and their
-scopes. The [proof page](../reference/differences-from-cscope.md) gives concrete
-examples, and [quality and compatibility](../architecture/quality.md) describes
-how to run the checks. Finite fixtures do not establish arbitrary-C accuracy or
-current corpus-wide performance.
-
-## Implementation and checks
-
-Ripscope is written in Rust with `unsafe` code forbidden, exact dependency pins
-and a locked build. Unit tests exercise the scanner, query engine, storage and
-Refresh. Integration tests run the real executable through one-shot queries,
-sessions, warnings, JSON output and recovery. Separate editor checks drive Vim,
-Neovim and Emacs in isolated projects.
-
-Design choices and their tradeoffs are recorded in the
-[architecture decisions](../adr/README.md). Start with the
-[architecture overview](../architecture/overview.md) for the module boundaries,
-or [Contributing](contributing.md) to build and test a change.
+The [architecture overview](../architecture/overview.md) maps the code, and the
+[decision records](https://github.com/pederbe/ripscope/tree/main/docs/adr) give the
+reasoning behind each design choice. [Contributing](contributing.md) explains how
+to build and test a change.

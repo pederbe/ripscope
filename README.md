@@ -4,73 +4,65 @@
 [![Docs](https://img.shields.io/badge/docs-ripscope.com-blue)](https://ripscope.com/docs/)
 [![License: MIT OR Apache-2.0](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue)](#license)
 
-**Fast C navigation, with answers you can inspect.**
-
-Find definitions, follow callers and trace assignments in unfamiliar C. Ripscope
-is written in purely safe Rust and needs no compiler, preprocessor or compile
-database to read your source. It speaks cscope's command line and query protocol, works with
-Vim's built-in cscope support and `cscope -Rbqk` scripts, and ships integrations
-for Neovim and Emacs on Linux and Windows.
+Ripscope finds definitions, callers and assignments in C code, from Vim, Neovim,
+Emacs or the command line. It is for people who read large or unfamiliar C and
+want cscope's searches, much faster, with an index that keeps itself up to date.
 
 ```console
-$ ripscope -bk -I include          # index the C files here
-$ ripscope -L -1 greet             # where is greet defined?
+$ ripscope -R -L -1 greet          # where is greet defined?
 greet.c greet 6 void greet(const char *name)
 $ ripscope -L -3 greet             # who calls it?
 main.c main 5 greet("world");
 ```
 
-## Why Ripscope?
+The examples here search the three small files of the
+[example project](https://ripscope.com/docs/getting-started/example-project).
 
-- **Fast, by a wide margin.** On the Linux kernel, symbol, definition and caller
-  lookups return in about a tenth of a millisecond, hundreds of times faster than
-  cscope. Even against cscope `-q`, text searches run about 6× faster, egrep 10×
-  and assignment searches over 70×. See the [benchmarks](docs/reference/benchmarks.md)
-  for every search on Linux and Windows.
-- **Better reading of specific C constructs.** Find written increments and
-  indexed stores, recognise ordinary split-line calls and correct mislabelled
-  contexts. [Paired fixtures and source evidence](docs/reference/differences-from-cscope.md)
-  show the intended readings and the limits.
-- **An index that keeps up.** Only changed files are analysed again. Each update
-  commits in one transaction, so queries keep reading a complete revision and
-  editor searches refresh saved source changes automatically.
-- **A design you can follow.** The [architecture guides](docs/architecture/overview.md),
-  [decisions](docs/adr/README.md) and [glossary](GLOSSARY.md) explain how a result is
-  obtained.
-- **Exact output when needed.** The opt-in JSON interface preserves path and line
-  bytes, including spaces and non-ASCII text.
+## Highlights
 
-Ripscope reads written source across conditional branches. It does not expand
-arbitrary macros or resolve types. See the [recognition limits](docs/reference/limitations.md)
-and [freshness checks](docs/guide/recovery.md).
+- **Fast.** On Linux, with 3,579 files of the Linux kernel, symbol, definition and
+  caller lookups take about a tenth of a millisecond, hundreds of times faster
+  than cscope. Text searches run about 6 times faster than `cscope -q` and assignment
+  searches over 70 times.
+- **Always current.** Save a file and search again. Ripscope reads only the files
+  that changed, and a search never sees a half-updated index.
+- **Fits where cscope fits.** It takes cscope's command line and prints cscope's
+  rows, so Vim's `:cs find` and `cscope -Rbqk` scripts carry over.
+- **No build setup.** One executable, written in safe Rust, reads your C as it is
+  written. It needs no compiler, preprocessor or compile database.
+- **Finds what cscope misses.** Increments, indexed stores and ordinary calls
+  split across lines show up, and for specific constructs Ripscope corrects the
+  function name cscope puts on a row.
 
-Find callers in Vim, add and save a caller, then search again. The saved caller
-is already in the results.
+Ripscope reads C only and runs on Linux and Windows. It does not expand macros or
+resolve types, and it has no full-screen terminal interface.
 
-![Vim searches for the callers of greet and lists main.c line 5. A call is added at line 8 and saved, and the same search then lists lines 5 and 8.](site/demo.gif)
+## Installation
 
-## Your editor. Your source.
-
-Use all nine cscope searches from the command line or directly in Vim, Neovim and
-Emacs. Ripscope creates and manages the project index on Linux and Windows,
-so you can get straight to exploring C.
-
-## Install
-
-On Linux, use the [signed apt or dnf repository](docs/guide/installation-options.md#apt-and-dnf-repositories)
-to install Ripscope and receive updates through your package manager.
-
-Alternatively, the installer sets up Ripscope and your editor in one step.
+Linux
 
 ```sh
-curl -fsSL https://ripscope.com/install.sh | sh        # Linux
-irm https://ripscope.com/install.ps1 | iex             # Windows PowerShell
+curl -fsSL https://ripscope.com/install.sh | sh
 ```
 
-Vim then loads Ripscope by itself, and so does Neovim unless lazy.nvim manages its
-plugins. For Emacs, and for lazy.nvim where it finds it, the installer prints the one
-line to add. Or add one line to your plugin manager, which also downloads the
-executable if it is not already installed.
+Windows, in PowerShell
+
+```powershell
+irm https://ripscope.com/install.ps1 | iex
+```
+
+The installer also sets up Vim and Neovim. For Emacs, and for Neovim with
+lazy.nvim, it prints the one line to add to your configuration.
+
+On Debian, Ubuntu, Fedora and RHEL-family systems you can install from the
+[signed apt or dnf repository](https://ripscope.com/docs/guide/installation-options#apt-and-dnf-repositories)
+instead and receive updates through your package manager.
+[Other installation methods](https://ripscope.com/docs/guide/installation-options)
+covers Cargo, standalone packages, archives and source builds, and every version
+is on the [releases page](https://github.com/pederbe/ripscope/releases).
+
+If you would rather start from your editor, add one line to your plugin manager.
+It installs the plugin and downloads the executable when it is missing.
 
 ```lua
 { 'pederbe/ripscope', branch = 'release', build = ':RipscopeInstall' },   -- Neovim, lazy.nvim
@@ -85,61 +77,103 @@ Plug 'pederbe/ripscope', { 'branch': 'release', 'do': ':RipscopeInstall' }  " Vi
 (use-package ripscope :vc (:url "https://github.com/pederbe/ripscope" :branch "release" :lisp-dir "contrib/emacs" :rev :newest) :config (ripscope-setup))
 ```
 
-Then open a C file in your project and search with `:cs find g main` in Vim,
-`:RipscopeFind g main` in Neovim, or `M-.` on `main` in Emacs. The first search indexes
-the project into your cache directory, and later searches see your saved edits.
-See [installation](docs/getting-started/installation.md) for the details, system
-packages and source builds.
+Find callers in Vim, add and save a caller, then search again. The saved caller
+is already in the results.
 
-## Use
+![Vim searches for the callers of greet and lists main.c line 5. A call is added at line 8 and saved, and the same search then lists lines 5 and 8.](site/demo.gif)
 
-| Task | Command |
+## Everyday use
+
+### In your editor
+
+Open a C file in your project and search for the definition of `main`.
+
+| Editor | Search |
 | --- | --- |
-| Build or update the index | `ripscope -b [-R] [-k] [-I DIR]... [FILES... \| -i LIST]` |
-| Query (updates first) | `ripscope -L -FIELD PATTERN` |
-| Query without updating | `ripscope -dL -FIELD PATTERN` |
-| Editor session | `ripscope -l` |
-| Exact output as JSON | add `--json` to a query or session |
-| Check the index | `ripscope --verify` |
+| Vim | `:cs find g main` |
+| Neovim | `:RipscopeFind g main` |
+| Emacs | `M-.` with the cursor on `main` |
 
-The index is `ripscope.db`, and `-f INDEX` names another.
+The first search indexes the project into your cache directory. Later searches
+see every edit you have saved. Helix and other editors that speak the Language
+Server Protocol use `ripscope lsp`.
 
-| Field | Finds | Field | Finds |
+### On the command line
+
+Run the first search with `-R` in your project directory, as the example at the
+top does. It indexes the C files there and below, then answers. Later searches
+bring the index up to date before they answer.
+
+```console
+$ ripscope -L -9 greet_count       # where is greet_count assigned?
+greet.c greet 8 greet_count = greet_count + 1;
+```
+
+Each row is the file, the enclosing function, the line number and the source
+line.
+
+Search for text when the name is not a C symbol.
+
+```console
+$ ripscope -L -4 Hello
+greet.c <unknown> 9     printf("Hello, %s!\n", name);
+```
+
+Get JSON for a script. It carries paths with spaces and every byte of the line.
+
+```console
+$ ripscope --json -L -3 greet
+["main.c","main",5,"greet(\"world\");"]
+```
+
+The number after `-L` chooses the search.
+
+| Search | Finds | Search | Finds |
 | --- | --- | --- | --- |
-| `-0` | symbol occurrences | `-5` | text (as in cscope's line mode) |
-| `-1` | definitions | `-6` | regular expression |
-| `-2` | functions called by | `-7` | files |
-| `-3` | callers | `-8` | files including |
-| `-4` | text | `-9` | assignments |
+| `-0` | every use of a symbol | `-5` | text, as in cscope's line mode |
+| `-1` | definitions | `-6` | a regular expression |
+| `-2` | functions called by a function | `-7` | files by name |
+| `-3` | callers of a function | `-8` | files that include a file |
+| `-4` | text | `-9` | assignments to a symbol |
 
-Start with the [quick start](docs/getting-started/quick-start.md). The
-[Vim](docs/editors/vim.md), [Neovim](docs/editors/neovim.md) and
-[Emacs](docs/editors/emacs.md) guides cover the editors. Helix and other editors
-that speak the Language Server Protocol use the
-[language server](docs/editors/language-server.md), `ripscope lsp`.
+| Option | What it does |
+| --- | --- |
+| `-L -N PATTERN` | Run search `N` and print the rows |
+| `-R` | Include the C files in subdirectories |
+| `-I DIR` | Look for included headers in `DIR` too |
+| `-k` | Leave out the system headers in `/usr/include` |
+| `-d` | Answer from the index as it is, without updating it |
+| `-b` | Build or update the index without searching |
+| `-f INDEX` | Use this index file instead of `ripscope.db` |
+| `-l` | Keep running and answer one search per line, as editors do |
+| `--json` | Print each row as a JSON array |
+| `--verify` | Check the index |
 
-## Documentation
+Run `ripscope --help` for every option.
 
-The full documentation is at **[ripscope.com/docs](https://ripscope.com/docs/)**
-and in [`docs/`](docs/README.md).
+## Learn more
 
-- [User guide](docs/guide/building.md) for building an index, queries, sessions, JSON and checking
-- [Reference](docs/reference/cli.md) for the command line, differences from cscope and the FAQ
-- [Architecture](docs/architecture/overview.md) and [design decisions](docs/adr/README.md)
-- [Glossary](GLOSSARY.md)
+- [Installation](https://ripscope.com/docs/getting-started/installation), with
+  how to check that it worked and every other way to install
+- [Quick start](https://ripscope.com/docs/getting-started/quick-start) and a worked
+  [example project](https://ripscope.com/docs/getting-started/example-project)
+- Editor guides for [Vim](https://ripscope.com/docs/editors/vim),
+  [Neovim](https://ripscope.com/docs/editors/neovim),
+  [Emacs](https://ripscope.com/docs/editors/emacs) and the
+  [language server](https://ripscope.com/docs/editors/language-server)
+- [Switch from cscope](https://ripscope.com/docs/guide/switch-from-cscope) and the
+  [differences from cscope](https://ripscope.com/docs/reference/differences-from-cscope)
+- [Use Ripscope in scripts](https://ripscope.com/docs/guide/scripts)
+- [Command reference](https://ripscope.com/docs/reference/cli) and
+  [limitations](https://ripscope.com/docs/reference/limitations)
+- [Benchmarks](https://ripscope.com/docs/reference/benchmarks) for every search on
+  Linux and Windows
+- [How Ripscope works](https://ripscope.com/docs/project/how-it-is-built)
+- [Troubleshooting](https://ripscope.com/docs/help/troubleshooting)
 
-## Status
-
-Ripscope reads C only and runs on Linux and Windows. Find the latest version on
-the [releases page](https://github.com/pederbe/ripscope/releases).
-Before 1.0, a minor version may change the index format or command-line
-behavior, and the [changelog](CHANGELOG.md) says when it does. Reports of wrong
-answers and failed setups help most.
-
-## Contributing
-
-Bug reports, compatibility reports and pull requests are welcome. See
-[CONTRIBUTING.md](CONTRIBUTING.md) and [how Ripscope is built](docs/project/how-it-is-built.md).
+Before 1.0, a minor version may change the index format or command-line behavior,
+and the [changelog](CHANGELOG.md) says when it does. Bug reports, compatibility
+reports and pull requests are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 

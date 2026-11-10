@@ -1,10 +1,17 @@
 # JSON interface
 
+Add `--json` to any query or session to get each row as a JSON array, with exact paths
+and line text:
+
+```console
+$ ripscope --json -L -3 greet
+["main.c","main",5,"greet(\"world\");"]
+```
+
 cscope's line format separates fields with spaces and has no quoting, so a row whose
 path holds a control character cannot be carried, and a line's bytes may be shown
-escaped. Add `--json` to any query or session to get exact output instead. Nothing else
-about the query changes: the same rows, in the same order, with the same contexts and
-text.
+escaped. JSON output has neither limit. Nothing else about the query changes. You get
+the same rows, in the same order, with the same contexts and text.
 
 `--json` cannot be combined with `--vim-errors`, index builds or `--verify`.
 
@@ -27,8 +34,8 @@ $ ripscope --json -dL -f "navigation index.db" -1 greet
 An empty standard output with no diagnostic means no matches. Warnings and errors
 go to standard error. A query that cannot read the index, or whose output fails,
 exits with status 1. An unusable pattern follows cscope's one-shot behavior: no rows,
-a diagnostic on standard error, and status 0. Check both streams; status 0 alone
-does not establish that the pattern was valid.
+a diagnostic on standard error, and status 0. Check both streams. Status 0 alone
+does not show that the pattern was valid.
 
 ## Sessions
 
@@ -37,12 +44,12 @@ In a `--json` session, every line Ripscope writes is one JSON value:
 | Frame | Meaning |
 | --- | --- |
 | `{"type":"ready"}` | Ready for the next command (at startup and after each command). |
-| `{"type":"result","count":N}` | A query's answer; exactly N row arrays follow. N may be 0. |
-| `{"type":"error","message":"..."}` | A request that could not be answered, or an `r` that did not bring the index up to date: it failed, another process was updating the index, or the index is kept where it cannot be updated. The session continues. |
+| `{"type":"result","count":N}` | A query's answer. Exactly N row arrays follow. N may be 0. |
+| `{"type":"error","message":"..."}` | A request that could not be answered, or an `r` that did not bring the index up to date. That `r` failed, another process was updating the index, or the index is kept where it cannot be updated. The session continues. |
 | `{"type":"warning","message":"..."}` | Something worth knowing about the answer before it, such as a file a text search could not read or a refresh before the query that did not complete. Zero or more follow the response and all its rows, before `ready`. |
 | `{"type":"rebuilt"}` | The `r` command brought the index up to date (warnings may follow). |
 
-Parse frames as JSON objects; do not rely on key order, and ignore keys you do not know.
+Parse frames as JSON objects. Do not rely on key order, and ignore keys you do not know.
 
 ```console
 $ printf '1greet\nq\n' | ripscope --json -dl -f project.db
@@ -72,6 +79,7 @@ explicit `r`.
 
 ## Editor integration
 
-The [Neovim adapter](../editors/neovim.md) uses the JSON interface directly. Other
-integrations can launch Ripscope and decode these responses with their language's
-JSON support.
+The [Neovim](../editors/neovim.md) and [Emacs](../editors/emacs.md) integrations use
+the JSON interface. Your own integration can launch Ripscope and decode these
+responses with its language's JSON support. [Use Ripscope in scripts](scripts.md)
+shows the interface from a shell.

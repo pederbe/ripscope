@@ -12,14 +12,14 @@ This page is the map. Details live in:
 - [How Ripscope answers stored queries](answering-queries.md): the query engine.
 - [Index storage](storage.md): the SQLite file, updates and change detection.
 - [Quality and compatibility method](quality.md): probes, the compass and Corrections.
-- [Architecture decisions](../adr/README.md): why things are the way they are.
+- [Architecture decisions](https://github.com/pederbe/ripscope/tree/main/docs/adr): why things are the way they are.
 
 ## Stack
 
 | Concern | Choice |
 | --- | --- |
 | Language | Rust (2024 edition, stable toolchain), `unsafe_code = "forbid"` |
-| Reading C | Ripscope's own scanner, matched to the pinned cscope ([ADR 0004](../adr/0004-own-scanner.md)) |
+| Reading C | Ripscope's own scanner, matched to the pinned cscope ([ADR 0004](https://github.com/pederbe/ripscope/blob/main/docs/adr/0004-own-scanner.md)) |
 | Storage | [SQLite](https://sqlite.org/) via `rusqlite`, bundled, in WAL mode |
 | Matching | `regex` (byte-oriented, cscope's pattern grammar translated) |
 | Change detection | file metadata and identity, `sha2` hashes, and a session's watch through inotify on Linux and `notify` on Windows |
@@ -93,7 +93,7 @@ Discovery returns canonical indexed spellings in cscope's build-root and include
 order, stopping at already-listed paths. It asks the file system only whether a
 candidate is a regular file spelled exactly (through directory listings on Windows), and
 its caches start fresh for each Refresh. Each file is read from its own bytes, without
-the headers it includes ([ADR 0003](../adr/0003-read-source-as-written.md), "Each file is
+the headers it includes ([ADR 0003](https://github.com/pederbe/ripscope/blob/main/docs/adr/0003-read-source-as-written.md), "Each file is
 read as written, without a compiler or preprocessor"), so only a file whose bytes
 changed is analysed again.
 

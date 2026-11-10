@@ -430,7 +430,7 @@ test('docs sections stay visible while chapter submenus start collapsed', async 
   const page = await pageWith();
   const closedMenus = async () => {
     assert.equal(await page.$$eval('#mdbook-sidebar .part-title', titles =>
-      titles.filter(title => title.getBoundingClientRect().height > 0).length), 6);
+      titles.filter(title => title.getBoundingClientRect().height > 0).length), 7);
     assert.ok(await page.$eval('#mdbook-sidebar a[href$="getting-started/quick-start"]',
       link => link.getBoundingClientRect().height > 0));
     assert.ok(await page.$$eval('.chapter-fold-toggle', toggles =>

@@ -2,7 +2,7 @@
 
 This page specifies how the query engine (`src/engine.rs`) answers the stored query fields
 over Analysis units. The product answers with Ripscope's own query semantics
-([ADR 0010](../adr/0010-own-query-semantics.md), "Ripscope's own query semantics give
+([ADR 0010](https://github.com/pederbe/ripscope/blob/main/docs/adr/0010-own-query-semantics.md), "Ripscope's own query semantics give
 each name the context it sits in"). The engine also keeps, exactly, the pinned
 reference cscope's sequential search, the search it runs on a database built without
 `-q`, as the **oracle** (section 7). The evidence is:
@@ -52,7 +52,7 @@ corrected. Probe names are cited in brackets, for example [01-contexts].
 - **Which blocks.** The index keeps each file's lines in blocks of about 16 KiB, each with
   the scope its first line starts in: the macro being defined and the function, all the
   context a walk carries from line to line (section 3 and
-  [ADR 0011](../adr/0011-blocks-of-lines-with-their-scope.md)). A query reads its files'
+  [ADR 0011](https://github.com/pederbe/ripscope/blob/main/docs/adr/0011-blocks-of-lines-with-their-scope.md)). A query reads its files'
   blocks in order and walks each from its start scope, so each name sits in the context a
   walk of the whole file gives it. For an exact name it reads only the blocks the name's
   postings list in each file: those the name occurs in, in any role, and those that start

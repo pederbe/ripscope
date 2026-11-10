@@ -9,7 +9,7 @@ Navigation accuracy and workflow checks.
 - **Every readable file indexed.** A new analyzer that reads C the way cscope does, so no
   file is left out, with Corrections where cscope reads C wrongly.
 - **Separate compatibility and accuracy checks.** Reference captures pin observed
-  readings; independent source labels check selected navigation facts separately.
+  readings, and independent source labels check selected navigation facts separately.
 - **An incremental index.** One SQLite file, updated in place, with metadata-based
   change detection and content checks for recently modified files.
 - **Drop-in command line.** The invocations Vim, Neovim, Emacs and cscope scripts
@@ -28,7 +28,7 @@ Navigation accuracy and workflow checks.
 - Keep conditional-function context limits visible before considering a change to
   query semantics or stored scope.
 
-Known recognition limits remain explicit; completed index builds and reference
+Known recognition limits remain explicit. Completed index builds and reference
 agreement do not establish navigation correctness throughout a project.
 
 ## Later, if there is demand
