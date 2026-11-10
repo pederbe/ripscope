@@ -527,7 +527,7 @@ fn search_file(
 ) -> Searched {
     use std::io::Read;
     bytes.clear();
-    std::fs::File::open(full)?.read_to_end(bytes)?;
+    crate::files::open_regular(full)?.read_to_end(bytes)?;
     let mut lines = Vec::new();
     let Ok(()) = query.matching_lines(bytes, scratch, folded, |number, line| {
         let number = u32::try_from(number).unwrap_or(u32::MAX);

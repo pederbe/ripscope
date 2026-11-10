@@ -25,7 +25,7 @@
 use serde_json::Value;
 use std::collections::BTreeMap;
 use std::fs;
-use std::path::{Path, PathBuf};
+use std::path::{Component, Path, PathBuf};
 use std::process::{Command, ExitCode};
 
 #[path = "support/captured_text.rs"]
@@ -36,6 +36,9 @@ mod captured_text;
 mod json_text;
 #[path = "support/query_semantics.rs"]
 mod query_semantics;
+
+#[path = "../src/files.rs"]
+mod files;
 
 use json_text::{FIXTURE, Json};
 use query_semantics::{Pattern, RULES};
@@ -57,6 +60,55 @@ fn main() -> ExitCode {
 
 fn fixtures() -> PathBuf {
     Path::new(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures")
+}
+
+/// A portable relative fixture name. Check Windows spellings on Unix too, so a
+/// capture cannot become an escaping path when it is checked on the other platform.
+fn relative_name(name: &str) -> Result<PathBuf> {
+    if name.is_empty() || name.contains(['\\', ':']) || name.chars().any(char::is_control) {
+        return Err(format!("unsafe fixture path {name:?}").into());
+    }
+    let mut relative = PathBuf::new();
+    for part in Path::new(name).components() {
+        match part {
+            Component::CurDir => {}
+            Component::Normal(part) => {
+                let text = part.to_str().ok_or("fixture path is not text")?;
+                let stem = text
+                    .split('.')
+                    .next()
+                    .unwrap_or_default()
+                    .to_ascii_uppercase();
+                let device = matches!(
+                    stem.as_str(),
+                    "CON" | "PRN" | "AUX" | "NUL" | "CONIN$" | "CONOUT$"
+                ) || ["COM", "LPT"].iter().any(|prefix| {
+                    stem.strip_prefix(prefix).is_some_and(|number| {
+                        number.chars().count() == 1 && "123456789¹²³".contains(number)
+                    })
+                });
+                if text.ends_with(['.', ' ']) || device {
+                    return Err(format!("unsafe fixture path {name:?}").into());
+                }
+                relative.push(part);
+            }
+            _ => return Err(format!("unsafe fixture path {name:?}").into()),
+        }
+    }
+    if relative.as_os_str().is_empty() {
+        return Err(format!("unsafe fixture path {name:?}").into());
+    }
+    Ok(relative)
+}
+
+/// Resolves an existing fixture input, including its links, inside its selected root.
+fn fixture_input(root: &Path, name: &str) -> Result<PathBuf> {
+    let root = root.canonicalize()?;
+    let path = root.join(relative_name(name)?).canonicalize()?;
+    if !path.starts_with(&root) {
+        return Err(format!("fixture input escapes {}: {name:?}", root.display()).into());
+    }
+    Ok(path)
 }
 
 /// One recorded difference: the product's answer and the recorded one.
@@ -84,8 +136,8 @@ fn run() -> Result<usize> {
         return Err(USAGE.into());
     };
     let binary = std::path::absolute(binary)?.canonicalize()?;
-    let path = fixtures().join("intended-answers.json");
-    let answers: Value = serde_json::from_slice(&fs::read(&path)?)?;
+    let path = fixture_input(&fixtures(), "intended-answers.json")?;
+    let answers = json_file(&path)?;
     let semantics = answers.get("semantics").cloned();
     if let Some(unknown) = answers
         .as_object()
@@ -245,7 +297,7 @@ fn stored_entry(entry: &Value) -> Result<Json> {
 }
 
 fn json_file(path: &Path) -> Result<Value> {
-    Ok(serde_json::from_slice(&fs::read(path)?)?)
+    Ok(serde_json::from_slice(&files::read(path)?)?)
 }
 
 /// Each source file a query's index was built from, by name.
@@ -269,16 +321,20 @@ fn sources(fixture: &str, key: &str) -> Result<(Files, String)> {
     };
     if fixture == "queries" {
         let (probe, rest) = split(key)?;
-        let directory = fixtures().join("queries").join(&probe);
-        let expected = json_file(&directory.join("expected.json"))?;
+        let queries = fixture_input(&fixtures(), "queries")?;
+        let directory = fixture_input(&queries, &probe)?;
+        let expected = json_file(&fixture_input(&directory, "expected.json")?)?;
         let mut files = Vec::new();
         for name in expected["files"].as_array().ok_or("probe without files")? {
             let name = name.as_str().ok_or("file name is not text")?;
-            files.push((name.to_owned(), fs::read(directory.join(name))?));
+            files.push((
+                name.to_owned(),
+                files::read(&fixture_input(&directory, name)?)?,
+            ));
         }
         return Ok((files, rest));
     }
-    let data = json_file(&fixtures().join(fixture))?;
+    let data = json_file(&fixture_input(&fixtures(), fixture)?)?;
     let (capture, rest) = if data.get("cases").is_some() {
         let (case, rest) = split(key)?;
         let entry = &data["cases"][&case];
@@ -350,16 +406,22 @@ fn units(
     files: &[(String, Vec<u8>)],
     corrections: Option<&str>,
 ) -> Result<Vec<Value>> {
+    let names: Vec<PathBuf> = files
+        .iter()
+        .map(|(name, _)| relative_name(name))
+        .collect::<Result<_>>()?;
+    if names
+        .iter()
+        .any(|name| name.to_string_lossy().eq_ignore_ascii_case(".names"))
+    {
+        return Err("fixture path .names is reserved for the file list".into());
+    }
+    let listing = file_list(files)?;
     let work = tempfile::tempdir()?;
-    for (name, data) in files {
+    for ((_, data), name) in files.iter().zip(names) {
         let path = work.path().join(name);
         fs::create_dir_all(path.parent().ok_or("file without a directory")?)?;
         fs::write(path, data)?;
-    }
-    let mut listing = Vec::new();
-    for (name, _) in files {
-        listing.extend(bytes_of(name)?);
-        listing.push(b'\n');
     }
     fs::write(work.path().join(".names"), listing)?;
     let mut command = Command::new(binary);
@@ -384,6 +446,17 @@ fn units(
         .lines()
         .map(serde_json::from_str)
         .collect::<std::result::Result<_, _>>()?)
+}
+
+fn file_list(files: &[(String, Vec<u8>)]) -> Result<Vec<u8>> {
+    let mut listing = Vec::new();
+    for (name, _) in files {
+        // --dump-units reads literal newline-separated names, not cscope list tokens.
+        // relative_name has already refused line breaks and other control characters.
+        listing.extend(bytes_of(name)?);
+        listing.push(b'\n');
+    }
+    Ok(listing)
 }
 
 /// Each row of an answer as (path, context, line).
@@ -542,6 +615,78 @@ fn change(row: Json, kind: &str, rules: Vec<String>) -> Json {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn developer_file_list_keeps_each_filename_literal() {
+        let files =
+            ["dir/a file.c", "-k", "quote\"name.c"].map(|name| (name.to_owned(), Vec::new()));
+        assert_eq!(
+            file_list(&files).unwrap(),
+            b"dir/a file.c\n-k\nquote\"name.c\n"
+        );
+    }
+
+    #[test]
+    fn reconstruction_rejects_escaping_paths_before_writing_or_running() {
+        let outside = tempfile::tempdir().unwrap();
+        let sentinel = outside.path().join("keep.c");
+        fs::write(&sentinel, "keep").unwrap();
+        let absolute = sentinel.to_str().unwrap();
+        for name in [
+            absolute,
+            "../outside.c",
+            "a/../../outside.c",
+            "/outside.c",
+            "C:outside.c",
+            "C:/outside.c",
+            "..\\outside.c",
+            "\\\\server\\share\\a.c",
+            "a.c\n../outside.c",
+            "a.c\0",
+            "CON",
+            "nul.c",
+            "COM1.c",
+            "a/.. /outside.c",
+            ".names",
+            "./.names",
+        ] {
+            let error = units(
+                Path::new("must-not-run"),
+                &[(name.to_owned(), b"replace".to_vec())],
+                None,
+            )
+            .unwrap_err();
+            assert!(
+                error.to_string().contains("fixture path"),
+                "{name:?}: {error}"
+            );
+            assert_eq!(fs::read_to_string(&sentinel).unwrap(), "keep");
+        }
+        for name in ["a.c", "dir/a.c", "./dir/a.c", "dir/a file.c", "-k"] {
+            assert!(relative_name(name).is_ok(), "{name}");
+        }
+    }
+
+    #[test]
+    fn fixture_inputs_stay_inside_the_selected_root() {
+        let root = tempfile::tempdir().unwrap();
+        fs::create_dir(root.path().join("nested")).unwrap();
+        fs::write(root.path().join("nested/input.json"), "{}").unwrap();
+        assert_eq!(
+            fixture_input(root.path(), "./nested/input.json").unwrap(),
+            root.path()
+                .join("nested/input.json")
+                .canonicalize()
+                .unwrap()
+        );
+        assert!(fixture_input(root.path(), "../input.json").is_err());
+        #[cfg(unix)]
+        {
+            let outside = tempfile::NamedTempFile::new().unwrap();
+            std::os::unix::fs::symlink(outside.path(), root.path().join("link.json")).unwrap();
+            assert!(fixture_input(root.path(), "link.json").is_err());
+        }
+    }
 
     #[test]
     fn queries_and_rows_are_read_as_the_keys_write_them() {

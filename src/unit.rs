@@ -276,6 +276,7 @@ impl AnalysisUnit {
     /// of image, with the scope each starts in, and its postings with the blocks a query for
     /// each name reads. There is at least one block, empty for a unit without lines. The
     /// index keeps what this gives, so a change to it needs a new schema version.
+    #[cfg_attr(feature = "hotpath", hotpath::measure)]
     pub(crate) fn split(&self, size: usize) -> Split<'_> {
         let mut splitter = Splitter::new(size, true);
         for (line, record) in self.records() {
@@ -697,12 +698,19 @@ struct Splitter<'u> {
     /// their numbers.
     ids: crate::hashing::HashMap<&'u [u8], usize>,
     numbered: Vec<&'u [u8]>,
-    /// The current line's names, and the names it gave a row in fields 0 and 9 or where a
-    /// field 1 row lets reading resume, kept from line to line to spare allocations.
+    /// The current line's names, kept from line to line to spare allocations.
     names: Vec<Name<'u>>,
-    symbols: Vec<&'u [u8]>,
-    assigned: Vec<&'u [u8]>,
-    next: Vec<(&'u [u8], usize)>,
+    /// Per-name answer state, indexed by the same dense IDs as `numbered`.
+    answered: Vec<LineAnswers>,
+}
+
+#[derive(Default)]
+struct LineAnswers {
+    /// Block and record ordinal, rather than source line number: equal numbers are valid.
+    record: (u32, u32),
+    symbol: bool,
+    assigned: bool,
+    next_definition: usize,
 }
 
 impl<'u> Splitter<'u> {
@@ -712,8 +720,22 @@ impl<'u> Splitter<'u> {
         let id = *self.ids.entry(name).or_insert(next);
         if id == next {
             self.numbered.push(name);
+            self.answered.push(LineAnswers::default());
         }
         id
+    }
+
+    /// Resets only the state of names read on this record, never every name in the file.
+    fn answered(&mut self, id: usize) -> &mut LineAnswers {
+        let record = (self.started, self.count);
+        let answered = &mut self.answered[id];
+        if answered.record != record {
+            *answered = LineAnswers {
+                record,
+                ..LineAnswers::default()
+            };
+        }
+        answered
     }
 
     /// Adds an exact-name answer row for the name numbered `id`.
@@ -745,9 +767,7 @@ impl<'u> Splitter<'u> {
             ids: crate::hashing::HashMap::default(),
             numbered: Vec::new(),
             names: Vec::new(),
-            symbols: Vec::new(),
-            assigned: Vec::new(),
-            next: Vec::new(),
+            answered: Vec::new(),
         }
     }
 
@@ -805,12 +825,6 @@ impl<'u> Splitter<'u> {
             context,
         };
         // Fields 0 and 9 answer a line once, for its first name that matches.
-        let (mut symbols, mut assigned) = (
-            std::mem::take(&mut self.symbols),
-            std::mem::take(&mut self.assigned),
-        );
-        symbols.clear();
-        assigned.clear();
         for (index, name) in names.iter().enumerate() {
             if name.mark == Mark::Include {
                 self.last_include_line = Some(line.number);
@@ -843,12 +857,13 @@ impl<'u> Splitter<'u> {
                 } else {
                     context
                 };
-                if !symbols.contains(&name.text) {
-                    symbols.push(name.text);
+                let answered = self.answered(id);
+                let symbol = !std::mem::replace(&mut answered.symbol, true);
+                let assigned = name.assigned && !std::mem::replace(&mut answered.assigned, true);
+                if symbol {
                     self.row(id, row(0, index, context));
                 }
-                if name.assigned && !assigned.contains(&name.text) {
-                    assigned.push(name.text);
+                if assigned {
                     self.row(id, row(9, index, context));
                 }
             }
@@ -866,8 +881,9 @@ impl<'u> Splitter<'u> {
         }
         // Field 1: a definition row consumes the rest of its line, to the next name that
         // directly follows its predecessor.
-        let mut next = std::mem::take(&mut self.next);
-        next.clear();
+        // The next display boundary is shared by every definition before it. Advancing
+        // this cursor scans each range once, even on a line with many distinct names.
+        let mut after = 0;
         for (index, name) in names.iter().enumerate() {
             let definition = matches!(
                 name.mark,
@@ -884,22 +900,17 @@ impl<'u> Splitter<'u> {
             if !definition || name.text.is_empty() {
                 continue;
             }
-            let from = next
-                .iter()
-                .find(|(text, _)| *text == name.text)
-                .map(|(_, at)| *at);
-            if from.is_some_and(|from| index < from) {
+            let id = self.id(name.text);
+            if index < self.answered(id).next_definition {
                 continue;
             }
-            let id = self.id(name.text);
             self.row(id, row(1, index, None));
-            let after = after_row(&names, index);
-            match next.iter_mut().find(|(text, _)| *text == name.text) {
-                Some(entry) => entry.1 = after,
-                None => next.push((name.text, after)),
+            if index >= after {
+                after = after_row(&names, index);
             }
+            self.answered(id).next_definition = after;
         }
-        (self.names, self.symbols, self.assigned, self.next) = (names, symbols, assigned, next);
+        self.names = names;
         self.scope.leave(line);
         Some(starts)
     }
@@ -1267,6 +1278,37 @@ mod tests {
     use super::{AnalysisUnit, IMAGE_VERSION, MAGIC, Mark, Scope, UnitError};
     use crate::scanner::{self, Mode};
     use std::collections::BTreeMap;
+
+    #[test]
+    fn long_lines_keep_each_distinct_names_rows_and_verify_their_split() {
+        use std::fmt::Write;
+        let mut source = String::from("int ");
+        for index in 0..20_000 {
+            if index > 0 {
+                source.push(',');
+            }
+            write!(source, "name{index:05}").unwrap();
+        }
+        source.push_str(";\n");
+        let unit = AnalysisUnit::from_records(&scanner::scan(source.as_bytes(), Mode::C)).unwrap();
+        let split = unit.split(16 * 1024);
+        assert_eq!(split.blocks.len(), 1);
+        assert_eq!(split.postings.iter().count(), 20_000);
+        for (_, _, _, rows) in split.postings.iter() {
+            let fields: Vec<_> = super::Occurrences(rows)
+                .iter()
+                .map(|row| row.unwrap().field)
+                .collect();
+            assert_eq!(fields, [0, 1]);
+        }
+        let blocks: Vec<_> = split
+            .blocks
+            .iter()
+            .map(|(unit, start)| (unit, *start))
+            .collect();
+        let checked = AnalysisUnit::check_split(&blocks, 16 * 1024).unwrap();
+        assert!(checked.iter().eq(split.postings.iter()));
+    }
 
     /// A unit's postings: each distinct name once, with every role it has, assigned ones
     /// apart, and neither include operands nor function and macro ends.

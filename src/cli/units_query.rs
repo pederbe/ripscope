@@ -55,7 +55,7 @@ pub(super) fn run(
         let _ = writeln!(stderr, "ripscope: --units-query needs -i LIST");
         return ExitCode::FAILURE;
     };
-    let names: Vec<Vec<u8>> = match std::fs::read(list) {
+    let names: Vec<Vec<u8>> = match crate::files::read(std::path::Path::new(&list)) {
         Ok(bytes) => bytes
             .split(|byte| *byte == b'\n')
             .map(|line| line.strip_suffix(b"\r").unwrap_or(line))
@@ -152,7 +152,7 @@ fn read_units(names: &[Vec<u8>], analyzer: Analyzer, stderr: &mut impl Write) ->
                         .iter()
                         .map(|name| {
                             let path = String::from_utf8_lossy(name);
-                            let bytes = std::fs::read(refresh::path_of(name))
+                            let bytes = crate::files::read(&refresh::path_of(name))
                                 .map_err(|error| format!("cannot read {path}: {error}"))?;
                             analyzer
                                 .analyse(name, &bytes)

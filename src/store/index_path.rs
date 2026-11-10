@@ -166,7 +166,7 @@ fn same_file(a: &Path, b: &Path) -> std::io::Result<bool> {
 #[cfg(not(unix))]
 fn same_file(a: &Path, b: &Path) -> std::io::Result<bool> {
     let identity = |path: &Path| -> std::io::Result<(u64, u64)> {
-        let information = winx::winapi_util::file::information(&std::fs::File::open(path)?)?;
+        let information = winx::winapi_util::file::information(&crate::files::open_regular(path)?)?;
         Ok((information.volume_serial_number(), information.file_index()))
     };
     Ok(identity(a)? == identity(b)?)

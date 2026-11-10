@@ -82,6 +82,9 @@ fn capture(root: &Path, names: &BTreeSet<String>, reference: &Reference) -> Resu
             let text = if caseless { &line[2..] } else { line };
             let mut chars = text.chars();
             let field = chars.next().ok_or("empty query line")?.to_string();
+            if !field.as_bytes()[0].is_ascii_digit() || field.len() != 1 {
+                return Err("a query field must be one ASCII digit".into());
+            }
             queries.push(Query {
                 field,
                 pattern: chars.as_str().to_owned(),
@@ -240,4 +243,29 @@ fn capture(root: &Path, names: &BTreeSet<String>, reference: &Reference) -> Resu
         );
     }
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn invalid_fields_are_refused_before_reference_execution() {
+        for query in [";true", "|true", "`true", "éname", "C ;true"] {
+            let work = tempfile::tempdir().unwrap();
+            let probe = work.path().join("probe");
+            fs::create_dir(&probe).unwrap();
+            fs::write(probe.join("a.c"), "int Alpha;\n").unwrap();
+            fs::write(probe.join("queries.txt"), query).unwrap();
+            let reference = Reference {
+                cscope: work.path().join("must-not-run"),
+                sha256: String::new(),
+                windows: false,
+                libraries: None,
+            };
+            let error = capture(work.path(), &BTreeSet::new(), &reference).unwrap_err();
+            assert!(error.to_string().contains("one ASCII digit"), "{error}");
+            assert!(!probe.join("expected.json").exists());
+        }
+    }
 }

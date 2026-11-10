@@ -25,6 +25,7 @@ pkg-fmt = "zip"
 
 [features]
 session-profile = []
+hotpath = ["dep:hotpath", "hotpath/hotpath"]
 
 # Keep release optimization and inlining, with matching Rust and bundled-C symbols.
 [profile.profiling]
@@ -36,6 +37,7 @@ strip = false
 base16ct = { version = "=1.0.0", features = ["alloc"] }
 blake3 = "=1.8.7"
 foldhash = "=0.2.0"
+hotpath = { version = "=0.31.2", optional = true }
 memchr = "=2.8.3"
 regex-syntax = "=0.8.11"
 regex = "=1.13.1"

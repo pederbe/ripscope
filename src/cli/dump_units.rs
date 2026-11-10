@@ -19,7 +19,7 @@ pub(super) fn run(args: &[OsString], stdout: &mut impl Write, stderr: &mut impl 
         }
     };
     let names: Vec<OsString> = match args.as_slice() {
-        [flag, list] if flag == "-i" => match std::fs::read(list) {
+        [flag, list] if flag == "-i" => match crate::files::read(std::path::Path::new(list)) {
             Ok(bytes) => bytes
                 .split(|byte| *byte == b'\n')
                 .map(|line| line.strip_suffix(b"\r").unwrap_or(line))
@@ -39,7 +39,7 @@ pub(super) fn run(args: &[OsString], stdout: &mut impl Write, stderr: &mut impl 
     };
     for name in names {
         let display = name.to_string_lossy().into_owned();
-        let bytes = match std::fs::read(&name) {
+        let bytes = match crate::files::read(std::path::Path::new(&name)) {
             Ok(bytes) => bytes,
             Err(error) => {
                 let _ = writeln!(stderr, "ripscope: cannot read {display}: {error}");

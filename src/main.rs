@@ -4,6 +4,7 @@ mod analyzer;
 mod cli;
 mod console;
 mod engine;
+mod files;
 mod hashing;
 mod invocation;
 mod project;
@@ -18,6 +19,7 @@ mod watch;
 
 use std::io::{IsTerminal, Write};
 
+#[cfg_attr(feature = "hotpath", hotpath::main)]
 fn main() -> std::process::ExitCode {
     let stdout = std::io::stdout();
     let stderr = std::io::stderr();
