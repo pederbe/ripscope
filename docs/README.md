@@ -2,8 +2,14 @@
 
 <p class="docs-lead">Find your way around C code with <strong>familiar cscope searches</strong>, a single executable and your favorite editor.</p>
 
-Install Ripscope, search your C project and connect your editor. Start with the
-steps below, then use the guides and reference as you need them.
+Ripscope finds definitions, callers and assignments in C, from Vim, Neovim, Emacs
+or the command line. It keeps its index up to date as you save, and it needs no
+compiler or build setup.
+
+```console
+$ ripscope -R -L -3 greet
+main.c main 5 greet("world");
+```
 
 <div class="docs-grid">
 <a class="docs-card" href="getting-started/installation.md">
@@ -43,13 +49,20 @@ without leaving your code. Each editor guide includes setup and useful commands.
 <a href="editors/emacs.md">Emacs →</a>
 </div>
 
-## A little more context
+## Where to start
 
-- **Coming from cscope?** Read [Differences from cscope](reference/differences-from-cscope.md)
-  for the familiar parts and the changes.
-- **Automating a workflow?** The [JSON interface](guide/json.md) gives scripts
-  structured results, including paths with spaces and Unicode.
-- **Keeping an editor connected?** [Sessions](guide/sessions.md) explains the
-  line protocol and index refreshes.
-- **Want to contribute?** Start with [Contributing](project/contributing.md)
-  and the [architecture overview](architecture/overview.md).
+- **New to Ripscope?** [Install it](getting-started/installation.md), then follow
+  the [quick start](getting-started/quick-start.md).
+- **Coming from cscope?** [Switch from cscope](guide/switch-from-cscope.md) shows
+  what carries over and what changes.
+- **Using it in a script or CI job?** Go to [Use Ripscope in scripts](guide/scripts.md).
+- **Looking up an option?** See the [command line reference](reference/cli.md).
+- **Something not working?** See [troubleshooting](help/troubleshooting.md).
+- **Want to contribute?** Start with [Contributing](project/contributing.md).
+
+## When Ripscope is the wrong tool
+
+Ripscope reads C only and runs on Linux and Windows. It reads source as written,
+so it does not expand macros or resolve types the way a compiler-based tool such
+as clangd does. It has no full-screen terminal interface. The
+[comparison with other tools](reference/comparison.md) says where each one fits.

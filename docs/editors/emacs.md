@@ -24,8 +24,8 @@ On Emacs 29, use this line instead:
 ```
 
 The `release` branch holds the latest release. `:rev :newest` takes that branch as it
-is: `use-package`'s own release lookup cannot find the package in `contrib/emacs` on
-Emacs 31.1. The next time Emacs starts, it installs the package, and
+is, because `use-package`'s own release lookup cannot find the package in
+`contrib/emacs` on Emacs 31.1. The next time Emacs starts, it installs the package, and
 `ripscope-setup` installs the `ripscope` executable of the same version in the
 background when it is missing, or when the one the installer put there is older.
 `M-x ripscope-install` does that too.
@@ -43,7 +43,7 @@ such as:
 Open a C file in your project, put the cursor on a function name and press `M-.`. The
 first time, Emacs says `Ripscope: indexing ... for the first time` while it indexes
 the project, then jumps to the definition. `M-,` takes you back. Save an edit and
-search again: the results include it.
+search again, and the results include it.
 
 Ripscope picks the project and keeps its index for you:
 
@@ -52,10 +52,9 @@ Ripscope picks the project and keeps its index for you:
 - **The sources** are the files `cscope.files` names, when there is one. Otherwise
   Ripscope finds the C sources in the project and its subdirectories.
 - **The index** lives in your cache directory, `~/.cache/ripscope` on Linux and
-  `%LOCALAPPDATA%\ripscope` on Windows, named after the project. When your home
-  directory is on a network file system such as NFS, it lives in
-  `/var/tmp/ripscope-UID` instead. On Windows a search briefly makes a marker file
-  in the project directory.
+  `%LOCALAPPDATA%\ripscope` on Windows, named after the project. The
+  [command line reference](../reference/cli.md#editor-integrations) gives the exact
+  rule and its exceptions.
 
 A Git repository in your home directory, such as one for dotfiles, is not taken as a
 project. Where the project is your home directory or a drive, only the files directly
@@ -126,7 +125,7 @@ its answer, 120 by default.
 - On Windows, the executable, index and include paths must fit the active Windows
   code page, and unsupported characters are refused. Search patterns may hold any
   character.
-- On Windows a running session keeps its project directory in use: run
+- On Windows a running session keeps its project directory in use. Run
   `M-x ripscope-stop-sessions` before moving or removing a project.
 
 The Emacs package is under the MIT or the Apache-2.0 licence, as Ripscope is. See the

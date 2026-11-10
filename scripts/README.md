@@ -124,3 +124,21 @@ with `cargo test --locked --manifest-path tools/release/Cargo.toml` on Windows a
 do not upload or publish, apart from `package-repository-upload`, which the Package
 repository workflow runs. The manual release workflow checks that the tag matches the
 source, and its publication step is off by default.
+
+## Dependency updates
+
+Renovate prepares one combined daily update for Cargo, npm, Actions, container
+digests and the custom tools in `.github/dependency-pins.json`. Stable major
+releases are included. Merge follows required checks and an independent Spec
+and Standards review. The self-hosted runner executes `.github/scripts/renovate-sync.sh` to
+prepare compiler commits, download hashes and duplicated tool versions before
+pushing the PR. An unavailable upstream digest fails preparation.
+Urgent security fixes may produce separate pull requests outside the daily batch.
+Existing Dependabot security alerts and updates remain enabled.
+
+
+The notify 9 release candidate preserves Windows overflow/rescan handling absent
+from stable 8.2. Replace it with stable 9 or newer when available. Minimum Rust
+and the cscope reference are compatibility baselines. Windows MSVC and SDK pins
+require an installed, qualified host toolchain and remain explicit maintenance
+items. Dependency updates do not publish releases or rewrite release identities.

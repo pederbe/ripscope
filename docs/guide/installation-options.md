@@ -1,8 +1,9 @@
 # Other installation methods
 
-For the standard installation, use the [install script](../getting-started/installation.md).
-This page covers PATH setup, system packages, manual downloads, source builds
-and installer options.
+Besides the [one-command installer](../getting-started/installation.md), Ripscope
+installs from the apt and dnf repository, standalone packages, archives, Cargo and
+source. You can also add Ripscope to PATH yourself and change what the installer
+does.
 
 ## Add Ripscope to PATH
 
@@ -85,20 +86,20 @@ They reuse the executable installed by your package manager.
 
 ## Debian/Ubuntu and RHEL-family packages
 
-For a standalone package without repository updates, select the version from
-[GitHub Releases](https://github.com/pederbe/ripscope/releases).
-Debian/Ubuntu `.deb` and RHEL-family `.rpm` packages contain the inspected Linux
-executable, with glibc 2.28 or newer and the system GCC runtime required.
-Verify the selected package's `.sha256` sidecar, then install it:
+For a standalone package without repository updates, download the `.deb` or `.rpm`
+and its `.sha256` file from
+[GitHub Releases](https://github.com/pederbe/ripscope/releases). The packages need
+glibc 2.28 or newer and the system GCC runtime. Check the package against its
+`.sha256` file, then install it. Replace `<version>` with the version you downloaded:
 
 ```sh
-sha256sum -c ripscope_0.2.4_amd64.deb.sha256
-sudo apt install ./ripscope_0.2.4_amd64.deb
+sha256sum -c ripscope_<version>_amd64.deb.sha256
+sudo apt install ./ripscope_<version>_amd64.deb
 ```
 
 ```sh
-sha256sum -c ripscope-0.2.4-1.x86_64.rpm.sha256
-sudo dnf install ./ripscope-0.2.4-1.x86_64.rpm
+sha256sum -c ripscope-<version>-1.x86_64.rpm.sha256
+sudo dnf install ./ripscope-<version>-1.x86_64.rpm
 ```
 
 Notices and editor sources are installed in `/usr/share/ripscope`.
@@ -109,24 +110,25 @@ Select the version from [GitHub Releases](https://github.com/pederbe/ripscope/re
 
 | Platform | Archive | Runtime |
 | --- | --- | --- |
-| Linux | `ripscope-<version>-x86_64-linux-gnu.tar.gz` | glibc 2.28 or newer and the system GCC runtime; not musl/Alpine |
-| Windows | `ripscope-<version>-x86_64-windows-msvc.zip` | Windows system DLLs; the C runtime is bundled |
+| Linux | `ripscope-<version>-x86_64-linux-gnu.tar.gz` | glibc 2.28 or newer and the system GCC runtime. Not musl or Alpine |
+| Windows | `ripscope-<version>-x86_64-windows-msvc.zip` | Windows system DLLs. The C runtime is bundled |
 
 The archives include their executable, licences, editor sources and build
 manifest. Compare the archive against its individual `.sha256` sidecar before
-extracting it. Keep the complete extracted directory:
+extracting it. Keep the complete extracted directory. Replace `<version>` with the
+version you downloaded:
 
 ```sh
-sha256sum -c ripscope-0.2.4-x86_64-linux-gnu.tar.gz.sha256
-tar -xzf ripscope-0.2.4-x86_64-linux-gnu.tar.gz
-./ripscope-0.2.4-x86_64-linux-gnu/bin/ripscope --help
+sha256sum -c ripscope-<version>-x86_64-linux-gnu.tar.gz.sha256
+tar -xzf ripscope-<version>-x86_64-linux-gnu.tar.gz
+./ripscope-<version>-x86_64-linux-gnu/bin/ripscope --help
 ```
 
 ```powershell
-Get-FileHash .\ripscope-0.2.4-x86_64-windows-msvc.zip -Algorithm SHA256
-Get-Content .\ripscope-0.2.4-x86_64-windows-msvc.zip.sha256
-Expand-Archive .\ripscope-0.2.4-x86_64-windows-msvc.zip -DestinationPath .\ripscope-install
-.\ripscope-install\ripscope-0.2.4-x86_64-windows-msvc\bin\ripscope.exe --help
+Get-FileHash .\ripscope-<version>-x86_64-windows-msvc.zip -Algorithm SHA256
+Get-Content .\ripscope-<version>-x86_64-windows-msvc.zip.sha256
+Expand-Archive .\ripscope-<version>-x86_64-windows-msvc.zip -DestinationPath .\ripscope-install
+.\ripscope-install\ripscope-<version>-x86_64-windows-msvc\bin\ripscope.exe --help
 ```
 
 Checksums identify the downloaded bytes. For repository and workflow provenance,
@@ -191,7 +193,7 @@ Set these environment variables before running a script to change that behavior.
 | `RIPSCOPE_VERSION` | Select a release version |
 | `RIPSCOPE_INSTALL_DIR` | Choose another executable directory |
 | `RIPSCOPE_RELEASES` | Use a release mirror |
-| `RIPSCOPE_EDITORS` | `all` (the default) sets up the editors; `none` leaves them alone |
+| `RIPSCOPE_EDITORS` | `all` (the default) sets up the editors. `none` leaves them alone |
 
 In PowerShell, set them through `$env:`.
 
@@ -212,8 +214,8 @@ prints the line to add to your init file. Neovim set up with lazy.nvim loads onl
 the plugins in lazy.nvim's list, so where the script finds lazy.nvim it prints the
 line to add there as well. Running the script again updates them with the executable.
 
-With a system package or an archive, the same files are in its `contrib` directory:
-copy `contrib/vim` to the Vim or Neovim directory above, and load
+With a system package or an archive, the same files are in its `contrib` directory.
+Copy `contrib/vim` to the Vim or Neovim directory above, and load
 `contrib/emacs/ripscope.el` from Emacs as the [Emacs guide](../editors/emacs.md)
 shows.
 

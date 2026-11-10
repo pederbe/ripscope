@@ -1,8 +1,8 @@
 # Quick start
 
-[Install Ripscope](installation.md), then open a terminal in your C project.
-Keep the project index on a local disk. For other storage arrangements, see
-[index locations](../guide/building.md#where-the-index-may-live).
+A minute from now you will have found a definition in your own C project and
+followed its callers. You need Ripscope [installed](installation.md) and a
+terminal open in the project.
 
 ## 1. Find a definition
 
@@ -12,9 +12,18 @@ Search for a function in your project. This example finds `main`.
 ripscope -R -L -1 main
 ```
 
-Ripscope creates the index, searches subdirectories and prints each matching
-file, function, line number and source line. Replace `main` with another function
-name to explore your code.
+Ripscope indexes the C files here and in subdirectories, then prints one row for
+each definition, like this one:
+
+```text
+main.c main 3 int main(void )
+```
+
+A row is the file, the function, the line number and the source line. Replace
+`main` with another function name to explore your code.
+
+If you see `ripscope: no source files found`, the directory holds no C files.
+Change to your project directory and run the command again.
 
 ## 2. Find more code
 
@@ -27,8 +36,10 @@ Use the search that fits your question.
 | Functions it calls | `ripscope -L -2 NAME` |
 | Assignments to a variable | `ripscope -L -9 NAME` |
 
-Replace `NAME` with a function or variable from your project. Command-line
-searches refresh the index automatically after edits.
+Replace `NAME` with a function or variable from your project. You only need `-R`
+the first time, because the index remembers which files you chose. Every search
+brings the index up to date with your edits before it answers.
+[Queries](../guide/queries.md) describes all nine searches.
 
 ## 3. Search from your editor
 
@@ -39,6 +50,10 @@ directory, and later searches see your saved edits. The [Vim](../editors/vim.md)
 [Neovim](../editors/neovim.md) and [Emacs](../editors/emacs.md) guides explain how
 the project is found, file-list selection and optional manual updates.
 
-Prefer a guided example? Follow the [example project](example-project.md).
-For include directories, file lists and other project options, see
-[building an index](../guide/building.md).
+## Next steps
+
+- Follow the [example project](example-project.md) for a guided tour with known
+  answers.
+- [Build an index](../guide/building.md) covers include directories, file lists
+  and where the index may live. Keep it on a local disk.
+- Coming from cscope? Read [Switch from cscope](../guide/switch-from-cscope.md).

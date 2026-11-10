@@ -1,6 +1,6 @@
 # Index storage
 
-An index is one SQLite file ([ADR 0005](../adr/0005-one-sqlite-file-per-index.md)), at
+An index is one SQLite file ([ADR 0005](https://github.com/pederbe/ripscope/blob/main/docs/adr/0005-one-sqlite-file-per-index.md)), at
 the path `-f` names or `ripscope.db`. SQLite keeps its `-wal` and `-shm` files beside it.
 They can remain between queries. Move, copy or delete the complete Index together.
 
@@ -11,10 +11,10 @@ They can remain between queries. Move, copy or delete the complete Index togethe
 | `meta` | The revision number, the revision's indexed paths in database order as one value (each path's length, then its bytes), which field 7, text searches and a Session's start read at once, the index's identity (16 random bytes written when it was created, and again by each update that analyses every file again), the block size, the selection rule (the directory the index is built in, sources, include directories, `-k`, and `INCLUDEDIRS`/`INCDIR` as they were at the index build), and the analyzer's identity (scanner version, enabled Corrections, image version). After a clean Refresh, a record of what it observed (see below). |
 | `files` | The indexed files in cscope's database order: the path as displayed, its Analysis unit, size, modification and status-change times, file identity, SHA-256 of the bytes analysed, and when they were last read. |
 | `units` | Analysis units, keyed by the bytes' hash, suffix mode and analyzer identity, so identical files share one unit: a file is read without the headers it includes (ADR 0003). Each unit records how many blocks hold its lines. |
-| `blocks` | Each unit's lines in blocks ([ADR 0011](../adr/0011-blocks-of-lines-with-their-scope.md)): runs of consecutive lines, each an Analysis unit image of its own with the macro and the function its first line starts inside. Block `n` of unit `u` has the id `u << 20 \| n`, so a unit's blocks are one range of ids, in order, deleted with the unit. |
+| `blocks` | Each unit's lines in blocks ([ADR 0011](https://github.com/pederbe/ripscope/blob/main/docs/adr/0011-blocks-of-lines-with-their-scope.md)): runs of consecutive lines, each an Analysis unit image of its own with the macro and the function its first line starts inside. Block `n` of unit `u` has the id `u << 20 \| n`, so a unit's blocks are one range of ids, in order, deleted with the unit. |
 | `operands` | Each distinct include operand the units hold, without its delimiters, removed once no include uses it. |
 | `includes` | Each Analysis unit's include operands, as `operands` ids, with where each sits (block, line, the line's record in the block and the name's index) and its includer row (the text it shows and the name its line's reading resumes at), so an update follows `#include`s without decoding the units, and field 8 matches each distinct operand once and answers from the includes of those it matches, read from one index, without reading blocks. |
-| `names` | The name postings: for each distinct name, the units that hold it, in unit order, with the roles it has in each (the marks of its occurrences, and whether one is assigned) and the blocks a query for it reads there (those it occurs in, and those that start inside its macro's or function's body), so a query finds the files that hold a name it asks for, or one its pattern matches, without reading every unit, and for a name it asks for, the blocks. For each unit they also record the rows an exact-name query in fields 0, 1, 2, 3 and 9 answers: each row's line, block, record and name, and its context as a reference into the block ([ADR 0011](../adr/0011-blocks-of-lines-with-their-scope.md)). |
+| `names` | The name postings: for each distinct name, the units that hold it, in unit order, with the roles it has in each (the marks of its occurrences, and whether one is assigned) and the blocks a query for it reads there (those it occurs in, and those that start inside its macro's or function's body), so a query finds the files that hold a name it asks for, or one its pattern matches, without reading every unit, and for a name it asks for, the blocks. For each unit they also record the rows an exact-name query in fields 0, 1, 2, 3 and 9 answers: each row's line, block, record and name, and its context as a reference into the block ([ADR 0011](https://github.com/pederbe/ripscope/blob/main/docs/adr/0011-blocks-of-lines-with-their-scope.md)). |
 
 The application id (`RIPS`) and schema version (`PRAGMA user_version`) identify the
 file. No source copies are kept: stored queries answer from the displayed lines in the
@@ -101,7 +101,7 @@ analyzer changes, every unit goes first, with the postings, as with `-u`. A post
 that cannot be read makes a query for its name, or a pattern that matches it, read every
 file, with a warning, and an update that changes it fail until the index is rebuilt with
 `-bu`. A `names` table SQLite cannot read does the same for any pattern, and for an exact
-name whose lookup meets the damage. [ADR 0011](../adr/0011-blocks-of-lines-with-their-scope.md)
+name whose lookup meets the damage. [ADR 0011](https://github.com/pederbe/ripscope/blob/main/docs/adr/0011-blocks-of-lines-with-their-scope.md)
 records the tradeoffs behind the block size and verification.
 
 A file that cannot be read keeps its last Analysis unit and is tried again next time. An

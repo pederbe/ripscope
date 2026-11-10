@@ -1,4 +1,7 @@
-# Uninstalling Ripscope
+# Uninstall Ripscope
+
+Remove Ripscope the way you installed it. Your projects and source files are never
+touched.
 
 ## Installed with a script
 
@@ -17,7 +20,7 @@ In PowerShell, run
 
 Set `RIPSCOPE_INSTALL_DIR` as you did when installing if you chose another
 directory. Remove the line you added to your Emacs init file yourself. On Windows,
-close the editors running Ripscope first: Windows keeps an executable in use, so the
+close the editors running Ripscope first. Windows keeps an executable in use, so the
 uninstaller says so, removes everything else, and removes the executable when run
 again.
 

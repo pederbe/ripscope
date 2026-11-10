@@ -1,7 +1,7 @@
 # How Ripscope reads C
 
 This page specifies how Ripscope's analyzer turns one source file into an Analysis unit
-([ADR 0004](../adr/0004-own-scanner.md)). The baseline, with
+([ADR 0004](https://github.com/pederbe/ripscope/blob/main/docs/adr/0004-own-scanner.md)). The baseline, with
 Corrections off, targets the pinned reference cscope's observed reading. The
 probe fixtures in `tests/fixtures/scanner/` record that executable's
 output on small synthetic files (`examples/scanner-probes.rs`). The
@@ -392,7 +392,7 @@ backwards, so each file costs linear time however its comments are arranged.
 ## 12. Corrections
 
 A Correction reads a construct differently from the reference because the reference's
-reading is wrong ([ADR 0002](../adr/0002-measured-compatibility.md)). A clear fix is
+reading is wrong ([ADR 0002](https://github.com/pederbe/ripscope/blob/main/docs/adr/0002-measured-compatibility.md)). A clear fix is
 enabled once it is measured on the corpus and loses no real definition. A Correction
 that trades a correct reading for another stays off. All Corrections below except
 return-type-wrappers are enabled. The index is built with the enabled ones, while the
@@ -537,7 +537,7 @@ Corrections stop them.
   Bare `void` or opaque operands (`API(void)`, `API(T)`), existing written return prefixes, prototypes,
   suffix annotations and nested wrapped heads retain their established reading.
   In particular, a list ending in a named typed inner list is unresolved, preserving
-  the inner-head reading kept under [ADR 0002](../adr/0002-measured-compatibility.md).
+  the inner-head reading kept under [ADR 0002](https://github.com/pederbe/ripscope/blob/main/docs/adr/0002-measured-compatibility.md).
   This rule performs no macro expansion and changes no displayed text
   [70-return-type-wrappers].
 
@@ -552,7 +552,7 @@ Corrections stop them.
 
   Ripscope does not read included headers to classify macros, because every unit would
   then depend on the headers it might include ([ADR 0003, "Each file is read as written,
-  without a compiler or preprocessor"](../adr/0003-read-source-as-written.md)).
+  without a compiler or preprocessor"](https://github.com/pederbe/ripscope/blob/main/docs/adr/0003-read-source-as-written.md)).
 - **subscript-assignments.** A direct written name followed by balanced subscript
   groups and an assignment operator is assigned, including pointer-indexed storage.
   Written array initializers qualify too. An empty dimension needs a definition mark
@@ -578,7 +578,7 @@ Corrections stop them.
   stop recognition [72-named-mutations].
   Written macro and unevaluated operands such as `sizeof(counter++)` qualify. This and
   subscript assignment follow [ADR 0012, "Assignment search includes subscript stores,
-  increments and decrements"](../adr/0012-written-assignment-search.md).
+  increments and decrements"](https://github.com/pederbe/ripscope/blob/main/docs/adr/0012-written-assignment-search.md).
   Both recognizers account for comment delimiters formed by LF/CRLF splices. An
   opener visible in the preceding window without a close before the name cannot
   establish an assigned occurrence, even if the scanner retained that name.
@@ -603,7 +603,7 @@ Corrections stop them.
   (`PRIV(check_escape)(const char *text, int length) {`), also marks that identifier as
   a Function, so it is defined and is the context of the body's names. The macro stays a
   Function too. A keyword argument, several arguments and a head without the second
-  list keep the reference's reading ([ADR 0003](../adr/0003-read-source-as-written.md))
+  list keep the reference's reading ([ADR 0003](https://github.com/pederbe/ripscope/blob/main/docs/adr/0003-read-source-as-written.md))
   [78-written-head-names].
 - **conditional-lists.** The look-ahead that reads a head's parameter list and what
   follows it up to the body, for definition-bodies and definition-heads, reads only the
@@ -738,7 +738,7 @@ Corrections stop them.
 
   Token pasting makes this a definition of `wrapped`. The inner-head reading is kept
   under [ADR 0002, "Compatibility with cscope is measured, and its misreadings are
-  corrected"](../adr/0002-measured-compatibility.md).
+  corrected"](https://github.com/pederbe/ripscope/blob/main/docs/adr/0002-measured-compatibility.md).
 
   ```c
   int count(STACK_OF(X509) *sk)  /* reference: plain;    corrected: $count     */
@@ -1024,7 +1024,7 @@ Corrections stop them.
 
   Both `END` and `x` are real globals in that expansion. This reading is kept under
   [ADR 0002, "Compatibility with cscope is measured, and its misreadings are
-  corrected"](../adr/0002-measured-compatibility.md).
+  corrected"](https://github.com/pederbe/ripscope/blob/main/docs/adr/0002-measured-compatibility.md).
 - **opaque-member-tails.** At the closing brace of a positively recognised
   file-scope struct/union, suppress a would-be Member for one word, at least three
   bare words, or a numeric invocation followed by one word. Known C declaration

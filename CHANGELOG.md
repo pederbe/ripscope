@@ -10,6 +10,10 @@ index format or command-line behavior, and its entry says so.
 ### Changed
 
 - Document cargo-binstall installation from the published Linux and Windows binaries.
+- Reorganise the documentation. The README now covers installation and everyday use
+  on its own. The book gains guides for switching from cscope and for scripts, and a
+  troubleshooting page. Decision records and the website hosting guide are read in
+  the repository, and their old book addresses redirect there.
 
 ### Fixed
 

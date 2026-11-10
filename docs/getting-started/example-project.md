@@ -1,10 +1,9 @@
 # Example project
 
-This optional tutorial uses a tiny project. [Install Ripscope](installation.md) first. Every output shown is what Ripscope prints.
-
-<div class="doc-callout">
-<p><strong>Four steps to a working workflow.</strong> Create the example files below, build the index, ask a few questions and connect your editor.</p>
-</div>
+Three small files are enough to try definitions, callers, callees, assignments and
+includes, and to compare your output with the answers shown here.
+[Install Ripscope](installation.md) first, then create these files in a new
+directory.
 
 ```text
 demo/
@@ -49,14 +48,16 @@ From the project directory:
 $ ripscope -bk -I include
 ```
 
+It prints nothing when it succeeds, and `ripscope.db` appears in the directory.
+
 - `-b` builds or updates the index, as in cscope. With no file arguments, Ripscope uses
   `cscope.files` if it can be read, otherwise the source files in the current directory with
   cscope's suffixes (`.c`, `.h` and [others](../guide/building.md#directory-discovery)).
   Add `-R` to include subdirectories.
-- `-k` leaves out the system include directory, as in cscope; without it, headers such
+- `-k` leaves out the system include directory, as in cscope. Without it, headers such
   as `stdio.h` are indexed too.
 - `-I include` lets `#include "greet.h"` resolve, so `include/greet.h` is indexed too.
-- Ripscope creates `ripscope.db` in the project directory for you; `-f` names another.
+- `-f INDEX` names another index file than `ripscope.db`.
 
 ## 2. Ask questions
 
@@ -102,7 +103,8 @@ are gone.
 
 ## 4. Use it from your editor
 
-Vim and Neovim keep a Ripscope **Session** open and send one query per line:
+Editors keep a Ripscope [session](../guide/sessions.md) open, one process that
+answers many queries. Vim sends it one query per line, like this:
 
 ```console
 $ printf '1greet\n3greet\nq\n' | ripscope -l
@@ -114,7 +116,8 @@ main.c helper 8 void helper(void ) { greet("x"); }
 >>
 ```
 
-You rarely type this yourself. With [Vim](../editors/vim.md),
+You rarely type this yourself, though a
+[script that asks many questions](../guide/scripts.md#ask-many-questions) can. With [Vim](../editors/vim.md),
 [Neovim](../editors/neovim.md) or [Emacs](../editors/emacs.md) set up, open
 `main.c` and search there instead. The editors keep their own index of the project in
 your cache directory. Save an edit and search again to see it. Each editor reuses its

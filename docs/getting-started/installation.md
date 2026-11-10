@@ -1,24 +1,8 @@
 # Installation
 
-Install Ripscope for **Linux or Windows** in one step, then open a C file and
-search. Pick the way you prefer.
+One command installs Ripscope on **Linux or Windows** and sets up your editor.
 
-## Your Linux package manager
-
-For command-line installation and normal system updates, use the
-[signed apt or dnf repository](../guide/installation-options.md#apt-and-dnf-repositories).
-Packages include the executable and editor sources. To enable editor integration,
-follow the [plugin-manager setup](#your-plugin-manager) below, which reuses the
-executable installed by your package manager.
-
-## The installer
-
-The installer verifies and installs Ripscope in `~/.local/bin`
-(`%USERPROFILE%\.local\bin` on Windows) and sets up Vim and Neovim, which load
-Ripscope by themselves from then on. Neovim set up with lazy.nvim needs the one line
-the installer prints, as below.
-
-### Linux
+## Linux
 
 In your terminal, run:
 
@@ -26,7 +10,7 @@ In your terminal, run:
 curl -fsSL https://ripscope.com/install.sh | sh
 ```
 
-### Windows
+## Windows
 
 In PowerShell 5.1 or newer, run:
 
@@ -34,17 +18,50 @@ In PowerShell 5.1 or newer, run:
 irm https://ripscope.com/install.ps1 | iex
 ```
 
-### Emacs and lazy.nvim
+## What the installer does
 
-The installer also prints one line to add to your Emacs init file, such as:
+The installer verifies its download and puts Ripscope in `~/.local/bin`
+(`%USERPROFILE%\.local\bin` on Windows). It also sets up Vim and Neovim, which load
+Ripscope by themselves from then on.
 
-```elisp
-(when (load "~/.local/share/ripscope/emacs/ripscope" t) (ripscope-setup))
+Two setups need one more line, which the installer prints for you.
+
+- **Emacs.** Add the printed line to your init file. It looks like this:
+
+  ```elisp
+  (when (load "~/.local/share/ripscope/emacs/ripscope" t) (ripscope-setup))
+  ```
+
+- **Neovim with lazy.nvim.** lazy.nvim, which LazyVim, kickstart, AstroNvim and
+  NvChad use, loads only the plugins in its list. Where the installer finds
+  lazy.nvim, it prints the line to add to that list.
+
+## Check that it works
+
+In your terminal, run:
+
+```sh
+ripscope --version
 ```
 
-Neovim set up with lazy.nvim (as LazyVim, kickstart, AstroNvim and NvChad are) loads
-only the plugins in its list. Where the installer finds lazy.nvim, it prints the
-line to add there too.
+It prints the name and the version. If the command is not found,
+[add Ripscope to PATH](../guide/installation-options.md#add-ripscope-to-path).
+The editors find Ripscope either way.
+
+Then open a C file in your project and search: `:cs find g main` in Vim,
+`:RipscopeFind g main` in Neovim, or `M-.` on `main` in Emacs. The first search indexes
+the project into your cache directory, and later searches see your saved edits.
+
+Continue to the [quick start](quick-start.md).
+
+## Your Linux package manager
+
+On Debian, Ubuntu, Fedora and RHEL-family systems, the
+[signed apt or dnf repository](../guide/installation-options.md#apt-and-dnf-repositories)
+installs Ripscope and updates it with the rest of your system. Packages include
+the executable and editor sources. To enable editor integration, follow the
+[plugin-manager setup](#your-plugin-manager) below, which reuses the executable
+installed by your package manager.
 
 ## Your plugin manager
 
@@ -63,20 +80,7 @@ executable is kept, so continue using your package manager to update it.
 The [Vim](../editors/vim.md), [Neovim](../editors/neovim.md) and
 [Emacs](../editors/emacs.md) guides cover other plugin managers and Emacs 29.
 
-## Start searching
+## More ways to install
 
-Open a C file in your project and search: `:cs find g main` in Vim,
-`:RipscopeFind g main` in Neovim, or `M-.` on `main` in Emacs. The first search indexes
-the project into your cache directory, and later searches see your saved edits.
-
-To search from the command line too, check that your terminal finds Ripscope:
-
-```sh
-ripscope --version
-```
-
-If the command is not found, [add Ripscope to PATH](../guide/installation-options.md#add-ripscope-to-path).
-The editors find it either way. Then continue to the [quick start](quick-start.md).
-
-For system packages, manual downloads or source builds, see
-[other installation methods](../guide/installation-options.md).
+[Other installation methods](../guide/installation-options.md) covers standalone
+packages, archives, Cargo, source builds and the installer's options.

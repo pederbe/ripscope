@@ -1,5 +1,15 @@
 # Queries
 
+Ripscope answers cscope's nine searches. You choose one with a query field, `-0`
+to `-9`, and give it a pattern. Fields 4 and 5 both search for text.
+
+```console
+$ ripscope -L -3 greet
+main.c main 5 greet("world");
+```
+
+The two forms are:
+
 ```text
 ripscope  -L [-f INDEX] [-C] [-P PATH] [--json] -FIELD PATTERN     update, then query
 ripscope -dL [-f INDEX] [-C] [-P PATH] [--json] -FIELD PATTERN     query without updating
@@ -31,19 +41,19 @@ greet.c greet 6 void greet(const char *name)
 ```
 
 For field 2 the context is the *called* function. For field 1 it is the pattern you
-searched for, as in cscope; a field-1 pattern with blanks cannot be shown that way, so
-it is refused with a pointer to `--json`.
+searched for, as in cscope. A field-1 pattern with blanks cannot be shown that way, so
+it is refused.
 
-Rows come in cscope's order: rows at file scope first, then the rest. Each row's
-context is the function or macro its name sits in, worked out within its file; cscope's
-contexts can differ, depending on how its database was built (see
-[Differences from cscope](../reference/differences-from-cscope.md#query-results)).
+Rows come in cscope's order, with rows at file scope first and then the rest. Each
+row's context is the function or macro its name sits in, worked out within its file.
+cscope's contexts can differ, depending on how its database was built. See
+[Differences from cscope](../reference/differences-from-cscope.md#query-results).
 
 ## Patterns
 
 **Symbol patterns** (fields 0, 1, 2, 3, 9). A plain C identifier matches exactly.
 If the pattern contains any of `^ . [ { * + $ | (`, it is a POSIX extended regular
-expression that must match the **whole** name: `greet.*` matches `greet` and
+expression that must match the **whole** name. `greet.*` matches `greet` and
 `greet_count`, but `reet` matches nothing. Trailing blanks are ignored.
 
 **Text** (fields 4 and 5) is a literal byte string, including spaces.
@@ -53,15 +63,18 @@ each line. `^` and `$` anchor to line boundaries, and `.` never matches a newlin
 line of a CR LF file ends with its carriage return, as in cscope.
 
 **File and include patterns** (fields 7 and 8) are regular expressions that may match
-anywhere in the path or include name: `-7 greet` finds `greet.c` and
+anywhere in the path or include name. `-7 greet` finds `greet.c` and
 `include/greet.h`.
 
-Patterns are limited to 4096 bytes. Matching is byte-based in the C locale: a pattern in
-fields 4 to 6 may hold any byte but NUL and a line break, UTF-8 or not, one in fields 7
-and 8 any but those and a carriage return, and symbol patterns are printable ASCII. A
-pattern that cannot be used gives no rows, as in cscope, with the reason on standard
-error; a few that cscope does answer, such as back-references, are refused too (see
-[Differences from cscope](../reference/differences-from-cscope.md#query-results)).
+Patterns are limited to 4096 bytes. Matching is byte-based in the C locale.
+
+- A pattern in fields 4 to 6 may hold any byte but NUL and a line break, UTF-8 or not.
+- A pattern in fields 7 and 8 may hold any byte but those and a carriage return.
+- Symbol patterns are printable ASCII.
+
+A pattern that cannot be used gives no rows, as in cscope, with the reason on standard
+error. A few that cscope does answer, such as back-references, are refused too. See
+[Differences from cscope](../reference/differences-from-cscope.md#query-results).
 
 ## Case-insensitive matching
 
@@ -77,9 +90,9 @@ and `[[:upper:]]` matches nothing.
   last published revision and says so.
 - `-dL` answers from the index as it is, and never creates one.
 - An index that has published nothing yet, because another process is building it
-  afresh or its first index build failed, is no index: `-dL` fails and says so, as does `-L`
-  while another process is building it; otherwise `-L` builds it, as it builds a missing
-  one.
+  afresh or its first index build failed, counts as no index. `-dL` fails and says so,
+  as does `-L` while another process is building it. Otherwise `-L` builds it, as it
+  builds a missing one.
 
 ## Stored and live fields
 
@@ -89,7 +102,7 @@ contents of the indexed files, as cscope does, even with `-d`. A file that canno
 read is skipped, with a warning on standard error.
 
 Live searches read files relative to the directory the index was built in. `-P PATH`
-does what it does in cscope: relative names are read below `PATH`, and text rows show
+does what it does in cscope. Relative names are read below `PATH`, and text rows show
 them with it (`PATH/src/main.c`). Stored rows keep the names the index holds.
 
 ## Output
@@ -97,7 +110,7 @@ them with it (`PATH/src/main.c`). Stored rows keep the names the index holds.
 Paths are printed as they are, spaces and non-ASCII characters included, as cscope
 prints them. A row whose path holds a control character cannot be carried by the line
 format and is skipped, with one warning. Displayed text is compacted as cscope compacts
-it; control bytes in it are shown as `\xHH`. A line a text search finds keeps its tabs
+it, and control bytes in it are shown as `\xHH`. A line a text search finds keeps its tabs
 and a CR LF ending, as cscope prints it. [`--json`](json.md) carries every byte.
 
 Warnings go to standard error before the first row, where xcscope and Vim pass over
