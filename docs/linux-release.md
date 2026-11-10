@@ -249,7 +249,7 @@ they do not measure performance or establish broad platform qualification.
 
 ## Weekly releases
 
-Every Monday at 06:43 UTC, `.github/workflows/weekly-release.yml` checks for
+Every Thursday at 06:43 UTC, `.github/workflows/weekly-release.yml` checks for
 unreleased code, dependency, editor or packaging changes. Documentation and website
 changes alone do not create a release. The workflow remains enabled until disabled
 in GitHub Actions. You can also dispatch it from `main` for an urgent release.
