@@ -121,6 +121,20 @@ jobs:
             rpm -i /input/ripscope-*.x86_64.rpm; cd /work; printf "int value;\n" > source.c
             ripscope -bk source.c; ripscope -dL -1 value | grep "source.c value 1 int value;"
             rpm -e ripscope; test ! -e /usr/bin/ripscope; test -f ripscope.db'
+      - name: Bundle the Arch recipe
+        env:
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          version=${TAG#v}
+          dist="$RUNNER_TEMP/linux/dist"
+          cargo run --locked --example prepare-packages -- \
+            --archive "$dist/ripscope-$version-x86_64-linux-gnu.tar.gz" \
+            --out "$RUNNER_TEMP/package-recipes"
+          bundle="ripscope-$version-arch-recipe.tar.gz"
+          tar --sort=name --mtime="@$(git show -s --format=%ct)" --owner=0 --group=0 --numeric-owner \
+            -czf "$dist/$bundle" -C "$RUNNER_TEMP/package-recipes" aur
+          (cd "$dist" && sha256sum "$bundle" > "$bundle.sha256")
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: linux-release

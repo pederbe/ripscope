@@ -39,6 +39,12 @@ captures outside the source tree. Generate again in a new directory whenever
 the archive, version or recipe templates change. Never reuse an earlier hash
 for a rebuilt archive. No tag, release, Cargo publication or channel is changed.
 
+The release workflow runs the same preparation against its newly built Linux
+archive. It adds `ripscope-VERSION-arch-recipe.tar.gz` and its `.sha256` sidecar
+to the release assets. The bundle contains `aur/PKGBUILD` and
+`aur/check-installed.sh`, ready for `makepkg --check`. It receives the same
+provenance attestation as the other release archives.
+
 Each package retains the full archive below its private installation prefix and
 exposes one command on PATH. The retained directory contains `BUILD.json`, the
 file manifest, dependency/Rust/SQLite notices and editor sources (ADR 0014,
@@ -131,8 +137,8 @@ notices remain with each package.
 For each later version, regenerate the recipes, reset package
 revisions, repeat the installed checks and removal checks, then verify a fresh
 installation from the published destination. Only then add that route to user
-installation instructions. This helper adds no recurring workflow or automated
-submission.
+installation instructions. Publishing recipes to package-manager channels remains
+a separate step from generating them and bundling the Arch recipe for release.
 
 The Arch recipe builds a local pacman package without an AUR listing. To prepare
 an AUR submission, run `makepkg --printsrcinfo > .SRCINFO` in the generated `aur/`
