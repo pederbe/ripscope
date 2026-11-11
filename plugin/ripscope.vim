@@ -2,8 +2,6 @@
 "
 " With no settings, opening a C file connects Vim to its project, so `:cs find` works
 " at once. The first time, Ripscope indexes the project into your cache directory.
-" Setting g:ripscope with a 'root' before this file loads chooses the project, index
-" and sources yourself instead; `:RipscopeBuild` then builds the index.
 " See docs/editors/vim.md.
 if has('nvim')
   finish
@@ -11,46 +9,27 @@ endif
 if exists('g:loaded_ripscope')
   " Loaded already, by Vim's startup or by another copy of this plugin.
   if exists('s:requested') && string(get(g:, 'ripscope', {})) !=# s:requested
-    throw 'ripscope: configuration already loaded; start a new Vim to change projects'
+    throw 'ripscope: configuration already loaded; start a new Vim to change settings'
   endif
   finish
 endif
 let s:settings = get(g:, 'ripscope', {})
-let s:explicit = type(s:settings) == v:t_dict
-      \ && !empty(filter(['root', 'index', 'sources', 'file_list'], 'has_key(s:settings, v:val)'))
 let s:supported = (has('unix') || has('win32')) && has('cscope') && has('quickfix')
       \ && (!has('win32') || has('job'))
 let s:path_pattern = has('win32') ? '^[A-Za-z]:/[A-Za-z0-9_./-]\+$' : '^/[A-Za-z0-9_./-]\+$'
 let s:repository = fnamemodify(resolve(expand('<sfile>:p')), ':h:h')
 
-if s:explicit
-  if !s:supported
-    throw 'ripscope: Vim with +cscope and +quickfix is required; Windows also requires +job'
-  endif
-  let s:config = deepcopy(s:settings)
-  for s:key in ['backend', 'root', 'index']
-    if has('win32') && type(get(s:config, s:key, 0)) == v:t_string
-      let s:config[s:key] = substitute(s:config[s:key], '\\', '/', 'g')
-    endif
-    if type(get(s:config, s:key, 0)) != v:t_string || s:config[s:key] !~# s:path_pattern
-      unlet s:config
-      throw 'ripscope: backend, root and index require absolute paths using only ASCII letters, digits, slash, dot, underscore or hyphen (Windows drive colon allowed)'
-    endif
-  endfor
-  if !isdirectory(s:config.root) || !executable(s:config.backend)
-    unlet s:config
-    throw 'ripscope: root directory and executable backend must exist'
-  endif
-  if empty(get(s:config, 'sources', [])) == empty(get(s:config, 'file_list', ''))
-    unlet s:config
-    throw 'ripscope: select exactly one of sources or file_list'
-  endif
-elseif !s:supported
+if !s:supported
   " Without cscope support there is nothing to connect; stay out of the way.
   finish
 elseif type(s:settings) != v:t_dict
   let s:settings = {}
 endif
+for s:key in keys(s:settings)
+  if index(['backend', 'include_dirs'], s:key) < 0
+    throw 'ripscope: unknown option: ' . s:key
+  endif
+endfor
 
 let s:owned = 0
 let s:added = []
@@ -66,10 +45,6 @@ function! s:Guard() abort
   if len(rows) > (s:OwnConnection() ? 1 : 0)
     throw 'ripscope: unrelated cscope connection; use a separate Vim session'
   endif
-endfunction
-
-function! s:Automatic() abort
-  return exists('s:config') && get(s:config, 'automatic', 0)
 endfunction
 
 " A path Vim can hand to its cscope program: on Windows, the short 8.3 form of one with
@@ -94,9 +69,6 @@ endfunction
 " index goes as it is: Vim turns a short name it is given for the index back into the
 " long one, so an index path with spaces cannot be used.
 function! s:Paths() abort
-  if !s:Automatic()
-    return [s:config.backend, s:config.index, s:config.root]
-  endif
   if s:config.index !~# s:path_pattern
     throw 'ripscope: Vim''s cscope support cannot use the index ' . s:config.index
           \ . ', whose path holds a space or another character it cannot pass. Set the'
@@ -135,30 +107,26 @@ function! s:Connect() abort
   if s:OwnConnection()
     return
   endif
-  let automatic = s:Automatic()
   " Without settings, cscopequickfix is set only as cscopeprg is taken over from Vim's
   " default, and only when it is empty, so a configured one stays.
   let default = &cscopeprg ==# 'cscope'
   let [backend, index, root] = s:Paths()
   " Paths are restricted above. Vim's direct argument parser keeps single quotes
   " in the executable name, so cscopeprg must use the validated path as it is.
-  let s:program = backend . ' --vim-errors'
-        \ . (get(s:config, 'auto_refresh', 1) ? ' --auto-refresh' : ' --no-auto-refresh')
-  if automatic
-    " A session that finds no published index builds it as an index build would.
-    let s:program .= ' ' . join(s:config.selection + s:Includes(), ' ')
-  endif
+  " Vim supplies -d, so explicitly enable automatic refresh.
+  let s:program = backend . ' --vim-errors --auto-refresh '
+        \ . join(s:config.selection + s:Includes(), ' ')
   let &cscopeprg = s:program
-  if !automatic || (default && empty(&cscopequickfix))
+  if default && empty(&cscopequickfix)
     set cscopequickfix=s-,g-,d-,c-,f-,t-,e-,i-,a-
   endif
   " Vim starts its cscope program in its own directory: start it in the project, where
   " a session that builds the index must run.
-  let previous = automatic ? s:Enter(s:config.root) : ''
+  let previous = s:Enter(s:config.root)
   try
     execute 'cs add ' . fnameescape(index) . ' ' . fnameescape(root)
   finally
-    if automatic && !empty(previous)
+    if !empty(previous)
       call s:Enter(previous)
     endif
   endtry
@@ -242,22 +210,9 @@ endfunction
 
 function! s:Build() abort
   call s:Guard()
-  if s:Automatic()
-    let args = [s:config.backend, '-b'] + s:config.selection + s:Includes() + ['-f', s:config.index]
-  else
-    let args = [s:config.backend, '-bk', '-f', s:config.index]
-    for directory in get(s:config, 'include_dirs', [])
-      call extend(args, ['-I', directory])
-    endfor
-    if has_key(s:config, 'file_list') && !empty(s:config.file_list)
-      call extend(args, ['-i', s:config.file_list])
-    else
-      call add(args, '--')
-      call extend(args, s:config.sources)
-    endif
-  endif
+  let args = [s:config.backend, '-b'] + s:config.selection + s:Includes() + ['-f', s:config.index]
   let [status, output] = s:Run(args, s:config.root, {}, 'build')
-  if status != 0 && s:Automatic() && output =~# 'another process'
+  if status != 0 && output =~# 'another process'
     " Another editor's index build has held the index for a minute: wait once more.
     echomsg 'ripscope: another editor is indexing ' . s:config.root . '; waiting for it...'
     redraw
@@ -271,11 +226,6 @@ function! s:Build() abort
   let warnings = filter(split(output, "\n"), 'v:val =~# ''^ripscope: ''')
   return empty(warnings) ? '' : printf('ripscope: build completed with %d warning(s); first: %s',
         \ len(warnings), warnings[0][10:])
-endfunction
-
-function! s:BuildCommand() abort
-  let warning = s:Build()
-  echomsg empty(warning) ? 'ripscope: build completed' : warning
 endfunction
 
 " Automatic mode: the executable, then the project and its index, which `ripscope
@@ -346,9 +296,8 @@ function! s:Connected(file, build) abort
   if exists('s:config') && !s:Same(s:config.root, project.root)
     call s:Disconnect()
   endif
-  let s:config = {'automatic': 1, 'backend': backend, 'root': project.root,
+  let s:config = {'backend': backend, 'root': project.root,
         \ 'index': project.index, 'selection': project.selection,
-        \ 'auto_refresh': get(s:settings, 'auto_refresh', 1),
         \ 'include_dirs': get(s:settings, 'include_dirs', [])}
   " Before indexing, so that a project Vim cannot connect to is not indexed for it.
   call s:Paths()
@@ -385,9 +334,8 @@ function! s:Opened(file) abort
 endfunction
 
 " Installs the latest executable with the repository's installer,
-" which leaves a current ripscope alone, and one it did not put there,
-" unless FORCE is set.
-function! s:Install(force) abort
+" which leaves a current ripscope alone, and one it did not put there.
+function! s:Install() abort
   let script = s:repository . (has('win32') ? '/install.ps1' : '/install.sh')
   if !filereadable(script)
     throw 'ripscope: this copy has no installer; run the one-line installer from https://ripscope.com'
@@ -395,8 +343,7 @@ function! s:Install(force) abort
   let command = has('win32')
         \ ? [$SystemRoot . '/System32/WindowsPowerShell/v1.0/powershell.exe', '-NoProfile',
         \    '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script, '-Plugin']
-        \   + (a:force ? ['-Force'] : [])
-        \ : ['sh', script, '--plugin'] + (a:force ? ['--force'] : [])
+        \ : ['sh', script, '--plugin']
   echomsg 'ripscope: running the installer...'
   redraw
   let [status, output] = s:Run(command, s:repository, {}, 'installer')
@@ -408,18 +355,13 @@ function! s:Install(force) abort
 endfunction
 
 let s:requested = string(s:settings)
-if s:explicit
-  command! RipscopeBuild call <SID>BuildCommand()
-  command! RipscopeConnect call <SID>Connect()
-else
-  command! RipscopeBuild call <SID>Connected(expand('%:p'), 1)
-  command! RipscopeConnect call <SID>Connected(expand('%:p'), 0)
-  augroup ripscope
-    autocmd!
-    " Not a new file's buffer: its project is known once it is saved.
-    autocmd BufReadPost,BufWritePost *.c,*.h call <SID>Opened(expand('<afile>:p'))
-  augroup END
-endif
+command! RipscopeBuild call <SID>Connected(expand('%:p'), 1)
+command! RipscopeConnect call <SID>Connected(expand('%:p'), 0)
+augroup ripscope
+  autocmd!
+  " Not a new file's buffer: its project is known once it is saved.
+  autocmd BufReadPost,BufWritePost *.c,*.h call <SID>Opened(expand('<afile>:p'))
+augroup END
 command! RipscopeDisconnect call <SID>Disconnect()
-command! -bang RipscopeInstall call <SID>Install(<bang>0)
+command! RipscopeInstall call <SID>Install()
 let g:loaded_ripscope = 1

@@ -196,20 +196,17 @@ impl Checks {
         self.profile.apply(&mut command);
         command
             .arg(&self.installer)
-            .env("RIPSCOPE_INSTALL_DIR", self.work.join("installation"))
-            .env("RIPSCOPE_RELEASES", &self.mirror.url);
+            .env("RIPSCOPE_INSTALL_DIR", self.work.join("installation"));
         if let Some(path) = path {
             command.env("PATH", path);
         }
         self.command(label, command, success)
     }
-    /// The checkout's installer SCRIPT run as the editors' install command, with
-    /// `--force` when FORCE, and PATH when given.
+    /// The checkout's installer SCRIPT run as the editors' install command.
     fn plugin(
         &mut self,
         label: &str,
         script: &Path,
-        force: bool,
         success: bool,
         path: Option<&Path>,
     ) -> Result<()> {
@@ -223,22 +220,14 @@ impl Checks {
                 "-File",
             ]);
             command.arg(script).arg("-Plugin");
-            if force {
-                command.arg("-Force");
-            }
             command
         } else {
             let mut command = Command::new("sh");
             command.arg(script).arg("--plugin");
-            if force {
-                command.arg("--force");
-            }
             command
         };
         self.profile.apply(&mut command);
-        command
-            .env("RIPSCOPE_INSTALL_DIR", self.work.join("installation"))
-            .env("RIPSCOPE_RELEASES", &self.mirror.url);
+        command.env("RIPSCOPE_INSTALL_DIR", self.work.join("installation"));
         if let Some(path) = path {
             command.env("PATH", path);
         }
@@ -447,11 +436,11 @@ fn plugin_checks(
         .mirror
         .archive(&checks.version, archive_name, archive, false);
     manifest("0.0.0")?;
-    checks.plugin("plugin-current", &script, false, true, None)?;
+    checks.plugin("plugin-current", &script, true, None)?;
     unchanged("plugin-current")?;
     // A development checkout must not select an unpublished executable either.
     manifest("9.9.9")?;
-    checks.plugin("plugin-development", &script, false, true, None)?;
+    checks.plugin("plugin-development", &script, true, None)?;
     unchanged("plugin-development")?;
     // Another ripscope first on PATH, such as a system package's, is left alone.
     let other = checks.work.join("other-bin");
@@ -471,27 +460,19 @@ fn plugin_checks(
             .unwrap_or_default(),
     ));
     let search = std::env::join_paths(search)?;
-    checks.plugin(
-        "plugin-other",
-        &script,
-        false,
-        true,
-        Some(Path::new(&search)),
-    )?;
+    checks.plugin("plugin-other", &script, true, Some(Path::new(&search)))?;
     unchanged("plugin-other")?;
-    // Forced, and with the release served, it installs latest even from an old checkout.
+    // An outdated installation is updated to latest even from an old checkout.
     checks
         .mirror
         .archive(&checks.version, archive_name, archive, true);
     manifest("0.0.0")?;
     fs::write(executable, b"outdated installation")?;
-    checks.plugin("plugin-update", &script, false, true, None)?;
+    checks.plugin("plugin-update", &script, true, None)?;
     unchanged("plugin-update")?;
-    checks.plugin("plugin-force", &script, true, true, None)?;
-    unchanged("plugin-force")?;
     // A missing executable is installed from latest through the same route.
     fs::remove_file(executable)?;
-    checks.plugin("plugin-missing", &script, false, true, None)?;
+    checks.plugin("plugin-missing", &script, true, None)?;
     unchanged("plugin-missing")?;
     Ok(())
 }
@@ -714,9 +695,7 @@ fn windows_checks(
         .arg("-Work")
         .arg(&checks.work)
         .arg("-Executable")
-        .arg(executable)
-        .arg("-Mirror")
-        .arg(&checks.mirror.url);
+        .arg(executable);
     // Its installs place editor integrations too: in the check's own profile.
     checks.profile.apply(&mut command);
     checks.command("native-filesystem", command, true)
@@ -784,7 +763,7 @@ try {
 "#;
 #[cfg(windows)]
 const WINDOWS_CHECKS: &str = r#"
-param($Installer, $Work, $Executable, $Mirror)
+param($Installer, $Work, $Executable)
 $ErrorActionPreference = 'Stop'
 . $Installer
 function Check($Condition, $Message) { if (-not $Condition) { throw $Message } }
@@ -792,7 +771,7 @@ $old = Get-RipscopeHash $Executable
 $lock = [IO.File]::Open($Executable, 'Open', 'Read', 'Read')
 try {
     $failed = $false
-    try { Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror }
+    try { Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) }
     catch { $failed = $true; Write-Output $_ }
     Check $failed 'Locked executable replacement unexpectedly succeeded'
     Check ((Get-RipscopeHash $Executable) -eq $old) 'Locked executable changed'
@@ -822,11 +801,11 @@ try {
 [IO.Directory]::CreateDirectory($Executable) | Out-Null
 try {
     $failed = $false
-    try { Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror }
+    try { Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) }
     catch { $failed = $true }
     Check $failed 'Directory destination accepted'
 } finally { [IO.Directory]::Delete($Executable) }
-Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror
+Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable))
 # Uninstalling while an editor runs Ripscope says so and removes everything else.
 $editors = Get-RipscopeEditorPaths
 Check ([IO.Directory]::Exists($editors.Vim)) 'Vim package not placed'
@@ -841,7 +820,7 @@ try {
         Check (-not [IO.Directory]::Exists($directory)) "Uninstall in use kept $directory"
     }
 } finally { $lock.Dispose() }
-Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable)) -Releases $Mirror
+Install-Ripscope -InstallDir ([IO.Path]::GetDirectoryName($Executable))
 Write-Output 'Native locked/directory/recovery/postcommit-cleanup/uninstall-in-use checks passed'
 "#;
 fn main() {
@@ -879,7 +858,7 @@ fn run() -> Result<()> {
         ))
     };
     let archive_path = script_path(&path("--archive")?)?;
-    let installer = script_path(&path("--installer")?)?;
+    let source_installer = script_path(&path("--installer")?)?;
     let work = path("--work")?;
     ensure(!work.exists(), "work directory must be new")?;
     fs::create_dir_all(&work)?;
@@ -900,6 +879,12 @@ fn run() -> Result<()> {
     let archive = fs::read(&archive_path)?;
     let mirror = Mirror::start(&version)?;
     mirror.archive(&version, &archive_name, &archive, true);
+    let installer = work.join(
+        source_installer
+            .file_name()
+            .ok_or("installer filename missing")?,
+    );
+    mirror.installer(&source_installer, &installer)?;
     let profile = Profile::new(work.join("profile"), None)?;
     let mut checks = Checks {
         work,

@@ -26,11 +26,9 @@ function M.executable()
 end
 
 -- The project of PATH, a file or a directory, seen from the editor's directory CWD:
--- { root, index, selection, published }. OPTIONS, an index build's -f and selection
--- options, name another index and other sources to judge publication by.
-function M.locate(exec, path, cwd, options)
+-- { root, index, selection, published }.
+function M.locate(exec, path, cwd)
   local command = { exec, '--project', path }
-  vim.list_extend(command, options or {})
   local result = vim.system(command, { cwd = cwd, text = true }):wait()
   if result.code ~= 0 then
     error((result.stderr or ''):gsub('^ripscope: ', ''):gsub('\n+$', ''), 0)

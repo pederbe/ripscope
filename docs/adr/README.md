@@ -36,3 +36,4 @@ the earlier record names its replacement.
 - [0015 Emacs searches through xref, with no package dependencies](0015-native-emacs-package.md)
 - [0016 The language server chooses each request's Project from its file](0016-language-server-project-per-file.md)
 - [0017 Installers resolve the latest release](0017-install-latest-release.md)
+- [0018 Editors discover projects and refresh automatically](0018-automatic-editor-setup.md)

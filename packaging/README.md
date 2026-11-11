@@ -128,8 +128,14 @@ installation from the published destination. Only then add that route to user
 installation instructions. This helper adds no recurring workflow or automated
 submission.
 
-## AUR template
+## Arch package template
 
-The preparation command does not use `templates/PKGBUILD` and generates no `aur/`
-directory. To use the template, fill its metadata from the latest validated release archive, generate
-`.SRCINFO` and repeat package creation, installed checks and removal checks.
+`templates/PKGBUILD` prepares `ripscope-bin` from the latest validated Linux
+archive, without compiling Ripscope. Fill its release identity and checksums and
+place `check-installed.sh` beside it. Arch's `makepkg` builds a package for local
+installation with pacman, even without an AUR listing. See the
+[makepkg manual](https://man.archlinux.org/man/makepkg.8.en).
+
+The preparation command does not generate this recipe. Check package creation,
+the installed command and removal before distributing it. AUR submission also
+needs `.SRCINFO`.

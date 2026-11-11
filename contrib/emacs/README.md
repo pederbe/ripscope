@@ -67,8 +67,6 @@ search could not read, appears there too and stays in `*Messages*`.
 ```elisp
 ;; Headers to index from outside the project, relative to it or absolute.
 (setq ripscope-include-directories '("include" "../shared"))
-;; Index edits only with M-x ripscope-index-project.
-(setq ripscope-auto-refresh nil)
 ;; Name the executable instead of finding it.
 (setq ripscope-executable "/path/to/ripscope")
 ```

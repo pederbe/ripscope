@@ -126,7 +126,7 @@ function M.new(opts, decode_row)
       send(c)
       return
     end
-    local command = { opts.exec, '--json', '-dl', opts.auto_refresh and '--auto-refresh' or '--no-auto-refresh' }
+    local command = { opts.exec, '--json', '-l' }
     vim.list_extend(command, opts.session_args or {})
     vim.list_extend(command, { '-f', opts.index, '-P', opts.root })
     local launched, process = pcall(vim.system, command,

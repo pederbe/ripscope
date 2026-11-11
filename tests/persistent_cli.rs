@@ -305,7 +305,8 @@ fn stored_occurrence_context_matches_reference_and_isolates_requests() {
 
 #[test]
 fn rebuild_refreshes_stored_selection_and_preserves_query_lifecycle() {
-    for manual in ["-dl", "--no-auto-refresh"] {
+    {
+        let manual = "-dl";
         let dir = temp();
         let root = dir.path();
         fs::write(root.join("case.c"), "int Alpha;\n").unwrap();
@@ -346,7 +347,8 @@ fn rebuild_refreshes_stored_selection_and_preserves_query_lifecycle() {
 
 #[test]
 fn rebuild_source_failure_keeps_queries_and_retry_in_the_same_process() {
-    for manual in ["-dl", "--no-auto-refresh"] {
+    {
+        let manual = "-dl";
         let dir = temp();
         let root = dir.path();
         fs::write(root.join("case.c"), "int Alpha;\n").unwrap();
@@ -1764,7 +1766,8 @@ fn automatic_selection_rechecks_list_presence_within_the_same_session() {
 
 #[test]
 fn native_rebuild_source_failure_keeps_queries_and_retry() {
-    for manual in ["-dl", "--no-auto-refresh"] {
+    {
+        let manual = "-dl";
         let dir = temp();
         let root = dir.path();
         fs::write(root.join("case.c"), "int Alpha;\n").unwrap();

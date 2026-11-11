@@ -15,9 +15,7 @@ curl -fsSL https://ripscope.com/install.sh | sh
 ```
 
 It needs curl, GNU tar, gzip and ordinary GNU coreutils. The default destination
-is `~/.local/bin/ripscope`. Set `RIPSCOPE_INSTALL_DIR` for another directory,
-or `RIPSCOPE_RELEASES` for an
-explicit mirror. An HTTPS mirror must keep redirects on HTTPS. The checksum
+is `~/.local/bin/ripscope`. Set `RIPSCOPE_INSTALL_DIR` for another directory. The checksum
 checks the download against the release's checksum, and the separate attestation
 check in [release preparation](linux-release.md#attestation-verification) checks
 its provenance.

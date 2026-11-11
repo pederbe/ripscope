@@ -5,18 +5,9 @@ let s:root = substitute(getcwd(), '\\', '/', 'g')
 let s:shell = &shell
 let s:shellslash = has('win32') ? &shellslash : 0
 let s:observations = []
-let g:ripscope = {'backend': s:root . (has('win32') ? '/backend.exe' : '/backend'), 'root': s:root, 'index': s:root . '/workflow.idx'}
-let s:auto_refresh = $RIPSCOPE_AUTO_REFRESH !=# 'manual'
-if !s:auto_refresh
-  let g:ripscope.auto_refresh = 0
-endif
-if $RIPSCOPE_SELECTION ==# 'list'
-  let g:ripscope.file_list = 'selection.txt'
-else
-  let g:ripscope.sources = ['workflow.c']
-endif
+let g:ripscope = {'backend': s:root . (has('win32') ? '/backend.exe' : '/backend')}
 if has('win32') && $RIPSCOPE_SELECTION ==# 'list'
-  for key in ['backend', 'root', 'index']
+  for key in ['backend']
     let g:ripscope[key] = substitute(g:ripscope[key], '/', '\\', 'g')
   endfor
 endif
@@ -27,7 +18,7 @@ function! s:Failure() abort
   catch
     let failure = v:exception
   endtry
-  call assert_match('ripscope: build failed', failure)
+  call assert_match('ripscope:', failure)
   call add(s:observations, {'build_failure': failure})
 endfunction
 function! s:Connection() abort
@@ -62,7 +53,7 @@ function! s:AutomaticChanges(pid) abort
   call s:Navigate('g', 'HeaderFresh', 'workflow.h', 1, 'HeaderFresh', a:pid)
   call writefile(['int Added;'], s:root . '/added.c')
   if $RIPSCOPE_SELECTION ==# 'list'
-    call delete(s:root . '/selection.txt')
+    call delete(s:root . '/cscope.files')
     let uncertain = execute('silent! cs find g Saved')
     call assert_match('E609:', uncertain, 'automatic Refresh failure must be visible')
     call assert_equal(1, len(getqflist()), 'last published rows remain navigable')
@@ -70,20 +61,21 @@ function! s:AutomaticChanges(pid) abort
     call assert_equal(2, line('.'))
     call assert_match('Saved', getline('.'))
     call assert_equal(a:pid, s:Connection())
-    call writefile(['workflow.c', 'added.c'], s:root . '/selection.txt')
+    call writefile(['workflow.c', 'added.c'], s:root . '/cscope.files')
     call s:Navigate('g', 'Added', 'added.c', 1, 'Added', a:pid)
     execute 'bwipeout! ' . fnameescape(s:root . '/added.c')
     call assert_equal(0, rename(s:root . '/added.c', s:root . '/renamed.c'))
-    call writefile(['workflow.c', 'renamed.c'], s:root . '/selection.txt')
+    call writefile(['workflow.c', 'renamed.c'], s:root . '/cscope.files')
     call s:Navigate('g', 'Added', 'renamed.c', 1, 'Added', a:pid)
     execute 'bwipeout! ' . fnameescape(s:root . '/renamed.c')
     call assert_equal(0, delete(s:root . '/renamed.c'))
-    call writefile(['workflow.c'], s:root . '/selection.txt')
+    call writefile(['workflow.c'], s:root . '/cscope.files')
   else
+    call s:Navigate('g', 'Added', 'added.c', 1, 'Added', a:pid)
     call delete(s:root . '/added.c')
   endif
   let empty = execute('silent! cs find g Added')
-  call assert_match('E259:', empty, 'explicit source lists stay fixed and removed list entries disappear')
+  call assert_match('E259:', empty, 'removed files and list entries disappear')
   call assert_notmatch('E609:', empty)
   call assert_equal(a:pid, s:Connection())
   execute 'edit ' . fnameescape(s:root . '/workflow.c')
@@ -97,39 +89,19 @@ endfunction
 function! s:InterruptBuild(timer) abort
   for job in job_info()
     let info = job_info(job)
-    if info.status ==# 'run' && index(info.cmd, '-bk') >= 0
+    if info.status ==# 'run' && index(info.cmd, '-b') >= 0
       let sid = getscriptinfo({'name': 'ripscope.vim$'})[0].sid
       let vars = getscriptinfo({'sid': sid})[0].variables
       call add(s:observations, {'interrupted_pid': info.process, 'output_file': vars.job_log, 'state': info.status})
+      call timer_stop(a:timer)
       call interrupt()
       return
     endif
   endfor
-  call add(v:errors, 'no running build found for interruption')
 endfunction
 
 try
-  let valid = deepcopy(g:ripscope)
-  for key in ['backend', 'root', 'index']
-    let rejected = [valid[key] . "'", valid[key] . ';']
-    if has('win32')
-      call extend(rejected, ['C:relative', '/no-drive/path', '//server/share/index', 'C:/space dir/index', 'C:/bad&path'])
-    endif
-    for path in rejected
-      let g:ripscope = deepcopy(valid)
-      let g:ripscope[key] = path
-      let failure = ''
-      try
-        execute 'source ' . fnameescape($RIPSCOPE_CONFIG)
-      catch
-        let failure = v:exception
-      endtry
-      call assert_match('require absolute paths using only ASCII', failure)
-      call assert_false(filereadable(valid.index), 'reject before building')
-      call assert_false(cscope_connection(), 'reject before connecting')
-    endfor
-  endfor
-  let g:ripscope = valid
+  execute 'edit ' . fnameescape(s:root . '/workflow.c')
   execute 'source ' . fnameescape($RIPSCOPE_CONFIG)
   call assert_equal(s:shell, &shell)
   if has('win32')
@@ -140,7 +112,7 @@ try
     call assert_false(cscope_connection())
     call rename(s:root . '/backend-away.exe', s:root . '/backend.exe')
     call writefile(repeat(['int Slow;'], 20000), s:root . '/workflow.c')
-    let timer = timer_start(1, function('s:InterruptBuild'))
+    let timer = timer_start(1, function('s:InterruptBuild'), {'repeat': -1})
     let failure = ''
     try
       RipscopeBuild
@@ -169,43 +141,7 @@ try
   cc 1
   call assert_equal(s:root . '/workflow.c', substitute(expand('%:p'), '\\', '/', 'g'))
   call assert_equal(1, line('.'))
-  if s:auto_refresh
-    call s:AutomaticChanges(pid)
-  else
-  if has('win32')
-    " Missing selected input is a real nonzero backend update, not a stub exit.
-    call delete(s:root . '/workflow.c')
-    call s:Failure()
-    call assert_match('build failed (exit', s:observations[-1].build_failure)
-  else
-    " A failing executable must expose its output without reconnecting.
-    call writefile(['#!/bin/sh', 'echo deliberate-backend-failure >&2', 'exit 23'], s:root . '/backend')
-    call s:Failure()
-    call assert_match('deliberate-backend-failure', s:observations[-1].build_failure)
-    call assert_equal(pid, s:Connection())
-    call writefile(['#!/bin/sh', 'exec ' . shellescape($RIPSCOPE_BACKEND) . ' "$@"'], s:root . '/backend')
-  endif
-  call writefile(['int Workflow;', 'int Fresh;'], s:root . '/workflow.c')
-  if !has('win32')
-    call system('chmod a-w ' . join(map(['', '-wal', '-shm'], 'shellescape(s:root . "/workflow.idx" . v:val)')))
-    call s:Failure()
-  endif
-  cs find g Workflow
-  call assert_equal(pid, s:Connection())
-  let empty = execute('silent! cs find g Fresh')
-  call assert_match('E259:', empty)
-  call assert_notmatch('E609:', empty)
-  if !has('win32')
-    call system('chmod u+w ' . join(map(['', '-wal', '-shm'], 'shellescape(s:root . "/workflow.idx" . v:val)')))
-  endif
-  RipscopeBuild
-  call assert_equal(pid, s:Connection())
-  checktime
-  cs find g Fresh
-  cc 1
-  call assert_equal(s:root . '/workflow.c', substitute(expand('%:p'), '\\', '/', 'g'))
-  call assert_equal(2, line('.'))
-  endif
+  call s:AutomaticChanges(pid)
   RipscopeDisconnect
   if !has('win32')
     call assert_false(isdirectory('/proc/' . pid))
@@ -219,8 +155,7 @@ try
   call assert_equal(2, line('.'))
   RipscopeDisconnect
   " An unrelated connection must survive without changing its global settings.
-  let &cscopeprg = $RIPSCOPE_BACKEND . ' --vim-errors'
-  execute 'cs add ' . fnameescape(s:root . '/index') . ' ' . fnameescape(s:root)
+  execute 'cs add ' . fnameescape($RIPSCOPE_WORKFLOW_INDEX) . ' ' . fnameescape(s:root)
   let unrelated = s:Connection()
   let oldprg = &cscopeprg
   let failure = ''
@@ -236,9 +171,6 @@ try
 catch
   call add(v:errors, v:exception . ' at ' . v:throwpoint)
 finally
-  if !has('win32')
-    call system('chmod u+w ' . join(map(['', '-wal', '-shm'], 'shellescape(s:root . "/workflow.idx" . v:val)')))
-  endif
   call writefile([json_encode({'errors': v:errors, 'observations': s:observations})], s:root . '/workflow.json')
 endtry
 if !empty(v:errors)

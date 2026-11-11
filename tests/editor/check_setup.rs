@@ -143,6 +143,11 @@ fn run() -> Result<bool> {
     let (archive_name, archive) = development_archive(&options, &version)?;
     let mirror = mirror::Mirror::start(&version)?;
     mirror.archive(&version, &archive_name, &archive, true);
+    let installers = options.work.join("installers");
+    fs::create_dir(&installers)?;
+    for script in ["install.sh", "install.ps1"] {
+        mirror.installer(&options.repo.join(script), &installers.join(script))?;
+    }
     let mut runs = Vec::new();
     let mut passed = true;
     let mut repository = None;
@@ -162,7 +167,6 @@ fn run() -> Result<bool> {
                 editor,
                 executable,
                 route,
-                mirror: &mirror.url,
                 version: &version,
                 url: repository.as_deref().unwrap_or_default(),
             };
@@ -395,7 +399,12 @@ fn git_repository(options: &Options) -> Result<String> {
         "Cargo.toml",
     ] {
         fs::create_dir_all(&repository)?;
-        fs::copy(options.repo.join(file), repository.join(file))?;
+        let source = if file.starts_with("install.") {
+            options.work.join("installers").join(file)
+        } else {
+            options.repo.join(file)
+        };
+        fs::copy(source, repository.join(file))?;
     }
     for directory in ["plugin", "lua", "contrib", "tests/editor"] {
         copy_tree(&options.repo.join(directory), &repository.join(directory))?;
@@ -479,7 +488,6 @@ struct Route<'a> {
     editor: &'a str,
     executable: &'a Path,
     route: &'a str,
-    mirror: &'a str,
     version: &'a str,
     url: &'a str,
 }
@@ -527,7 +535,6 @@ impl Route<'_> {
             // for an index, so its cache is where the documented variable puts it.
             profile.set("RIPSCOPE_CACHE_DIR", self.cache(&profile));
         }
-        profile.set("RIPSCOPE_RELEASES", self.mirror);
         let mut steps = Vec::new();
         let mut passed = true;
         let emacs_init = self.prepare(&profile, &directory, &mut steps, &mut passed)?;
@@ -709,7 +716,12 @@ impl Route<'_> {
                 let clone = directory.join("clone");
                 for file in ["install.sh", "install.ps1", "Cargo.toml"] {
                     fs::create_dir_all(&clone)?;
-                    fs::copy(options.repo.join(file), clone.join(file))?;
+                    let source = if file.starts_with("install.") {
+                        options.work.join("installers").join(file)
+                    } else {
+                        options.repo.join(file)
+                    };
+                    fs::copy(source, clone.join(file))?;
                 }
                 for name in ["plugin", "lua"] {
                     copy_tree(&options.repo.join(name), &clone.join(name))?;
@@ -1017,11 +1029,11 @@ fn installer(options: &Options, flags: &[&str]) -> (PathBuf, Vec<OsString>) {
         ]
         .map(OsString::from)
         .to_vec();
-        args.push(options.repo.join("install.ps1").into());
+        args.push(options.work.join("installers/install.ps1").into());
         args.extend(flags.iter().map(|flag| OsString::from(format!("-{flag}"))));
         (powershell(), args)
     } else {
-        let mut args = vec![OsString::from(options.repo.join("install.sh"))];
+        let mut args = vec![OsString::from(options.work.join("installers/install.sh"))];
         args.extend(flags.iter().map(|flag| OsString::from(format!("--{flag}"))));
         (PathBuf::from("sh"), args)
     }

@@ -1,5 +1,8 @@
 # A refresh re-applies the selection rule and trusts unchanged metadata
 
+[ADR 0018](0018-automatic-editor-setup.md) removes the redundant negative refresh
+option described here. The cscope-compatible `-d` still selects manual updates.
+
 A refresh has to find added, removed, renamed and edited files without reading the
 whole project each time. The reference cscope misses an edit that keeps a file's size
 and modification time.

@@ -14,7 +14,7 @@ main.c main 5 greet("world");
 ```
 
 ```text
-ripscope -l [-f INDEX] [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json | --vim-errors]
+ripscope -l [-f INDEX] [-d] [--auto-refresh] [-C] [-P PATH] [--json | --vim-errors]
 ```
 
 Without `-d`, the session brings the index up to date at startup and again before the
@@ -23,8 +23,7 @@ explicit `r` command. A missing index, or one that has published nothing yet, ca
 queried.
 
 `--auto-refresh` explicitly enables updates, including startup, even if an editor adds
-`-d`. `--no-auto-refresh` explicitly disables them. Either control takes precedence over
-`-d` regardless of argument order. The two controls cannot be combined. Explicit `r`
+`-d`. It takes precedence over `-d` regardless of argument order. Explicit `r`
 works with either setting.
 
 ## Commands

@@ -48,7 +48,7 @@ your project and search: `:cs find g main` in Vim, `:RipscopeFind g main` in Neo
 or `M-.` on `main` in Emacs. The first search indexes the project into your cache
 directory, and later searches see your saved edits. The [Vim](../editors/vim.md),
 [Neovim](../editors/neovim.md) and [Emacs](../editors/emacs.md) guides explain how
-the project is found, file-list selection and optional manual updates.
+the project is found and how to select sources with a file list.
 
 ## Next steps
 

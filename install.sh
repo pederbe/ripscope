@@ -1,11 +1,11 @@
 #!/bin/sh
 # curl -fsSL https://ripscope.com/install.sh | sh
 # Uninstall: curl -fsSL https://ripscope.com/install.sh | sh -s -- --uninstall
-# Settings: RIPSCOPE_INSTALL_DIR, RIPSCOPE_RELEASES (mirror),
+# Settings: RIPSCOPE_INSTALL_DIR,
 # RIPSCOPE_EDITORS (all, the default, or none to leave the editors alone).
 # From a checkout, as the editors' install commands run it: sh install.sh --plugin
 # installs the latest release, unless it is already installed or the ripscope found
-# is not one this installer put there. --plugin --force installs anyway.
+# is not one this installer put there.
 # The complete function must arrive before installation can begin.
 ripscope_install() (
     set -eu
@@ -31,7 +31,6 @@ ripscope_install() (
     neovim_package=$data/nvim/site/pack/ripscope
     emacs_directory=$data/ripscope/emacs
     plugin=no
-    force=no
     case ${1:-} in
         --uninstall)
             dir=${RIPSCOPE_INSTALL_DIR:-$HOME/.local/bin}
@@ -53,12 +52,8 @@ ripscope_install() (
             esac
             say "Indexes the editors made remain in $cache (RIPSCOPE_CACHE_DIR names another folder when set). Delete them too if you no longer need them."
             exit 0 ;;
-        --plugin|--force)
-            case $1:${2:-} in
-                --plugin:) ;;
-                --plugin:--force|--force:--plugin) force=yes ;;
-                *) fail "unknown options: $*" ;;
-            esac
+        --plugin)
+            [ "$#" -eq 1 ] || fail "unknown options: $*"
             plugin=yes ;;
         '') ;;
         *) fail "unknown option: $1" ;;
@@ -74,7 +69,7 @@ ripscope_install() (
     fi
     case $editors in all|none) ;; *) fail 'set RIPSCOPE_EDITORS to all or none.' ;; esac
     have=
-    if [ "$plugin" = yes ] && [ "$force" = no ]; then
+    if [ "$plugin" = yes ]; then
         # The ripscope the editors find: on PATH, else where this installer puts it.
         destination=${RIPSCOPE_INSTALL_DIR:-$HOME/.local/bin}/ripscope
         found=$(command -v ripscope 2>/dev/null) || found=
@@ -98,11 +93,10 @@ ripscope_install() (
     for tool in curl tar gzip sha256sum awk find sort uniq cmp cp mv mktemp; do
         has "$tool" || fail "please install $tool first."
     done
-    releases=${RIPSCOPE_RELEASES:-https://github.com/pederbe/ripscope/releases}
+    releases=https://github.com/pederbe/ripscope/releases
     case $releases in
         https://*) fetch() { curl --proto '=https' --proto-redir '=https' --tlsv1.2 -fsSL "$1" -o "$2"; } ;;
-        *) [ -n "${RIPSCOPE_RELEASES:-}" ] || fail 'a release mirror must be explicit.'
-           fetch() { curl -fsSL "$1" -o "$2"; } ;;
+        *) fetch() { curl -fsSL "$1" -o "$2"; } ;;
     esac
     case $releases in
         https://*) latest=$(curl --proto '=https' --proto-redir '=https' --tlsv1.2 -fsSLI -o /dev/null -w '%{url_effective}' "$releases/latest") ;;
@@ -113,7 +107,7 @@ ripscope_install() (
         *) fail 'cannot find the latest release.' ;;
     esac
     case $version in ''|.*|*[!A-Za-z0-9.-]*) fail 'cannot find the latest release.' ;; esac
-    if [ "$plugin" = yes ] && [ "$force" = no ] && [ "$have" = "$version" ]; then
+    if [ "$plugin" = yes ] && [ "$have" = "$version" ]; then
         say "Ripscope $have is installed: $found"
         exit 0
     fi

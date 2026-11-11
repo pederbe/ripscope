@@ -418,12 +418,27 @@ fn check(
         steps.report["workflows"] = json!({});
         let workflow_arguments = editor(&workflow.to_string_lossy());
         let workflow_arguments: Vec<&str> = workflow_arguments.iter().map(String::as_str).collect();
-        for selection in ["sources", "list"] {
-            for refresh in ["automatic", "manual"] {
+        fs::create_dir(root.join(".git"))?;
+        let cache = root.join("cache");
+        steps.set("RIPSCOPE_CACHE_DIR", slashes(&cache));
+        for selection in ["discovery", "list"] {
+            {
                 steps.set("RIPSCOPE_SELECTION", selection);
-                steps.set("RIPSCOPE_AUTO_REFRESH", refresh);
                 write_text(&root.join("workflow.c"), "int Workflow;\n")?;
-                write_text(&root.join("selection.txt"), "workflow.c\n")?;
+                if selection == "list" {
+                    write_text(&root.join("cscope.files"), "workflow.c\n")?;
+                }
+                let discovery = Command::new(backend)
+                    .args(["--project", &root.to_string_lossy()])
+                    .env("RIPSCOPE_CACHE_DIR", &cache)
+                    .output()?;
+                ensure(
+                    discovery.status.success(),
+                    "workflow project discovery failed",
+                )?;
+                let project: Value = serde_json::from_slice(&discovery.stdout)?;
+                let index = project["index"].as_str().ok_or("project index missing")?;
+                steps.set("RIPSCOPE_WORKFLOW_INDEX", index);
                 if cfg!(windows) {
                     let target = root.join("backend.exe");
                     settled(&target, || fs::copy(backend, &target))?;
@@ -442,11 +457,11 @@ fn check(
                         fs::set_permissions(&wrapper, fs::Permissions::from_mode(0o700))?;
                     }
                 }
-                let label = format!("Vim workflow {selection} {refresh}");
+                let label = format!("Vim workflow {selection}");
                 let result = steps.run(&label, vim, &workflow_arguments)?;
                 let observed: Value =
                     serde_json::from_slice(&fs::read(root.join("workflow.json"))?)?;
-                steps.report["workflows"][format!("{selection}-{refresh}")] = observed.clone();
+                steps.report["workflows"][selection] = observed.clone();
                 ensure(
                     result == 0 && observed["errors"].as_array().is_some_and(Vec::is_empty),
                     format!("{label} failed: {}", observed["errors"]),
@@ -477,8 +492,8 @@ fn check(
                         ensure(!Path::new(output).exists(), format!("{label}: {item}"))?;
                     }
                 }
-                for name in ["workflow.idx", "workflow.idx-wal", "workflow.idx-shm"] {
-                    let path = root.join(name);
+                for suffix in ["", "-wal", "-shm"] {
+                    let path = PathBuf::from(format!("{index}{suffix}"));
                     settled(&path, || match fs::remove_file(&path) {
                         Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(()),
                         other => other,

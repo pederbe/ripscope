@@ -120,12 +120,8 @@ pub(crate) fn parse(args: &[OsString]) -> Result<Invocation, String> {
             others.push("--json".to_owned());
             continue;
         }
-        if matches!(bytes, b"--auto-refresh" | b"--no-auto-refresh") {
-            let enabled = bytes == b"--auto-refresh";
-            if automatic_refresh.is_some_and(|previous| previous != enabled) {
-                return Err("--auto-refresh and --no-auto-refresh cannot be combined".into());
-            }
-            automatic_refresh = Some(enabled);
+        if bytes == b"--auto-refresh" {
+            automatic_refresh = Some(true);
             others.push(arg.to_string_lossy().into_owned());
             continue;
         }
