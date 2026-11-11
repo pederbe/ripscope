@@ -94,8 +94,7 @@ bash scripts/package-linux.sh 0.1.0 \
 This requires `dpkg-deb`, `rpmbuild`, `rpm2cpio` and `cpio`. Missing RPM tools fail
 the command. Both extracted packages must contain the byte-identical executable
 and complete notices/editor source. No stripping or recompilation is allowed.
-The declared dependency is glibc 2.28 or newer. When packaging an older archive
-that imports `libgcc_s.so.1`, the script also declares the system GCC runtime.
+The declared dependency is glibc 2.28 or newer.
 Install, query and remove each package in its selected offline runtime before
 accepting it; leave a project index and unrelated file in place to check removal.
 The prepared workflow runs these checks on Debian 12 and AlmaLinux 8.
