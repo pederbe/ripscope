@@ -13,8 +13,8 @@ index format or command-line behavior, and its entry says so.
   Remove Vim and Neovim project, index and source-selection settings, and all
   editors' manual-refresh settings. Remove those settings from your configuration
   and use `cscope.files` to select sources. CLI `-d` remains available.
-- Remove installer release mirrors and forced reinstalls, the redundant
-  `--no-auto-refresh` option and the unused AUR template.
+- Remove installer release mirrors and forced reinstalls, and the redundant
+  `--no-auto-refresh` option.
 - Install scripts always resolve the latest release, including editor install
   commands. Remove release-version overrides and checkout-based selection.
   Installation pages and package commands now follow the latest release.
@@ -30,6 +30,8 @@ index format or command-line behavior, and its entry says so.
 
 ### Fixed
 
+- Remove Windows watch markers before announcing a completed session reply, so
+  closing an editor immediately after a search leaves no temporary marker behind.
 - Refuse pipes and devices used as file lists, live source files or indexes without
   waiting for input. Symbolic links to regular files remain supported.
 - Avoid repeated scans when recording navigation answers for source lines with many

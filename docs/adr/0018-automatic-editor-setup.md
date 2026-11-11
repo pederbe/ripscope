@@ -20,4 +20,5 @@ their fixed address. This refines the test route in
 
 Executable paths, include directories, cache location, editor timeouts and window
 controls retain concrete uses. Homebrew, Nix and conda recipes remain for package
-channel adoption. The unused AUR template is removed.
+channel adoption. The Arch binary-package template remains useful for local
+pacman installation without an AUR listing.

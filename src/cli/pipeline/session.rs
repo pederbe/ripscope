@@ -128,10 +128,10 @@ struct Session<'s, I, O, E> {
 impl<I: BufRead, O: Write, E: Write> Session<'_, I, O, E> {
     fn serve(mut self) -> Result<(), String> {
         loop {
-            self.replies.ready().map_err(output_failed)?;
             if let Some(watch) = &mut self.watch {
                 watch.tidy();
             }
+            self.replies.ready().map_err(output_failed)?;
             let request = match self.pending.take() {
                 Some(line) => Request::Line(line),
                 None => read_request(&mut *self.input).map_err(input_failed)?,
@@ -301,6 +301,73 @@ mod tests {
         limit: usize,
         flushes: usize,
         failed_flush: Option<usize>,
+    }
+
+    #[cfg(windows)]
+    #[test]
+    fn ready_frame_follows_watch_marker_cleanup() {
+        struct ReadyCapture {
+            root: std::path::PathBuf,
+            bytes: Vec<u8>,
+            readies: usize,
+        }
+        impl Write for ReadyCapture {
+            fn write(&mut self, bytes: &[u8]) -> io::Result<usize> {
+                self.bytes.extend_from_slice(bytes);
+                Ok(bytes.len())
+            }
+            fn flush(&mut self) -> io::Result<()> {
+                if self.bytes.ends_with(b"{\"type\":\"ready\"}\n") {
+                    self.readies += 1;
+                    for entry in std::fs::read_dir(&self.root)? {
+                        let name = entry?.file_name();
+                        let name = name.to_string_lossy();
+                        assert!(
+                            !(name.starts_with(".ripscope-") && name.ends_with(".sync")),
+                            "ready was flushed before removing {name}"
+                        );
+                    }
+                }
+                Ok(())
+            }
+        }
+        let work = tempfile::tempdir().unwrap();
+        let source = work.path().join("a.c");
+        let index = work.path().join("i.db");
+        std::fs::write(&source, "int Alpha;\n").unwrap();
+        assert_eq!(
+            super::super::run_in(
+                &[
+                    "-bk".into(),
+                    "-f".into(),
+                    index.clone().into(),
+                    source.into()
+                ],
+                work.path(),
+                &mut io::empty(),
+                &mut Vec::new(),
+                &mut Vec::new(),
+            ),
+            std::process::ExitCode::SUCCESS
+        );
+        let invocation =
+            crate::invocation::parse(&["--json".into(), "-l".into(), "-f".into(), index.into()])
+                .unwrap();
+        let mut output = ReadyCapture {
+            root: work.path().to_owned(),
+            bytes: Vec::new(),
+            readies: 0,
+        };
+        session(
+            &invocation,
+            work.path(),
+            &mut io::Cursor::new(b"1Alpha\nq\n"),
+            &mut output,
+            &mut Vec::new(),
+        )
+        .unwrap();
+        assert_eq!(output.readies, 2);
+        assert!(String::from_utf8(output.bytes).unwrap().contains("Alpha"));
     }
 
     impl Write for FailingReply {
