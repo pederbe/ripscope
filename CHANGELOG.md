@@ -9,6 +9,12 @@ index format or command-line behavior, and its entry says so.
 
 ### Changed
 
+- Editor plugins always find the current file's project and refresh saved changes.
+  Remove Vim and Neovim project, index and source-selection settings, and all
+  editors' manual-refresh settings. Remove those settings from your configuration
+  and use `cscope.files` to select sources. CLI `-d` remains available.
+- Remove installer release mirrors and forced reinstalls, the redundant
+  `--no-auto-refresh` option and the unused AUR template.
 - Install scripts always resolve the latest release, including editor install
   commands. Remove release-version overrides and checkout-based selection.
   Installation pages and package commands now follow the latest release.

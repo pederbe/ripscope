@@ -89,7 +89,7 @@ nnoremap <Leader>ca :cs find a <C-R><C-W><CR>
 | `:RipscopeConnect` | Connect to the current file's project, indexing it first if needed. |
 | `:RipscopeBuild` | Update the index now (or build it), then connect. |
 | `:RipscopeDisconnect` | Close Ripscope's connection. |
-| `:RipscopeInstall` | Install the latest `ripscope` executable when it is missing or the one the installer put there needs updating. `:RipscopeInstall!` installs it anyway. |
+| `:RipscopeInstall` | Install the latest `ripscope` executable when it is missing or the one the installer put there needs updating. |
 
 Vim searches one project at a time, the project of the first C file you open.
 `:RipscopeConnect` switches to the current file's project. Ripscope leaves Vim alone
@@ -100,43 +100,25 @@ Vim finds `ripscope` on PATH, else where the installer puts it (`~/.local/bin`, 
 `%USERPROFILE%\.local\bin` on Windows). If it finds none, opening a C file says so
 and suggests `:RipscopeInstall`.
 
-## Choosing the project yourself
+## Settings
 
-Set `g:ripscope` in your vimrc to change the defaults. Without a `root`, these
-apply to every project:
+Set `g:ripscope` in your vimrc to change the executable or add header directories
+for every project:
 
 ```vim
-let g:ripscope = {'auto_refresh': 0, 'include_dirs': ['include']}
+let g:ripscope = {'include_dirs': ['include']}
 ```
 
 | Key | Meaning |
 | --- | --- |
 | `backend` | Absolute path to the Ripscope executable |
-| `auto_refresh` | Enabled by default. Set to `0` for manual updates with `:RipscopeBuild`. |
 | `include_dirs` | Include directories, relative to the project, searched in order |
 
-With a `root`, you choose the project, the index and its sources, and nothing
-connects by itself. Run `:RipscopeBuild` to build the index and connect.
+To select sources, put a [file list](../guide/building.md#file-lists) named
+`cscope.files` in your project directory.
 
-```vim
-let g:ripscope = {
-      \ 'backend': '/home/me/.local/bin/ripscope',
-      \ 'root': '/home/me/project',
-      \ 'index': '/home/me/project/ripscope.db',
-      \ 'sources': ['src/main.c']}
-```
-
-| Key | Meaning |
-| --- | --- |
-| `backend` | Absolute path to the Ripscope executable |
-| `root` | Absolute project directory. Relative names below resolve from here |
-| `index` | Absolute path of the index |
-| `sources` *or* `file_list` | Explicit source files, or a [file list](../guide/building.md#file-lists) such as `'cscope.files'` (exactly one) |
-| `include_dirs` | Optional include directories, searched in order |
-| `auto_refresh` | Enabled by default. Set to `0` for manual updates with `:RipscopeBuild`. |
-
-On Windows use drive paths such as `'C:/Users/me/.local/bin/ripscope.exe'` and
-`'C:/Projects/example'`. Backslashes are also accepted. Settings are read when the
+On Windows use a drive path such as `'C:/Users/me/.local/bin/ripscope.exe'` for
+the executable. Backslashes are also accepted. Settings are read when the
 plugin loads, so restart Vim to change them. Without a plugin manager, set
 `g:ripscope` and then `source` the plugin's `plugin/ripscope.vim`.
 
@@ -145,7 +127,7 @@ plugin loads, so restart Vim to change them. Without a plugin manager, set
 - Save and search. Searches refresh changed files automatically in the same
   connection, including external edits and header changes. Unmodified loaded
   buffers can be reloaded with `:checktime` after external edits.
-- Explicit source lists stay fixed. With a file list, add or rename its entries when
+- With a file list, add or rename its entries when
   membership changes. Saves and searches never rewrite that list.
 - `:RipscopeBuild` reads saved files and blocks Vim while it runs. The default
   automatic refresh explicitly overrides the `-d` Vim supplies to its backend.

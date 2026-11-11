@@ -10,8 +10,8 @@ and its exit statuses.
 ```text
 ripscope -b [-R] [-k] [-u] [-I DIR]... [-f INDEX] [--] [SOURCE...]
 ripscope -b [-R] [-k] [-u] [-I DIR]... [-f INDEX] -i LIST
-ripscope -L [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json] [-f INDEX] -FIELD PATTERN
-ripscope -l [-d] [--auto-refresh | --no-auto-refresh] [-C] [-P PATH] [--json | --vim-errors] [-f INDEX]
+ripscope -L [-d] [--auto-refresh] [-C] [-P PATH] [--json] [-f INDEX] -FIELD PATTERN
+ripscope -l [-d] [--auto-refresh] [-C] [-P PATH] [--json | --vim-errors] [-f INDEX]
 ripscope --verify [-d] [-f INDEX]
 ripscope --project PATH [-f INDEX] [-kR] [-i LIST] [FILE...]
 ripscope lsp
@@ -48,7 +48,6 @@ Ripscope reads its options as cscope does, so it accepts what Vim, Neovim, Emacs
 | `-l` | session | Start a [session](../guide/sessions.md). Updates the index first, and again before a query after the sources change, unless `-d`. |
 | `-d` | query, session, `--verify` | Do not update. Use the index as it is, and never create one. Explicit `r` remains available. |
 | `--auto-refresh` | query, session | Update as without `-d`, even when an editor supplies `-d`, in either argument order. |
-| `--no-auto-refresh` | query, session | Never update, as with `-d`, in either argument order. Cannot be combined with `--auto-refresh`. |
 | `-0` ... `-9` | query | [Query field](../guide/queries.md#query-fields) followed by the pattern. |
 | `-C` | query, session | Ignore ASCII case. |
 | `-P PATH` | query, session | cscope's prepend path. Text searches read relative names below it and show them with it. |

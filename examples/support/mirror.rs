@@ -1,10 +1,11 @@
-//! A loopback release mirror that serves exact archive bytes, as the installers'
-//! `RIPSCOPE_RELEASES` setting expects: `/latest` redirects to the version's tag, and
-//! each archive has its `.sha256` sidecar.
+//! A loopback release fixture serving exact candidate archive bytes before publication.
+//! Only temporary installer copies point here. Public installers always use GitHub.
 use sha2::{Digest, Sha256};
 use std::collections::BTreeMap;
+use std::fs;
 use std::io::{Read, Write};
 use std::net::{TcpListener, TcpStream};
+use std::path::Path;
 use std::sync::{
     Arc, Mutex,
     atomic::{AtomicBool, Ordering},
@@ -23,6 +24,17 @@ pub struct Mirror {
     worker: Option<std::thread::JoinHandle<()>>,
 }
 impl Mirror {
+    /// Stage the installer with only its release address changed for this fixture.
+    pub fn installer(&self, source: &Path, destination: &Path) -> std::io::Result<()> {
+        const RELEASES: &str = "https://github.com/pederbe/ripscope/releases";
+        let script = fs::read_to_string(source)?;
+        if script.matches(RELEASES).count() != 1 {
+            return Err(std::io::Error::other(
+                "expected one installer release address",
+            ));
+        }
+        fs::write(destination, script.replacen(RELEASES, &self.url, 1))
+    }
     pub fn start(version: &str) -> Result<Self> {
         let listener = TcpListener::bind("127.0.0.1:0")?;
         let url = format!("http://{}", listener.local_addr()?);

@@ -127,9 +127,3 @@ revisions, repeat the installed checks and removal checks, then verify a fresh
 installation from the published destination. Only then add that route to user
 installation instructions. This helper adds no recurring workflow or automated
 submission.
-
-## AUR template
-
-The preparation command does not use `templates/PKGBUILD` and generates no `aur/`
-directory. To use the template, fill its metadata from the latest validated release archive, generate
-`.SRCINFO` and repeat package creation, installed checks and removal checks.

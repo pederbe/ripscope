@@ -1,10 +1,10 @@
 # irm https://ripscope.com/install.ps1 | iex
 # Uninstall: & ([scriptblock]::Create((irm https://ripscope.com/install.ps1))) -Uninstall
-# Settings: RIPSCOPE_INSTALL_DIR, RIPSCOPE_RELEASES (mirror),
+# Settings: RIPSCOPE_INSTALL_DIR,
 # RIPSCOPE_EDITORS (all, the default, or none to leave the editors alone).
 # From a checkout, as the editors' install commands run it: install.ps1 -Plugin installs
 # the latest release, unless it is already installed or the ripscope.exe found is
-# not one this installer put there. -Plugin -Force installs anyway.
+# not one this installer put there.
 # Dot sourcing defines the filesystem helpers for the native installer checks.
 function Get-RipscopeAttributes([string] $Path) {
     try { return [IO.File]::GetAttributes($Path) }
@@ -135,11 +135,9 @@ function Install-Ripscope {
     [CmdletBinding()]
     param(
         [string] $InstallDir = $env:RIPSCOPE_INSTALL_DIR,
-        [string] $Releases = $env:RIPSCOPE_RELEASES,
         [string] $Editors = $env:RIPSCOPE_EDITORS,
         [switch] $Uninstall,
-        [switch] $Plugin,
-        [switch] $Force
+        [switch] $Plugin
     )
     $ErrorActionPreference = 'Stop'
     Set-StrictMode -Version 2
@@ -153,7 +151,7 @@ function Install-Ripscope {
     }
     if ($Editors -notin @('all', 'none')) { throw 'Set RIPSCOPE_EDITORS to all or none.' }
     $have = ''
-    if ($Plugin -and -not $Force) {
+    if ($Plugin) {
         # The ripscope.exe the editors find: on PATH, else where this installer puts it.
         $destination = Join-Path $(if ($InstallDir) { $InstallDir } else { Join-Path $HOME '.local\bin' }) 'ripscope.exe'
         $found = Get-Command 'ripscope.exe' -CommandType Application -ErrorAction SilentlyContinue | Select-Object -First 1 -ExpandProperty Source
@@ -177,10 +175,8 @@ function Install-Ripscope {
         -not [Environment]::Is64BitOperatingSystem -or $env:PROCESSOR_ARCHITECTURE -ne 'AMD64') {
         throw 'The prebuilt archive supports x86-64 Windows.'
     }
-    if (-not $Releases) { $Releases = 'https://github.com/pederbe/ripscope/releases' }
-    $Releases = $Releases.TrimEnd('/')
+    $Releases = 'https://github.com/pederbe/ripscope/releases'
     $secure = ([Uri] $Releases).Scheme -eq 'https'
-    if (-not $secure -and -not $env:RIPSCOPE_RELEASES -and -not $PSBoundParameters.ContainsKey('Releases')) { throw 'A non-HTTPS mirror must be explicit.' }
     [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
     function Get-ResponseUri($Response) {
         if ($Response.BaseResponse -is [Net.HttpWebResponse]) { return $Response.BaseResponse.ResponseUri }
@@ -195,7 +191,7 @@ function Install-Ripscope {
     if ($secure -and $uri.Scheme -ne 'https') { throw 'HTTPS release lookup redirected to an insecure URL.' }
     if ($uri.AbsolutePath -notmatch '/tag/v([0-9]+\.[0-9]+\.[0-9]+(?:[-.][0-9A-Za-z]+)*)$') { throw 'Cannot find the latest release.' }
     $Version = $Matches[1]
-    if ($Plugin -and -not $Force -and $have -eq $Version) {
+    if ($Plugin -and $have -eq $Version) {
         Write-Output "Ripscope $have is installed: $found"
         return
     }
@@ -336,8 +332,9 @@ function Install-Ripscope {
     }
 }
 if ($MyInvocation.InvocationName -ne '.') {
-    # -Uninstall, -Plugin and -Force arrive as plain arguments from both a script block and -File.
-    if ($args -contains '-Uninstall') { Install-Ripscope -Uninstall }
-    elseif ($args -contains '-Plugin') { Install-Ripscope -Plugin -Force:($args -contains '-Force') }
-    else { Install-Ripscope @args }
+    # Switches arrive as plain strings through both a script block and -File.
+    if ($args.Count -eq 0) { Install-Ripscope }
+    elseif ($args.Count -eq 1 -and $args[0] -eq '-Uninstall') { Install-Ripscope -Uninstall }
+    elseif ($args.Count -eq 1 -and $args[0] -eq '-Plugin') { Install-Ripscope -Plugin }
+    else { throw "Unknown installer arguments: $args" }
 }

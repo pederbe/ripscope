@@ -181,12 +181,11 @@ A separate Rust toolchain or SQLite installation is unnecessary for archive user
 
 The install scripts select the latest release and install into your user account.
 Set these environment variables before running a script to change its destination,
-download source or editor setup.
+or editor setup.
 
 | Variable | Purpose |
 | --- | --- |
 | `RIPSCOPE_INSTALL_DIR` | Choose another executable directory |
-| `RIPSCOPE_RELEASES` | Use a release mirror |
 | `RIPSCOPE_EDITORS` | `all` (the default) sets up the editors. `none` leaves them alone |
 
 In PowerShell, set them through `$env:`.

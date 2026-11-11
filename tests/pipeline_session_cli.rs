@@ -275,13 +275,7 @@ fn updating_sessions_refresh_saved_definitions_callers_and_assignments_before_st
 
 #[test]
 fn explicit_automatic_refresh_controls_override_d_in_either_order() {
-    for args in [
-        vec!["--auto-refresh", "-dl"],
-        vec!["-dl", "--auto-refresh"],
-        vec!["--no-auto-refresh", "-l"],
-        vec!["-l", "--no-auto-refresh"],
-    ] {
-        let automatic = args.contains(&"--auto-refresh");
+    for args in [vec!["--auto-refresh", "-dl"], vec!["-dl", "--auto-refresh"]] {
         let work = tempfile::tempdir().unwrap();
         write(work.path().join("a.c"), "int Alpha;\n").unwrap();
         build(work.path(), &["a.c"]);
@@ -290,34 +284,17 @@ fn explicit_automatic_refresh_controls_override_d_in_either_order() {
         args.extend(["-f", "i.db"]);
         let mut session = Session::start(work.path(), &args);
         session.expect(b">> ");
-        let (name, text) = if automatic {
-            ("Beta", "int Beta;")
-        } else {
-            ("Alpha", "int Alpha;")
-        };
+        let (name, text) = ("Beta", "int Beta;");
         session.query(false, &format!("1{name}"), &[("a.c", name, 1, text)]);
         write(work.path().join("a.c"), "int Gamma;\n").unwrap();
-        if automatic {
-            session.query(false, "1Gamma", &[("a.c", "Gamma", 1, "int Gamma;")]);
-        } else {
-            session.query(false, "1Gamma", &[]);
-            session.send(b"r\n");
-            session.expect(b"\n>> ");
-            session.query(false, "1Gamma", &[("a.c", "Gamma", 1, "int Gamma;")]);
-        }
+        session.query(false, "1Gamma", &[("a.c", "Gamma", 1, "int Gamma;")]);
         session.send(b"q\n");
         session.finish();
     }
     let work = tempfile::tempdir().unwrap();
-    for args in [
-        &["--auto-refresh", "--no-auto-refresh", "-l"][..],
-        &["--auto-refresh", "-b"],
-        &["--no-auto-refresh", "--verify"],
-    ] {
-        let refused = run(work.path(), args);
-        assert!(!refused.status.success(), "{args:?}: {refused:?}");
-        assert!(refused.stdout.is_empty(), "{args:?}: {refused:?}");
-    }
+    let refused = run(work.path(), &["--auto-refresh", "-b"]);
+    assert!(!refused.status.success(), "{refused:?}");
+    assert!(refused.stdout.is_empty(), "{refused:?}");
 }
 
 #[test]

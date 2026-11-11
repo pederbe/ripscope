@@ -1,12 +1,10 @@
 -- Ripscope's Neovim adapter. With no settings, a search finds the current file's
--- project and indexes it into your cache directory the first time. setup() with a
--- root chooses the project, index and sources yourself. See docs/editors/neovim.md.
+-- project and indexes it into your cache directory the first time.
+-- See docs/editors/neovim.md for the optional editor settings.
 local M = {}
 local windows = vim.fn.has('win32') == 1
 local project = require('ripscope.project')
--- The project setup() names with a root, or nil for automatic projects.
-local explicit
--- Settings for automatic projects, from setup() without a root.
+-- Settings shared by the automatically located projects.
 local defaults = {}
 -- Each project's settings and its session, by root and index.
 local projects = {}
@@ -170,34 +168,22 @@ local function start(entry, kind, args, title, after)
   end
 end
 
--- Checks the settings both kinds of project take, filling in their defaults.
+-- Checks the editor settings, filling in their defaults.
 local function settings(options)
   assert(vim.fn.has('nvim-0.10') == 1 and (windows or vim.uv.os_uname().sysname == 'Linux'),
     'requires Linux or native Windows Neovim 0.10 or newer')
   local opts = vim.deepcopy(options or {})
-  local allowed = { exec = true, root = true, index = true, recursive = true,
-    include_dirs = true, sources = true, file_list = true, timeout = true, open = true,
-    auto_refresh = true }
+  local allowed = { exec = true, include_dirs = true, timeout = true, open = true }
   for key in pairs(opts) do assert(allowed[key], 'unknown Ripscope option: ' .. tostring(key)) end
-  if opts.index then string_arg(opts.index, 'index') end
   if opts.exec then string_arg(opts.exec, 'exec') end
   opts.timeout = opts.timeout or 120000
   assert(type(opts.timeout) == 'number' and opts.timeout > 0 and opts.timeout < math.huge
     and opts.timeout == math.floor(opts.timeout), 'timeout must be positive integer milliseconds')
   if opts.open == nil then opts.open = true end
-  if opts.auto_refresh == nil then opts.auto_refresh = true end
-  for _, key in ipairs({ 'recursive', 'open', 'auto_refresh' }) do
-    assert(opts[key] == nil or type(opts[key]) == 'boolean', key .. ' must be boolean')
-  end
-  for _, key in ipairs({ 'sources', 'include_dirs' }) do
-    opts[key] = opts[key] or {}
-    assert(type(opts[key]) == 'table' and vim.islist(opts[key]), key .. ' must be a list')
-    for _, value in ipairs(opts[key]) do string_arg(value, key) end
-  end
-  if opts.file_list then
-    string_arg(opts.file_list, 'file_list')
-    assert(#opts.sources == 0, 'choose sources or file_list, not both')
-  end
+  assert(type(opts.open) == 'boolean', 'open must be boolean')
+  opts.include_dirs = opts.include_dirs or {}
+  assert(type(opts.include_dirs) == 'table' and vim.islist(opts.include_dirs), 'include_dirs must be a list')
+  for _, value in ipairs(opts.include_dirs) do string_arg(value, 'include_dirs') end
   return opts
 end
 
@@ -211,10 +197,8 @@ local function executable(exec)
   return absolute(found, vim.fn.getcwd())
 end
 
--- The project the next operation is for: the one setup() named, or the current file's,
--- which `ripscope --project` finds.
+-- The current file's project, which `ripscope --project` finds.
 local function current()
-  if explicit then return explicit end
   local file = vim.api.nvim_buf_get_name(0)
   local is_file = file ~= '' and vim.bo.buftype == ''
   if not is_file and recent then return recent end
@@ -222,41 +206,25 @@ local function current()
   local cwd = vim.fn.getcwd()
   local path = is_file and file or cwd
   local exec = executable(opts.exec)
-  -- Settings that choose the sources or the index replace the project's own, and
-  -- `ripscope --project` judges publication by them.
-  local chosen = opts.recursive ~= nil or opts.file_list or #opts.sources > 0
-  local options = {}
-  if opts.index then vim.list_extend(options, { '-f', opts.index }) end
-  if chosen then
-    options[#options + 1] = '-k'
-    if opts.recursive then options[#options + 1] = '-R' end
-    if opts.file_list then vim.list_extend(options, { '-i', opts.file_list }) end
-    if #opts.sources > 0 then
-      options[#options + 1] = '--'
-      vim.list_extend(options, opts.sources)
-    end
-  end
   local place = (path == cwd and cwd or vim.fs.dirname(path)) .. '\0' .. cwd
   local found = located[place]
   if not found then
-    found = project.locate(exec, path, cwd, options)
+    found = project.locate(exec, path, cwd)
     located[place] = found
   end
   opts.root, opts.index = found.root, found.index
-  if not chosen then opts.selection = found.selection end
+  opts.selection = found.selection
   local published = found.published
   local key = opts.root .. '\0' .. opts.index
   local entry = projects[key]
   if not entry then
     opts.exec = exec
-    if opts.selection then
-      -- A session that finds no published index builds it as an index build would.
-      opts.session_args = vim.deepcopy(opts.selection)
-      for _, path in ipairs(opts.include_dirs) do
-        vim.list_extend(opts.session_args, { '-I', path })
-      end
+    -- A session that finds no published index builds it as an index build would.
+    opts.session_args = vim.deepcopy(opts.selection)
+    for _, path in ipairs(opts.include_dirs) do
+      vim.list_extend(opts.session_args, { '-I', path })
     end
-    entry = { config = opts, automatic = true, published = published }
+    entry = { config = opts, published = published }
     projects[key] = entry
   end
   recent = entry
@@ -264,25 +232,12 @@ local function current()
 end
 
 local function build_args(opts)
-  if opts.selection then
-    local args = { opts.exec, '-b' }
-    vim.list_extend(args, opts.selection)
-    for _, path in ipairs(opts.include_dirs) do
-      vim.list_extend(args, { '-I', path })
-    end
-    vim.list_extend(args, { '-f', opts.index })
-    return args
-  end
-  local args = { opts.exec, '-bk', '-f', opts.index }
-  if opts.recursive then args[#args + 1] = '-R' end
+  local args = { opts.exec, '-b' }
+  vim.list_extend(args, opts.selection)
   for _, path in ipairs(opts.include_dirs) do
     vim.list_extend(args, { '-I', path })
   end
-  if opts.file_list then vim.list_extend(args, { '-i', opts.file_list }) end
-  if #opts.sources > 0 then
-    args[#args + 1] = '--'
-    vim.list_extend(args, opts.sources)
-  end
+  vim.list_extend(args, { '-f', opts.index })
   return args
 end
 
@@ -301,7 +256,7 @@ function M.find(field, pattern)
     start(entry, 'query', field .. pattern, 'Ripscope ' .. field .. ' ' .. pattern)
   end
   local opts = entry.config
-  if entry.automatic and not entry.published then
+  if not entry.published then
     -- The first search in a project indexes it, as does the next after a first index
     -- build that never published.
     vim.notify('Ripscope: indexing ' .. opts.root .. ' for the first time', vim.log.levels.INFO)
@@ -322,9 +277,8 @@ function M.build()
 end
 
 -- Installs the latest executable with the repository's installer,
--- which leaves a current ripscope alone, and one it did not put there,
--- unless FORCE is set.
-function M.install(force)
+-- which leaves a current ripscope alone, and one it did not put there.
+function M.install()
   local source = debug.getinfo(1, 'S').source:sub(2)
   local repository = vim.fs.dirname(vim.fs.dirname(vim.fs.normalize(source)))
   local script = repository .. (windows and '/install.ps1' or '/install.sh')
@@ -332,7 +286,6 @@ function M.install(force)
   local command = windows and { (vim.env.SystemRoot or 'C:/Windows') .. '/System32/WindowsPowerShell/v1.0/powershell.exe',
     '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', script, '-Plugin' }
     or { 'sh', script, '--plugin' }
-  if force then command[#command + 1] = windows and '-Force' or '--force' end
   vim.notify('Ripscope: running the installer...', vim.log.levels.INFO)
   local result = vim.system(command, { cwd = repository, text = true }):wait()
   local output = (result.stdout or '') .. (result.stderr or '')
@@ -355,27 +308,15 @@ function M.commands()
     M.find(field, pattern)
   end, { nargs = '+' })
   vim.api.nvim_create_user_command('RipscopeLog', M.show_log, {})
-  vim.api.nvim_create_user_command('RipscopeInstall', function(command) M.install(command.bang) end, { bang = true })
+  vim.api.nvim_create_user_command('RipscopeInstall', M.install, {})
 end
 
 function M.setup(options)
   assert(not running, 'cannot reconfigure while a Ripscope operation is running')
   local opts = settings(options)
-  if opts.root == nil then
-    -- Automatic projects, with these settings.
-    if opts.exec then opts.exec = executable(opts.exec) end
-    close_sessions()
-    explicit, defaults, projects, located, recent = nil, vim.deepcopy(options or {}), {}, {}, nil
-    M.commands()
-    return
-  end
-  opts.root = absolute(string_arg(opts.root, 'root'), vim.fn.getcwd())
-  assert(vim.fn.isdirectory(opts.root) == 1, 'root must be an existing directory')
-  opts.index = absolute(opts.index or 'ripscope.db', opts.root)
-  opts.exec = executable(opts.exec)
+  if opts.exec then opts.exec = executable(opts.exec) end
   close_sessions()
-  explicit = { config = opts }
-  defaults, projects, located, recent = {}, { [opts.root .. '\0' .. opts.index] = explicit }, {}, nil
+  defaults, projects, located, recent = opts, {}, {}, nil
   M.commands()
 end
 

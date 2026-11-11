@@ -72,7 +72,7 @@ picks for a file.
 | `:RipscopeFind FIELD PATTERN` | Search. `FIELD` is a number or letter (`s g d c t e f i a`). The pattern is the rest of the line. |
 | `:RipscopeBuild` | Update the current project's index now (or build it), in the background. |
 | `:RipscopeLog` | Show the last operation's output. |
-| `:RipscopeInstall` | Install the latest `ripscope` executable when it is missing or the one the installer put there needs updating. `:RipscopeInstall!` installs it anyway. |
+| `:RipscopeInstall` | Install the latest `ripscope` executable when it is missing or the one the installer put there needs updating. |
 
 | Field | Letter | Finds |
 | --- | --- | --- |
@@ -104,52 +104,37 @@ suggests `:RipscopeInstall`.
 
 ## Settings
 
-`setup` is optional. Without a `root`, its settings apply to every project:
+`setup` is optional. Its settings apply to every project:
 
 ```lua
-require('ripscope').setup({ auto_refresh = false, include_dirs = { 'include' } })
+require('ripscope').setup({ include_dirs = { 'include' } })
 ```
 
-With lazy.nvim, put them in the spec's `opts`. With a `root`, you choose one project
-for every search, and its index is `ripscope.db` in that root unless `index` says
-otherwise. Build it with `:RipscopeBuild` before the first search.
-
-```lua
-require('ripscope').setup({
-  exec = '/home/me/.local/bin/ripscope',
-  root = '/home/me/project',
-  recursive = true,
-})
-```
+With lazy.nvim, put them in the spec's `opts`. To select sources, put a
+[file list](../guide/building.md#file-lists) named `cscope.files` in your project
+directory.
 
 | Setting | Purpose |
 | --- | --- |
 | `exec = '/path/to/ripscope'` | The executable, instead of finding it |
-| `root = '/path/to/project'` | One project for every search, instead of the current file's |
-| `index = 'ripscope.db'` | Index path, relative to the project, instead of the cache directory |
-| `recursive = true` | Discover sources in subdirectories (the default without a `root`) |
 | `include_dirs = { 'include' }` | Additional header directories |
-| `sources = { 'src/main.c' }` | Select source files explicitly |
-| `file_list = 'sources.list'` | Read a source-file list instead |
 | `timeout = 120000` | Operation timeout in milliseconds |
 | `open = true` | Open result and log windows automatically |
-| `auto_refresh = true` | Refresh saved source changes before the next search. Set to `false` for manual updates with `:RipscopeBuild`. |
 
 On Windows, use full drive paths, for example
 `exec = [[C:\Users\me\.local\bin\ripscope.exe]]`. Lua long strings accept backslashes
-literally, and forward slashes also work. Relative paths resolve against the project
-root. Paths such as `C:relative` or `\rooted` are ambiguous and refused, and so are
+literally, and forward slashes also work. Relative include directories resolve
+against the project root. Executable paths such as `C:relative` or `\rooted` are
+ambiguous and refused, and so are
 device namespace paths and batch or cmd backends.
 
 ## Good to know
 
 - Save and search. Searches refresh changed source automatically, including
   external saves and header edits. Discovery follows file additions, removals and
-  renames. Explicit sources stay fixed, and new file-list entries must be added to
+  renames. New file-list entries must be added to
   the list. Saves and searches never rewrite it.
-- Use `:RipscopeBuild` after changing which files the project covers, or for an
-  explicit update.
-  `auto_refresh = false` keeps manual updates.
+- Use `:RipscopeBuild` to retry a failed build or update the index immediately.
 - Successive searches in a project reuse one backend process, including after index
   builds.
 - Query warnings accompany the results. An invalid query reports its error and the

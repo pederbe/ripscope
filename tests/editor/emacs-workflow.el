@@ -198,8 +198,7 @@ lands on LINE of FILE."
      (should (equal (ripscope-test-pids) pid))
      (let ((command (car (ripscope-test-commands))))
        (should (member "--json" command))
-       (should (member "-dl" command))
-       (should (member "--auto-refresh" command)))
+       (should (member "-l" command)))
      ;; A stopped session gives way to a new one at the next search.
      (ripscope-stop-sessions)
      (should-not (ripscope-test-pids))
@@ -207,22 +206,9 @@ lands on LINE of FILE."
      (should (= (length (ripscope-test-pids)) 1))
      (should-not (equal (ripscope-test-pids) pid)))))
 
-(ert-deftest ripscope-manual-refresh-waits-for-an-index-build ()
-  (ripscope-test-project
-   (let ((ripscope-auto-refresh nil))
-     (ripscope-test-jump root #'ripscope-find-definition "callee" "case.c" 3)
-     (should (member "--no-auto-refresh" (car (ripscope-test-commands))))
-     (with-current-buffer (ripscope-test-source root)
-       (goto-char (point-max)) (insert "int ManualSaved;\n") (save-buffer))
-     (should-error (ripscope-test-rows root 1 "ManualSaved") :type 'user-error)
-     (with-current-buffer (ripscope-test-source root) (ripscope-index-project))
-     (ripscope-test-jump root #'ripscope-find-definition "ManualSaved" "case.c" 5))
-   ;; Back on, the next search starts a session that refreshes.
-   (ripscope-test-rows root 1 "callee")
-   (should (member "--auto-refresh" (car (ripscope-test-commands))))))
-
 (ert-deftest ripscope-failures-and-warnings-are-reported ()
   (ripscope-test-project
+   (ripscope-test-write "cscope.files" "case.c\ncase.h\n")
    (let ((empty (should-error (ripscope-test-rows root 1 "Absent") :type 'user-error)))
      (should (string-match-p "found no definitions of Absent" (cadr empty))))
    (let ((pid (ripscope-test-pids))
@@ -233,18 +219,18 @@ lands on LINE of FILE."
      (should (equal (ripscope-test-pids) pid)))
    (should-error (ripscope-test-rows root 1 "two\nlines") :type 'user-error)
    (should-error (ripscope-test-rows root 1 "") :type 'user-error)
-   ;; A text search reads the sources, and says which it could not read. Without
-   ;; refreshing, the index still lists the removed header.
-   (let ((ripscope-auto-refresh nil) rows)
+   ;; A missing selected file produces a warning while other rows remain usable.
+   (let (rows)
      (delete-file "case.h")
-     (should (string-match-p "Ripscope: cannot read .*case.h"
+     (should (string-match-p "Ripscope: cannot find file case.h"
                              (ripscope-test-message
                               (lambda () (setq rows (ripscope-test-rows root 4 "value"))))))
      (should (equal (mapcar #'cadr rows) '(2 3 4)))
+     (ripscope-test-write "cscope.files" "case.h\ncase.c\n")
      (let ((empty (should-error (ripscope-test-rows root 4 "Absent") :type 'user-error)))
-       (should (string-match-p "found no text Absent (cannot read .*case.h" (cadr empty))))
+       (should (string-match-p "found no text Absent (cannot find file case.h" (cadr empty))))
      (ripscope-test-write "case.h" "extern int value;\n")
-     (should-not (string-match-p "cannot read"
+     (should-not (string-match-p "cannot find file"
                                  (ripscope-test-message
                                   (lambda () (ripscope-test-rows root 4 "value"))))))
    (let ((ripscope-executable (expand-file-name "missing/ripscope.exe" root)))

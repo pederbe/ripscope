@@ -656,7 +656,7 @@ mod tests {
             "examples/support/shared.rs",
             "tests/support/fixture.rs",
             "packaging/check-installed.sh",
-            "packaging/templates/PKGBUILD",
+            "packaging/templates/package.nix",
         ];
         for name in inputs {
             let path = repo.join(name);

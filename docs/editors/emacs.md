@@ -104,8 +104,6 @@ Emacs finds `ripscope` on `exec-path`, else where the installer puts it
 
 ```elisp
 (setq ripscope-include-directories '("include"))
-;; Index edits only when you run M-x ripscope-index-project.
-(setq ripscope-auto-refresh nil)
 ;; Name the executable instead of finding it.
 (setq ripscope-executable "/path/to/ripscope")
 ```

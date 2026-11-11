@@ -114,7 +114,6 @@ Options:
   -u                 Read every file again. With -b, repairs a damaged index
   -P PATH            Text searches read and show relative names under PATH
   --auto-refresh     Update the index even with -d (-L, -l)
-  --no-auto-refresh  Never update the index, as -d (-L, -l)
   --vim-errors       Show problems through Vim's prompt (-l, not with --json)
   -h, --help         Show this help
   -V, --version      Show the version

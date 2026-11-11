@@ -20,8 +20,8 @@ version and platform; it does not establish every editor setup or version.
 ## Vim
 
 The `check-vim` Cargo example checks Vim's built-in cscope reader. Add `--workflow`
-to test the shipped `plugin/ripscope.vim` with explicit settings, both explicit
-sources and a named file list. Vim needs cscope, quickfix and jobs; Windows
+to test the shipped `plugin/ripscope.vim` with automatic discovery and
+`cscope.files`. Vim needs cscope, quickfix and jobs; Windows
 workflows also need timers and `interrupt()`.
 
 ```sh
@@ -53,14 +53,13 @@ Vim acknowledges the RETURN prompt itself. Under `silent!`, E259 can remain in
 Raw session behavior, including refresh failures and acknowledgement handling,
 is covered separately by `tests/pipeline_session_cli.rs`.
 
-The delivered workflows run default automatic and intentional manual profiles with
-both explicit sources and a named list. They check saved edits followed immediately by
+The delivered workflows use automatic discovery and a named list.
+They check saved edits followed immediately by
 displayed results and actual jumps, external changes, header-only edits, fixed-list
 limits, changed list membership and same-PID continuity. A failed automatic Refresh
-keeps navigable rows and a visible E609 warning. Manual profiles retain the existing
-build failure, retry and newly indexed content checks. Both preserve unrelated cscope
+keeps navigable rows and a visible E609 warning. Both preserve unrelated cscope
 connections and process cleanup. Windows
-also checks native argument handling, path rejection, interrupted builds and
+also checks native argument handling, interrupted builds and
 unchanged shell options. The driver enforces a 30-second deadline per process
 and checks backend termination. Keep Vimscript LF; `.gitattributes` enforces it.
 
@@ -90,10 +89,10 @@ late callbacks, reconfiguration and editor exit are checked too.
 
 Default automatic checks save an editor buffer and immediately search and jump without
 an index command. They also cover external edits, header changes, discovery additions,
-removal and rename, explicit-source and file-list limits, and list updates. The same
+removal and rename, file-list limits and list updates. The same
 backend PID survives. A missing required list leaves navigable last-revision rows and
-an unconfirmed-freshness warning, then recovers on the next query. Manual profiles
-retain updates-skipped diagnostics and explicit build coverage.
+an unconfirmed-freshness warning, then recovers on the next query. Explicit build
+checks retain updates-skipped diagnostics and retry coverage.
 
 The Windows driver isolates HOME/AppData/XDG paths, restricts PATH to System32,
 uses a deny-write ACL and reserves an unused SUBST drive for working-directory
@@ -139,7 +138,8 @@ editor left no process behind.
 | `vim-plug`, `lazy`, `use-package`, `package-vc` | The documented plugin manager lines, following the `release` branch |
 
 The installing routes install a development archive of the given executable from a
-loopback mirror. The plugin managers clone a local Git repository of this checkout's
+loopback server, using temporary installer copies with that server's release address.
+The plugin managers clone a local Git repository of this checkout's
 editor files, with a `release` branch and a later commit on `main` they must not
 take, so the check needs Git, and `--vim-plug` and `--lazy` checkouts for those
 routes.
@@ -180,7 +180,7 @@ valid empty answers, invalid patterns, warnings with results and with none, file
 lists, include directories and large answers, in a project whose path holds spaces and
 accents. They save and immediately search, then follow saved and externally changed
 definitions, callers and headers, and file creation, rename and removal, all in one
-session. Manual mode waits for `ripscope-index-project`. The package byte-compiles
+session. The package byte-compiles
 without warnings and passes `checkdoc`.
 
 Linux also replaces the session with fake executables that exit, are killed, send a

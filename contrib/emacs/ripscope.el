@@ -67,11 +67,6 @@ the one Ripscope's installer puts in ~/.local/bin."
   "Directories to look for included headers in, relative to the project."
   :type '(repeat directory))
 
-(defcustom ripscope-auto-refresh t
-  "Whether a search first brings the index up to date with your edits.
-When nil, the index changes only when `ripscope-index-project' runs."
-  :type 'boolean)
-
 (defcustom ripscope-timeout 120
   "How many seconds a search waits for its answer before it fails."
   :type 'number)
@@ -228,8 +223,8 @@ From the xref buffer, it is the project of the last search."
 ;;;###autoload
 (defun ripscope-index-project ()
   "Index the current file's project again.
-Searches keep the index up to date by themselves, unless
-`ripscope-auto-refresh' is nil."
+Searches keep the index up to date by themselves.  This command also
+retries an index build after a problem."
   (interactive)
   (let ((project (ripscope--project)))
     (message "Ripscope: indexing %s..." (abbreviate-file-name (plist-get project :root)))
@@ -250,7 +245,7 @@ Searches keep the index up to date by themselves, unless
 
 (defun ripscope--startup-arguments (project)
   "The arguments of a session for PROJECT, with the current settings."
-  (append (list "--json" "-dl" (if ripscope-auto-refresh "--auto-refresh" "--no-auto-refresh"))
+  (append (list "--json" "-l")
           (plist-get project :selection)
           (ripscope--include-arguments)
           (list "-f" (plist-get project :index) "-P" (plist-get project :root))))
@@ -666,13 +661,12 @@ latest executable when it is missing or needs updating."
                     (or (getenv "SystemRoot") "C:/Windows")))
 
 ;;;###autoload
-(defun ripscope-install (&optional force)
+(defun ripscope-install ()
   "Install the ripscope executable with Ripscope's verifying installer.
 It installs the latest release, but leaves a current executable alone,
-and one it did not install, unless FORCE, the prefix
-argument, is given.  The installer runs in the background and reports in
+and one it did not install.  The installer runs in the background and reports in
 the *ripscope-install* buffer."
-  (interactive "P")
+  (interactive)
   (let ((windows (ripscope--windows-p))
         (script (ripscope--installer))
         (quiet (not (called-interactively-p 'any))))
@@ -691,11 +685,10 @@ the *ripscope-install* buffer."
         (setq ripscope--installation
               (make-process
                :name "ripscope-install" :buffer buffer :noquery t
-               :command (append (if windows
+               :command (if windows
                                     (list (ripscope--powershell) "-NoProfile" "-NonInteractive"
                                           "-ExecutionPolicy" "Bypass" "-File" script "-Plugin")
                                   (list "sh" script "--plugin"))
-                                (and force (list (if windows "-Force" "--force"))))
                :sentinel #'ripscope--installed))
         ;; Run at startup, it reports only an installation.
         (process-put ripscope--installation 'quiet quiet))))))

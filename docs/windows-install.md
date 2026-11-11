@@ -17,9 +17,8 @@ The installer downloads the latest ZIP and its SHA-256 sidecar, validates its
 paths, file inventory and hashes, then stages on the destination volume. It
 refuses directory and reparse-point executable destinations. The default is
 `$HOME\.local\bin\ripscope.exe`; administrator rights are unnecessary.
-Set `$env:RIPSCOPE_INSTALL_DIR` or `$env:RIPSCOPE_RELEASES` before invoking it
-to select a destination or
-explicit mirror. The checksum checks the download against the release's checksum;
+Set `$env:RIPSCOPE_INSTALL_DIR` before invoking it to select another destination.
+The checksum checks the download against the release's checksum;
 use the separate [attestation check](linux-release.md#attestation-verification)
 when verifying its provenance.
 
