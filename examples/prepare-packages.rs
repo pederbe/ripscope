@@ -90,13 +90,12 @@ fn requires_gcc(archive: &Path) -> Result<bool> {
 fn select_gcc_blocks(template: &str, requires_gcc: bool) -> String {
     let mut selected = String::new();
     let mut gcc_block = false;
-    for line in template.lines() {
+    for line in template.split_inclusive('\n') {
         match line.trim() {
             "@GCC_RUNTIME@" => gcc_block = true,
             "@END_GCC_RUNTIME@" => gcc_block = false,
             _ if !gcc_block || requires_gcc => {
                 selected.push_str(line);
-                selected.push('\n');
             }
             _ => {}
         }
