@@ -39,6 +39,8 @@ index format or command-line behavior, and its entry says so.
 
 ### Development
 
+- Generate the Arch binary-package recipe and its installed check with
+  `prepare-packages`, including release and helper checksums in the preparation receipt.
 - Fix homepage link checks in `scripts/build-site.sh --dev --docs-only`.
 - Validate query fields in reference recapture and constrain intended-answer fixture
   reconstruction to its selected directories.

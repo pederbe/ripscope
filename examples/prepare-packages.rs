@@ -10,6 +10,11 @@ type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
 const CHECK: &str = include_str!("../packaging/check-installed.sh");
 const TEMPLATES: &[(&str, &str)] = &[
     (
+        "aur/PKGBUILD",
+        include_str!("../packaging/templates/PKGBUILD"),
+    ),
+    ("aur/check-installed.sh", CHECK),
+    (
         "homebrew/ripscope.rb",
         include_str!("../packaging/templates/ripscope.rb"),
     ),
@@ -100,10 +105,7 @@ fn prepare(archive: &Path, out: &Path) -> Result<()> {
         out.join("PREPARATION.json"),
         format!("{}\n", serde_json::to_string_pretty(&receipt)?),
     )?;
-    println!(
-        "Prepared three package-manager recipes in {}",
-        out.display()
-    );
+    println!("Prepared four package-manager recipes in {}", out.display());
     Ok(())
 }
 
@@ -168,18 +170,25 @@ mod tests {
             receipt["archive_sha256"],
             "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
         );
-        assert!(!out.join("aur").exists());
-        assert!(
-            receipt["files"]
-                .as_object()
-                .unwrap()
-                .keys()
-                .all(|name| !name.starts_with("aur/"))
+        let arch = fs::read_to_string(out.join("aur/PKGBUILD")).unwrap();
+        assert!(arch.lines().any(|line| line == "pkgname=ripscope-bin"));
+        assert!(arch.lines().any(|line| line == "pkgver=0.1.0"));
+        assert!(arch.contains(
+            "sha256sums=('ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'"
+        ));
+        assert_eq!(
+            fs::read_to_string(out.join("aur/check-installed.sh")).unwrap(),
+            CHECK
         );
+        assert!(arch.contains(&format!(
+            "'{}')",
+            receipt["files"]["aur/check-installed.sh"].as_str().unwrap()
+        )));
         for entry in receipt["files"].as_object().unwrap().keys() {
             let contents = fs::read_to_string(out.join(entry)).unwrap();
             assert!(!contents.contains("@VERSION@"));
             assert!(!contents.contains("@ARCHIVE_SHA256@"));
+            assert!(!contents.contains("@CHECK_SHA256@"));
             assert!(!contents.contains(work.path().to_str().unwrap()));
         }
         // A recipe change needs a fresh preparation; never update a pinned output in place.

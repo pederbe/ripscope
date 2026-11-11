@@ -8,7 +8,7 @@ reference outputs and help maintain the checked-in fixtures:
 | Tools | Purpose |
 |---|---|
 | `tools/release` | Build, inspect and smoke the Linux and Windows release archives. See [Linux preparation](../docs/linux-release.md) and [Windows preparation](../docs/windows-release.md). |
-| `cargo run --example prepare-packages` | Generate local Homebrew Linux, Nix and conda recipes from the latest validated Linux archive. See [package-manager preparation](../packaging/README.md). |
+| `cargo run --example prepare-packages` | Generate local Arch, Homebrew Linux, Nix and conda recipes from the latest validated Linux archive. See [package-manager preparation](../packaging/README.md). |
 | `cargo run --example assess-navigation` | Source-labelled definition and caller/callee accuracy, independently of the reference. See [navigation assessment](navigation-assessment.md). |
 | `cargo run --example assess-workflows` | Replay frozen editing and navigation workflows on disposable copies. See [workflow replay](assess-workflows.md). |
 | `cargo run --example coverage-campaign` | Acquire pinned C selections and draw a repeatable source sample. See [coverage campaigns](coverage-campaign.md). |
