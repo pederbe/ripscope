@@ -4,8 +4,7 @@ The [Linux release tooling](../docs/linux-release.md#debian-and-rpm-packages)
 builds Debian/Ubuntu `.deb` and RHEL-family `.rpm` packages from the checked Linux
 glibc archive. It verifies the byte-identical executable and complete
 notices/editor sources after package extraction, and writes individual SHA-256
-sidecars. The runtime dependency is glibc 2.28 or newer. Older archives also need
-the system GCC runtime.
+sidecars. The runtime dependency is glibc 2.28 or newer.
 A workflow installs, queries and removes them on Debian 12 and AlmaLinux 8.
 
 The Linux tarball and checksum-verified shell installer are also prepared.
@@ -21,11 +20,10 @@ and a conda channel. Generating recipes does not publish a package.
 
 ## Prepare additional recipes
 
-Use the latest validated Linux release archive and independently verify its checksum
-and, when available, its attestation. The preparation command records the bytes
-you provide. It does not check where they came from. It derives the package version
-from the archive's filename and runtime dependencies from its `BUILD.json`.
-Use a new output directory whose
+Use a validated Linux archive from the current GNU cross-builder and independently
+verify its checksum and, when available, its attestation. The preparation command
+records the bytes you provide. It does not check where they came from. It derives the package version
+from the archive's filename. Use a new output directory whose
 parent exists:
 
 ```sh
@@ -82,8 +80,7 @@ dependencies, rather than Ripscope runtime requirements.
   the upstream binary and does not compile Rust), then `brew test` and the tap's
   applicable `brew audit`/`brew style` checks. For local validation, change only
   the URL in a temporary recipe copy to a local mirror of the exact archive.
-  The formula retains the full archive in `libexec/ripscope`. For older archives
-  that need GCC, it also declares Homebrew's GCC package and sets its runtime path.
+  The formula retains the full archive in `libexec/ripscope`.
 - **Nix:** use `pkgs.callPackage /path/to/new-recipes/nix/package.nix {}` with a
   selected Nixpkgs revision and build with sandboxing enabled. A local test can
   override `src` to the local archive while leaving the pinned recipe unchanged.
@@ -110,24 +107,10 @@ executable hash in `NIX-RELOCATION.txt`, and generates a new installed manifest.
 `BUILD.json` describes the original archive build. Archive attestations do not
 cover the modified Nix executable.
 
-New GNU cross-built archives need no GCC runtime. Homebrew and conda install
-their executable unchanged and retain the archive manifest. Nix still needs
-interpreter relocation, but its generated recipe no longer needs GCC.
-
-For older archives that import `libgcc_s.so.1`, the generator retains GCC
-dependencies and the following relocation steps. Conda adds the relative
-`$ORIGIN/../..` runtime path so that the
-executable finds the environment's GCC library. It retains the original manifest,
-records the changed executable in `CONDA-RELOCATION.txt` and regenerates its
-installed manifest. It does not change the host's global library lookup.
-
-Homebrew sets its GCC library's runtime path and records the changed executable
-in `HOMEBREW-RELOCATION.txt`, also retaining the original manifest and generating
-an installed manifest. `skip_clean` preserves the archive's licences and support
-files at their manifested paths.
-
-The conda recipe requires glibc 2.28 and adds the GCC runtime only for those older
-archives. Its automatic prefix rewriting and binary relocation are disabled.
+The GNU cross-built archive needs no GCC runtime. Homebrew and conda install
+the executable unchanged and retain the archive manifest. Homebrew's `skip_clean`
+preserves licences and support files at their manifested paths. Conda's automatic
+prefix rewriting and binary relocation are disabled.
 
 The implementations follow the [Homebrew formula API](https://docs.brew.sh/Formula-Cookbook),
 [Nixpkgs relocation hook](https://nixos.org/manual/nixpkgs/stable/#sec-auto-patchelf)
