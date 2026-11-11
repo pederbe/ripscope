@@ -14,25 +14,25 @@ use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Duration;
 
-const USAGE: &str =
-    "ripscope-release linux --work NEW_DIR --toolchain RUST_TOOLCHAIN --mold-archive MOLD_TAR_GZ";
+const USAGE: &str = "ripscope-release linux --work NEW_DIR --toolchain RUST_TOOLCHAIN --zig-archive ZIG_TAR_XZ --zigbuild-archive ZIGBUILD_TAR_XZ";
 
 /// Set by an interrupt: the running command stops, and the build cleans up what it owns
 /// before it exits.
 static INTERRUPTED: AtomicBool = AtomicBool::new(false);
 
 /// The build's own inputs, recorded beside the product source.
-const EXTRAS: [&str; 6] = [
+const EXTRAS: [&str; 7] = [
     "docs/getting-started/installation.md",
     "tools/release/Cargo.toml",
     "tools/release/Cargo.lock",
     "tools/release/src",
     "tools/release/linux-release-profile.json",
     "scripts/linux-smoke.sh",
+    "tools/release/fixtures/unwind.rs",
 ];
 
 /// Accepts the ELF runtime only when it asks for nothing beyond the glibc 2.28 base
-/// system, baseline x86-64, the standard interpreter and the pinned Mold linker.
+/// system, baseline x86-64, the standard interpreter and Zig's LLD linker.
 pub fn inspect_elf(
     dynamic: &str,
     versions: &str,
@@ -46,7 +46,6 @@ pub fn inspect_elf(
         .map(|found| found[1].to_owned())
         .collect();
     let allowed = [
-        "libgcc_s.so.1",
         "libpthread.so.0",
         "libm.so.6",
         "libdl.so.2",
@@ -82,8 +81,8 @@ pub fn inspect_elf(
     if !header.contains("Advanced Micro Devices X86-64") || !header.contains("ELF64") {
         return Err("Not an x86-64 ELF64 artifact".into());
     }
-    if !interpreter.contains("/lib64/ld-linux-x86-64.so.2") || !comments.contains("mold 3.0.0") {
-        return Err("Unexpected interpreter or missing pinned Mold identification".into());
+    if !interpreter.contains("/lib64/ld-linux-x86-64.so.2") || !comments.contains("LLD") {
+        return Err("Unexpected interpreter or missing LLD identification".into());
     }
     let maximum: Vec<String> = highest.iter().map(u64::to_string).collect();
     Ok(json!({
@@ -132,11 +131,12 @@ fn reference_tools(path: &OsStr, directory: &Path) -> Result<PathBuf> {
 struct Options {
     work: PathBuf,
     toolchain: PathBuf,
-    mold_archive: PathBuf,
+    zig_archive: PathBuf,
+    zigbuild_archive: PathBuf,
 }
 
 fn options(args: &[String]) -> Result<Options> {
-    let (mut work, mut toolchain, mut mold) = (None, None, None);
+    let (mut work, mut toolchain, mut zig, mut zigbuild) = (None, None, None, None);
     let mut args = args.iter();
     while let Some(arg) = args.next() {
         if arg == "--help" || arg == "-h" {
@@ -147,7 +147,8 @@ fn options(args: &[String]) -> Result<Options> {
         match arg.as_str() {
             "--work" => work = Some(value),
             "--toolchain" => toolchain = Some(value),
-            "--mold-archive" => mold = Some(value),
+            "--zig-archive" => zig = Some(value),
+            "--zigbuild-archive" => zigbuild = Some(value),
             _ => return Err(format!("unknown option {arg}\n{USAGE}").into()),
         }
     }
@@ -157,7 +158,8 @@ fn options(args: &[String]) -> Result<Options> {
     Ok(Options {
         work: required(work, "--work")?,
         toolchain: required(toolchain, "--toolchain")?,
-        mold_archive: required(mold, "--mold-archive")?,
+        zig_archive: required(zig, "--zig-archive")?,
+        zigbuild_archive: required(zigbuild, "--zigbuild-archive")?,
     })
 }
 
@@ -469,8 +471,13 @@ pub fn run(args: &[String]) -> Result<()> {
     if inside(&work, &repo)? || work.exists() {
         return Err("Use a new external work directory".into());
     }
-    if sha(&options.mold_archive)? != field("mold_archive_sha256")? {
-        return Err("Mold archive identity mismatch".into());
+    for (name, archive) in [
+        ("zig", &options.zig_archive),
+        ("zigbuild", &options.zigbuild_archive),
+    ] {
+        if sha(archive)? != field(&format!("{name}_archive_sha256"))? {
+            return Err(format!("{name} archive identity mismatch").into());
+        }
     }
     fs::create_dir_all(&work)?;
     let logs = work.join("logs");
@@ -484,7 +491,7 @@ pub fn run(args: &[String]) -> Result<()> {
         "validation".into(),
         json!({
             "product": {"complete": false, "profile": "release", "targets": ["bin:ripscope", "test:*"],
-                        "environment": "pinned glibc 2.28 container"},
+                        "environment": "offline Ubuntu container; Zig GNU glibc 2.28 target"},
             "auxiliary": {"complete": false, "profile": "debug", "targets": ["examples"],
                           "environment": "native Linux user scopes", "ignored_tests": "included"},
         }),
@@ -592,22 +599,52 @@ pub fn run(args: &[String]) -> Result<()> {
         None,
     )?;
     build.receipt.insert("rustc".into(), json!(rust.trim()));
-    fs::create_dir(work.join("mold"))?;
-    build.run(
-        "mold-extract",
-        &words(&[
-            "tar",
-            "--no-same-owner",
-            "-xzf",
-            &text(&options.mold_archive),
-            "-C",
-            &text(&work.join("mold")),
-        ]),
-        None,
-        300,
-        None,
-    )?;
-    let mold = work.join("mold/mold-3.0.0-x86_64-linux");
+    for (name, archive) in [
+        ("zig", &options.zig_archive),
+        ("zigbuild", &options.zigbuild_archive),
+    ] {
+        fs::create_dir(work.join(name))?;
+        build.run(
+            &format!("{name}-extract"),
+            &words(&[
+                "tar",
+                "--no-same-owner",
+                "-xJf",
+                &text(archive),
+                "-C",
+                &text(&work.join(name)),
+            ]),
+            None,
+            300,
+            None,
+        )?;
+    }
+    let zig = work.join(format!("zig/zig-x86_64-linux-{}", field("zig_version")?));
+    let zigbuild = work.join("zigbuild/cargo-zigbuild-x86_64-unknown-linux-gnu");
+    let tools = work.join("tools");
+    fs::create_dir(&tools)?;
+    fs::create_dir(work.join("tmp"))?;
+    // Use cargo-zigbuild's linker adapter for both Cargo phases. In particular it
+    // translates Rust's -lgcc_s to the LLVM unwinder supplied by Zig.
+    for (name, script) in [
+        (
+            "cc",
+            format!(
+                "export CARGO_ZIGBUILD_ZIG_VERSION={}\nexport CARGO_ZIGBUILD_ZIG_COMMAND=/zig/zig\nexec /zigbuild/cargo-zigbuild zig cc -- -g -fno-sanitize=all -mcpu=x86_64 -target x86_64-linux-gnu.2.28 \"$@\"",
+                field("zig_version")?
+            ),
+        ),
+        ("ar", "exec /zig/zig ar \"$@\"".into()),
+        ("ranlib", "exec /zig/zig ranlib \"$@\"".into()),
+    ] {
+        let path = tools.join(name);
+        write_text(&path, &format!("#!/bin/sh\n{script}\n"))?;
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            fs::set_permissions(&path, fs::Permissions::from_mode(0o755))?;
+        }
+    }
     let vendor = work.join("vendor");
     // Cargo's progress and configuration share a retained log. The generated
     // configuration below uses fixed container paths instead of log extraction.
@@ -689,14 +726,14 @@ pub fn run(args: &[String]) -> Result<()> {
             &format!("{uid}:{gid}"),
             "--tmpfs",
             "/tmp:rw,exec,mode=1777",
-            "--tmpfs",
-            "/var/tmp:rw,exec,mode=1777",
             "-v",
             &format!("{}:/work:rw", text(&work)),
             "-v",
             &format!("{}:/toolchain:ro", text(&toolchain)),
             "-v",
-            &format!("{}:/mold:ro", text(&mold)),
+            &format!("{}:/zig:ro", text(&zig)),
+            "-v",
+            &format!("{}:/zigbuild:ro", text(&zigbuild)),
             "-w",
             "/work/source",
             "-e",
@@ -705,6 +742,24 @@ pub fn run(args: &[String]) -> Result<()> {
             "CARGO_TARGET_DIR=/work/target",
             "-e",
             "CARGO_BUILD_JOBS=4",
+            "-e",
+            "TMPDIR=/work/tmp",
+            "-e",
+            "ZIG_GLOBAL_CACHE_DIR=/work/zig-cache",
+            "-e",
+            "ZIG_LOCAL_CACHE_DIR=/work/zig-local-cache",
+            "-e",
+            "CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER=/work/tools/cc",
+            "-e",
+            "CC=/work/tools/cc",
+            "-e",
+            "CC_x86_64_unknown_linux_gnu=/work/tools/cc",
+            "-e",
+            "AR=/work/tools/ar",
+            "-e",
+            "AR_x86_64_unknown_linux_gnu=/work/tools/ar",
+            "-e",
+            "RANLIB=/work/tools/ranlib",
             "-e",
             &format!("RUSTFLAGS={}", field("rustflags")?),
             "-e",
@@ -725,7 +780,7 @@ pub fn run(args: &[String]) -> Result<()> {
             field("build_image")?,
             "bash".into(),
             "-euc".into(),
-            format!("export PATH=/toolchain/bin:/mold/bin:$PATH; {script}"),
+            format!("export PATH=/toolchain/bin:/work/tools:$PATH; {script}"),
         ]);
         Ok(arguments)
     };
@@ -734,7 +789,7 @@ pub fn run(args: &[String]) -> Result<()> {
         "build-tools",
         script(
             &owned(),
-            "rustc -Vv; cargo -V; mold --version; gcc --version; ldd --version",
+            "rustc -Vv; cargo -V; /zig/zig version; /zigbuild/cargo-zigbuild --version; ldd --version",
         )?,
         300,
     )?;
@@ -745,21 +800,26 @@ pub fn run(args: &[String]) -> Result<()> {
         "release-build",
         script(
             &owned(),
-            "cargo build --release --locked --offline --bins --examples -vv",
+            "cargo build --target x86_64-unknown-linux-gnu --release --locked --offline --bins --examples -vv",
         )?,
         1800,
     )?;
-    let executable = work.join("target/release/ripscope");
+    let executable = work.join("target/x86_64-unknown-linux-gnu/release/ripscope");
     let built_hash = sha(&executable)?;
     build.container(
         "release-product-tests",
-        script(&owned(), "cargo test --release --locked --offline --bin ripscope --test \"*\" -- --test-threads=1")?,
+        script(&owned(), "cargo test --target x86_64-unknown-linux-gnu --release --locked --offline --bin ripscope --test \"*\" -- --test-threads=1")?,
         1800,
     )?;
     if sha(&executable)? != built_hash {
         return Err("Artifact changed during release tests".into());
     }
     build.receipt["validation"]["product"]["complete"] = json!(true);
+    build.container(
+        "unwind-build",
+        script(&owned(), "rustc --edition=2024 --target x86_64-unknown-linux-gnu -C target-cpu=x86-64 -C opt-level=3 -C linker=/work/tools/cc tools/release/fixtures/unwind.rs -o /work/unwind-probe")?,
+        300,
+    )?;
     let native_config =
         container_config.replace("\"/work/vendor\"", &serde_json::to_string(&text(&vendor))?);
     write_text(&configs.join("native.toml"), &native_config)?;
@@ -894,6 +954,17 @@ pub fn run(args: &[String]) -> Result<()> {
         &package.join("INSTALL.md"),
     )?;
     collect_notices(&vendor, &toolchain, &package)?;
+    fs::create_dir_all(package.join("licenses/toolchain"))?;
+    for (from, to) in [
+        ("LICENSE", "ZIG-MIT.txt"),
+        ("lib/libunwind/LICENSE.TXT", "LLVM-LIBUNWIND.txt"),
+        ("lib/libc/glibc/LICENSES", "GLIBC-NOTICES.txt"),
+    ] {
+        copy_file(
+            &zig.join(from),
+            &package.join("licenses/toolchain").join(to),
+        )?;
+    }
     build
         .receipt
         .insert("binary_sha256".into(), json!(built_hash));
@@ -950,6 +1021,8 @@ pub fn run(args: &[String]) -> Result<()> {
         "/work:rw,exec,mode=1777",
         "-v",
         &format!("{}:/input:ro", text(&dist)),
+        "-v",
+        &format!("{}:/unwind-probe:ro", text(&work.join("unwind-probe"))),
         "-v",
         &format!(
             "{}:/smoke.sh:ro",
@@ -1052,7 +1125,7 @@ mod tests {
             "(NEEDED) [libc.so.6]",
             "GLIBC_2.2.5 GLIBC_2.28",
             "x86 ISA needed: x86-64-baseline",
-            "mold 3.0.0",
+            "LLD 22.0.0",
             "ELF64 Advanced Micro Devices X86-64",
             "/lib64/ld-linux-x86-64.so.2",
         ];
@@ -1067,6 +1140,7 @@ mod tests {
             (1, "GLIBC_PRIVATE"),
             (2, "x86 ISA needed: x86-64-v2"),
             (0, "(NEEDED) [libsqlite3.so.0]"),
+            (0, "(NEEDED) [libgcc_s.so.1]"),
             (0, "(NEEDED) [libc.so.6]\n(RUNPATH) [/work]"),
             (3, "GNU ld"),
             (4, "ELF32"),

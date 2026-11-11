@@ -15,8 +15,10 @@ for tool in rustc cargo cc gcc clang mold sqlite3; do
     fi
 done
 cat /etc/os-release
+test "$(getconf GNU_LIBC_VERSION)" = 'glibc 2.28'
 ldd --version
 ldd ./bin/ripscope
+/unwind-probe
 binary=$package/bin/ripscope
 "$binary" --help
 for ending in lf crlf; do

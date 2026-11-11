@@ -7,11 +7,17 @@ version=${1:?version required}
 package=$(realpath "${2:?archive directory required}")
 mkdir -p "${3:?output directory required}"
 out=$(realpath "$3")
-for tool in dpkg-deb rpmbuild rpm2cpio cpio sha256sum; do
+for tool in dpkg-deb rpmbuild rpm2cpio cpio sha256sum readelf; do
     command -v "$tool" >/dev/null || { echo "Required package tool missing: $tool" >&2; exit 1; }
 done
 (cd "$package" && sha256sum -c MANIFEST.sha256)
 test -s "$package/contrib/emacs/ripscope.el"
+deb_runtime='libc6 (>= 2.28)'
+gcc_runtime=0
+if readelf -d "$package/bin/ripscope" | grep -Fq '[libgcc_s.so.1]'; then
+    deb_runtime+=', libgcc-s1'
+    gcc_runtime=1
+fi
 export SOURCE_DATE_EPOCH=${SOURCE_DATE_EPOCH:-$(stat -c %Y "$package/bin/ripscope")}
 work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
@@ -34,7 +40,7 @@ Package: ripscope
 Version: $version
 Architecture: amd64
 Maintainer: Peder Bergan <https://github.com/pederbe/ripscope/issues>
-Depends: libc6 (>= 2.28), libgcc-s1
+Depends: $deb_runtime
 Section: devel
 Priority: optional
 Homepage: https://ripscope.com
@@ -64,7 +70,9 @@ URL: https://ripscope.com
 BuildArch: x86_64
 AutoReqProv: no
 Requires: glibc >= 2.28
+%if %{gcc_runtime}
 Requires: libgcc
+%endif
 %description
 Cscope searches for C, with stored queries and live text searches.
 It includes the Vim, Neovim and Emacs integrations.
@@ -75,7 +83,7 @@ cp -a %{_sourcedir}/usr/. %{buildroot}/usr/
 /usr/bin/ripscope
 /usr/share/ripscope
 SPEC
-rpmbuild --quiet -bb --define "_topdir $top" --define "release_version $version" \
+rpmbuild --quiet -bb --define "_topdir $top" --define "release_version $version" --define "gcc_runtime $gcc_runtime" \
     --define 'use_source_date_epoch_as_buildtime 1' --define 'clamp_mtime_to_source_date_epoch 1' \
     "$top/SPECS/ripscope.spec"
 rpm="ripscope-$version-1.x86_64.rpm"

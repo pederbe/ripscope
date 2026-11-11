@@ -26,6 +26,12 @@
   "automerge": true,
   "packageRules": [
     {
+      "description": "Keep the runtime smoke test on the supported glibc 2.28 floor.",
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["docker.io/library/debian"],
+      "allowedVersions": "/^10$/"
+    },
+    {
       "matchPackageNames": [
         "*"
       ],
@@ -64,13 +70,22 @@
         "/^\\.github/dependency-pins\\.json$/"
       ],
       "matchStrings": [
-        "\"mold\":\\s*\"(?<currentValue>[^\"\\s]+)\""
+        "\"zigbuild\":\\s*\"(?<currentValue>[^\"\\s]+)\""
       ],
-      "depNameTemplate": "mold",
-      "packageNameTemplate": "rui314/mold",
+      "depNameTemplate": "cargo-zigbuild",
+      "packageNameTemplate": "rust-cross/cargo-zigbuild",
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver",
       "extractVersionTemplate": "^v(?<version>.+)$"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.github/dependency-pins\\.json$/"],
+      "matchStrings": ["\"zig\":\\s*\"(?<currentValue>[^\"\\s]+)\""],
+      "depNameTemplate": "zig",
+      "packageNameTemplate": "https://codeberg.org/ziglang/zig.git",
+      "datasourceTemplate": "git-tags",
+      "versioningTemplate": "semver"
     },
     {
       "customType": "regex",
@@ -92,10 +107,9 @@
         "/^tools/release/linux-release-profile\\.json$/"
       ],
       "matchStrings": [
-        "\"(?:build_image|runtime_image)\":\\s*\"(?<depName>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
+        "\"(?:build_image|runtime_image)\":\\s*\"(?<depName>[^\"@:]+(?:/[^\"@:]*)?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
       ],
       "datasourceTemplate": "docker",
-      "currentValueTemplate": "latest",
       "versioningTemplate": "docker"
     },
     {

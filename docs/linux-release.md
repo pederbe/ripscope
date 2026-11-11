@@ -1,7 +1,7 @@
 # Linux release preparation
 
 The `linux` command of the release tool in `tools/release` builds an x86-64 archive
-against glibc 2.28 with rolling stable Rust and the Mold and image identities in
+against glibc 2.28 with rolling stable Rust and the Zig, cargo-zigbuild and image identities in
 `tools/release/linux-release-profile.json`. It records the actual compiler and
 exact source, dependency and tool inputs, runs locked offline product release tests,
 inspects ELF imports, and
@@ -10,7 +10,7 @@ network; the build and runtime containers cannot. This prepares local files with
 publishing them.
 
 Use Git, binutils (`readelf`), GNU tar and GNU timeout, rootless Podman, the stable Rust
-toolchain and the Mold archive identified by the profile. The workflow updates
+toolchain and the Zig and cargo-zigbuild archives identified by the profile. The workflow updates
 stable through rustup before building. GNU timeout is a prerequisite of the
 reference and release tests, not of the installed Ripscope executable.
 The tool uses the default `timeout` when its
@@ -22,8 +22,9 @@ Native developer-proof tests also require disk-backed `/var/tmp` with at
 least 4 GiB free, a reachable user systemd manager, and a visible unified cgroup
 hierarchy under that manager. The tool checks those prerequisites without recording
 the manager's environment. It does not expose the host's user bus, PID namespace or
-cgroup controls to a container. Download Mold from the profile's `mold_url`; the tool
-checks `mold_archive_sha256` before extraction. Select a new external work directory:
+cgroup controls to a container. Download the archives from the profile's `zig_url`
+and `zigbuild_url`. The tool checks their SHA-256 identities before extraction.
+Select a new external work directory:
 
 ```sh
 rustup update stable
@@ -31,16 +32,23 @@ toolchain=$(dirname "$(dirname "$(rustup which --toolchain stable rustc)")")
 env RUSTFLAGS='' cargo run --locked --manifest-path tools/release/Cargo.toml -- linux \
   --work /var/tmp/ripscope-linux-candidate \
   --toolchain "$toolchain" \
-  --mold-archive /path/to/mold-archive.tar.gz
+  --zig-archive /path/to/zig-archive.tar.xz \
+  --zigbuild-archive /path/to/cargo-zigbuild-archive.tar.xz
 ```
 
 The tool preserves logs and `receipt.json` there. The archive contains the
 executable, installation guidance, `BUILD.json`, `MANIFEST.sha256`, dependency
-notices, Rust and SQLite notices, and editor integration sources.
+notices, Rust, SQLite and Zig runtime notices, and editor integration sources.
 `dist/` holds the archive, its `.sha256` sidecar and `SHA256SUMS`.
 
-The pinned container builds the artifact and runs release tests for the product
-binary and integration targets. All auxiliary examples are separately built and
+The pinned Ubuntu container builds the artifact and runs release tests for the product
+binary and integration targets. Zig supplies the C compiler and LLD linker for
+baseline x86-64 and the `x86_64-linux-gnu.2.28` target, including bundled SQLite.
+Both Cargo phases use the same wrappers and environment. cargo-zigbuild's linker
+adapter replaces Rust's GCC unwinder request with Zig's static LLVM libunwind.
+The executable therefore needs no shared GCC runtime. Builds use disk-backed
+temporary files and caches, and do not depend on an old-glibc build image.
+All auxiliary examples are separately built and
 tested in native debug mode, using the same copied source, vendor tree and selected
 Rust toolchain. The native tests include ignored checks and run in uniquely named
 user scopes. The receipt labels the two phases separately; native proof coverage
@@ -60,12 +68,15 @@ also reaches the running container or scope, and the receipt's last command name
 the `ripscope-release-*` container or unit to check before removing the work.
 
 The ELF gate rejects required glibc symbols above 2.28, foreign shared libraries,
-build-path RPATH/RUNPATH, a different interpreter, a missing pinned Mold marker,
+RPATH/RUNPATH, the shared GCC runtime, a different interpreter, a missing LLD marker,
 and advertised CPU requirements above baseline x86-64. It does not certify every
-instruction or old kernel. Runtime smoke uses the archive's exact executable
+instruction or old kernel. A separate pinned Debian 10 container verifies that
+its runtime is glibc 2.28, then uses the archive's exact executable
 with no compiler or SQLite tool on PATH. It covers LF and CRLF, stored queries
 after source deletion, available live rows with warnings, changed source,
-session `r` and an unchanged Refresh that preserves the index revision.
+session `r` and an unchanged Refresh that preserves the index revision. A safe Rust
+probe built with the same cross-linker verifies main-thread and worker-thread
+panic unwinding, including destructors, on that runtime.
 
 Stable archive ownership and timestamps do not promise identical recompilation.
 Keep the recorded source and tool inputs when repeating a build.
@@ -83,7 +94,8 @@ bash scripts/package-linux.sh 0.1.0 \
 This requires `dpkg-deb`, `rpmbuild`, `rpm2cpio` and `cpio`. Missing RPM tools fail
 the command. Both extracted packages must contain the byte-identical executable
 and complete notices/editor source. No stripping or recompilation is allowed.
-The declared dependencies are glibc 2.28 or newer and the system GCC runtime.
+The declared dependency is glibc 2.28 or newer. When packaging an older archive
+that imports `libgcc_s.so.1`, the script also declares the system GCC runtime.
 Install, query and remove each package in its selected offline runtime before
 accepting it; leave a project index and unrelated file in place to check removal.
 The prepared workflow runs these checks on Debian 12 and AlmaLinux 8.

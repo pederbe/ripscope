@@ -25,12 +25,16 @@ requirements:
   build:
     - coreutils
     - findutils
+@GCC_RUNTIME@
     - patchelf
   host:
     - libgcc
+@END_GCC_RUNTIME@
   run:
     - __glibc >=2.28
+@GCC_RUNTIME@
     - libgcc
+@END_GCC_RUNTIME@
 tests:
   - script: sh check-installed.sh ${{ version }} "$PREFIX/bin/ripscope" "$PREFIX/lib/ripscope"
     requirements:
@@ -55,8 +59,7 @@ about:
   homepage: https://ripscope.com
   summary: C navigation with atomic index updates
   description: |
-    Repackages the upstream Linux x86-64 glibc archive without recompilation,
-    adjusting its relative runtime path to the environment's GCC library.
+    Repackages the upstream Linux x86-64 glibc archive without recompilation.
     SQLite is bundled. Vim, Neovim and Emacs integration sources are included.
   license: MIT OR Apache-2.0
   license_file:

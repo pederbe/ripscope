@@ -1,4 +1,4 @@
-{ lib, stdenvNoCC, fetchurl, autoPatchelfHook, gcc }:
+{ lib, stdenvNoCC, fetchurl, autoPatchelfHook, @NIX_RUNTIME@ }:
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "ripscope-bin";
@@ -8,7 +8,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     sha256 = "@ARCHIVE_SHA256@";
   };
   nativeBuildInputs = [ autoPatchelfHook ];
-  buildInputs = [ gcc.cc.lib ];
+  buildInputs = [ @NIX_RUNTIME_LIBRARY@ ];
   dontBuild = true;
   dontStrip = true;
   installPhase = ''
