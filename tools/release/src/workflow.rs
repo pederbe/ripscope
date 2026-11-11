@@ -71,7 +71,7 @@ fn automated_environment(value: &Value) -> Result<()> {
     Ok(())
 }
 
-/// Prints one field of a release profile, such as `linux mold_url`.
+/// Prints one field of a release profile, such as `linux zig_url`.
 pub fn profile(args: &[String]) -> Result<()> {
     let [platform, field] = args else {
         return Err("usage: ripscope-release profile (linux | windows) FIELD".into());

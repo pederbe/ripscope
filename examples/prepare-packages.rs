@@ -58,6 +58,52 @@ fn sha256(path: &Path) -> Result<String> {
 }
 
 fn prepare(archive: &Path, out: &Path) -> Result<()> {
+    prepare_recipes(archive, out, requires_gcc(archive)?)
+}
+
+// Read metadata without extracting the archive. Published pre-Zig archives need
+// GCC's unwinder, so recipes must follow the selected archive rather than main.
+fn requires_gcc(archive: &Path) -> Result<bool> {
+    let root = archive
+        .file_name()
+        .and_then(|name| name.to_str())
+        .and_then(|name| name.strip_suffix(".tar.gz"))
+        .ok_or("Expected a Linux release archive filename")?;
+    let metadata_path = PathBuf::from(root).join("BUILD.json");
+    let mut tar = tar::Archive::new(flate2::read::GzDecoder::new(File::open(archive)?));
+    for entry in tar.entries()? {
+        let mut entry = entry?;
+        if entry.path()? == metadata_path {
+            let metadata: serde_json::Value = serde_json::from_reader(&mut entry)?;
+            let needed = metadata["elf"]["needed"]
+                .as_array()
+                .filter(|needed| {
+                    !needed.is_empty() && needed.iter().all(serde_json::Value::is_string)
+                })
+                .ok_or("Archive BUILD.json has no ELF dependency list")?;
+            return Ok(needed.iter().any(|name| name == "libgcc_s.so.1"));
+        }
+    }
+    Err("Archive has no BUILD.json".into())
+}
+
+fn select_gcc_blocks(template: &str, requires_gcc: bool) -> String {
+    let mut selected = String::new();
+    let mut gcc_block = false;
+    for line in template.split_inclusive('\n') {
+        match line.trim() {
+            "@GCC_RUNTIME@" => gcc_block = true,
+            "@END_GCC_RUNTIME@" => gcc_block = false,
+            _ if !gcc_block || requires_gcc => {
+                selected.push_str(line);
+            }
+            _ => {}
+        }
+    }
+    selected
+}
+
+fn prepare_recipes(archive: &Path, out: &Path, requires_gcc: bool) -> Result<()> {
     let filename = archive
         .file_name()
         .and_then(|name| name.to_str())
@@ -80,11 +126,17 @@ fn prepare(archive: &Path, out: &Path) -> Result<()> {
     fs::create_dir(out)?;
     let mut files = BTreeMap::new();
     for (name, template) in TEMPLATES {
-        let contents = template
+        let contents = select_gcc_blocks(template, requires_gcc)
             .replace("@VERSION@", version)
             .replace("@ARCHIVE_SHA256@", &archive_hash)
             .replace("@CHECK_SHA256@", &check_hash)
-            .replace("@CHECK_SCRIPT_RUBY@", &ruby_check);
+            .replace("@CHECK_SCRIPT_RUBY@", &ruby_check)
+            .replace("@NIX_RUNTIME@", if requires_gcc { "gcc" } else { "glibc" })
+            .replace(
+                "@NIX_RUNTIME_LIBRARY@",
+                if requires_gcc { "gcc.cc.lib" } else { "glibc" },
+            )
+            .replace("@ARCH_GCC@", if requires_gcc { " 'gcc-libs'" } else { "" });
         let path = out.join(name);
         fs::create_dir_all(path.parent().ok_or("Missing output parent")?)?;
         fs::write(path, contents.as_bytes())?;
@@ -98,6 +150,7 @@ fn prepare(archive: &Path, out: &Path) -> Result<()> {
         "version": version,
         "archive": filename,
         "archive_sha256": archive_hash,
+        "requires_gcc_runtime": requires_gcc,
         "files": files,
         "publication": "prepared locally; no release or channel was changed"
     });
@@ -163,7 +216,7 @@ mod tests {
         let archive = work.path().join("ripscope-0.1.0-x86_64-linux-gnu.tar.gz");
         fs::write(&archive, b"abc").unwrap();
         let out = work.path().join("recipes");
-        prepare(&archive, &out).unwrap();
+        prepare_recipes(&archive, &out, false).unwrap();
         let receipt: serde_json::Value =
             serde_json::from_slice(&fs::read(out.join("PREPARATION.json")).unwrap()).unwrap();
         assert_eq!(
@@ -193,5 +246,62 @@ mod tests {
         }
         // A recipe change needs a fresh preparation; never update a pinned output in place.
         assert!(prepare(&archive, &out).is_err());
+    }
+
+    #[test]
+    fn runtime_dependencies_follow_the_selected_archive() {
+        let work = tempfile::tempdir().unwrap();
+        let archive = work.path().join("ripscope-0.2.7-x86_64-linux-gnu.tar.gz");
+        for gcc in [false, true] {
+            let needed = if gcc {
+                vec!["libc.so.6", "libgcc_s.so.1"]
+            } else {
+                vec!["libc.so.6"]
+            };
+            let metadata = serde_json::to_vec(&json!({"elf": {"needed": needed}})).unwrap();
+            let encoder = flate2::write::GzEncoder::new(
+                File::create(&archive).unwrap(),
+                flate2::Compression::fast(),
+            );
+            let mut tar = tar::Builder::new(encoder);
+            let mut header = tar::Header::new_gnu();
+            header.set_size(metadata.len() as u64);
+            header.set_mode(0o644);
+            header.set_cksum();
+            tar.append_data(
+                &mut header,
+                "ripscope-0.2.7-x86_64-linux-gnu/BUILD.json",
+                metadata.as_slice(),
+            )
+            .unwrap();
+            tar.into_inner().unwrap().finish().unwrap();
+            assert_eq!(requires_gcc(&archive).unwrap(), gcc);
+            let out = work.path().join(format!("recipes-{gcc}"));
+            prepare(&archive, &out).unwrap();
+            let brew = fs::read_to_string(out.join("homebrew/ripscope.rb")).unwrap();
+            assert_eq!(brew.contains("patchelf"), gcc);
+            assert_eq!(brew.contains("HOMEBREW-RELOCATION.txt"), gcc);
+            let conda = fs::read_to_string(out.join("conda/build.sh")).unwrap();
+            assert_eq!(conda.contains("patchelf"), gcc);
+            let recipe = fs::read_to_string(out.join("conda/recipe.yaml")).unwrap();
+            assert_eq!(recipe.contains("- libgcc"), gcc);
+            let arch = fs::read_to_string(out.join("aur/PKGBUILD")).unwrap();
+            assert_eq!(arch.contains("'gcc-libs'"), gcc);
+            let nix = fs::read_to_string(out.join("nix/package.nix")).unwrap();
+            assert!(nix.contains(if gcc {
+                "buildInputs = [ gcc.cc.lib ];"
+            } else {
+                "buildInputs = [ glibc ];"
+            }));
+            for name in TEMPLATES.iter().map(|(name, _)| name) {
+                let recipe = fs::read_to_string(out.join(name)).unwrap();
+                assert!(
+                    !recipe.contains("@GCC")
+                        && !recipe.contains("@END_GCC")
+                        && !recipe.contains("@NIX")
+                        && !recipe.contains("@ARCH_GCC")
+                );
+            }
+        }
     }
 }

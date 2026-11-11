@@ -113,6 +113,10 @@ queries, warnings and refresh. Its `linux` and `windows` commands share the sour
 inventory and notice delivery. `package-linux.sh` turns the inspected Linux executable
 into Debian and RPM packages without rewriting it.
 
+The Linux builder uses Zig's GNU cross-toolchain in a modern Ubuntu container.
+A separate Debian 10 runtime check preserves the glibc 2.28 compatibility floor.
+The archive retains the notices for its statically linked LLVM unwinder.
+
 The `check-installers` example drives `install.sh` or `install.ps1` against a loopback
 mirror of an exact archive, and checks refusal, replacement and removal. The mirror's
 `/latest` endpoint serves the candidate before publication. The harness derives its

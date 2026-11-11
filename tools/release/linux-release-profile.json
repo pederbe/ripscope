@@ -1,9 +1,12 @@
 {
-  "build_image": "quay.io/pypa/manylinux_2_28_x86_64@sha256:9555ba6c479fa69a2aa80ad1dc57154a60d562b19df159361d9379a02beb1e36",
-  "runtime_image": "docker.io/library/debian@sha256:9c6e381421d0f48d1b8133e573f33c185ee16cbf505eda9c4a8a4791b25ea8a6",
-  "mold_version": "3.0.0",
-  "mold_archive_sha256": "6c90d4a474c7c0409dfb575be03a5345878ac14fdba18de8b40fa58c60121189",
-  "mold_url": "https://github.com/rui314/mold/releases/download/v3.0.0/mold-3.0.0-x86_64-linux.tar.gz",
-  "rustflags": "-C target-cpu=x86-64 -C link-arg=-fuse-ld=mold --remap-path-prefix=/work/source=/ripscope --remap-path-prefix=/work/vendor=/vendor",
-  "cflags": "-march=x86-64 -mtune=generic -ffile-prefix-map=/work/source=/ripscope -ffile-prefix-map=/work/vendor=/vendor"
+  "build_image": "docker.io/library/ubuntu:26.04@sha256:157dc3d6e4a3e4f2c68d12df9df9ed6e808b59af6d4c3757b432b4f519916725",
+  "runtime_image": "docker.io/library/debian:10@sha256:2a0c1b9175adf759420fe0fbd7f5b449038319171eb76554bb76cbe172b62b42",
+  "zig_version": "0.17.1",
+  "zig_archive_sha256": "3581863e3cbcfd0fce0efc682ce7e9e93da96668a977791d356a26d2a7e9b17a",
+  "zig_url": "https://ziglang.org/download/0.17.1/zig-x86_64-linux-0.17.1.tar.xz",
+  "zigbuild_version": "0.24.1",
+  "zigbuild_archive_sha256": "32581c8e13f27a807bb244aaaac870522f5b51263c766cf77b1a99771ce9fa5c",
+  "zigbuild_url": "https://github.com/rust-cross/cargo-zigbuild/releases/download/v0.24.1/cargo-zigbuild-x86_64-unknown-linux-gnu.tar.xz",
+  "rustflags": "-C target-cpu=x86-64 --remap-path-prefix=/work/source=/ripscope --remap-path-prefix=/work/vendor=/vendor",
+  "cflags": "-march=x86-64 -ffile-prefix-map=/work/source=/ripscope -ffile-prefix-map=/work/vendor=/vendor"
 }

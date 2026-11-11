@@ -98,10 +98,12 @@ jobs:
         run: |
           set -euo pipefail
           release="cargo run --locked --quiet --manifest-path tools/release/Cargo.toml --"
-          curl --proto '=https' --tlsv1.2 -fL "$($release profile linux mold_url)" -o "$RUNNER_TEMP/mold.tar.gz"
+          curl --proto '=https' --tlsv1.2 -fL "$($release profile linux zig_url)" -o "$RUNNER_TEMP/zig.tar.xz"
+          curl --proto '=https' --tlsv1.2 -fL "$($release profile linux zigbuild_url)" -o "$RUNNER_TEMP/zigbuild.tar.xz"
           toolchain=$(dirname "$(dirname "$(rustup which --toolchain stable rustc)")")
           $release linux --work "$RUNNER_TEMP/linux" \
-            --toolchain "$toolchain" --mold-archive "$RUNNER_TEMP/mold.tar.gz"
+            --toolchain "$toolchain" --zig-archive "$RUNNER_TEMP/zig.tar.xz" \
+            --zigbuild-archive "$RUNNER_TEMP/zigbuild.tar.xz"
       - name: Package the inspected executable and smoke-test the packages
         env:
           TAG: ${{ inputs.tag }}

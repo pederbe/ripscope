@@ -6,7 +6,7 @@ pkgdesc='C navigation with atomic index updates'
 arch=('x86_64')
 url='https://ripscope.com'
 license=('MIT OR Apache-2.0')
-depends=('glibc>=2.28' 'gcc-libs')
+depends=('glibc>=2.28'@ARCH_GCC@)
 checkdepends=('diffutils' 'findutils' 'grep')
 provides=("ripscope=$pkgver")
 conflicts=('ripscope')

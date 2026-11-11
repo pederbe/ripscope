@@ -5,9 +5,11 @@ class Ripscope < Formula
   sha256 "@ARCHIVE_SHA256@"
   license any_of: ["MIT", "Apache-2.0"]
 
+@GCC_RUNTIME@
   depends_on "patchelf" => :build
-  depends_on arch: :x86_64
   depends_on "gcc" # The archive imports libgcc_s.so.1.
+@END_GCC_RUNTIME@
+  depends_on arch: :x86_64
   depends_on :linux
 
   # Keep the archive's required licences at their manifested paths.
@@ -18,6 +20,7 @@ class Ripscope < Formula
     payload = libexec/"ripscope"
     payload.install "bin", "contrib", "licenses", "BUILD.json", "DEPENDENCIES.json",
                     "INSTALL.md", "LICENSE-MIT", "LICENSE-APACHE", "MANIFEST.sha256", "README.md"
+@GCC_RUNTIME@
     system Formula["patchelf"].opt_bin/"patchelf", "--set-rpath",
            (Formula["gcc"].opt_lib/"gcc/current").to_s, payload/"bin/ripscope"
     cd payload do
@@ -30,6 +33,7 @@ class Ripscope < Formula
                          "find . -type f ! -name MANIFEST.sha256 -print0 | " \
                          "sort -z | xargs -0 sha256sum > MANIFEST.sha256"
     end
+@END_GCC_RUNTIME@
     bin.install_symlink payload/"bin/ripscope"
     prefix.install_symlink payload/"LICENSE-MIT", payload/"LICENSE-APACHE", payload/"README.md"
   end

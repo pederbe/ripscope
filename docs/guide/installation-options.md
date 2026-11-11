@@ -89,7 +89,8 @@ They reuse the executable installed by your package manager.
 For a standalone package without repository updates, download the `.deb` or `.rpm`
 and its `.sha256` file from the
 [latest release](https://github.com/pederbe/ripscope/releases/latest) into an empty directory. The packages need
-glibc 2.28 or newer and the system GCC runtime. Check the package against its
+glibc 2.28 or newer. The package manager also installs the GCC runtime when an
+older package needs it. Check the package against its
 `.sha256` file, then install it:
 
 ```sh
@@ -111,7 +112,7 @@ Download the archive and its `.sha256` sidecar from the
 
 | Platform | Archive | Runtime |
 | --- | --- | --- |
-| Linux | `.tar.gz` | glibc 2.28 or newer and the system GCC runtime. Not musl or Alpine |
+| Linux | `.tar.gz` | glibc 2.28 or newer. Older archives also need the system GCC runtime. Not musl or Alpine |
 | Windows | `.zip` | Windows system DLLs. The C runtime is bundled |
 
 The archives include their executable, licences, editor sources and build

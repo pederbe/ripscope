@@ -9,6 +9,9 @@ index format or command-line behavior, and its entry says so.
 
 ### Changed
 
+- Build Linux releases with Zig's GNU cross-toolchain while retaining glibc 2.28
+  compatibility. Remove the shared GCC runtime dependency and its Homebrew and
+  conda relocation steps. Nix still relocates the ELF interpreter.
 - Include a ready-to-use Arch binary-package recipe bundle and SHA-256 sidecar in
   weekly releases. Build a local pacman package with `makepkg --check`.
 - Editor plugins always find the current file's project and refresh saved changes.
