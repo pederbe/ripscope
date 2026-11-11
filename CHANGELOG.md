@@ -9,6 +9,8 @@ index format or command-line behavior, and its entry says so.
 
 ### Changed
 
+- Include a ready-to-use Arch binary-package recipe bundle and SHA-256 sidecar in
+  weekly releases. Build a local pacman package with `makepkg --check`.
 - Editor plugins always find the current file's project and refresh saved changes.
   Remove Vim and Neovim project, index and source-selection settings, and all
   editors' manual-refresh settings. Remove those settings from your configuration
