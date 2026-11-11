@@ -15,8 +15,8 @@ and are generated and checked after each release. There are no macOS, ARM64 or m
 builds. [Limitations](../docs/reference/limitations.md#platforms-and-storage) lists
 the supported platforms.
 
-Additional recipes repackage the same Linux archive for a Homebrew tap, Nix and
-a conda channel. Generating recipes does not publish a package.
+Additional recipes repackage the same Linux archive for Arch, a Homebrew tap, Nix
+and a conda channel. Generating recipes does not publish a package.
 
 ## Prepare additional recipes
 
@@ -32,7 +32,7 @@ cargo run --locked --example prepare-packages -- \
   --out /path/to/new-recipes
 ```
 
-The command generates three pinned recipes, their installed checks and
+The command generates four pinned recipes, their installed checks and
 `PREPARATION.json`, containing the archive and generated-file SHA-256 hashes.
 It refuses an existing output directory. Keep generated recipes and validation
 captures outside the source tree. Generate again in a new directory whenever
@@ -47,6 +47,7 @@ not set up editors. The install scripts and plugin managers do.
 
 | Route | Installed support directory | Removal |
 | --- | --- | --- |
+| Arch `ripscope-bin` | `/usr/lib/ripscope` | `pacman -R ripscope-bin` |
 | Homebrew tap formula | Formula's `libexec/ripscope` (`brew --prefix ripscope` plus `/libexec/ripscope`) | `brew uninstall ripscope` |
 | Nix `ripscope-bin` | Output's `lib/ripscope` | Remove its entry with `nix profile remove`. Old generations/store objects can remain |
 | conda `ripscope` | Environment's `lib/ripscope` | `conda remove ripscope` |
@@ -63,6 +64,11 @@ licences/editor sources must pass too. No compiler, external SQLite or cscope
 is required at runtime. Shell and core utilities used by package tests are test
 dependencies, rather than Ripscope runtime requirements.
 
+- **Arch:** in the generated `aur/` directory, run `makepkg --check`. It downloads
+  the release archive, verifies both source checksums and runs `check-installed.sh`
+  before packaging. Install the resulting package with `pacman -U` in a disposable
+  Arch environment, repeat the check against `/usr/bin/ripscope` and
+  `/usr/lib/ripscope`, then remove it with `pacman -R ripscope-bin`.
 - **Homebrew:** put `homebrew/ripscope.rb` in a local tap's `Formula/` directory.
   Use `brew install --build-from-source OWNER/LOCAL-TAP/ripscope` (this installs
   the upstream binary and does not compile Rust), then `brew test` and the tap's
@@ -117,8 +123,8 @@ and [Rattler-Build repackaging and recipe format](https://rattler-build.prefix.d
 ## Publication and updates
 
 After a release, verify downloads from the final release URLs before copying the
-generated recipes into their destinations. Keep the helper check beside the Nix and
-conda recipes. Homebrew embeds it. Check applicable channel policies, maintainer
+generated recipes into their destinations. Keep the helper check beside the Arch,
+Nix and conda recipes. Homebrew embeds it. Check applicable channel policies, maintainer
 metadata and licensing before any upstream submission. The full bundled dependency
 notices remain with each package.
 
@@ -128,14 +134,6 @@ installation from the published destination. Only then add that route to user
 installation instructions. This helper adds no recurring workflow or automated
 submission.
 
-## Arch package template
-
-`templates/PKGBUILD` prepares `ripscope-bin` from the latest validated Linux
-archive, without compiling Ripscope. Fill its release identity and checksums and
-place `check-installed.sh` beside it. Arch's `makepkg` builds a package for local
-installation with pacman, even without an AUR listing. See the
-[makepkg manual](https://man.archlinux.org/man/makepkg.8.en).
-
-The preparation command does not generate this recipe. Check package creation,
-the installed command and removal before distributing it. AUR submission also
-needs `.SRCINFO`.
+The Arch recipe builds a local pacman package without an AUR listing. To prepare
+an AUR submission, run `makepkg --printsrcinfo > .SRCINFO` in the generated `aur/`
+directory. See the [makepkg manual](https://man.archlinux.org/man/makepkg.8.en).
