@@ -727,6 +727,8 @@ pub fn run(args: &[String]) -> Result<()> {
             "--tmpfs",
             "/tmp:rw,exec,mode=1777",
             "-v",
+            &format!("{}:/var/tmp:rw", text(&work.join("tmp"))),
+            "-v",
             &format!("{}:/work:rw", text(&work)),
             "-v",
             &format!("{}:/toolchain:ro", text(&toolchain)),
