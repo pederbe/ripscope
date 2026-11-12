@@ -125,7 +125,7 @@ release pull request. Review its notes against the changes since the previous
 release, especially installation, editor setup, output and index changes. Edit its
 dated section for any explanation the titles do not capture. Leave Unreleased
 empty. Closing the release pull request holds that release until the next weekly
-or manual preparation. See the [release guide](docs/linux-release.md#weekly-releases)
+or manual preparation. See the [release guide](https://github.com/pederbe/ripscope/blob/main/docs/linux-release.md#weekly-releases)
 for recovery.
 
 Contributions are dual-licensed under MIT or Apache-2.0, like the rest of Ripscope,
