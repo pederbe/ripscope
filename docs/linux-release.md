@@ -275,7 +275,8 @@ changes outside the Cargo package. Entries mark breaking changes and link to
 the pull request, whose Solution section contains any upgrade instructions.
 No changelog footer is required. Conventional prefixes keep internal changes
 out. Before 1.0, features and breaking changes raise the minor version.
-A week with only internal changes makes no release.
+A week with only internal changes makes no release. Documentation alone waits
+for a releasable change.
 
 Preparation checks entries, breaking markers and source links against the
 generated section before enabling auto-merge. The publisher repeats this check

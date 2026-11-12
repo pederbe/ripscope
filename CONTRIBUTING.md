@@ -112,7 +112,7 @@ capability, `fix:` for a repair, `perf:` for a measured speed improvement, `docs
 for documentation and `fix(deps):` for dependency updates. Internal changes use
 `ci:`, `build:`, `chore:`, `test:` or `refactor:` and stay out of the notes.
 Write the title for someone using Ripscope and keep performance claims tied to
-their measured workloads. Documentation changes use the same weekly release process.
+their measured workloads. Documentation alone waits for a releasable change and joins that release's notes.
 
 The changelog uses short entries from pull request titles, marks breaking changes
 and links to their pull requests. Put compatibility effects and migration or
