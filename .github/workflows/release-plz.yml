@@ -49,6 +49,10 @@ jobs:
           persist-credentials: false
       - run: rustup toolchain install
         if: steps.prepare.outputs.run == 'true'
+      - uses: taiki-e/install-action@cfdb7ed4ccc7c7dce37759eae89dc5674b469b39 # v2
+        if: steps.prepare.outputs.run == 'true'
+        with:
+          tool: git-cliff@2.14.2
       # CI runs only on pull requests opened with a personal token, not with the workflow token.
       - id: release-plz
         if: steps.prepare.outputs.run == 'true'
@@ -57,7 +61,7 @@ jobs:
           command: release-pr
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
-      - name: Update the Emacs package version in the release pull request
+      - name: Complete and check the release pull request
         if: steps.release-plz.outputs.prs_created == 'true'
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
@@ -68,11 +72,17 @@ jobs:
           git fetch origin "refs/heads/$RELEASE_BRANCH"
           git switch --detach FETCH_HEAD
           version=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "ripscope") | .version')
+          previous=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)
+          # Rebuild from main on every refresh, so an open release PR never
+          # accumulates old versions of its own unpublished section.
+          git show origin/main:CHANGELOG.md > CHANGELOG.md
+          git-cliff --config cliff.toml --tag "v$version" "$previous..origin/main" --prepend CHANGELOG.md
+          RUSTFLAGS='' cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- check-release-notes "$previous"
           sed -i "s/^;; Version:.*/;; Version: $version/" contrib/emacs/ripscope.el
-          if ! git diff --quiet -- contrib/emacs/ripscope.el; then
-            git add contrib/emacs/ripscope.el
+          if ! git diff --quiet -- CHANGELOG.md contrib/emacs/ripscope.el; then
+            git add CHANGELOG.md contrib/emacs/ripscope.el
             git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
-              commit -m 'chore: update Emacs package version for release'
+              commit -m 'chore: complete release notes and editor metadata'
             git push origin "HEAD:refs/heads/$RELEASE_BRANCH"
           fi
       - name: Merge the release pull request once CI passes

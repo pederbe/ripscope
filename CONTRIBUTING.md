@@ -105,26 +105,44 @@ required CI check passes on Linux and Windows, with the branch current with `mai
 - Write commit subjects in the imperative ("Preserve UTF-8 literal bytes"), and
   explain *why* in the body when it is not obvious.
 
-The squashed pull request title becomes a changelog entry. Use `feat:` for a new
+Use `feat:` in the pull request title for a new
 capability, `fix:` for a repair, `perf:` for a measured speed improvement, `docs:`
 for documentation and `fix(deps):` for dependency updates. Internal changes use
 `ci:`, `build:`, `chore:`, `test:` or `refactor:` and stay out of the notes.
-Unprefixed titles appear under Other changes. Write the title for someone using
-Ripscope and keep performance claims tied to their measured workloads. Documentation
-alone does not trigger a release, but joins the notes when another change does.
+Write the title for someone using Ripscope and keep performance claims tied to
+their measured workloads. Documentation alone does not trigger a release, but
+joins the notes when another change does.
+
+For every user-facing change, end the description with a conventional-commit
+footer containing the complete release note. For example:
+
+```text
+Changelog: Fixed: Searches see saved changes immediately, including when a
+source file is replaced by an editor's atomic save.
+```
+
+Choose Added, Changed, Fixed, Removed, Deprecated, Security, Performance,
+Dependencies or Documentation. Continuation lines and paragraphs are kept.
+Explain what users can do, what changed and any action they need to take. Cover
+every user-facing part of the change in this block. Internal-only changes can use
+an internal title without a footer. Do not mark a user-facing change as internal.
+Renovate supplies dependency notes automatically.
 
 For a compatibility change, put `!` before the title's colon and explain the
 consequences and upgrade steps in a `BREAKING CHANGE:` paragraph in the pull
-request description. That paragraph is kept in the changelog. Before 1.0, features
+request description, after the Changelog footer. That paragraph is kept in the
+changelog. Before 1.0, features
 and breaking changes raise the minor version.
 
 Release-plz opens or updates one release pull request every Thursday. It commits
 the version and dated changelog to `main` once required CI passes, then the Release
 workflow builds, checks and publishes that tag. Pushes to `main` refresh an open
-release pull request. Review its notes against the changes since the previous
-release, especially installation, editor setup, output and index changes. Edit its
-dated section for any explanation the titles do not capture. Leave Unreleased
-empty. Closing the release pull request holds that release until the next weekly
+release pull request. Git-cliff assembles the recorded notes from the full release
+range, including changes outside the Cargo package. Required CI checks note inputs.
+Release preparation checks every recorded note, source link and upgrade paragraph
+before enabling auto-merge. No separate maintainer review of each release is needed.
+Keep Unreleased empty and correct wording in the original change. Closing the
+release pull request holds that release until the next weekly
 or manual preparation. See the [release guide](https://github.com/pederbe/ripscope/blob/main/docs/linux-release.md#weekly-releases)
 for recovery.
 

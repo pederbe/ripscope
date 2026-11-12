@@ -7,49 +7,6 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
-### Changed
-
-- Build Linux releases with Zig's GNU cross-toolchain while retaining glibc 2.28
-  compatibility. Remove the shared GCC runtime dependency and its Homebrew and
-  conda relocation steps. Nix still relocates the ELF interpreter.
-- Include a ready-to-use Arch binary-package recipe bundle and SHA-256 sidecar in
-  weekly releases. Build a local pacman package with `makepkg --check`.
-- Editor plugins always find the current file's project and refresh saved changes.
-  Remove Vim and Neovim project, index and source-selection settings, and all
-  editors' manual-refresh settings. Remove those settings from your configuration
-  and use `cscope.files` to select sources. CLI `-d` remains available.
-- Remove installer release mirrors and forced reinstalls, and the redundant
-  `--no-auto-refresh` option.
-- Install scripts always resolve the latest release, including editor install
-  commands. Remove release-version overrides and checkout-based selection.
-  Installation pages and package commands now follow the latest release.
-- Document cargo-binstall installation from the published Linux and Windows binaries.
-- Reorganise the documentation. The README now covers installation and everyday use
-  on its own. The book gains guides for switching from cscope and for scripts, and a
-  troubleshooting page. Decision records and the website hosting guide are read in
-  the repository, and their old book addresses redirect there.
-- Rewrite `ripscope --help`. It now opens with a one-line description and two
-  examples, lists the searches and the most used options first, and links to the
-  command line reference. The options Ripscope accepts are unchanged, and help
-  still prints to standard output with exit status 0.
-
-### Fixed
-
-- Remove Windows watch markers before announcing a completed session reply, so
-  closing an editor immediately after a search leaves no temporary marker behind.
-- Refuse pipes and devices used as file lists, live source files or indexes without
-  waiting for input. Symbolic links to regular files remain supported.
-- Avoid repeated scans when recording navigation answers for source lines with many
-  distinct names, preserving the index format and query results.
-
-### Development
-
-- Generate the Arch binary-package recipe and its installed check with
-  `prepare-packages`, including release and helper checksums in the preparation receipt.
-- Fix homepage link checks in `scripts/build-site.sh --dev --docs-only`.
-- Validate query fields in reference recapture and constrain intended-answer fixture
-  reconstruction to its selected directories.
-- Add opt-in Hotpath timing for index posting construction.
 
 ## [0.2.7] - 2026-11-09
 

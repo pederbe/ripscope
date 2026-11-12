@@ -68,6 +68,10 @@ jobs:
           release=tools/release/target/debug/ripscope-release
           "$release" check-tag "$TAG"
           if [ "$PUBLISH" = true ]; then
+            previous=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)
+            if [ "$TAG" != "$previous" ]; then
+              "$release" check-release-notes "$previous"
+            fi
             test "$(gh api "repos/$GITHUB_REPOSITORY" --jq .private)" = false
             if [ "$AUTOMATIC" = true ]; then
               gh api "repos/$GITHUB_REPOSITORY/environments/automated-release" > "$RUNNER_TEMP/release-environment.json"

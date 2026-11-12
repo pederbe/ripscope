@@ -4,11 +4,11 @@
 
 ## Changelog
 
-<!-- The squash title becomes a changelog entry. Use feat:, fix:, perf:, docs: or
-     fix(deps): for user-visible work. Internal prefixes stay out of the notes.
-     For a compatibility change, put ! before the title's colon and add a
-     BREAKING CHANGE: paragraph below with consequences and upgrade instructions.
-     Keep Unreleased empty. See CONTRIBUTING.md. -->
+<!-- Use a conventional title. For user-facing work, end the description with
+     Changelog: CATEGORY: complete user-facing prose, including continuation
+     paragraphs when needed. For compatibility changes, use ! in the title and
+     follow that footer with BREAKING CHANGE: consequences and upgrade steps.
+     Internal-only titles need no note. Keep Unreleased empty. See CONTRIBUTING.md. -->
 
 ## How you tested it
 
