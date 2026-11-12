@@ -1,0 +1,121 @@
+name: Release-plz
+
+# Every Thursday, release-plz opens or updates one release pull request when there
+# are unreleased changes. It merges once CI passes. Pushes to main refresh an
+# open release pull request. Merging it tags the version, and the Release
+# workflow builds and publishes it.
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '43 6 * * 4'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-plz
+  cancel-in-progress: false
+  queue: max
+
+jobs:
+  release-pr:
+    if: >-
+      github.repository == 'pederbe/ripscope' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    steps:
+      - name: Prepare weekly release or refresh an open release pull request
+        id: prepare
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
+          EVENT: ${{ github.event_name }}
+        run: |
+          set -euo pipefail
+          if [ "$EVENT" = push ]; then
+            open=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --json headRefName \
+              --jq '[.[] | select(.headRefName | startswith("release-plz-"))] | length')
+            if [ "$open" = 0 ]; then
+              echo run=false >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+          echo run=true >> "$GITHUB_OUTPUT"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        if: steps.prepare.outputs.run == 'true'
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - run: rustup toolchain install
+        if: steps.prepare.outputs.run == 'true'
+      # CI runs only on pull requests opened with a personal token, not with the workflow token.
+      - id: release-plz
+        if: steps.prepare.outputs.run == 'true'
+        uses: release-plz/action@66b324fd6c72d05d2a08568492ecdd62bfb8a62b # v0.5.148
+        with:
+          command: release-pr
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
+      - name: Update the Emacs package version in the release pull request
+        if: steps.release-plz.outputs.prs_created == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
+          RELEASE_BRANCH: ${{ fromJSON(steps.release-plz.outputs.pr || '{}').head_branch }}
+        run: |
+          set -euo pipefail
+          gh auth setup-git --hostname github.com
+          git fetch origin "refs/heads/$RELEASE_BRANCH"
+          git switch --detach FETCH_HEAD
+          version=$(cargo metadata --no-deps --format-version 1 | jq -r '.packages[] | select(.name == "ripscope") | .version')
+          sed -i "s/^;; Version:.*/;; Version: $version/" contrib/emacs/ripscope.el
+          if ! git diff --quiet -- contrib/emacs/ripscope.el; then
+            git add contrib/emacs/ripscope.el
+            git -c user.name='github-actions[bot]' -c user.email='41898282+github-actions[bot]@users.noreply.github.com' \
+              commit -m 'chore: update Emacs package version for release'
+            git push origin "HEAD:refs/heads/$RELEASE_BRANCH"
+          fi
+      - name: Merge the release pull request once CI passes
+        if: steps.release-plz.outputs.prs_created == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
+          PR: ${{ steps.release-plz.outputs.pr }}
+        run: gh pr merge "$(jq -r .number <<< "$PR")" --repo "$GITHUB_REPOSITORY" --squash --auto
+
+  release:
+    if: github.repository == 'pederbe/ripscope' && github.event_name == 'push'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+      pull-requests: read
+      actions: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - run: rustup toolchain install
+      - id: release-plz
+        uses: release-plz/action@66b324fd6c72d05d2a08568492ecdd62bfb8a62b # v0.5.148
+        with:
+          command: release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+      # Workflow-token events do not start other workflows. Dispatch the build
+      # explicitly after release-plz has tagged it. The Release workflow creates
+      # the draft, qualifies the assets and publishes the crate.
+      - name: Build and publish the tagged release
+        if: steps.release-plz.outputs.releases_created == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASES: ${{ steps.release-plz.outputs.releases }}
+        run: |
+          set -euo pipefail
+          tag=$(jq -r '.[] | select(.package_name == "ripscope") | .tag' <<< "$RELEASES")
+          if [ -n "$tag" ]; then
+            git fetch origin "refs/tags/$tag"
+            sha=$(git rev-parse 'FETCH_HEAD^{commit}')
+            gh workflow run release.yml --repo "$GITHUB_REPOSITORY" --ref "$tag" \
+              -f tag="$tag" -f source_sha="$sha" -f publish=true -f automatic=true
+          fi

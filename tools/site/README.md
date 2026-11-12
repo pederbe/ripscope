@@ -66,8 +66,8 @@ The Workers Builds command first fetches and checks out `main`, then runs
 Cloudflare deploy hook after publishing and updating the editor branch. The hook builds `main` again, refreshing the
 displayed version without replacing newer documentation with the release's frozen
 snapshot. Its URL is stored in the `CLOUDFLARE_DEPLOY_HOOK` repository secret. A failed
-hook request fails release delivery, and the weekly scheduler retries that run even
-when the editor branch already points to the published tag.
+hook request fails website delivery. Retry Website deployment in GitHub Actions,
+without rebuilding archives or republishing the crate.
 
 Only chapters selected by `docs/SUMMARY.md`, their local assets, resolved Markdown
 includes and the theme enter the documentation build. `--list-inputs` lists the

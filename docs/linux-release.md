@@ -260,51 +260,37 @@ they do not measure performance or establish broad platform qualification.
 
 ## Weekly releases
 
-Every Thursday at 06:43 UTC, `.github/workflows/weekly-release.yml` checks for
-unreleased code, dependency, editor or packaging changes. Documentation and website
-changes alone do not create a release. The workflow remains enabled until disabled
-in GitHub Actions. You can also dispatch it from `main` for an urgent release.
+Every Thursday at 06:43 UTC, `.github/workflows/release-plz.yml` opens or updates
+one release pull request using release-plz. The request raises the version and
+adds a dated changelog section from merged pull request titles. It updates the
+Emacs package header to the same version and enables auto-merge after required CI.
+Pushes to `main` refresh an open release pull request without starting a new one
+between scheduled runs. Disable the workflow to stop weekly preparation.
 
-The workflow prepares a new patch version by default. Commit subjects with `!`
-before their colon, or bodies containing `BREAKING CHANGE:` or `BREAKING-CHANGE:`,
-advance the minor version before 1.0 and the major version after 1.0. Feature commits
-advance the minor version after 1.0. Mark compatibility changes when merging their
-pull request. A manual dispatch can request a minor or major increment. An explicitly
-prepared newer version in `Cargo.toml` takes precedence.
+The workflow uses the existing `RELEASE_PLZ_TOKEN` secret for release pull requests
+so GitHub runs their required CI. Squash merges preserve the pull request title
+and description. Conventional prefixes group the notes and keep internal changes
+out. Breaking changes retain their upgrade instructions. Before 1.0, features and
+breaking changes raise the minor version. A week with only internal changes makes
+no release. Documentation alone also waits for a releasable change. Review the
+dated notes against changes since the previous published
+release and edit them when titles need more explanation. The first migration
+retains the existing authored pending notes. Future Unreleased sections stay empty.
 
-Release metadata lives on the version tag. Its commit changes `Cargo.toml`,
-`Cargo.lock`, the Emacs version header and `CHANGELOG.md`, leaving the development
-version on `main` unchanged. Each changelog carries all previous release sections,
-new authored entries and grouped commit summaries with comparison links. The next
-release compares the two development snapshots, excluding generated metadata.
+Merging the release pull request commits its metadata on `main`. Release-plz tags
+that commit, with Cargo publication and GitHub release creation disabled in its
+configuration. It explicitly dispatches `.github/workflows/release.yml` at the tag
+and exact source SHA because workflow-token tag pushes do not start other workflows.
+The existing Release workflow builds, tests, inspects and packages both platform
+archives before attesting provenance and publishing.
 
-The release tool replaces the shipping Unreleased heading with its version and
-UTC release date. Dated-only changelogs and older tags with an empty Unreleased
-section are both accepted. New candidates omit the empty pending heading.
-
-After publication, `Release changelog` records the dated notes on `main` through
-a pull request and the maintained documentation checks. It preserves later
-pending entries and historical edits. The publisher dispatches it after publication.
-Publishing a draft also triggers it. Draft and check-only runs do not update `main`.
-Its manual check-only mode and retry use the published tag without rebuilding packages.
-
-Before preparing a release, compare the Unreleased entries with all merged
-changes since the previous published release. Check capabilities, fixes,
-installation, editor setup, support boundaries, format changes and upgrade
-instructions. Resolve omissions before freezing the notes. Generated commit
-history supplements the user-facing summary rather than replacing it. For the
-scheduled workflow, account for this coverage in each change review so it can
-reuse the maintained entries without a separate manual approval.
-
-The scheduler dispatches `.github/workflows/release.yml` at the exact tag and source
-SHA. That workflow builds, tests, inspects and packages both platform archives before
-attesting their provenance and publishing. Failed runs keep their tag. The next
-weekly or manual run resumes that same version before preparing another. If a
-failure needs a source or workflow fix, merge the fix and manually dispatch with
-`supersede_failed=true`. Once the old run has stopped, this prepares a higher version
-from current `main` and preserves the abandoned tag and its evidence. Successful
-build jobs are retained when retrying failed jobs. Releases are serialized and an
-older tag cannot replace a newer published version or its editor branch.
+Retry a failed Release run's failed jobs to keep successful builds and the original
+tag. If tag creation succeeded but dispatch failed, dispatch Release with that tag,
+its resolved commit as `source_sha`, and `publish=true` and `automatic=true`.
+Package, WinGet and website delivery each have their own workflow retry. If a source
+fix is needed, merge it and prepare a higher version through a new release pull
+request, preserving the old tag. Releases are serialized and an older tag cannot
+replace a newer published version or its editor branch.
 
 Automatic publication uses the `automated-release` environment with no approval or
 wait rules and exactly one custom deployment policy, tag `v*`. Its preflight checks
@@ -332,8 +318,8 @@ changelog section. Manual drafts do not publish to crates.io.
 
 Plugin managers follow the `release` branch. After automatic publication, the
 workflow moves that branch to the published tag using a lease to protect concurrent
-updates. Generated release commits can have sibling histories, so this update can
-be non-fast-forward. The Emacs version header and crate version match on every tag.
+updates. Older release tags can have sibling histories, so this update can be
+non-fast-forward. The Emacs version header and crate version match on every tag.
 
 ## Website deployment
 
@@ -345,8 +331,8 @@ deployment result after accepting the request.
 
 A website failure does not fail package publication or block the next weekly
 release. Retry Website deployment manually in GitHub Actions, without rebuilding
-archives or republishing the crate. Weekly release recovery still repairs failed
-package publication and an editor branch that did not advance.
+archives or republishing the crate. Retry Release if publication or the editor
+branch update failed.
 
 ## Attestation verification
 

@@ -294,8 +294,8 @@ jobs:
           fi
           if [ "$AUTOMATIC" = true ]; then
             gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false --latest
-            # Plugin managers follow this branch. It contains generated release
-            # metadata, so subsequent release commits may be on sibling histories.
+            # Plugin managers follow this branch. Older release tags can have
+            # sibling histories, so retain the lease when advancing it.
             old=$(git ls-remote origin refs/heads/release | cut -f1)
             git push --force-with-lease="refs/heads/release:$old" origin "$SOURCE_SHA:refs/heads/release"
           fi
@@ -307,7 +307,7 @@ jobs:
         run: |
           set -euo pipefail
           result=0
-          for workflow in package-repository.yml winget.yml release-changelog.yml; do
+          for workflow in package-repository.yml winget.yml; do
             extra=()
             if [ "$workflow" = winget.yml ]; then extra=(-f submit=true); fi
             gh workflow run "$workflow" --repo "$GITHUB_REPOSITORY" --ref main -f tag="$TAG" "${extra[@]}" || result=1

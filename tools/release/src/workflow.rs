@@ -196,6 +196,7 @@ mod delivery_tests {
     fn run(root: &Path, script: &str, mode: &str) -> std::process::Output {
         Command::new("bash")
             .args(["-c", script])
+            .current_dir(root)
             .env(
                 "PATH",
                 format!(
@@ -209,8 +210,11 @@ mod delivery_tests {
             .env("GITHUB_REPOSITORY", "fixture/ripscope")
             .env("TAG", "v0.2.6")
             .env("CLOUDFLARE_DEPLOY_HOOK", "https://example.invalid/hook")
-            .env("SUPERSEDE", "false")
-            .env("INCREMENT", "auto")
+            .env("GITHUB_OUTPUT", root.join("output"))
+            .env(
+                "RELEASES",
+                r#"[{"package_name":"ripscope","tag":"v0.3.0"}]"#,
+            )
             .env("FIXTURE_TRACE", root.join("trace"))
             .env("FIXTURE_MODE", mode)
             .output()
@@ -243,7 +247,6 @@ if [ "$FIXTURE_MODE" = failure ] && [ "$3" = winget.yml ]; then exit 1; fi
         let expected = [
             "workflow run package-repository.yml --repo fixture/ripscope --ref main -f tag=v0.2.6\n",
             "workflow run winget.yml --repo fixture/ripscope --ref main -f tag=v0.2.6 -f submit=true\n",
-            "workflow run release-changelog.yml --repo fixture/ripscope --ref main -f tag=v0.2.6\n",
             "workflow run website-deploy.yml --repo fixture/ripscope --ref main\n",
         ];
         for (mode, success) in [("success", true), ("failure", false)] {
@@ -327,7 +330,119 @@ printf '{"success":true,"result":{"build_uuid":"fixture"}}' > "${!#}"
     }
 
     #[test]
-    fn weekly_scheduler_ignores_website_failure_but_repairs_editor_delivery() {
+    fn release_pr_preparation_waits_for_the_schedule_and_refreshes_an_open_pr() {
+        let root = tempfile::tempdir().unwrap();
+        fs::create_dir(root.path().join("bin")).unwrap();
+        executable(
+            root.path(),
+            "gh",
+            r#"#!/bin/bash
+set -euo pipefail
+test "$1 $2" = 'pr list'
+echo "$FIXTURE_MODE"
+"#,
+        );
+        let script = release_step("Prepare weekly release or refresh an open release pull request");
+        for (event, open, expected) in [
+            ("push", "0", "run=false\n"),
+            ("push", "1", "run=true\n"),
+            ("schedule", "0", "run=true\n"),
+            ("workflow_dispatch", "0", "run=true\n"),
+        ] {
+            fs::write(root.path().join("output"), "").unwrap();
+            let output = run(
+                root.path(),
+                &format!("export EVENT={event}\n{script}"),
+                open,
+            );
+            assert!(output.status.success(), "{output:?}");
+            assert_eq!(
+                fs::read_to_string(root.path().join("output")).unwrap(),
+                expected
+            );
+        }
+    }
+
+    fn release_step(name: &str) -> String {
+        let workflow = fs::read_to_string(
+            Path::new(env!("CARGO_MANIFEST_DIR")).join("../../.github/workflows/release-plz.yml"),
+        )
+        .unwrap();
+        workflow
+            .split_once(&format!("      - name: {name}\n"))
+            .unwrap()
+            .1
+            .split_once("        run: |\n")
+            .unwrap()
+            .1
+            .lines()
+            .take_while(|line| line.is_empty() || line.starts_with("          "))
+            .map(|line| line.strip_prefix("          ").unwrap_or(line))
+            .collect::<Vec<_>>()
+            .join("\n")
+    }
+
+    #[test]
+    fn release_pr_updates_the_emacs_header_and_keeps_an_already_matching_header() {
+        let root = tempfile::tempdir().unwrap();
+        fs::create_dir(root.path().join("bin")).unwrap();
+        fs::create_dir_all(root.path().join("contrib/emacs")).unwrap();
+        fs::write(
+            root.path().join("contrib/emacs/ripscope.el"),
+            ";; Version: 0.2.7\n;; Other metadata\n",
+        )
+        .unwrap();
+        let git = |args: &[&str]| {
+            let output = Command::new("git")
+                .args(args)
+                .current_dir(root.path())
+                .output()
+                .unwrap();
+            assert!(output.status.success(), "{args:?}: {output:?}");
+            String::from_utf8(output.stdout).unwrap()
+        };
+        git(&["init", "--quiet"]);
+        git(&["config", "user.name", "Fixture"]);
+        git(&["config", "user.email", "fixture@example.invalid"]);
+        git(&["add", "contrib/emacs/ripscope.el"]);
+        git(&["commit", "--quiet", "-m", "Initial metadata"]);
+        git(&["init", "--bare", "--quiet", "remote.git"]);
+        git(&["remote", "add", "origin", "remote.git"]);
+        git(&[
+            "push",
+            "--quiet",
+            "origin",
+            "HEAD:refs/heads/release-plz-fixture",
+        ]);
+        executable(root.path(), "gh", "#!/bin/bash\nexit 0\n");
+        executable(
+            root.path(),
+            "cargo",
+            r#"#!/bin/bash
+printf '%s\n' '{"packages":[{"name":"ripscope","version":"0.3.0"}]}'
+"#,
+        );
+        let script = format!(
+            "export RELEASE_BRANCH=release-plz-fixture\n{}",
+            release_step("Update the Emacs package version in the release pull request")
+        );
+        let output = run(root.path(), &script, "success");
+        assert!(output.status.success(), "{output:?}");
+        assert_eq!(
+            fs::read_to_string(root.path().join("contrib/emacs/ripscope.el")).unwrap(),
+            ";; Version: 0.3.0\n;; Other metadata\n"
+        );
+        let updated = git(&["rev-parse", "refs/remotes/origin/release-plz-fixture"]);
+        let output = run(root.path(), &script, "success");
+        assert!(output.status.success(), "{output:?}");
+        assert_eq!(
+            git(&["rev-parse", "refs/remotes/origin/release-plz-fixture"]),
+            updated
+        );
+    }
+
+    #[test]
+    fn release_dispatch_uses_the_new_tag_and_exact_source_and_reports_failure() {
         let root = tempfile::tempdir().unwrap();
         fs::create_dir(root.path().join("bin")).unwrap();
         executable(
@@ -335,11 +450,9 @@ printf '{"success":true,"result":{"build_uuid":"fixture"}}' > "${!#}"
             "git",
             r#"#!/bin/bash
 set -euo pipefail
-case "$1" in
-  tag) echo v0.2.4;;
-  show) echo 'Prepare automated release v0.2.4';;
-  rev-parse) echo delivered;;
-  ls-remote) printf '%s\trefs/heads/release\n' "$FIXTURE_MODE";;
+case "$*" in
+  'fetch origin refs/tags/v0.3.0') ;;
+  'rev-parse FETCH_HEAD^{commit}') echo 0123456789012345678901234567890123456789;;
   *) exit 1;;
 esac
 "#,
@@ -349,35 +462,27 @@ esac
             "gh",
             r#"#!/bin/bash
 set -euo pipefail
-case "$*" in
-  api*) echo v0.2.4;;
-  'run list'*)
-    # A delivered version must not query a release failure caused by its website.
-    test "$FIXTURE_MODE" != delivered
-    printf '42\tcompleted\tfailure\n';;
-  'run rerun 42 --failed') echo repaired >> "$FIXTURE_TRACE";;
-  *) exit 1;;
-esac
+echo "$*" >> "$FIXTURE_TRACE"
+test "$FIXTURE_MODE" != failure
 "#,
         );
-        executable(
-            root.path(),
-            "cargo",
-            "#!/bin/bash\nset -euo pipefail\nprintf 'changed=false\\n' > \"$RUNNER_TEMP/plan\"\necho prepared >> \"$FIXTURE_TRACE\"\n",
-        );
-        let script = workflow_script("weekly-release.yml");
-        for (branch, expected) in [("delivered", "prepared\n"), ("older", "repaired\n")] {
+        let script = release_step("Build and publish the tagged release");
+        for (mode, expected) in [("success", true), ("failure", false)] {
             fs::write(root.path().join("trace"), "").unwrap();
-            let output = run(root.path(), &script, branch);
-            assert!(
-                output.status.success(),
-                "{}",
-                String::from_utf8_lossy(&output.stderr)
-            );
+            let output = run(root.path(), &script, mode);
+            assert_eq!(output.status.success(), expected, "{output:?}");
             assert_eq!(
                 fs::read_to_string(root.path().join("trace")).unwrap(),
-                expected
+                "workflow run release.yml --repo fixture/ripscope --ref v0.3.0 -f tag=v0.3.0 -f source_sha=0123456789012345678901234567890123456789 -f publish=true -f automatic=true\n"
             );
         }
+        fs::write(root.path().join("trace"), "").unwrap();
+        let output = run(
+            root.path(),
+            &format!("export RELEASES='[]'\n{script}"),
+            "success",
+        );
+        assert!(output.status.success(), "{output:?}");
+        assert_eq!(fs::read_to_string(root.path().join("trace")).unwrap(), "");
     }
 }
