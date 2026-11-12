@@ -236,18 +236,39 @@ mod tests {
 
     #[test]
     fn cli_accepts_a_runtime_repository_location() {
-        if Path::new(env!("CARGO")).is_file() {
-            assert!(
-                Command::new("cargo")
-                    .args(["build", "--locked", "--example", "check-emacs"])
-                    .status()
-                    .unwrap()
-                    .success()
-            );
-        }
         let temporary = tempfile::tempdir().unwrap();
         let current = env::current_exe().unwrap();
-        let binary = current.with_file_name(format!("check-emacs{}", env::consts::EXE_SUFFIX));
+        let binary = if Path::new(env!("CARGO")).is_file() {
+            let built = Command::new("cargo")
+                .current_dir(env!("CARGO_MANIFEST_DIR"))
+                .args([
+                    "build",
+                    "--locked",
+                    "--example",
+                    "check-emacs",
+                    "--message-format=json",
+                ])
+                .output()
+                .unwrap();
+            assert!(
+                built.status.success(),
+                "{}",
+                String::from_utf8_lossy(&built.stderr)
+            );
+            String::from_utf8(built.stdout)
+                .unwrap()
+                .lines()
+                .filter_map(|line| serde_json::from_str::<serde_json::Value>(line).ok())
+                .find_map(|artifact| {
+                    (artifact["reason"] == "compiler-artifact"
+                        && artifact["target"]["name"] == "check-emacs")
+                        .then(|| artifact["executable"].as_str().map(PathBuf::from))
+                        .flatten()
+                })
+                .expect("Cargo did not report the check-emacs executable")
+        } else {
+            current.with_file_name(format!("check-emacs{}", env::consts::EXE_SUFFIX))
+        };
         let output = Command::new(binary)
             .arg("--repo")
             .arg(temporary.path().join("missing-repository"))
