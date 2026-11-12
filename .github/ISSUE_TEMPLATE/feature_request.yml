@@ -1,21 +1,26 @@
 name: Feature request
 description: Suggest a new capability or workflow improvement.
-labels: ["enhancement"]
+labels: [enhancement]
 body:
   - type: textarea
     id: problem
     attributes:
       label: Problem
-      description: What are you trying to do, and what gets in the way today?
+      description: |
+        What are you trying to do, and what gets in the way today?
     validations:
       required: true
   - type: textarea
-    id: proposal
+    id: outcome
     attributes:
-      label: Proposed behavior
-      description: What would you like ripscope to do? Include example commands or editor interactions if you can.
+      label: Desired outcome
+      description: |
+        What would Ripscope let you do? You do not need to design the solution.
+    validations:
+      required: true
   - type: textarea
-    id: alternatives
+    id: evidence
     attributes:
-      label: Alternatives
-      description: Workarounds or other tools you use today.
+      label: Evidence
+      description: |
+        Example commands or editor interactions, current workarounds or relevant links, if available.

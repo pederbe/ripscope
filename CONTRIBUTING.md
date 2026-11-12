@@ -112,46 +112,50 @@ capability, `fix:` for a repair, `perf:` for a measured speed improvement, `docs
 for documentation and `fix(deps):` for dependency updates. Internal changes use
 `ci:`, `build:`, `chore:`, `test:` or `refactor:` and stay out of the notes.
 Write the title for someone using Ripscope and keep performance claims tied to
-their measured workloads. Documentation alone does not trigger a release, but
-joins the notes when another change does.
+their measured workloads. Documentation changes use the same weekly release process.
 
-For every user-facing change, end the description with a conventional-commit
-footer containing the complete release note. For example:
-
-```text
-Changelog: Fixed: Searches see saved changes immediately, including when a
-source file is replaced by an editor's atomic save.
-```
-
-Choose Added, Changed, Fixed, Removed, Deprecated, Security, Performance,
-Dependencies or Documentation. Continuation lines and paragraphs are kept.
-Explain what users can do, what changed and any action they need to take. Cover
-every user-facing part of the change in this block. Put commands, options and
-literal names in Markdown backticks so the book preserves them exactly.
-Internal-only changes can use
-an internal title without a footer. Do not mark a user-facing change as internal.
-Renovate supplies dependency notes automatically.
-
-For a compatibility change, put `!` before the title's colon and explain the
-consequences and upgrade steps in a `BREAKING CHANGE:` paragraph in the pull
-request description, after the Changelog footer. That paragraph is kept in the
-changelog. Before 1.0, features
-and breaking changes raise the minor version.
+The changelog uses short entries from pull request titles, marks breaking changes
+and links to their pull requests. Put compatibility effects and migration or
+upgrade instructions in Solution. Mark a breaking title with `!` before the
+colon. No `Changelog:` or `BREAKING CHANGE:` footer is required. Before 1.0,
+features and breaking changes raise the minor version.
 
 Release-plz opens or updates one release pull request every Thursday. It commits
 the version and dated changelog to `main` once required CI passes, then the Release
 workflow builds, checks and publishes that tag. Pushes to `main` refresh an open
-release pull request. Git-cliff assembles the recorded notes from the full release
-range, including changes outside the Cargo package. Required CI checks note inputs.
-Release preparation checks every recorded note, source link and upgrade paragraph
-before enabling auto-merge. No separate maintainer review of each release is needed.
-Keep Unreleased empty and correct wording in the original change. Closing the
-release pull request holds that release until the next weekly
-or manual preparation. See the [release guide](https://github.com/pederbe/ripscope/blob/main/docs/linux-release.md#weekly-releases)
+release pull request. Git-cliff covers the full release range, including changes
+outside the Cargo package. Preparation checks entries, breaking markers and
+source links before enabling auto-merge. Keep Unreleased empty and correct
+wording in the original change. Closing the release pull request holds it until
+the next weekly or manual preparation. See the
+[release guide](https://github.com/pederbe/ripscope/blob/main/docs/linux-release.md#weekly-releases)
 for recovery.
 
 Contributions are dual-licensed under MIT or Apache-2.0, like the rest of Ripscope,
 unless explicitly stated otherwise.
+
+## Public issues and pull requests
+
+Issue descriptions use **Problem**, **Desired outcome** and **Evidence**.
+Describe the task and its impact, the result that would resolve it, and available
+reproduction details or examples. Incomplete observations are welcome.
+Pull requests use **Problem**, **Solution** and **Validation**. Explain the
+reason for the change, its behavior and compatibility effects, and meaningful
+checks. Put migration or upgrade instructions in Solution. Keep small changes
+brief and links and examples within these sections.
+
+Public descriptions and comments cover software behavior, technical rationale
+and evidence. Keep private discussions, authorization exchanges, personal
+decision history and handoffs out of them. State technical outcomes directly
+and attribute checks accurately. Comments are for technical questions, findings
+and review discussion.
+
+Edit descriptions only to keep technical facts, scope, evidence and acceptance
+criteria accurate within the work at hand. Preserve the reporter's observations
+and human-written wording unless a rewrite is requested. Leave merged PR
+descriptions alone unless a correction is requested. Track progress with
+checklists, linked issues and labels. These rules also apply to API updates.
+Check these limits before posting or editing.
 
 ## Code of conduct
 

@@ -1,47 +1,32 @@
 name: Compatibility difference
 description: Ripscope's output or behavior differs from cscope for the same input.
-labels: ["compatibility"]
+labels: [compatibility]
 body:
   - type: markdown
     attributes:
       value: |
-        Ripscope aims to match cscope's observable query behavior, except for
-        [documented differences](https://ripscope.com/docs/reference/differences-from-cscope).
-        Please check that list first.
+        Check the [documented differences](https://ripscope.com/docs/reference/differences-from-cscope) first.
   - type: textarea
-    id: source
+    id: problem
     attributes:
-      label: Source input
-      description: The smallest C source (and headers) that shows the difference.
-      render: c
+      label: Problem
+      description: |
+        Which query or behavior differs, and how does it affect your task?
     validations:
       required: true
   - type: textarea
-    id: commands
+    id: outcome
     attributes:
-      label: Commands
-      description: The cscope and ripscope commands you ran, including the query field and pattern.
-      render: shell
+      label: Desired outcome
+      description: |
+        What result did you expect from the cscope comparison?
     validations:
       required: true
   - type: textarea
-    id: cscope-output
+    id: evidence
     attributes:
-      label: cscope output
-      render: text
-    validations:
-      required: true
-  - type: textarea
-    id: ripscope-output
-    attributes:
-      label: Ripscope output
-      render: text
-    validations:
-      required: true
-  - type: input
-    id: versions
-    attributes:
-      label: Versions and platform
-      placeholder: "cscope 15.9, ripscope 0.1.0, Debian 12 x86-64"
+      label: Evidence
+      description: |
+        Include the smallest C source and headers, both commands with query fields and patterns, both outputs, both versions and the platform where available. Describe the observations and say which details are unknown.
     validations:
       required: true

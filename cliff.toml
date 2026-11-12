@@ -19,34 +19,16 @@ body = """
 {%- endif -%}
 {%- endmacro -%}
 ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
-{%- for group, commits in commits | group_by(attribute="group") -%}
-{{ "\n\n### " }}{{ group | striptags | trim }}{{ "\n\n" }}
-{%- set_global automated_dependencies = [] -%}
-{%- for commit in commits -%}
-{%- set notes = commit.footers | default(value=[]) | filter(attribute="token", value="Changelog") -%}
-{%- if notes | length > 0 -%}
-{%- set note = notes[0].value | split(pat=":") | slice(start=1) | join(sep=":") | trim -%}
-{%- else -%}
-{%- set note = commit.message | split(pat=" (#") | first | trim | upper_first -%}
-{%- endif -%}
-{%- if group == "<!-- 4 -->Dependencies" and note == "Update runtime and build dependencies." and not commit.breaking -%}
-{%- set_global automated_dependencies = automated_dependencies | concat(with=[commit]) -%}
-{%- else -%}
-{{ "- " }}{% if commit.breaking %}**Breaking:** {% endif %}{{ note | replace(from="\n", to="\n  ") }} {{ self::source(commit=commit) }}{{ "\n" }}
-{%- if commit.breaking and commit.breaking_description -%}
-{{ "\n  " }}{{ commit.breaking_description | trim | replace(from="\n", to="\n  ") }}{{ "\n" }}
-{%- endif -%}
-{{ "\n" }}
-{%- endif -%}
-{%- endfor -%}
-{%- if automated_dependencies | length > 0 -%}
-- Update runtime and build dependencies.\
-{% for commit in automated_dependencies %} {{ self::source(commit=commit) }}{% endfor %}{{ "\n" }}
-{%- endif -%}
-{%- endfor -%}
-{{ "\n[Full comparison](https://github.com/pederbe/ripscope/compare/v" }}{{ previous.version | trim_start_matches(pat="v") }}...v{{ version | trim_start_matches(pat="v") }}){{ "\n" }}
+{% for group, commits in commits | group_by(attribute="group") %}
+### {{ group | striptags | trim }}
+{% for commit in commits %}
+- {% if commit.breaking %}**Breaking:** {% endif %}{{ commit.message | split(pat="\n") | first | split(pat=" (#") | first | trim | upper_first }} {{ self::source(commit=commit) }}
+{%- endfor %}
+{% endfor %}
+
+[Full comparison](https://github.com/pederbe/ripscope/compare/{{ previous.version }}...{{ version }})
 """
-trim = false
+trim = true
 postprocessors = [
   { pattern = '\n{3,}', replace = "\n\n" },
 ]
@@ -56,60 +38,26 @@ filter_unconventional = false
 sort_commits = "oldest"
 protect_breaking_commits = true
 commit_preprocessors = [
-  # Existing changes predate structured notes. Normalize them once, using the
-  # same native replacements used for release wording in Fastmash.
+  # Normalize historical titles without importing their description text.
   { pattern = '(?s)^[^\n]* \(#117\)(?:\n.*)?$', replace = 'chore: record the previous release (#117)' },
   { pattern = '(?s)^[^\n]* \(#118\)(?:\n.*)?$', replace = 'chore: update website tooling (#118)' },
-  { pattern = '(?s)^[^\n]* \(#119\)(?:\n.*)?$', replace = """fix: handle source inputs without blocking (#119)
-
-Changelog: Fixed: Refuse pipes and devices used as file lists, live source files or indexes without waiting for input. Symbolic links to regular files remain supported. Avoid repeated scans when recording navigation answers for source lines with many distinct names. The index format and query results are unchanged. Source builds can opt into Hotpath timing for index posting construction, disabled by default.""" },
-  { pattern = '(?s)^[^\n]* \(#120\)(?:\n.*)?$', replace = """docs: explain cargo-binstall installation (#120)
-
-Changelog: Documentation: Document cargo-binstall installation from the published Linux and Windows binaries.""" },
+  { pattern = '(?s)^[^\n]* \(#119\)(?:\n.*)?$', replace = 'fix: handle source inputs without blocking (#119)' },
+  { pattern = '(?s)^[^\n]* \(#120\)(?:\n.*)?$', replace = 'docs: explain cargo-binstall installation (#120)' },
   { pattern = '(?s)^[^\n]* \(#121\)(?:\n.*)?$', replace = 'ci: check homepage links in documentation builds (#121)' },
-  { pattern = '(?s)^[^\n]* \(#122\)(?:\n.*)?$', replace = """docs: make installation and everyday use easier to find (#122)
-
-Changelog: Documentation: Make the README sufficient for installation and everyday use. Add guides for switching from cscope and using Ripscope in scripts, plus troubleshooting help. Move decision records and website hosting instructions to the repository, with redirects from their old book addresses.""" },
-  { pattern = '(?s)^[^\n]* \(#123\)(?:\n.*)?$', replace = """docs: make command help easier to scan (#123)
-
-Changelog: Documentation: Open command help with examples, list searches and common options first, and link to the command reference. Accepted options, standard output and exit status are unchanged.""" },
-  { pattern = '(?s)^[^\n]* \(#125\)(?:\n.*)?$', replace = """docs: keep editor setup instructions current (#125)
-
-Changelog: Documentation: Keep editor setup examples independent of the installed release version.""" },
-  { pattern = '(?s)^[^\n]* \(#126\)(?:\n.*)?$', replace = """fix!: install the latest release consistently (#126)
-
-Changelog: Changed: Installers and editor install commands always resolve the latest release, including commands run from old or development checkouts.
-
-BREAKING CHANGE: Release-version overrides and checkout-based selection are removed. Remove version overrides from installation commands and follow the latest-release installation instructions.""" },
-  { pattern = '(?s)^[^\n]* \(#129\)(?:\n.*)?$', replace = """feat!: discover editor projects and refresh saved changes automatically (#129)
-
-Changelog: Changed: Editor plugins always discover the current file's project and refresh saved changes. Windows sessions remove their watch markers before completing a reply, so closing an editor immediately after a search leaves no temporary marker behind.
-
-BREAKING CHANGE: Remove Vim and Neovim project, index and source-selection overrides, and manual-refresh settings from all editors. Use `cscope.files` to select sources. Installer mirrors, forced reinstalls and `--no-auto-refresh` are removed. CLI `-d`, `-f`, `-i`, `-R` and explicit source files remain available.""" },
-  { pattern = '(?s)^[^\n]* \(#131\)(?:\n.*)?$', replace = """feat: provide an Arch package recipe with each Linux release (#131)
-
-Changelog: Added: Include a ready-to-use Arch binary-package recipe bundle and SHA-256 sidecar in weekly releases. Build a local pacman package with `makepkg --check`, without running the Rust preparation tool.""" },
-  { pattern = '(?s)^[^\n]* \(#132\)(?:\n.*)?$', replace = """build: retain Linux compatibility with the current GNU toolchain (#132)
-
-Changelog: Changed: Build Linux releases with Zig's GNU cross-toolchain while retaining glibc 2.28 compatibility. Remove the shared GCC runtime dependency and its Homebrew and conda relocation steps. Nix still relocates the ELF interpreter.""" },
+  { pattern = '(?s)^[^\n]* \(#122\)(?:\n.*)?$', replace = 'docs: make installation and everyday use easier to find (#122)' },
+  { pattern = '(?s)^[^\n]* \(#123\)(?:\n.*)?$', replace = 'docs: make command help easier to scan (#123)' },
+  { pattern = '(?s)^[^\n]* \(#125\)(?:\n.*)?$', replace = 'docs: keep editor setup instructions current (#125)' },
+  { pattern = '(?s)^[^\n]* \(#126\)(?:\n.*)?$', replace = 'fix!: install the latest release consistently (#126)' },
+  { pattern = '(?s)^[^\n]* \(#129\)(?:\n.*)?$', replace = 'feat!: discover editor projects and refresh saved changes automatically (#129)' },
+  { pattern = '(?s)^[^\n]* \(#131\)(?:\n.*)?$', replace = 'feat: provide an Arch package recipe with each Linux release (#131)' },
+  { pattern = '(?s)^[^\n]* \(#132\)(?:\n.*)?$', replace = 'fix: retain Linux compatibility with the current GNU toolchain (#132)' },
   { pattern = '(?s)^[^\n]* \(#133\)(?:\n.*)?$', replace = 'chore: remove obsolete package preparation branches (#133)' },
   { pattern = '(?s)^[^\n]* \(#135\)(?:\n.*)?$', replace = 'ci: prepare weekly releases with release-plz (#135)' },
-  { pattern = '(?s)^Update daily dependencies \(#(\d+)\)(?:\n.*)?$', replace = """fix(deps): update dependencies (#${1})
-
-Changelog: Dependencies: Update runtime and build dependencies.""" },
+  { pattern = '(?s)^Update daily dependencies \(#(\d+)\)(?:\n.*)?$', replace = 'fix(deps): update dependencies (#${1})' },
 ]
 commit_parsers = [
   # GitHub's temporary PR merge commit is validation scaffolding, not a change.
   { message = '^Merge [0-9a-f]+ into [0-9a-f]+', skip = true },
-  { footer = '^Changelog:\s*Added:', group = "<!-- 1 -->Added" },
-  { footer = '^Changelog:\s*Changed:', group = "<!-- 0 -->Changed" },
-  { footer = '^Changelog:\s*Fixed:', group = "<!-- 2 -->Fixed" },
-  { footer = '^Changelog:\s*Removed:', group = "<!-- 0 -->Removed" },
-  { footer = '^Changelog:\s*Deprecated:', group = "<!-- 1 -->Deprecated" },
-  { footer = '^Changelog:\s*Security:', group = "<!-- 2 -->Security" },
-  { footer = '^Changelog:\s*Performance:', group = "<!-- 3 -->Performance" },
-  { footer = '^Changelog:\s*Dependencies:', group = "<!-- 4 -->Dependencies" },
-  { footer = '^Changelog:\s*Documentation:', group = "<!-- 5 -->Documentation" },
   { message = "^feat\\(remove\\)!?:", group = "<!-- 0 -->Removed" },
   { message = "^feat\\(deprecate\\)!?:", group = "<!-- 1 -->Deprecated" },
   { message = "^[a-z]+(\\([^)]*\\))?!:", group = "<!-- 0 -->Changed" },

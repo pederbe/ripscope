@@ -1,5 +1,7 @@
 # Issue tracker: GitHub
 
+Before any public write or edit, follow the [public content and editing rules](../../CONTRIBUTING.md#public-issues-and-pull-requests). Use only the template's sections and keep working notes in private records.
+
 Issues live in GitHub Issues in `pederbe/ripscope`. Use the `gh`
 CLI with `--repo pederbe/ripscope` on issue commands.
 
