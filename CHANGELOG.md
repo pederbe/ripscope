@@ -7,6 +7,48 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-12
+
+### Changed
+
+- **Breaking:** Installers and editor install commands always resolve the latest release, including commands run from old or development checkouts. ([#126](https://github.com/pederbe/ripscope/pull/126))
+
+  Release-version overrides and checkout-based selection are removed. Remove version overrides from installation commands and follow the latest-release installation instructions.
+
+- **Breaking:** Editor plugins always discover the current file's project and refresh saved changes. Windows sessions remove their watch markers before completing a reply, so closing an editor immediately after a search leaves no temporary marker behind. ([#129](https://github.com/pederbe/ripscope/pull/129))
+
+  Remove Vim and Neovim project, index and source-selection overrides, and manual-refresh settings from all editors. Use `cscope.files` to select sources. Installer mirrors, forced reinstalls and `--no-auto-refresh` are removed. CLI `-d`, `-f`, `-i`, `-R` and explicit source files remain available.
+
+- Build Linux releases with Zig's GNU cross-toolchain while retaining glibc 2.28 compatibility. Remove the shared GCC runtime dependency and its Homebrew and conda relocation steps. Nix still relocates the ELF interpreter. ([#132](https://github.com/pederbe/ripscope/pull/132))
+
+### Added
+
+- Include a ready-to-use Arch binary-package recipe bundle and SHA-256 sidecar in weekly releases. Build a local pacman package with `makepkg --check`, without running the Rust preparation tool. ([#131](https://github.com/pederbe/ripscope/pull/131))
+
+### Fixed
+
+- Refuse pipes and devices used as file lists, live source files or indexes without waiting for input. Symbolic links to regular files remain supported. Avoid repeated scans when recording navigation answers for source lines with many distinct names. The index format and query results are unchanged. Source builds can opt into Hotpath timing for index posting construction, disabled by default. ([#119](https://github.com/pederbe/ripscope/pull/119))
+
+### Dependencies
+
+- Update runtime and build dependencies. ([#128](https://github.com/pederbe/ripscope/pull/128)) ([#134](https://github.com/pederbe/ripscope/pull/134))
+
+### Documentation
+
+- Document cargo-binstall installation from the published Linux and Windows binaries. ([#120](https://github.com/pederbe/ripscope/pull/120))
+
+- Make the README sufficient for installation and everyday use. Add guides for switching from cscope and using Ripscope in scripts, plus troubleshooting help. Move decision records and website hosting instructions to the repository, with redirects from their old book addresses. ([#122](https://github.com/pederbe/ripscope/pull/122))
+
+- Open command help with examples, list searches and common options first, and link to the command reference. Accepted options, standard output and exit status are unchanged. ([#123](https://github.com/pederbe/ripscope/pull/123))
+
+- Keep editor setup examples independent of the installed release version. ([#125](https://github.com/pederbe/ripscope/pull/125))
+
+- Restore punctuation before
+  installation-directory and uninstall commands. ([#137](https://github.com/pederbe/ripscope/pull/137))
+
+[Full comparison](https://github.com/pederbe/ripscope/compare/v0.2.7...v0.3.0)
+
+
 
 ## [0.2.7] - 2026-11-09
 
