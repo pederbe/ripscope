@@ -26,9 +26,9 @@ mod executable_fixture;
 mod archive;
 mod common;
 mod linux;
+mod metadata;
 mod repository;
 mod smoke;
-mod weekly;
 mod windows;
 mod winget;
 mod winget_submission;
@@ -36,7 +36,7 @@ mod workflow;
 
 use std::process::ExitCode;
 
-const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | check-automated-environment | prepare-weekly | release-notes | winget | winget-check | package-repository | package-repository-check | package-repository-upload | profile) [OPTIONS]\n\
+const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | check-automated-environment | release-notes | winget | winget-check | package-repository | package-repository-check | package-repository-upload | profile) [OPTIONS]\n\
 Run a command with --help for its options. See docs/linux-release.md and docs/windows-release.md.";
 
 fn main() -> ExitCode {
@@ -48,8 +48,7 @@ fn main() -> ExitCode {
         Some("check-tag") => workflow::check_tag(&args[1..]),
         Some("check-automated-environment") => workflow::check_automated_environment(&args[1..]),
         Some("check-environment") => workflow::check_environment(&args[1..]),
-        Some("prepare-weekly") => weekly::prepare(&args[1..]),
-        Some("release-notes") => weekly::notes(&args[1..]),
+        Some("release-notes") => metadata::notes(&args[1..]),
         Some("winget") => winget::run(&args[1..]),
         Some("winget-check") => winget::check(&args[1..]),
         Some("winget-submit") => winget_submission::run(&args[1..]),
