@@ -8,4 +8,18 @@ git_tag_name = "v{{ version }}"
 release_always = false
 features_always_increment_minor = true
 pr_name = "chore: release{% if version %} v{{ version }}{% endif %}"
-release_commits = '^(feat|fix|perf|revert)(\([^)]*\))?!?:|^[a-z]+(\([^)]*\))?!:|^[A-Z]|(?m:^(?:BREAKING[ -]CHANGE:|Changelog: (?:Added|Changed|Fixed|Removed|Deprecated|Security|Performance|Dependencies):))'
+pr_body = """
+## Problem
+
+Unreleased changes need a versioned release.
+
+## Solution
+Update the Cargo version and matching editor metadata.
+
+Update CHANGELOG.md with short entries linked to their pull requests.
+
+## Validation
+
+Required CI checks validate this release before automatic merging.
+"""
+release_commits = '^(feat|fix|perf|revert)(\([^)]*\))?!?:|^[a-z]+(\([^)]*\))?!:|^[A-Z]|(?m:^BREAKING[ -]CHANGE:)'

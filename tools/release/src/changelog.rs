@@ -14,64 +14,41 @@ const CATEGORIES: &[&str] = &[
     "Performance",
     "Dependencies",
     "Documentation",
+    "Other changes",
 ];
 
 #[derive(Debug)]
 struct Note {
     category: String,
     text: String,
-    breaking: Option<String>,
+    breaking: bool,
 }
 
 fn note(commit: &Value) -> Result<Note> {
-    if commit["conventional"] != true {
-        return Err(
-            "use a conventional title and separate footers from the description with a blank line"
-                .into(),
-        );
+    let category = commit["group"]
+        .as_str()
+        .ok_or("missing changelog group")?
+        .rsplit("-->")
+        .next()
+        .unwrap_or("")
+        .trim();
+    if !CATEGORIES.contains(&category) {
+        return Err(format!("unknown changelog group: {category}").into());
     }
-    let footers = commit["footers"]
-        .as_array()
-        .ok_or("missing conventional footers")?;
-    let notes: Vec<_> = footers
-        .iter()
-        .filter(|f| f["token"] == "Changelog")
-        .collect();
-    if notes.len() != 1 {
-        return Err("add one Changelog: CATEGORY: complete user-facing description footer".into());
-    }
-    let value = notes[0]["value"].as_str().ok_or("missing note text")?;
-    let (category, text) = value
-        .split_once(':')
-        .ok_or("Changelog needs CATEGORY: description")?;
-    let (category, text) = (category.trim(), text.trim());
-    if !CATEGORIES.contains(&category)
-        || text.is_empty()
-        || text.contains("<!--")
-        || text.contains("\n##")
-    {
-        return Err(
-            "Changelog needs a supported category and prose, without template comments or headings"
-                .into(),
-        );
-    }
-    let breaking = if commit["breaking"] == true {
-        Some(
-            footers
-                .iter()
-                .find(|f| f["breaking"] == true)
-                .and_then(|f| f["value"].as_str())
-                .filter(|s| !s.trim().is_empty())
-                .ok_or("a breaking change needs BREAKING CHANGE: upgrade instructions")?
-                .to_owned(),
-        )
-    } else {
-        None
-    };
+    let title = commit["message"]
+        .as_str()
+        .unwrap_or("")
+        .lines()
+        .next()
+        .unwrap_or("")
+        .trim();
+    let title = Regex::new(r" [(]#[0-9]+[)]$")?.replace(title, "");
+    let mut chars = title.chars();
+    let first = chars.next().ok_or("empty changelog title")?;
     Ok(Note {
         category: category.into(),
-        text: text.into(),
-        breaking,
+        text: first.to_uppercase().collect::<String>() + chars.as_str(),
+        breaking: commit["breaking"] == true,
     })
 }
 
@@ -94,40 +71,6 @@ fn context(root: &Path, range: &str, extra: Option<&str>) -> Result<Vec<Value>> 
         .collect())
 }
 
-pub fn check_pr(args: &[String]) -> Result<()> {
-    let [file] = args else {
-        return Err("usage: ripscope-release check-pr-note EVENT_JSON".into());
-    };
-    let event: Value = serde_json::from_slice(&fs::read(file)?)?;
-    let pr = &event["pull_request"];
-    if pr["head"]["ref"]
-        .as_str()
-        .is_some_and(|branch| branch.starts_with("release-plz-"))
-    {
-        // The release PR carries generated output, checked separately against
-        // the complete source range by the required changelog CI job.
-        return Ok(());
-    }
-    let title = pr["title"].as_str().ok_or("pull request title missing")?;
-    let body = pr["body"].as_str().unwrap_or("");
-    let source = pr["number"]
-        .as_u64()
-        .map_or(String::new(), |n| format!(" (#{n})"));
-    let message = format!("{title}{source}\n\n{body}");
-    let commits = context(&repository()?, "HEAD..HEAD", Some(&message))?;
-    if commits.is_empty()
-        && ["\nChangelog:", "\nBREAKING CHANGE:", "\nBREAKING-CHANGE:"]
-            .iter()
-            .any(|m| message.contains(m))
-    {
-        return Err("the recorded note did not parse as a supported conventional footer".into());
-    }
-    for commit in commits {
-        note(&commit)?;
-    }
-    Ok(())
-}
-
 fn words(text: &str) -> String {
     text.split_whitespace().collect::<Vec<_>>().join(" ")
 }
@@ -148,13 +91,9 @@ fn check_section(section: &str, commits: &[Value]) -> Result<()> {
         if !headings.contains(note.category.as_str()) {
             return Err(format!("missing {} section", note.category).into());
         }
-        if !section_words.contains(&words(&note.text)) {
-            return Err(format!("missing changelog note: {}", note.text).into());
-        }
-        if let Some(breaking) = note.breaking
-            && !section_words.contains(&words(&breaking))
-        {
-            return Err("missing breaking-change upgrade instructions".into());
+        let marker = if note.breaking { "**Breaking:** " } else { "" };
+        if !section_words.contains(&format!("- {marker}{}", words(&note.text))) {
+            return Err(format!("missing short entry or breaking marker: {}", note.text).into());
         }
         if let Some(captures) = reference.captures(message.lines().next().unwrap_or("")) {
             let link = format!("https://github.com/pederbe/ripscope/pull/{}", &captures[1]);
@@ -223,40 +162,16 @@ mod tests {
         git(&["config", "user.email", "fixture@example.invalid"]);
         git(&["commit", "--allow-empty", "-qm", "chore: initial version"]);
         git(&["tag", "v0.2.7"]);
-        // Exercise the actual parser, including normal GitHub/Renovate footer forms.
-        for (message, success) in [
-            ("fix: missing note", false),
-            (
-                "fix: preserve note\n\nIntro\nChangelog: Fixed: Required detail.",
-                false,
-            ),
-            (
-                "fix: preserve note\n\nChangelog: Fixed: Required detail.\n\nCloses #107",
-                true,
-            ),
-            (
-                "fix: compatibility\n\nChangelog: Changed: New representation.\n\nBREAKING CHANGE: ",
-                false,
-            ),
-            (
-                "fix!: compatibility\n\nChangelog: Changed: New representation.",
-                false,
-            ),
-            (
-                "fix: preserve note\n\nChangelog: Fixed: Required detail.",
-                true,
-            ),
-            (
-                "fix(deps): update dependencies\n\n## Package changes\n\nA realistic Renovate body.\n\n---\n\nChangelog: Dependencies: Update runtime and build dependencies.",
-                true,
-            ),
+        // Titles alone supply the entry. Bodies and legacy footers stay out.
+        for message in [
+            "fix: preserve a short entry",
+            "fix!: replace old configuration",
+            "fix: preserve a short entry\n\n## Solution\n\nPrivate detail stays out.",
+            "fix(deps)!: replace the parser\n\nBREAKING CHANGE: Full upgrade steps.",
         ] {
             let commits = context(root.path(), "HEAD..HEAD", Some(message)).unwrap();
-            assert_eq!(
-                !commits.is_empty() && commits.iter().all(|c| note(c).is_ok()),
-                success,
-                "{message}: {commits:?}"
-            );
+            assert!(!commits.is_empty(), "{message}");
+            assert!(commits.iter().all(|c| note(c).is_ok()), "{commits:?}");
         }
         let current = [
             "Cross-build Linux releases with Zig while preserving glibc 2.28 (#132)",
@@ -301,7 +216,7 @@ mod tests {
         ]);
         let first = render("v0.2.7", "v0.3.0");
         check_section(&first, &context(root.path(), "v0.2.7..HEAD", None).unwrap()).unwrap();
-        assert_eq!(first.matches("### Changed").count(), 1);
+        assert_eq!(first.matches("### Fixed").count(), 1);
         assert!(!first.contains("manage weekly releases"));
         git(&["commit", "--allow-empty", "-qm", "chore: release v0.3.0"]);
         git(&["tag", "v0.3.0"]);
@@ -309,6 +224,7 @@ mod tests {
             "fix: keep multiline instructions (#900)\n\nChangelog: Fixed: Keep the first paragraph.\n\nKeep the second paragraph, including its explanation: nothing is truncated.",
             "docs: explain editor recovery (#901)\n\nChangelog: Documentation: Explain how to recover a disconnected editor session.",
             "ci: change the build cache (#902)",
+            "fix: handle lookups (#42) after a file move (#908)",
             "fix(deps): update the parser (#904)\n\nChangelog: Dependencies: Update the parser dependency and keep non-ASCII names intact.",
             "fix(deps)!: replace parser configuration (#905)\n\nChangelog: Dependencies: Upgrade the parser dependency and replace its obsolete configuration.\n\nBREAKING CHANGE: Rename parser_mode to parser-mode in saved configuration.",
             "fix(deps): update dependencies (#906)\n\nChangelog: Dependencies: Update runtime and build dependencies.",
@@ -344,19 +260,17 @@ mod tests {
         check_section(&second, &commits).unwrap();
         assert!(!second.contains("glibc"));
         assert!(!second.contains("build cache"));
-        assert!(
-            second.contains("second paragraph, including its explanation: nothing is truncated.")
-        );
+        assert!(!second.contains("second paragraph"));
         assert_eq!(second.matches("### Fixed").count(), 1);
-        assert_eq!(
-            second
-                .matches("Update runtime and build dependencies.")
-                .count(),
-            1
+        assert_eq!(second.matches("- Update dependencies ").count(), 2);
+        assert!(second.contains("Update the parser"));
+        assert!(second.contains("Handle lookups (#42) after a file move ([#908](https://github.com/pederbe/ripscope/pull/908))"));
+        assert!(!second.contains("Rename parser_mode"));
+        assert!(second.contains("**Breaking:** Replace parser configuration"));
+        assert!(check_section(&second.replace("**Breaking:** ", ""), &commits).is_err());
+        assert!(
+            check_section(&second.replace("Keep multiline instructions", ""), &commits).is_err()
         );
-        assert!(second.contains("non-ASCII names intact"));
-        assert!(second.contains("Rename parser_mode to parser-mode in saved configuration."));
-        assert!(check_section(&second.replace("Keep the first paragraph.", ""), &commits).is_err());
         assert!(check_section(&second.replace("/pull/904", "/pull/999"), &commits).is_err());
     }
 }

@@ -1,46 +1,32 @@
 name: Bug report
 description: Ripscope crashed, refused valid input, or returned wrong results.
-labels: ["bug"]
+labels: [bug]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting. If the problem is a difference from cscope's output,
-        use the **Compatibility difference** template instead.
+        For a difference from cscope, use the **Compatibility difference** form instead.
   - type: textarea
-    id: what-happened
+    id: problem
     attributes:
-      label: What happened
-      description: What you ran, what you expected and what you got. Paste exact output, including any error message.
+      label: Problem
+      description: |
+        What happened, and how does it affect your task?
     validations:
       required: true
   - type: textarea
-    id: reproduce
+    id: outcome
     attributes:
-      label: Reproduction
-      description: The smallest source file(s) and commands that reproduce the problem.
-      render: shell
+      label: Desired outcome
+      description: |
+        What should happen instead? You do not need to propose a fix.
     validations:
       required: true
-  - type: input
-    id: version
+  - type: textarea
+    id: evidence
     attributes:
-      label: Ripscope version or commit
-      placeholder: "0.1.0, or the output of git rev-parse HEAD"
+      label: Evidence
+      description: |
+        Include the smallest source files, commands, exact output or error, Ripscope version or commit, platform and editor integration where available. Describe your observations even if you cannot reproduce the problem yet, and say which details are unknown.
     validations:
       required: true
-  - type: dropdown
-    id: platform
-    attributes:
-      label: Platform
-      options:
-        - Linux x86-64
-        - Windows x86-64
-        - Other
-    validations:
-      required: true
-  - type: input
-    id: editor
-    attributes:
-      label: Editor integration (if any)
-      placeholder: "Vim 9.1, Neovim 0.11, Emacs 31, none"

@@ -97,8 +97,7 @@ jobs:
               commit -m 'chore: complete release notes and editor metadata'
             git push origin "HEAD:refs/heads/$RELEASE_BRANCH"
           fi
-          RUSTFLAGS='' cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- release-notes "v$version" "$RUNNER_TEMP/release-notes.md"
-          gh pr edit "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --title "chore: release v$version" --body-file "$RUNNER_TEMP/release-notes.md"
+          gh pr edit "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --title "chore: release v$version"
       - name: Merge the release pull request once CI passes
         if: steps.release-plz.outputs.prs_created == 'true'
         env:

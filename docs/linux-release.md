@@ -262,28 +262,28 @@ they do not measure performance or establish broad platform qualification.
 
 Every Thursday at 06:43 UTC, `.github/workflows/release-plz.yml` opens or updates
 one release pull request using release-plz. The request raises the version and
-adds a dated changelog section from the changes' structured notes. It updates the
+adds a dated changelog section with short entries from pull request titles. It updates the
 Emacs package header to the same version and enables auto-merge after required CI.
 Pushes to `main` refresh an open release pull request without starting a new one
 between scheduled runs. Disable the workflow to stop weekly preparation.
 
 The workflow uses the existing `RELEASE_PLZ_TOKEN` secret for release pull requests
 so GitHub runs their required CI. Squash merges preserve the pull request title
-and description. Git-cliff renders each change's `Changelog:` footer from the
-complete range since the last published tag, including editor, installer,
-documentation and build changes outside the Cargo package. Native text replacements
-provide the notes for changes merged before this format was introduced.
-Conventional prefixes keep internal changes out. Breaking changes retain their
-upgrade instructions. Before 1.0, features and
-breaking changes raise the minor version. A week with only internal changes makes
-no release. Documentation alone also waits for a releasable change. Review the
-recorded note inputs in normal pull requests. Preparation checks every note,
-source link and breaking-change paragraph against the generated section before
-enabling auto-merge. The publisher repeats the coverage check on its exact source.
-Git-cliff also checks the full range's version increment, and release-plz applies
-any higher required version before the notes and Emacs header are finalized.
-This includes compatibility changes outside the Cargo package. No owner review
-is required for each weekly release. Unreleased stays empty.
+and description. Git-cliff renders short entries from the complete range since
+the last published tag, including editor, installer, documentation and build
+changes outside the Cargo package. Entries mark breaking changes and link to
+the pull request, whose Solution section contains any upgrade instructions.
+No changelog footer is required. Conventional prefixes keep internal changes
+out. Before 1.0, features and breaking changes raise the minor version.
+A week with only internal changes makes no release. Documentation alone waits
+for a releasable change.
+
+Preparation checks entries, breaking markers and source links against the
+generated section before enabling auto-merge. The publisher repeats this check
+on its exact source. Git-cliff also checks the full range's version increment,
+and release-plz applies any higher required version before the notes and Emacs
+header are finalized. This includes compatibility changes outside the Cargo
+package. Unreleased stays empty.
 
 Merging the release pull request commits its metadata on `main`. Release-plz tags
 that commit, with Cargo publication and GitHub release creation disabled in its

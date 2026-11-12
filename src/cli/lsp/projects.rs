@@ -137,7 +137,7 @@ impl Session {
                 .into_iter()
                 .chain(selection)
                 .collect();
-            pipeline::run_in(
+            let _ = pipeline::run_in(
                 &args,
                 &root,
                 &mut BufReader::new(session_input),
