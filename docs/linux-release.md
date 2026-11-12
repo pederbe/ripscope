@@ -352,7 +352,6 @@ commit, and use the matching release filename:
 ```sh
 gh attestation verify ripscope-0.1.0-x86_64-linux-gnu.tar.gz \
   --repo pederbe/ripscope \
-  --signer-repo pederbe/ripscope \
   --signer-workflow pederbe/ripscope/.github/workflows/release.yml \
   --signer-digest FULL_SOURCE_COMMIT \
   --source-ref refs/tags/v0.1.0 \
