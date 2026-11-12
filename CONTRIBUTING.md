@@ -124,7 +124,9 @@ source file is replaced by an editor's atomic save.
 Choose Added, Changed, Fixed, Removed, Deprecated, Security, Performance,
 Dependencies or Documentation. Continuation lines and paragraphs are kept.
 Explain what users can do, what changed and any action they need to take. Cover
-every user-facing part of the change in this block. Internal-only changes can use
+every user-facing part of the change in this block. Put commands, options and
+literal names in Markdown backticks so the book preserves them exactly.
+Internal-only changes can use
 an internal title without a footer. Do not mark a user-facing change as internal.
 Renovate supplies dependency notes automatically.
 

@@ -85,10 +85,10 @@ BREAKING CHANGE: Release-version overrides and checkout-based selection are remo
 
 Changelog: Changed: Editor plugins always discover the current file's project and refresh saved changes. Windows sessions remove their watch markers before completing a reply, so closing an editor immediately after a search leaves no temporary marker behind.
 
-BREAKING CHANGE: Remove Vim and Neovim project, index and source-selection overrides, and manual-refresh settings from all editors. Use cscope.files to select sources. Installer mirrors, forced reinstalls and --no-auto-refresh are removed. CLI -d, -f, -i, -R and explicit source files remain available.""" },
+BREAKING CHANGE: Remove Vim and Neovim project, index and source-selection overrides, and manual-refresh settings from all editors. Use `cscope.files` to select sources. Installer mirrors, forced reinstalls and `--no-auto-refresh` are removed. CLI `-d`, `-f`, `-i`, `-R` and explicit source files remain available.""" },
   { pattern = '(?s)^[^\n]* \(#131\)(?:\n.*)?$', replace = """feat: provide an Arch package recipe with each Linux release (#131)
 
-Changelog: Added: Include a ready-to-use Arch binary-package recipe bundle and SHA-256 sidecar in weekly releases. Build a local pacman package with makepkg --check, without running the Rust preparation tool.""" },
+Changelog: Added: Include a ready-to-use Arch binary-package recipe bundle and SHA-256 sidecar in weekly releases. Build a local pacman package with `makepkg --check`, without running the Rust preparation tool.""" },
   { pattern = '(?s)^[^\n]* \(#132\)(?:\n.*)?$', replace = """build: retain Linux compatibility with the current GNU toolchain (#132)
 
 Changelog: Changed: Build Linux releases with Zig's GNU cross-toolchain while retaining glibc 2.28 compatibility. Remove the shared GCC runtime dependency and its Homebrew and conda relocation steps. Nix still relocates the ELF interpreter.""" },
