@@ -280,7 +280,10 @@ no release. Documentation alone also waits for a releasable change. Review the
 recorded note inputs in normal pull requests. Preparation checks every note,
 source link and breaking-change paragraph against the generated section before
 enabling auto-merge. The publisher repeats the coverage check on its exact source.
-No owner review is required for each weekly release. Unreleased stays empty.
+Git-cliff also checks the full range's version increment, and release-plz applies
+any higher required version before the notes and Emacs header are finalized.
+This includes compatibility changes outside the Cargo package. No owner review
+is required for each weekly release. Unreleased stays empty.
 
 Merging the release pull request commits its metadata on `main`. Release-plz tags
 that commit, with Cargo publication and GitHub release creation disabled in its

@@ -211,6 +211,7 @@ mod delivery_tests {
             .env("TAG", "v0.2.6")
             .env("CLOUDFLARE_DEPLOY_HOOK", "https://example.invalid/hook")
             .env("GITHUB_OUTPUT", root.join("output"))
+            .env("PR_NUMBER", "123")
             .env(
                 "RELEASES",
                 r#"[{"package_name":"ripscope","tag":"v0.3.0"}]"#,
@@ -410,7 +411,15 @@ echo "$FIXTURE_MODE"
             "# Changelog\n\n## [Unreleased]\n\n## [0.2.7] - 2026-11-09\n\nOld notes\n",
         )
         .unwrap();
-        git(&["add", "contrib/emacs/ripscope.el", "CHANGELOG.md"]);
+        fs::write(root.path().join("Cargo.toml"), "version = \"0.2.8\"\n").unwrap();
+        fs::write(root.path().join("Cargo.lock"), "version = \"0.2.8\"\n").unwrap();
+        git(&[
+            "add",
+            "contrib/emacs/ripscope.el",
+            "CHANGELOG.md",
+            "Cargo.toml",
+            "Cargo.lock",
+        ]);
         git(&["commit", "--quiet", "-m", "Initial metadata"]);
         git(&["init", "--bare", "--quiet", "remote.git"]);
         git(&["remote", "add", "origin", "remote.git"]);
@@ -429,14 +438,24 @@ echo "$FIXTURE_MODE"
         executable(
             root.path(),
             "git-cliff",
-            "#!/bin/bash\nprintf '# Changelog\\n\\n## [Unreleased]\\n\\n## [0.3.0] - 2026-11-12\\n\\n### Changed\\n\\n- Complete notes\\n' > CHANGELOG.md\n",
+            "#!/bin/bash\ncase \" $* \" in\n  *' --bumped-version '*) echo v0.3.0;;\n  *) printf '# Changelog\\n\\n## [Unreleased]\\n\\n## [0.3.0] - 2026-11-12\\n\\n### Changed\\n\\n- Complete notes\\n' > CHANGELOG.md;;\nesac\n",
+        );
+        executable(
+            root.path(),
+            "release-plz",
+            r#"#!/bin/bash
+set -euo pipefail
+echo "$*" >> "$FIXTURE_TRACE"
+sed -i "s/^version = .*/version = \"${2#ripscope@}\"/" Cargo.toml Cargo.lock
+"#,
         );
         executable(
             root.path(),
             "cargo",
             r#"#!/bin/bash
 if [ "$1" = metadata ]; then
-  printf '%s\n' '{"packages":[{"name":"ripscope","version":"0.3.0"}]}'
+  version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml)
+  printf '{"packages":[{"name":"ripscope","version":"%s"}]}\n' "$version"
 else
   test "$FIXTURE_MODE" != invalid-notes
 fi
@@ -458,6 +477,10 @@ fi
         assert_eq!(
             git(&["rev-parse", "refs/remotes/origin/release-plz-fixture"]),
             updated
+        );
+        assert_eq!(
+            fs::read_to_string(root.path().join("trace")).unwrap(),
+            "set-version ripscope@0.3.0\n"
         );
         let output = run(root.path(), &script, "invalid-notes");
         assert!(!output.status.success(), "{output:?}");

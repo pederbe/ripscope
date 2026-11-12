@@ -21,10 +21,7 @@ body = """
 ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
 {%- for group, commits in commits | group_by(attribute="group") -%}
 {{ "\n\n### " }}{{ group | striptags | trim }}{{ "\n\n" }}
-{%- if group == "<!-- 4 -->Dependencies" -%}
-- Update runtime and build dependencies.\
-{% for commit in commits %} {{ self::source(commit=commit) }}{% endfor %}{{ "\n" }}
-{%- else -%}
+{%- set_global automated_dependencies = [] -%}
 {%- for commit in commits -%}
 {%- set notes = commit.footers | default(value=[]) | filter(attribute="token", value="Changelog") -%}
 {%- if notes | length > 0 -%}
@@ -32,12 +29,19 @@ body = """
 {%- else -%}
 {%- set note = commit.message | split(pat=" (#") | first | trim | upper_first -%}
 {%- endif -%}
+{%- if group == "<!-- 4 -->Dependencies" and note == "Update runtime and build dependencies." and not commit.breaking -%}
+{%- set_global automated_dependencies = automated_dependencies | concat(with=[commit]) -%}
+{%- else -%}
 {{ "- " }}{% if commit.breaking %}**Breaking:** {% endif %}{{ note | replace(from="\n", to="\n  ") }} {{ self::source(commit=commit) }}{{ "\n" }}
 {%- if commit.breaking and commit.breaking_description -%}
 {{ "\n  " }}{{ commit.breaking_description | trim | replace(from="\n", to="\n  ") }}{{ "\n" }}
 {%- endif -%}
 {{ "\n" }}
+{%- endif -%}
 {%- endfor -%}
+{%- if automated_dependencies | length > 0 -%}
+- Update runtime and build dependencies.\
+{% for commit in automated_dependencies %} {{ self::source(commit=commit) }}{% endfor %}{{ "\n" }}
 {%- endif -%}
 {%- endfor -%}
 {{ "\n[Full comparison](https://github.com/pederbe/ripscope/compare/v" }}{{ previous.version | trim_start_matches(pat="v") }}...v{{ version | trim_start_matches(pat="v") }}){{ "\n" }}
@@ -95,6 +99,8 @@ Changelog: Changed: Build Linux releases with Zig's GNU cross-toolchain while re
 Changelog: Dependencies: Update runtime and build dependencies.""" },
 ]
 commit_parsers = [
+  # GitHub's temporary PR merge commit is validation scaffolding, not a change.
+  { message = '^Merge [0-9a-f]+ into [0-9a-f]+', skip = true },
   { footer = '^Changelog:\s*Added:', group = "<!-- 1 -->Added" },
   { footer = '^Changelog:\s*Changed:', group = "<!-- 0 -->Changed" },
   { footer = '^Changelog:\s*Fixed:', group = "<!-- 2 -->Fixed" },
@@ -117,3 +123,7 @@ commit_parsers = [
   { message = "^(chore|ci|build|test|style|refactor)(\\([^)]*\\))?:", skip = true },
   { message = ".*", group = "<!-- 6 -->Other changes" },
 ]
+
+[bump]
+features_always_bump_minor = true
+breaking_always_bump_major = false

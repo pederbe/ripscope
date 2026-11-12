@@ -17,6 +17,10 @@ fn workflow() -> String {
 #[test]
 fn required_ci_waits_for_every_job_and_every_pr_workflow() {
     let workflow = workflow();
+    assert!(
+        workflow.contains("types: [opened, synchronize, reopened, edited]"),
+        "editing release-note metadata must refresh its required check"
+    );
     let jobs = workflow.split_once("\njobs:\n").unwrap().1;
     let job_names: BTreeSet<_> = jobs
         .lines()
