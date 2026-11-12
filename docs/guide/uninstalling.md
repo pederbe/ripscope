@@ -6,13 +6,13 @@ touched.
 ## Installed with a script
 
 The install script removes what it installed: the executable, its notices
-directories and the editor integrations. On Linux, run
+directories and the editor integrations. On Linux, run:
 
 ```sh
 curl -fsSL https://ripscope.com/install.sh | sh -s -- --uninstall
 ```
 
-In PowerShell, run
+In PowerShell, run:
 
 ```powershell
 & ([scriptblock]::Create((irm https://ripscope.com/install.ps1))) -Uninstall
@@ -39,13 +39,13 @@ executable the plugin installed.
 
 ## Installed with a system package
 
-On Debian or Ubuntu, run
+On Debian or Ubuntu, run:
 
 ```sh
 sudo apt remove ripscope
 ```
 
-On Fedora or RHEL-family systems, run
+On Fedora or RHEL-family systems, run:
 
 ```sh
 sudo dnf remove ripscope
