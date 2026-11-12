@@ -58,8 +58,10 @@ and Project. Run every example you add or change and paste its real output.
 [ARCHITECTURE.md](https://github.com/pederbe/ripscope/blob/main/ARCHITECTURE.md) maps
 the main parts of the code and the folders around it. The
 [glossary](https://ripscope.com/docs/reference/glossary) defines the project's terms.
-Please use them. Design decisions are recorded in
-[docs/adr](https://github.com/pederbe/ripscope/tree/main/docs/adr).
+Please use them.
+
+[Design decisions](https://github.com/pederbe/ripscope/tree/main/docs/adr)
+explain the reasoning behind important technical choices.
 
 Code, including tests and tools, is Rust. The language check
 (`tests/language_check.rs`) names the only exceptions and the languages each allows.
