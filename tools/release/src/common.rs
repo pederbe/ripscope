@@ -478,7 +478,7 @@ pub fn copy_tree(origin: &Path, target: &Path) -> Result<()> {
 }
 
 /// The checkout paths every release build copies and records.
-pub const SOURCE_INPUTS: [&str; 13] = [
+pub const SOURCE_INPUTS: [&str; 14] = [
     ".github/workflows",
     "src",
     "tests",
@@ -488,6 +488,7 @@ pub const SOURCE_INPUTS: [&str; 13] = [
     "plugin",
     "lua",
     "README.md",
+    "CHANGELOG.md",
     "Cargo.toml",
     "Cargo.lock",
     "LICENSE-MIT",
@@ -508,12 +509,12 @@ pub fn copy_source(repo: &Path, source: &Path, extras: &[&str]) -> Result<()> {
     Ok(())
 }
 
-/// Keeps editor sources and their separate licence beside the executable.
+/// Keeps release notes, editor sources and their licences beside the executable.
 ///
 /// The Vim and Neovim plugin, at the repository root for plugin managers, becomes the
 /// archive's `contrib/vim`, the directory the installers copy into the editors.
 pub fn delivery_files(source: &Path, package: &Path) -> Result<()> {
-    for name in ["LICENSE-MIT", "LICENSE-APACHE", "README.md"] {
+    for name in ["LICENSE-MIT", "LICENSE-APACHE", "README.md", "CHANGELOG.md"] {
         copy_file(&source.join(name), &package.join(name))?;
     }
     copy_tree(&source.join("contrib"), &package.join("contrib"))?;
@@ -650,6 +651,7 @@ mod tests {
             }
         }
         let inputs = [
+            "CHANGELOG.md",
             ".github/workflows/ci.yml",
             ".github/workflows/release.yml",
             "examples/assessment.rs",
@@ -670,7 +672,7 @@ mod tests {
     }
 
     #[test]
-    fn editor_files_are_delivered_unchanged() {
+    fn release_notes_and_editor_files_are_delivered_unchanged() {
         let root = tempfile::tempdir().unwrap();
         let (source, package) = (root.path().join("source"), root.path().join("package"));
         fs::create_dir(&source).unwrap();
@@ -679,6 +681,7 @@ mod tests {
             "LICENSE-MIT",
             "LICENSE-APACHE",
             "README.md",
+            "CHANGELOG.md",
             "contrib/emacs/ripscope.el",
             "plugin/ripscope.vim",
             "lua/ripscope.lua",
