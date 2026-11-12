@@ -7,7 +7,7 @@ index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
 
-## [0.3.0] - 2026-11-12
+## [0.3.1] - 2026-11-12
 
 ### Changed
 
@@ -29,6 +29,11 @@ index format or command-line behavior, and its entry says so.
 
 - Refuse pipes and devices used as file lists, live source files or indexes without waiting for input. Symbolic links to regular files remain supported. Avoid repeated scans when recording navigation answers for source lines with many distinct names. The index format and query results are unchanged. Source builds can opt into Hotpath timing for index posting construction, disabled by default. ([#119](https://github.com/pederbe/ripscope/pull/119))
 
+- Include the complete changelog in Linux and Windows
+  release
+  archives, so release explanations and upgrade instructions are available
+  offline. ([#139](https://github.com/pederbe/ripscope/pull/139))
+
 ### Dependencies
 
 - Update runtime and build dependencies. ([#128](https://github.com/pederbe/ripscope/pull/128)) ([#134](https://github.com/pederbe/ripscope/pull/134))
@@ -46,7 +51,7 @@ index format or command-line behavior, and its entry says so.
 - Restore punctuation before
   installation-directory and uninstall commands. ([#137](https://github.com/pederbe/ripscope/pull/137))
 
-[Full comparison](https://github.com/pederbe/ripscope/compare/v0.2.7...v0.3.0)
+[Full comparison](https://github.com/pederbe/ripscope/compare/v0.2.7...v0.3.1)
 
 
 
