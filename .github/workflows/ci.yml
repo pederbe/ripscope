@@ -6,6 +6,7 @@ name: CI
 
 on:
   pull_request:
+    types: [opened, synchronize, reopened, edited]
   schedule:
     - cron: "17 3 * * 1"
   workflow_dispatch:
@@ -66,6 +67,7 @@ jobs:
               - '!.github/workflows/release.yml'
               - '!.github/workflows/release-plz.yml'
               - '!release-plz.toml'
+              - '!cliff.toml'
               - '!.github/workflows/winget.yml'
               - '!.github/workflows/package-repository.yml'
               - '!.github/workflows/website-deploy.yml'
@@ -76,6 +78,7 @@ jobs:
               - ".github/workflows/release.yml"
               - ".github/workflows/release-plz.yml"
               - "release-plz.toml"
+              - "cliff.toml"
               - ".github/workflows/winget.yml"
               - ".github/workflows/package-repository.yml"
               - ".github/workflows/website-deploy.yml"
@@ -102,6 +105,41 @@ jobs:
             packages_repository:
               - ".github/workflows/package-repository.yml"
               - "tools/release/src/repository.rs"
+
+  changelog:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-26.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
+        with:
+          toolchain: stable
+      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
+        with:
+          workspaces: tools/release
+      - uses: taiki-e/install-action@cfdb7ed4ccc7c7dce37759eae89dc5674b469b39 # v2
+        with:
+          tool: git-cliff@2.14.2
+      - name: Check the pull request's user-facing release note
+        env:
+          RUSTFLAGS: ''
+        run: cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- check-pr-note "$GITHUB_EVENT_PATH"
+      - name: Check generated current and future release notes
+        env:
+          RUSTFLAGS: ''
+        run: cargo test --locked --manifest-path tools/release/Cargo.toml changelog::tests -- --ignored
+      - name: Check the release candidate against all changes
+        if: startsWith(github.head_ref, 'release-plz-')
+        env:
+          RUSTFLAGS: ''
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          previous=$(gh api "repos/$GITHUB_REPOSITORY/releases/latest" --jq .tag_name)
+          cargo run --locked --quiet --manifest-path tools/release/Cargo.toml -- check-release-notes "$previous"
 
   check:
     name: ${{ matrix.os }}
@@ -206,7 +244,7 @@ jobs:
   # unneeded, and fails otherwise.
   ci:
     name: CI
-    needs: [changes, check, website, winget, packages-repository, binstall]
+    needs: [changes, changelog, check, website, winget, packages-repository, binstall]
     if: always()
     runs-on: ubuntu-26.04
     steps:

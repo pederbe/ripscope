@@ -2,50 +2,10 @@
 # The Release workflow builds and qualifies each tag, creates its GitHub release
 # and publishes the crate.
 publish = false
+changelog_update = false
 git_release_enable = false
 git_tag_name = "v{{ version }}"
 release_always = false
 features_always_increment_minor = true
 pr_name = "chore: release{% if version %} v{{ version }}{% endif %}"
-release_commits = '^(feat|fix|perf|revert)(\([^)]*\))?!?:|^[a-z]+(\([^)]*\))?!:|^[A-Z]|(?m:^BREAKING[ -]CHANGE:)'
-
-[changelog]
-header = """# Changelog
-
-## [Unreleased]
-"""
-body = """
-
-## [{{ version }}] - {{ timestamp | date(format="%Y-%m-%d") }}
-{% for group, commits in commits | group_by(attribute="group") %}
-### {{ group | striptags | trim }}
-{% for commit in commits | unique(attribute="message") %}
-- {% if commit.breaking %}**Breaking:** {% endif %}{{ commit.message | split(pat="\n") | first | trim | upper_first }}\
-{% if commit.breaking and commit.breaking_description and commit.breaking_description != commit.message %}
-
-{{ commit.breaking_description | trim }}
-
-{% endif %}
-{%- endfor %}
-{% endfor %}
-"""
-trim = true
-sort_commits = "oldest"
-protect_breaking_commits = true
-commit_preprocessors = [
-  { pattern = '\(#(\d+)\)', replace = "([#${1}](https://github.com/pederbe/ripscope/pull/${1}))" },
-]
-commit_parsers = [
-  { message = "^feat\\(remove\\)!?:", group = "<!-- 0 -->Removed" },
-  { message = "^feat\\(deprecate\\)!?:", group = "<!-- 1 -->Deprecated" },
-  { message = "^[a-z]+(\\([^)]*\\))?!:", group = "<!-- 0 -->Changed" },
-  { footer = "^BREAKING[ -]CHANGE:", group = "<!-- 0 -->Changed" },
-  { message = "^feat(\\([^)]*\\))?:", group = "<!-- 1 -->Added" },
-  { message = "^fix\\(deps\\):", group = "<!-- 4 -->Dependencies" },
-  { message = "^fix\\(security\\):", group = "<!-- 2 -->Security" },
-  { message = "^fix(\\([^)]*\\))?:", group = "<!-- 2 -->Fixed" },
-  { message = "^perf(\\([^)]*\\))?:", group = "<!-- 3 -->Performance" },
-  { message = "^docs(\\([^)]*\\))?:", group = "<!-- 5 -->Documentation" },
-  { message = "^(chore|ci|build|test|style|refactor)(\\([^)]*\\))?:", skip = true },
-  { message = ".*", group = "<!-- 6 -->Other changes" },
-]
+release_commits = '^(feat|fix|perf|revert)(\([^)]*\))?!?:|^[a-z]+(\([^)]*\))?!:|^[A-Z]|(?m:^(?:BREAKING[ -]CHANGE:|Changelog: (?:Added|Changed|Fixed|Removed|Deprecated|Security|Performance|Dependencies):))'

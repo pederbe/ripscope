@@ -211,6 +211,7 @@ mod delivery_tests {
             .env("TAG", "v0.2.6")
             .env("CLOUDFLARE_DEPLOY_HOOK", "https://example.invalid/hook")
             .env("GITHUB_OUTPUT", root.join("output"))
+            .env("PR_NUMBER", "123")
             .env(
                 "RELEASES",
                 r#"[{"package_name":"ripscope","tag":"v0.3.0"}]"#,
@@ -402,29 +403,67 @@ echo "$FIXTURE_MODE"
             String::from_utf8(output.stdout).unwrap()
         };
         git(&["init", "--quiet"]);
+        git(&["branch", "-M", "main"]);
         git(&["config", "user.name", "Fixture"]);
         git(&["config", "user.email", "fixture@example.invalid"]);
-        git(&["add", "contrib/emacs/ripscope.el"]);
+        fs::write(
+            root.path().join("CHANGELOG.md"),
+            "# Changelog\n\n## [Unreleased]\n\n## [0.2.7] - 2026-11-09\n\nOld notes\n",
+        )
+        .unwrap();
+        fs::write(root.path().join("Cargo.toml"), "version = \"0.2.8\"\n").unwrap();
+        fs::write(root.path().join("Cargo.lock"), "version = \"0.2.8\"\n").unwrap();
+        git(&[
+            "add",
+            "contrib/emacs/ripscope.el",
+            "CHANGELOG.md",
+            "Cargo.toml",
+            "Cargo.lock",
+        ]);
         git(&["commit", "--quiet", "-m", "Initial metadata"]);
         git(&["init", "--bare", "--quiet", "remote.git"]);
         git(&["remote", "add", "origin", "remote.git"]);
+        git(&["push", "--quiet", "origin", "main"]);
         git(&[
             "push",
             "--quiet",
             "origin",
             "HEAD:refs/heads/release-plz-fixture",
         ]);
-        executable(root.path(), "gh", "#!/bin/bash\nexit 0\n");
+        executable(
+            root.path(),
+            "gh",
+            "#!/bin/bash\nif [ \"$1\" = api ]; then echo v0.2.7; fi\n",
+        );
+        executable(
+            root.path(),
+            "git-cliff",
+            "#!/bin/bash\ncase \" $* \" in\n  *' --bumped-version '*) echo v0.3.0;;\n  *) printf '# Changelog\\n\\n## [Unreleased]\\n\\n## [0.3.0] - 2026-11-12\\n\\n### Changed\\n\\n- Complete notes\\n' > CHANGELOG.md;;\nesac\n",
+        );
+        executable(
+            root.path(),
+            "release-plz",
+            r#"#!/bin/bash
+set -euo pipefail
+echo "$*" >> "$FIXTURE_TRACE"
+sed -i "s/^version = .*/version = \"${2#ripscope@}\"/" Cargo.toml Cargo.lock
+"#,
+        );
         executable(
             root.path(),
             "cargo",
             r#"#!/bin/bash
-printf '%s\n' '{"packages":[{"name":"ripscope","version":"0.3.0"}]}'
+if [ "$1" = metadata ]; then
+  version=$(sed -n 's/^version = "\(.*\)"/\1/p' Cargo.toml)
+  printf '{"packages":[{"name":"ripscope","version":"%s"}]}\n' "$version"
+else
+  test "$FIXTURE_MODE" != invalid-notes
+fi
 "#,
         );
         let script = format!(
             "export RELEASE_BRANCH=release-plz-fixture\n{}",
-            release_step("Update the Emacs package version in the release pull request")
+            release_step("Complete and check the release pull request")
         );
         let output = run(root.path(), &script, "success");
         assert!(output.status.success(), "{output:?}");
@@ -435,6 +474,16 @@ printf '%s\n' '{"packages":[{"name":"ripscope","version":"0.3.0"}]}'
         let updated = git(&["rev-parse", "refs/remotes/origin/release-plz-fixture"]);
         let output = run(root.path(), &script, "success");
         assert!(output.status.success(), "{output:?}");
+        assert_eq!(
+            git(&["rev-parse", "refs/remotes/origin/release-plz-fixture"]),
+            updated
+        );
+        assert_eq!(
+            fs::read_to_string(root.path().join("trace")).unwrap(),
+            "set-version ripscope@0.3.0\n"
+        );
+        let output = run(root.path(), &script, "invalid-notes");
+        assert!(!output.status.success(), "{output:?}");
         assert_eq!(
             git(&["rev-parse", "refs/remotes/origin/release-plz-fixture"]),
             updated

@@ -24,6 +24,11 @@
   "dependencyDashboard": false,
   "pinDigests": true,
   "automerge": true,
+  "semanticCommits": "enabled",
+  "semanticCommitType": "fix",
+  "semanticCommitScope": "deps",
+  "commitBody": "Changelog: Dependencies: Update runtime and build dependencies.",
+  "prFooter": "Changelog: Dependencies: Update runtime and build dependencies.",
   "packageRules": [
     {
       "description": "Keep the runtime smoke test on the supported glibc 2.28 floor.",
@@ -51,6 +56,16 @@
     }
   ],
   "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/^\\.github/workflows/(release-plz|release|ci)\\.yml$/"],
+      "matchStrings": ["git-cliff@(?<currentValue>[0-9]+\\.[0-9]+\\.[0-9]+)"],
+      "depNameTemplate": "git-cliff",
+      "packageNameTemplate": "orhun/git-cliff",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
     {
       "customType": "regex",
       "managerFilePatterns": [
