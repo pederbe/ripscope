@@ -41,10 +41,8 @@ fn note(commit: &Value) -> Result<Note> {
         .lines()
         .next()
         .unwrap_or("")
-        .split(" (#")
-        .next()
-        .unwrap_or("")
         .trim();
+    let title = Regex::new(r" [(]#[0-9]+[)]$")?.replace(title, "");
     let mut chars = title.chars();
     let first = chars.next().ok_or("empty changelog title")?;
     Ok(Note {
@@ -226,6 +224,7 @@ mod tests {
             "fix: keep multiline instructions (#900)\n\nChangelog: Fixed: Keep the first paragraph.\n\nKeep the second paragraph, including its explanation: nothing is truncated.",
             "docs: explain editor recovery (#901)\n\nChangelog: Documentation: Explain how to recover a disconnected editor session.",
             "ci: change the build cache (#902)",
+            "fix: handle lookups (#42) after a file move (#908)",
             "fix(deps): update the parser (#904)\n\nChangelog: Dependencies: Update the parser dependency and keep non-ASCII names intact.",
             "fix(deps)!: replace parser configuration (#905)\n\nChangelog: Dependencies: Upgrade the parser dependency and replace its obsolete configuration.\n\nBREAKING CHANGE: Rename parser_mode to parser-mode in saved configuration.",
             "fix(deps): update dependencies (#906)\n\nChangelog: Dependencies: Update runtime and build dependencies.",
@@ -265,6 +264,7 @@ mod tests {
         assert_eq!(second.matches("### Fixed").count(), 1);
         assert_eq!(second.matches("- Update dependencies ").count(), 2);
         assert!(second.contains("Update the parser"));
+        assert!(second.contains("Handle lookups (#42) after a file move ([#908](https://github.com/pederbe/ripscope/pull/908))"));
         assert!(!second.contains("Rename parser_mode"));
         assert!(second.contains("**Breaking:** Replace parser configuration"));
         assert!(check_section(&second.replace("**Breaking:** ", ""), &commits).is_err());

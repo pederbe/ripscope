@@ -12,17 +12,26 @@ body = """
 {%- macro source(commit) -%}
 {%- set subject = commit.raw_message | split(pat="\n") | first -%}
 {%- set source = subject | split(pat=" (#") | last | trim_end_matches(pat=")") -%}
-{%- if source != subject -%}
+{%- if subject is matching(" [(]#[0-9]+[)]$") -%}
 ([#{{ source }}](https://github.com/pederbe/ripscope/pull/{{ source }}))
 {%- else -%}
 ([{{ commit.id | truncate(length=7, end="") }}](https://github.com/pederbe/ripscope/commit/{{ commit.id }}))
 {%- endif -%}
 {%- endmacro -%}
+{%- macro title(commit) -%}
+{%- set title = commit.message | split(pat="\n") | first | trim -%}
+{%- if title is matching(" [(]#[0-9]+[)]$") -%}
+{%- set source = title | split(pat=" (#") | last | trim_end_matches(pat=")") -%}
+{%- set suffix = " (#" ~ source ~ ")" -%}
+{%- set title = title | trim_end_matches(pat=suffix) -%}
+{%- endif -%}
+{{ title | trim | upper_first }}
+{%- endmacro -%}
 ## [{{ version | trim_start_matches(pat="v") }}] - {{ timestamp | date(format="%Y-%m-%d") }}
 {% for group, commits in commits | group_by(attribute="group") %}
 ### {{ group | striptags | trim }}
 {% for commit in commits %}
-- {% if commit.breaking %}**Breaking:** {% endif %}{{ commit.message | split(pat="\n") | first | split(pat=" (#") | first | trim | upper_first }} {{ self::source(commit=commit) }}
+- {% if commit.breaking %}**Breaking:** {% endif %}{{ self::title(commit=commit) }} {{ self::source(commit=commit) }}
 {%- endfor %}
 {% endfor %}
 
