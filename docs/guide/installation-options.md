@@ -218,13 +218,13 @@ The scripts retain a hidden `.ripscope-notices-*` directory beside the
 executable. It contains licences, build information and a copy of the editor
 integrations.
 
-To find the directories on Linux, run
+To find the directories on Linux, run:
 
 ```sh
 ls -d ~/.local/bin/.ripscope-notices-*
 ```
 
-On Windows, list them in PowerShell with
+On Windows, list them in PowerShell with:
 
 ```powershell
 Get-ChildItem "$HOME\.local\bin" -Force -Directory -Filter '.ripscope-notices-*'
