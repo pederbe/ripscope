@@ -13,6 +13,7 @@ rust-version = "1.98"
 [dependencies]
 base16ct = { version = "=1.0.0", features = ["alloc"] }
 flate2 = { version = "=1.1.11", default-features = false, features = ["rust_backend"] }
+pulldown-cmark = { version = "=0.13.6", default-features = false }
 regex = "=1.13.1"
 serde-saphyr = { version = "=2.1.1", default-features = false, features = ["deserialize"] }
 # Receipts keep their members in the order the build records them.
