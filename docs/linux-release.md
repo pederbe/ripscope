@@ -6,7 +6,7 @@ against glibc 2.28 with rolling stable Rust and the Zig, cargo-zigbuild and imag
 exact source, dependency and tool inputs, runs locked offline product release tests,
 inspects ELF imports, and
 smokes the extracted archive. Initial vendoring and image acquisition can use the
-network; the build and runtime containers cannot. This prepares local files without
+network. The build and runtime containers cannot. This prepares local files without
 publishing them.
 
 Use Git, binutils (`readelf`), GNU tar and GNU timeout, rootless Podman, the stable Rust
@@ -51,7 +51,7 @@ temporary files and caches, and do not depend on an old-glibc build image.
 All auxiliary examples are separately built and
 tested in native debug mode, using the same copied source, vendor tree and selected
 Rust toolchain. The native tests include ignored checks and run in uniquely named
-user scopes. The receipt labels the two phases separately; native proof coverage
+user scopes. The receipt labels the two phases separately. Native proof coverage
 is not artifact-baseline coverage. Both generated Cargo configurations are saved
 and hashed, and the container-built executable must remain byte-identical.
 
@@ -60,12 +60,15 @@ exact owned container or outer user scope. Any failure, timeout or unresolved
 cleanup leaves validation incomplete. Failed build/test phases stop before archive
 assembly. Auxiliary tests
 also create separate proof scopes: stopping the outer scope alone cannot prove
-those scopes terminated after a hard timeout. Such captures remain observations;
-preserve the work and resolve the exact surviving units/processes before retrying
-or removing it. No unrelated matching units or processes are terminated. An
-interrupt stops the tool at once without recording cleanup; the terminal's interrupt
-also reaches the running container or scope, and the receipt's last command names
-the `ripscope-release-*` container or unit to check before removing the work.
+those scopes terminated after a hard timeout. Such captures remain observations.
+Preserve the work and resolve the exact surviving units/processes before retrying
+or removing it. No unrelated matching units or processes are terminated.
+
+An interrupt stops the running command, records the interruption and attempts
+the same bounded cleanup. Let the tool return, then inspect `owned_cleanup` in
+the receipt before removing work. An interrupted native command still leaves
+separate proof scopes unverified. After a forced termination, use the recorded
+command's `ripscope-release-*` container or unit identity to inspect what remains.
 
 The ELF gate rejects required glibc symbols above 2.28, foreign shared libraries,
 RPATH/RUNPATH, the shared GCC runtime, a different interpreter, a missing LLD marker,
@@ -96,7 +99,7 @@ the command. Both extracted packages must contain the byte-identical executable
 and complete notices/editor source. No stripping or recompilation is allowed.
 The declared dependency is glibc 2.28 or newer.
 Install, query and remove each package in its selected offline runtime before
-accepting it; leave a project index and unrelated file in place to check removal.
+accepting it. Leave a project index and unrelated file in place to check removal.
 The prepared workflow runs these checks on Debian 12 and AlmaLinux 8.
 
 ## Signed apt and dnf repository
@@ -106,20 +109,19 @@ install Ripscope once and then receive new releases through `apt upgrade` or
 `dnf upgrade`. Standalone package downloads remain available for users who do not
 want to add a repository.
 
-After each published release, the
-[Package repository workflow](https://github.com/pederbe/ripscope/actions/workflows/package-repository.yml)
-adds the release's `.deb` and `.rpm` to it. The workflow takes these steps.
+The [Package repository workflow](https://github.com/pederbe/ripscope/actions/workflows/package-repository.yml)
+adds a published release's `.deb` and `.rpm` after verifying their checksums and
+attestations. It never rebuilds the executable. Repository publication preserves
+these constraints:
 
-1. It downloads the packages, checks their SHA-256 files and their attestations from
-   `release.yml`, and never rebuilds the executable.
-2. It fetches the published repository and checks every `.deb` already there against
+1. It checks every `.deb` already in the published repository against
    its release's SHA-256 file, since storage credentials alone must not be able to
    add a package.
-3. It runs `package-repository`, which publishes the `.deb` unchanged, adds a header
+2. `package-repository` publishes the `.deb` unchanged, adds a header
    signature to the `.rpm` (checking that its header and payload digests stay the
    same), refuses any file that is not a Ripscope package matching its name, and
    regenerates and signs the apt and dnf metadata.
-4. It runs `package-repository-check`, which installs the release from the generated
+3. `package-repository-check` installs the release from the generated
    repository in offline Debian 12, Ubuntu 22.04, Ubuntu 24.04 and AlmaLinux 8
    containers with signature checks on. When the release is the newest, it installs
    the previous version first and upgrades with `apt-get upgrade` or `dnf upgrade`. It checks
@@ -127,7 +129,7 @@ adds the release's `.deb` and `.rpm` to it. The workflow takes these steps.
    (including the editor sources under `/usr/share/ripscope`), indexing and search,
    and that removal leaves the project, its index and the editor configuration. A
    client holding another key must refuse the repository.
-5. It uploads packages, apt indexes by hash and complete dnf metadata snapshots, then
+4. It uploads packages, apt indexes by hash and complete dnf metadata snapshots, then
    the current apt index and dnf mirrorlist, and compares what is served with what
    it signed.
 
@@ -137,9 +139,8 @@ signed files. To repeat a publication, run the workflow from its page with the
 release tag. That signs and uploads again without changing the release or rebuilding
 anything. Runs take turns, so start the next one after the previous has finished.
 
-Pull requests that change the workflow or `tools/release/src/repository.rs` run
-steps 1, 3 and 4 on the two latest releases with a throwaway key, publish the newest
-twice to check that a repeat keeps every package, and upload nothing.
+The workflow's nonpublishing checks use a throwaway key and repeat publication
+to verify that existing packages remain unchanged.
 
 The repository holds:
 
@@ -153,77 +154,22 @@ rpm/snapshots/<sha256>/      permanent dnf metadata, with repomd.xml.asc
 rpm/mirrorlist               URL of the current dnf snapshot
 ```
 
-### One-time setup
+### Signing and live verification
 
-The public key is committed as `tools/release/package-signing-key.asc`.
-The signing secrets and bucket-scoped storage credentials are configured in the
-`packages` environment. Publication requires both. The steps below also describe
-how to restore the setup.
-
-The package signing key has fingerprint
-`3710 BE46 B974 AAB7 390D 225B FAFC E829 50BF F0D6`.
-The `ripscope-packages` bucket uses the existing Cloudflare account, Standard
-storage and `packages.ripscope.com`, with TLS 1.2 or later and public `r2.dev`
-access disabled. The `packages` GitHub environment permits only `main` and `v*`
-tags and has no approval or wait rule.
+The committed public key is `tools/release/package-signing-key.asc`. Publication
+requires the signing key and bucket-scoped storage credentials used by the
+[workflow](../.github/workflows/package-repository.yml). RSA signing preserves
+AlmaLinux 8 and RHEL 8 compatibility. Clients retain their own copy of the key,
+so key expiry affects their ability to receive updates. Keep an offline backup
+of the secret key and its revocation certificate outside the publishing environment.
 
 After publication, dispatch the same workflow with `verify_only=true` and the
 latest tag. It reuses the published packages and checks installation, upgrade,
 search and removal through the live HTTPS endpoint on all four clients, without
 signing or uploading. The default pre-publication checks remain offline.
 
-1. **Signing key.** Create a dedicated RSA 4096 key with no expiry. RSA keeps
-   AlmaLinux 8 and RHEL 8 able to check RPM signatures. An expiry would strand apt
-   users, who keep their own copy of the key. Keep an offline backup of the secret
-   key and its revocation certificate (`openpgp-revocs.d/` in the GnuPG home), which
-   is how the key is retired if it is ever exposed.
-2. **Storage.** In [Cloudflare R2](https://dash.cloudflare.com/?to=/:account/r2/overview),
-   create the bucket `ripscope-packages` with Standard storage. Connect the custom
-   domain `packages.ripscope.com` with TLS 1.2 or later and leave public `r2.dev`
-   access off. Then
-   [create an R2 API token](https://dash.cloudflare.com/?to=/:account/r2/api-tokens)
-   with Object Read & Write access to that bucket only. Ripscope's packages are a
-   few MiB per release, well inside the
-   [free tier](https://developers.cloudflare.com/r2/pricing/).
-3. **Environment.** In the
-   [repository's environments](https://github.com/pederbe/ripscope/settings/environments),
-   create `packages` without required reviewers, limited to the `main` branch and
-   `v*` tags, with these secrets:
-
-   | Secret | Value |
-   | --- | --- |
-   | `PACKAGE_SIGNING_KEY` | the armored secret key |
-   | `PACKAGE_SIGNING_PASSPHRASE` | its passphrase |
-   | `R2_ACCOUNT_ID` | the Cloudflare account ID |
-   | `R2_ACCESS_KEY_ID`, `R2_SECRET_ACCESS_KEY` | the R2 token's S3 credentials |
-
-4. **Key and first publication.** Commit the public key through a pull request and
-   check its fingerprint with `gpg --show-keys --fingerprint
-   tools/release/package-signing-key.asc`. Run the workflow for the previous release,
-   then for the latest, so the newest is published last. From a clean Debian,
-   Ubuntu and AlmaLinux machine, install through `https://packages.ripscope.com`,
-   upgrade and remove with signature checks on. Only then add the setup below and
-   the key fingerprint to the user guides.
-
-### User setup
-
-```sh
-# Debian and Ubuntu: check that the fingerprint matches the one in the guide
-curl -fsSLo ripscope.gpg https://packages.ripscope.com/ripscope.gpg
-gpg --show-keys --fingerprint ripscope.gpg
-sudo install -m 644 ripscope.gpg /usr/share/keyrings/ripscope.gpg
-echo "deb [signed-by=/usr/share/keyrings/ripscope.gpg] https://packages.ripscope.com/apt stable main" |
-  sudo tee /etc/apt/sources.list.d/ripscope.list
-sudo apt update && sudo apt install ripscope
-
-# RHEL, AlmaLinux and Fedora
-sudo curl -fsSLo /etc/yum.repos.d/ripscope.repo https://packages.ripscope.com/ripscope.repo
-sudo dnf install ripscope
-```
-
-dnf shows the key's fingerprint and asks for confirmation the first time. To stop
-receiving updates, remove the package, then `/etc/apt/sources.list.d/ripscope.list`
-and `/usr/share/keyrings/ripscope.gpg`, or `/etc/yum.repos.d/ripscope.repo`.
+The [user installation guide](guide/installation-options.md#apt-and-dnf-repositories)
+owns repository setup commands and the signing-key fingerprint.
 
 ### Checking locally
 
@@ -255,42 +201,35 @@ cargo run --locked --example check-installers -- \
 The work directory must be new. Captures retain installer/archive hashes and
 outcomes for replacement, checksum/path/link refusals, mandatory notices,
 interruption after rename, the editors' `--plugin` install decisions, and selective
-removal. These are functional checks;
-they do not measure performance or establish broad platform qualification.
+removal. These functional checks do not measure performance or establish broad
+platform qualification.
+
+### Installer replacement
+
+The shell installer needs curl, GNU tar, gzip and GNU coreutils. It verifies the
+archive and stages the new executable on the destination filesystem before
+renaming it into place. Directory and symbolic-link executable destinations are
+refused. An already running Linux process can finish using its old executable.
+
+A successful installation retains a `.ripscope-notices-*` directory beside the
+executable. An interrupted replacement can retain it too, because the executable
+may already have changed. Its
+`ORIGINAL-ARCHIVE-MANIFEST.sha256` describes the archive before the executable
+moved. `BUILD.json` and `INSTALLATION.txt` identify the installed executable by
+SHA-256. Earlier notices directories are not pruned during an update.
 
 ## Weekly releases
 
-Every Thursday at 06:43 UTC, `.github/workflows/release-plz.yml` opens or updates
-one release pull request using release-plz. The request raises the version and
-adds a dated changelog section with short entries from pull request titles. It updates the
-Emacs package header to the same version and enables auto-merge after required CI.
-Pushes to `main` refresh an open release pull request without starting a new one
-between scheduled runs. Disable the workflow to stop weekly preparation.
+The [release preparation workflow](../.github/workflows/release-plz.yml)
+generates the version, dated changelog and matching Emacs header in a release
+pull request. Notes come from merged pull request titles, using
+[git-cliff rules](../cliff.toml) over the complete release range, including
+changes outside the Cargo package. Keep Unreleased empty. Preparation and
+publication both check notes against the release source.
 
-The workflow uses the existing `RELEASE_PLZ_TOKEN` secret for release pull requests
-so GitHub runs their required CI. Squash merges preserve the pull request title
-and description. Git-cliff renders short entries from the complete range since
-the last published tag, including editor, installer, documentation and build
-changes outside the Cargo package. Entries mark breaking changes and link to
-the pull request, whose Solution section contains any upgrade instructions.
-No changelog footer is required. Conventional prefixes keep internal changes
-out. Before 1.0, features and breaking changes raise the minor version.
-A week with only internal changes makes no release. Documentation alone waits
-for a releasable change.
-
-Preparation checks entries, breaking markers and source links against the
-generated section before enabling auto-merge. The publisher repeats this check
-on its exact source. Git-cliff also checks the full range's version increment,
-and release-plz applies any higher required version before the notes and Emacs
-header are finalized. This includes compatibility changes outside the Cargo
-package. Unreleased stays empty.
-
-Merging the release pull request commits its metadata on `main`. Release-plz tags
-that commit, with Cargo publication and GitHub release creation disabled in its
-configuration. It explicitly dispatches `.github/workflows/release.yml` at the tag
-and exact source SHA because workflow-token tag pushes do not start other workflows.
-The existing Release workflow builds, tests, inspects and packages both platform
-archives before attesting provenance and publishing.
+The [Release workflow](../.github/workflows/release.yml) builds and qualifies
+the exact tagged commit before publishing. Its explicit dispatch is needed
+because a workflow-token tag push does not start another workflow.
 
 Retry a failed Release run's failed jobs to keep successful builds and the original
 tag. If tag creation succeeded but dispatch failed, dispatch Release with that tag,
@@ -300,22 +239,17 @@ fix is needed, merge it and prepare a higher version through a new release pull
 request, preserving the old tag. Releases are serialized and an older tag cannot
 replace a newer published version or its editor branch.
 
-Automatic publication uses the `automated-release` environment with no approval or
-wait rules and exactly one custom deployment policy, tag `v*`. Its preflight checks
-those settings, the public repository, the existing tag and exact dispatch SHA.
-Configure the environment once before enabling the schedule. The Windows runner
-uses its installed stable Visual Studio developer environment. Linux must satisfy the release tool's disk,
-user-manager and cgroup prerequisites. Missing prerequisites stop publication.
+Publication preflight checks the protected environment, public repository,
+existing tag and exact dispatch SHA. Each platform must satisfy its native
+build prerequisites. Missing prerequisites stop publication.
 
-Configure the crates.io trusted publisher for owner `pederbe`, repository `ripscope`,
-workflow `release.yml` and environment `automated-release`. After both platform jobs
-pass, the automatic publish job checks the source package's required files and runs
-`cargo publish --dry-run` before requesting a short-lived registry token. It publishes
-the crate before making the GitHub release public. Retries accept an existing,
-non-yanked crate version only when its registry checksum matches the package from
-the frozen release source. Missing registry authorization or a mismatch stops the
-release before GitHub publication. Configure the publisher before enabling releases
-from a workflow containing this step. Older tags keep their original workflow.
+Automatic publication uses crates.io trusted publishing. It checks the source
+package and runs `cargo publish --dry-run` before requesting a short-lived
+registry token. The crate is published before the GitHub release becomes public.
+Retries accept an existing, non-yanked crate version only when its registry
+checksum matches the package from the frozen release source. Missing registry
+authorization or a mismatch stops GitHub publication. Older tags keep their
+original workflow.
 
 The existing manual release dispatch remains available. With `publish=false` it
 only builds test artifacts. With `publish=true` and `automatic=false`, it requires
@@ -331,16 +265,10 @@ non-fast-forward. The Emacs version header and crate version match on every tag.
 
 ## Website deployment
 
-After automatic publication and editor delivery, Release dispatches the separate
-Website deployment workflow. Publishing a release manually also triggers it.
-The workflow requests a Cloudflare build of current `main`, with download links
-from the delivered `release` branch. Cloudflare reports the actual build and
-deployment result after accepting the request.
-
-A website failure does not fail package publication or block the next weekly
-release. Retry Website deployment manually in GitHub Actions, without rebuilding
-archives or republishing the crate. Retry Release if publication or the editor
-branch update failed.
+Website delivery is independent of package publication. Follow the
+[site-tool guide](../tools/site/README.md#combined-build) to retry it without
+rebuilding archives or republishing the crate. Retry Release if publication or
+the editor branch update failed.
 
 ## Attestation verification
 
@@ -360,6 +288,6 @@ gh attestation verify ripscope-0.1.0-x86_64-linux-gnu.tar.gz \
 ```
 
 Use the same flags for the `.deb`, `.rpm` and Windows ZIP. A missing or failed
-attestation is not successful verification. Checksums alone identify bytes; they
+attestation is not successful verification. Checksums alone identify bytes. They
 do not prove which repository or workflow built them. Available verification flags
 are documented in [the GitHub CLI manual](https://cli.github.com/manual/gh_attestation_verify).

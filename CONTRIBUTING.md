@@ -1,33 +1,31 @@
 # Contributing to Ripscope
 
-Bug reports, compatibility reports, documentation fixes and
-code are all welcome. Ripscope is young, so it is worth opening an issue to discuss a
-larger change before writing it.
+Bug reports, compatibility reports, documentation fixes and code are welcome.
+Open an issue to discuss a larger change before writing it.
 
-## Ways to help
+## Report a problem
 
-- **Try it on your code** and [report](https://github.com/pederbe/ripscope/issues/new/choose)
-  what fails. A wrong or missing result with a small reproduction is one of the most
-  useful reports you can file.
-- **Report compatibility differences** with cscope using the
-  [compatibility template](https://github.com/pederbe/ripscope/issues/new?template=compatibility.yml).
-- **Improve the documentation** in [`docs/`](https://github.com/pederbe/ripscope/tree/main/docs).
-- **Fix an issue.** Issues labelled `good first issue`, when available, are a good
-  start.
+Use the [issue forms](https://github.com/pederbe/ripscope/issues/new/choose).
+Include the smallest source example, commands and output you have. Incomplete
+observations are welcome. For a difference from cscope, check the
+[known differences](https://ripscope.com/docs/reference/differences-from-cscope)
+and use the compatibility form.
 
-## Development setup
+Report suspected vulnerabilities privately through
+[the security policy](SECURITY.md).
 
-You need stable Rust and a C compiler (SQLite is compiled from its bundled sources).
-On Windows, install the MSVC Build Tools with the Windows SDK.
+## Build and check a change
+
+You need stable Rust and a C compiler for bundled SQLite. On Windows, install
+the MSVC Build Tools and Windows SDK.
 
 ```sh
 git clone https://github.com/pederbe/ripscope.git
 cd ripscope
 cargo build --locked
-cargo test --locked
 ```
 
-Before sending a change, run the same checks as CI:
+Before sending a change, run:
 
 ```sh
 cargo fmt --all --check
@@ -35,138 +33,66 @@ cargo clippy --locked --all-targets -- -D warnings
 cargo test --locked
 ```
 
-A change to the release tool alone runs that tool's checks instead, on Linux and
-Windows. A change that touches both runs both sets of checks, and scheduled and
-manual CI runs keep their full coverage.
+Code, tests and tools use Rust with `unsafe` forbidden. The
+[language check](tests/language_check.rs) lists the only language exceptions.
+Dependencies use exact versions. Explain why an added dependency is needed.
 
-Ripscope forbids `unsafe` code and pins every dependency to an exact version. Adding
-a dependency needs a good reason in the pull request.
+For specialized changes, follow the [editor checks](tests/editor/README.md),
+[website guide](tools/site/README.md), [package guide](packaging/README.md) or
+[development tool inventory](scripts/README.md). Check every documentation
+example you add or change and use its real output.
 
-To preview the documentation site and check its links, install
-[mdBook 0.5.4](https://rust-lang.github.io/mdBook/), then:
+## Preserve compatibility
 
-```sh
-scripts/build-site.sh --dev
-```
+[ARCHITECTURE.md](ARCHITECTURE.md) maps the code. Use the terms in
+[GLOSSARY.md](GLOSSARY.md) and read the relevant
+[design decisions](docs/adr/README.md).
 
-User documentation follows one layout. The README stands on its own, and the book in
-`docs/` has the parts Getting started, Editors, Guides, Reference, Explanation, Help
-and Project. Run every example you add or change and paste its real output.
+Ripscope's compatibility contract covers result rows, ordering, duplicates,
+context names, displayed text, diagnostics and exit status. Before changing
+them, check the pinned cscope reference and the known differences. Include the
+reference command and output in your pull request.
 
-## Where things are
+Discuss a new difference in an issue with a minimal reproduction, an explanation
+of the incorrect cscope behavior and the intended answer. A Correction stays
+local to the construct, can be switched off, and keeps a fixture showing both
+readings. It is measured on real projects. Every readable file remains indexed.
+The [quality method](docs/architecture/quality.md) and
+[reference setup](scripts/README.md#reference-runtime) explain the checks.
 
-[ARCHITECTURE.md](https://github.com/pederbe/ripscope/blob/main/ARCHITECTURE.md) maps
-the main parts of the code and the folders around it. The
-[glossary](https://ripscope.com/docs/reference/glossary) defines the project's terms.
-Please use them.
+Add a regression test for behavior changes, with a CLI integration test for
+observable behavior. Record hard-to-reverse design changes in
+[docs/adr/](docs/adr/README.md).
 
-[Design decisions](https://github.com/pederbe/ripscope/tree/main/docs/adr)
-explain the reasoning behind important technical choices.
+## Send a pull request
 
-Code, including tests and tools, is Rust. The language check
-(`tests/language_check.rs`) names the only exceptions and the languages each allows.
+Create a branch in your fork and open a focused pull request against `main`.
+Link the issue when there is one and update documentation for user-visible
+changes. All changes enter `main` through a pull request with the required CI
+check passing and the branch current with `main`.
 
-## Changing behavior
+Write imperative commit subjects and explain why when it is not obvious.
+Use a conventional pull request title:
 
-Ripscope's contract is cscope's *observable* behavior: result rows, order,
-duplicates, context names, displayed text, diagnostics and exit status. Before
-changing any of these:
+- `feat:` for a capability, `fix:` for a repair and `perf:` for a measured speed
+  improvement.
+- `docs:` for documentation and `fix(deps):` for dependency updates.
+- `ci:`, `build:`, `chore:`, `test:` or `refactor:` for internal changes.
 
-1. **Check the reference.** Expected output comes from the pinned cscope 15.9
-   executable, not from Ripscope's current output or cscope's manual. Include the
-   reference output and the command you used in your pull request.
-2. **Check the known differences.** A mismatch listed in
-   [Differences from cscope](https://ripscope.com/docs/reference/differences-from-cscope)
-   is intended.
-3. **Proposing a new difference** needs a minimal reproduction, an explanation of
-   why cscope's behavior is wrong, and the intended output. It is discussed in an
-   issue first.
-4. **A reading that differs from cscope's is a Correction.** It stays local to the
-   construct, can be switched off, is measured against cscope on real projects, and a
-   probe fixture shows both readings ([ADR 0002](https://github.com/pederbe/ripscope/blob/main/docs/adr/0002-measured-compatibility.md),
-   [how Ripscope reads C](https://ripscope.com/docs/architecture/reading-c)).
-   Every file is indexed, and none is refused
-   ([ADR 0004](https://github.com/pederbe/ripscope/blob/main/docs/adr/0004-own-scanner.md)).
-
-Add a regression test for every behavior change: a unit test near the code for
-internal logic, and a `tests/*_cli.rs` test for anything a user can observe.
-
-Hard-to-reverse design changes (storage, analyzers, interfaces, scope) get a short
-[architecture decision record](https://github.com/pederbe/ripscope/tree/main/docs/adr).
-
-## Pull requests
-
-All changes enter `main` through a pull request, including the maintainer's. The
-maintainer creates a `contrib/` branch in this repository, and other contributors
-create a branch in their fork. Open the pull request against `main` once the checks
-above pass, and link the issue when there is one. A pull request merges after the
-required CI check passes on Linux and Windows, with the branch current with `main`.
-
-- Keep each pull request focused on one change, and update the documentation when
-  user-visible behavior changes.
-- Write commit subjects in the imperative ("Preserve UTF-8 literal bytes"), and
-  explain *why* in the body when it is not obvious.
-
-Use `feat:` in the pull request title for a new
-capability, `fix:` for a repair, `perf:` for a measured speed improvement, `docs:`
-for documentation and `fix(deps):` for dependency updates. Internal changes use
-`ci:`, `build:`, `chore:`, `test:` or `refactor:` and stay out of the notes.
-Write the title for someone using Ripscope and keep performance claims tied to
-their measured workloads. Documentation alone waits for a releasable change and joins that release's notes.
-
-The changelog uses short entries from pull request titles, marks breaking changes
-and links to their pull requests. Put compatibility effects and migration or
-upgrade instructions in Solution. Mark a breaking title with `!` before the
-colon. No `Changelog:` or `BREAKING CHANGE:` footer is required. Before 1.0,
-features and breaking changes raise the minor version.
-
-Release-plz opens or updates one release pull request every Thursday. It commits
-the version and dated changelog to `main` once required CI passes, then the Release
-workflow builds, checks and publishes that tag. Pushes to `main` refresh an open
-release pull request. Git-cliff covers the full release range, including changes
-outside the Cargo package. Preparation checks entries, breaking markers and
-source links before enabling auto-merge. Keep Unreleased empty and correct
-wording in the original change. Closing the release pull request holds it until
-the next weekly or manual preparation. See the
-[release guide](https://github.com/pederbe/ripscope/blob/main/docs/linux-release.md#weekly-releases)
-for recovery.
-
-Contributions are dual-licensed under MIT or Apache-2.0, like the rest of Ripscope,
-unless explicitly stated otherwise.
+Release notes come from these titles. Write for someone using Ripscope and keep
+performance claims tied to their measured workloads. Mark a breaking title with
+`!` before the colon and put compatibility effects and upgrade instructions in
+Solution. Keep Unreleased empty and correct wording in the original change.
 
 ## Public issues and pull requests
 
-Issue descriptions use **Problem**, **Desired outcome** and **Evidence**.
-Describe the task and its impact, the result that would resolve it, and available
-reproduction details or examples. Incomplete observations are welcome.
-Pull requests use **Problem**, **Solution** and **Validation**. Explain the
-reason for the change, its behavior and compatibility effects, and meaningful
-checks. Put migration or upgrade instructions in Solution. Keep small changes
-brief and links and examples within these sections.
+Issues use **Problem**, **Desired outcome** and **Evidence**. Pull requests use
+**Problem**, **Solution** and **Validation**. Keep small changes brief. Public
+descriptions and comments cover technical behavior, rationale and evidence.
+Attribute checks accurately and keep private working notes out.
 
-Public descriptions and comments cover software behavior, technical rationale
-and evidence. Keep private discussions, authorization exchanges, personal
-decision history and handoffs out of them. State technical outcomes directly
-and attribute checks accurately. Comments are for technical questions, findings
-and review discussion.
+Keep facts and evidence current, and respect the reporter's observations and
+wording when editing. Use checklists, linked issues and labels for progress.
 
-Edit descriptions only to keep technical facts, scope, evidence and acceptance
-criteria accurate within the work at hand. Preserve the reporter's observations
-and human-written wording unless a rewrite is requested. Leave merged PR
-descriptions alone unless a correction is requested. Track progress with
-checklists, linked issues and labels. These rules also apply to API updates.
-Check these limits before posting or editing.
-
-## Code of conduct
-
-This project follows the [code of conduct](https://github.com/pederbe/ripscope/blob/main/CODE_OF_CONDUCT.md).
-Report security issues privately as described in
-[SECURITY.md](https://github.com/pederbe/ripscope/blob/main/SECURITY.md).
-
-## Maintainer guides
-
-Release builds, the weekly release and dependency updates are described in the
-[tool inventory](https://github.com/pederbe/ripscope/blob/main/scripts/README.md), with
-the [Linux](https://github.com/pederbe/ripscope/blob/main/docs/linux-release.md) and
-[Windows](https://github.com/pederbe/ripscope/blob/main/docs/windows-release.md)
-release guides.
+Contributions are dual-licensed under MIT or Apache-2.0 unless stated otherwise.
+This project follows the [code of conduct](CODE_OF_CONDUCT.md).

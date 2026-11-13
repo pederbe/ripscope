@@ -107,44 +107,28 @@ Rebuild without `--features hotpath` for those comparisons.
 
 ## Release preparation
 
-The `tools/release` crate builds local archives with the pinned profiles beside it,
-records exact inputs, inspects runtime imports, and smokes the analyzer, stored and live
-queries, warnings and refresh. Its `linux` and `windows` commands share the source
-inventory and notice delivery. `package-linux.sh` turns the inspected Linux executable
-into Debian and RPM packages without rewriting it.
+Follow [Linux preparation](../docs/linux-release.md) or
+[Windows preparation](../docs/windows-release.md) to build, inspect and test an
+archive or check its installer. The [package guide](../packaging/README.md)
+covers additional package managers.
 
-The Linux builder uses Zig's GNU cross-toolchain in a modern Ubuntu container.
-A separate Debian 10 runtime check preserves the glibc 2.28 compatibility floor.
-The archive retains the notices for its statically linked LLVM unwinder.
+Run the release tool's checks on Windows with:
 
-The `check-installers` example drives `install.sh` or `install.ps1` against a loopback
-mirror of an exact archive, and checks refusal, replacement and removal. The mirror's
-`/latest` endpoint serves the candidate before publication. The harness derives its
-identity from the archive filename and passes no version override to the installer. Neither the
-release tool nor the installer harness is a runtime dependency.
+```sh
+cargo fmt --manifest-path tools/release/Cargo.toml --check
+cargo clippy --locked --all-targets --manifest-path tools/release/Cargo.toml -- -D warnings
+cargo test --locked --manifest-path tools/release/Cargo.toml
+```
 
-See [Linux preparation](../docs/linux-release.md) and
-[Windows preparation](../docs/windows-release.md). The release tool's own checks run
-with `cargo test --locked --manifest-path tools/release/Cargo.toml` on Windows and
-`env RUSTFLAGS='' cargo test --locked --manifest-path tools/release/Cargo.toml` on Linux. Local commands
-do not upload or publish, apart from `package-repository-upload`, which the Package
-repository workflow runs. The manual release workflow checks that the tag matches the
-source, and its publication step is off by default.
+On Linux, prefix the Clippy and test commands with `env RUSTFLAGS=''` because the
+product's executable flags do not apply to the tool's compiler plugins.
 
 ## Dependency updates
 
-Renovate prepares one combined daily update for Cargo, npm, Actions, container
-digests and the custom tools in `.github/dependency-pins.json`. Stable major
-releases are included. Merge follows required checks and an independent Spec
-and Standards review. The self-hosted runner executes `.github/scripts/renovate-sync.sh` to
-prepare compiler commits, download hashes and duplicated tool versions before
-pushing the PR. An unavailable upstream digest fails preparation.
-Urgent security fixes may produce separate pull requests outside the daily batch.
-Existing Dependabot security alerts and updates remain enabled.
+The [Renovate configuration](../renovate.json) and
+[input synchronization helper](../.github/scripts/renovate-sync.sh) maintain
+coupled tool versions and download hashes. Keep the minimum Rust version and
+pinned cscope reference as compatibility baselines.
 
-
-The notify 9 release candidate preserves Windows overflow/rescan handling absent
-from stable 8.2. Replace it with stable 9 or newer when available. Minimum Rust
-and the cscope reference are compatibility baselines. Windows MSVC and SDK pins
-require an installed, qualified host toolchain and remain explicit maintenance
-items. Dependency updates do not publish releases or rewrite release identities.
+The Windows notify pre-release retains overflow/rescan handling missing from
+the preceding stable release. Preserve that behavior when moving to stable.
