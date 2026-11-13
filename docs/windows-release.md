@@ -4,12 +4,11 @@ The `windows` command of the release tool in `tools/release` builds, inspects an
 smokes the exact x86-64 MSVC archive. It uses rolling stable Rust and the installed
 stable Visual Studio developer environment. The target and static C runtime flags
 are recorded in `tools/release/windows-release-profile.json`. It bundles
-SQLite and the C runtime; the executable still needs Windows system DLLs.
+SQLite and the C runtime. The executable still needs Windows system DLLs.
 
 Use native Windows, Git, stable Rust and Visual Studio's C++ build tools. Run from
 Developer PowerShell for the installed stable Visual Studio, selecting a new
-external directory on local NTFS. The hosted workflow selects this environment
-automatically with Visual Studio's `VsDevCmd.bat`:
+external directory on local NTFS:
 
 ```powershell
 rustup update stable
@@ -22,9 +21,9 @@ cargo run --locked --manifest-path tools/release/Cargo.toml -- windows `
 ```
 
 Use the actual installed tool paths. `--target-dir` can reuse an external Cargo
-cache; the tool refreshes all copied Rust input timestamps before invoking
+cache. The tool refreshes all copied Rust input timestamps before invoking
 Cargo so cached test executables cannot retain a previous checkout. It does not
-change global Cargo configuration. Vendoring can download missing locked crates;
+change global Cargo configuration. Vendoring can download missing locked crates.
 compilation and tests use Cargo's offline mode. The Windows host itself is not
 network-sandboxed.
 
@@ -59,12 +58,33 @@ cargo run --locked --example check-installers -- `
 It captures checksum/path/link refusals, replacement and locked-executable
 preservation, constructed recovery states, postcommit backup cleanup failure,
 retained notices and selective removal. It never terminates existing Ripscope
-processes. These checks cover the actual tested Windows environment; they do not
+processes. These checks cover the actual tested Windows environment. They do not
 qualify every Windows endpoint or baseline-only processor.
 
-The manual publication guard and exact repository/workflow/tag/source attestation
-verification flags are in [Linux release preparation](linux-release.md#guarded-release-workflow).
-The release tool never signs, uploads or publishes artifacts when run locally.
+### Installer replacement
+
+The installer needs PowerShell 5.1 or newer. It validates the archive's paths, inventory and hashes,
+then stages on the destination volume. It refuses directory and reparse-point
+executable destinations. Replacing an executable uses `File.Replace`, while a
+new installation uses a non-overwriting move. Close active sessions when Windows
+locks the executable. The installer does not terminate processes.
+
+A replacement error can occur after the old file moved to its backup. Recovery
+restores it only when the destination is absent and the backup is a regular file
+matching the recorded old hash. An uncertain outcome retains staging and backup
+files and reports their absolute paths. Backup cleanup after a verified successful
+replacement can leave a reported backup while installation still succeeds.
+
+The retained `.ripscope-notices-*` directory contains licences, build identity
+and editor sources. `ORIGINAL-ARCHIVE-MANIFEST.sha256` describes the original ZIP,
+while `BUILD.json` and `INSTALLATION.txt` identify the moved executable by SHA-256.
+Earlier notices directories remain after an update.
+
+The [publication and recovery procedure](linux-release.md#weekly-releases)
+describes the manual publication guard. Use the
+[attestation verification flags](linux-release.md#attestation-verification) to
+check the exact repository, workflow, tag and source.
+The local build and smoke commands above do not sign, upload or publish artifacts.
 
 ## WinGet package
 
@@ -73,8 +93,8 @@ portable package. It unpacks the whole ZIP, keeps its licences and editor source
 and puts the `ripscope` command on PATH. `winget upgrade` and `winget uninstall`
 replace and remove it. Project indexes and the editors' cache stay where they are.
 
-After each published release, the `WinGet` workflow writes the release's three
-manifests from its published ZIP and checks them on GitHub-hosted Windows. The check
+The [WinGet workflow](../.github/workflows/winget.yml) writes manifests from a
+published ZIP and checks them on native Windows. The check
 validates the manifests, installs the previous release, upgrades to the new one,
 finds `ripscope` on a freshly read PATH, indexes and searches a project, runs the
 editors' install command and removes the package. The manifests are in the run's
@@ -100,20 +120,19 @@ the release tool.
 
 ### Submission
 
-The package identifier is `PederBergan.Ripscope`. Submitting a version means opening
-a pull request in `microsoft/winget-pkgs` with that version's manifest directory.
-WinGet's own validation and moderators review it there. Automatic releases dispatch
-the WinGet workflow with submission enabled after publication. It uses the checked
-ZIP, completes the PR checklist from check evidence, and verifies the published
-description. Manual runs default to preparation without public changes. To retry
-submission or an unfinished description, run the workflow on `main` with the same
-published tag and submission enabled. An existing same-version PR is reused, and
-manual description edits are preserved. The `distribution` environment needs
-`WINGET_TOKEN`, and the repository variable `WINGET_ENABLED` must be `true`.
-Keep that token public-only. A separate `WINGET_FORK_TOKEN` in the same environment,
-restricted to the submission fork with Contents and Workflows write permissions,
-synchronizes the fork before submission. Preparation does not use that credential.
-Synchronization does not force or overwrite a divergent fork.
+The package identifier is `PederBergan.Ripscope`. Submission opens a pull request
+in `microsoft/winget-pkgs` with the checked version's manifest directory. WinGet's
+validation and moderators review it there.
+
+To retry submission or an unfinished description, run the WinGet workflow on
+`main` for the same published tag with submission enabled. It reuses an existing
+same-version PR and preserves manual description edits. Preparation without
+submission makes no public changes.
+
+Submission uses a public-only credential. Synchronizing the submission fork uses
+a separate fork-write credential and never forces a divergent fork. See the
+workflow for its authentication inputs. Preparation does not use the fork-write
+credential.
 The CLA checkbox reflects Microsoft's successful check and does not sign an agreement.
 Once WinGet's source lists the version, check
 `winget install PederBergan.Ripscope` from that source on a clean Windows account

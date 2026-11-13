@@ -1586,11 +1586,7 @@ mod tests {
             .unwrap();
         let summary = fs::read_to_string(root.join("docs/SUMMARY.md")).unwrap();
         let user = summary.split("\n# Project\n").next().unwrap();
-        let mut files = vec![
-            PathBuf::from("README.md"),
-            PathBuf::from("docs/linux-install.md"),
-            PathBuf::from("docs/windows-install.md"),
-        ];
+        let mut files = vec![PathBuf::from("README.md")];
         files.extend(INSTALLERS.map(PathBuf::from));
         files.extend(
             chapters(user)

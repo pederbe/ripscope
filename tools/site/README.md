@@ -56,25 +56,29 @@ in Cloudflare's build image. It resolves the published version from the tagged
 weekly releases while documentation can still ship from `main`. Local `--dev`
 and `--deploy` builds do not publish.
 
-The Cloudflare bootstrap explicitly runs the pinned npm version through `npx`.
-The image's default npm 10 does not honor the dependency lock's scoped overrides.
-The selected npm supports the image's Node.js 24 runtime, and Renovate maintains
-its version in `scripts/build-site.sh`.
+After a local build, validate static hosting without publishing:
 
-The Workers Builds command first fetches and checks out `main`, then runs
-`bash scripts/build-site.sh --cloudflare`. The release workflow calls a dedicated
-Cloudflare deploy hook after publishing and updating the editor branch. The hook builds `main` again, refreshing the
-displayed version without replacing newer documentation with the release's frozen
-snapshot. Its URL is stored in the `CLOUDFLARE_DEPLOY_HOOK` repository secret. A failed
-hook request fails website delivery. Retry Website deployment in GitHub Actions,
-without rebuilding archives or republishing the crate.
+```sh
+npm ci --ignore-scripts --no-audit --no-fund --prefix tools/site
+env WRANGLER_SEND_METRICS=false node tools/site/node_modules/wrangler/bin/wrangler.js deploy --dry-run --config wrangler.jsonc
+```
+
+Production builds use current `main` for documentation and the tagged `release`
+branch for download links. This lets documentation ship independently of a
+release. A release refresh uses the same source selection.
+
+If the website refresh request fails, retry the
+[Website deployment workflow](../../.github/workflows/website-deploy.yml)
+without rebuilding archives or republishing the crate. An accepted request means
+Cloudflare has started a build. Check Cloudflare's build and deployment result
+before treating website delivery as complete.
 
 Only chapters selected by `docs/SUMMARY.md`, their local assets, resolved Markdown
 includes and the theme enter the documentation build. `--list-inputs` lists the
 documentation source closure. It does not
 include general repository files, landing assets or build tools. Internal link and
 anchor checks are mandatory. Add `--check-external` to check remote responses with
-an installed `lychee`; temporary network failures are reported as failures.
+an installed `lychee`. Temporary network failures are reported as failures.
 
 The required `evidence/sources.json` version 1 contains only `version`, `metadata`
 and `mappings`. Its metadata array names individual files under `evidence/`, and
@@ -83,8 +87,8 @@ each mapping names one canonical fixture file and its path under
 declared files and the map itself to
 `/evidence/` before checking links, including during `--docs-only` builds.
 `--list-inputs` includes the map, metadata and original sources. Capture copies
-are generated from the canonical fixtures; their aliases are never maintained
-separately. Unexpected files are omitted even when tracked; physical capture
+are generated from the canonical fixtures. Their aliases are never maintained
+separately. Unexpected files are omitted even when tracked. Physical capture
 aliases are ignored.
 The paths `site/docs` and `site/evidence` are reserved for generated output.
 
@@ -96,7 +100,7 @@ Chrome available, and run `scripts/build-site.sh --dev --render-diagrams`.
 light SVGs, remove obsolete renders identified by the build, and commit them.
 Each Mermaid fence needs a following `<!-- description: ... -->` caption that
 explains the relationships in text. JavaScript here is the Mermaid web renderer's
-build-time ecosystem; the site builder is Rust.
+build-time ecosystem. The site builder is Rust.
 
 Run the tooling checks with:
 
@@ -114,13 +118,8 @@ version or sample data.
 Combined development and deployment builds also copy the canonical root `install.sh`
 and `install.ps1` to the site root. Documentation-only builds omit those scripts.
 `--list-inputs` includes both canonical installers for the public source closure.
-They must be regular files; symlinks and `site/install.sh` / `site/install.ps1`
+They must be regular files. Symlinks and `site/install.sh` / `site/install.ps1`
 shadow copies are refused. Keep only the root sources when changing installation.
 
 Static hosting configuration and automatic deployment are described in
 [Website hosting and deployment](../../docs/project/website-hosting.md).
-
-The optional tooling lock retains patched KaTeX and scopes Sharp 0.35.5 and
-Undici 8.12.3 overrides to Miniflare. These versions correct advisories in
-its pinned dependencies while retaining the selected Wrangler version. They affect
-local hosting and deployment tooling, rather than files served to visitors.
