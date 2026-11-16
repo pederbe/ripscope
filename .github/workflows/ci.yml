@@ -21,6 +21,7 @@ concurrency:
 env:
   CARGO_TERM_COLOR: always
   CARGO_INCREMENTAL: 0
+  KACHE_KEY_ENV_VARS: CARGO_MANIFEST_DIR
 
 jobs:
   changes:
@@ -62,7 +63,6 @@ jobs:
               - '!scripts/build-site.sh'
               - '!wrangler.jsonc'
               - '!.gitignore'
-              - '!.github/workflows/ci.yml'
               - '!.github/workflows/docs.yml'
               - '!.github/workflows/release.yml'
               - '!.github/workflows/release-plz.yml'
@@ -118,9 +118,12 @@ jobs:
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
         with:
           toolchain: stable
-      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
+      - uses: kunobi-ninja/kache-action@ad7317540dcdd71c904f7a60a87b620a0c0e67ed # v1
         with:
-          workspaces: tools/release
+          version: v2.1.1
+          cache-key-prefix: kache-${{ github.job }}
+          cache-executables: true
+          pr-comment: false
       - uses: taiki-e/install-action@ab49d3c64680143e184118bed66a46419fc15519 # v2
         with:
           tool: git-cliff@2.14.2
@@ -161,7 +164,12 @@ jobs:
           toolchain: stable
           components: rustfmt, clippy
 
-      - uses: Swatinem/rust-cache@d1527c8f67ef9af357290475d4af4b0fab8f12e0 # v2
+      - uses: kunobi-ninja/kache-action@ad7317540dcdd71c904f7a60a87b620a0c0e67ed # v1
+        with:
+          version: v2.1.1
+          cache-key-prefix: kache-${{ github.job }}
+          cache-executables: true
+          pr-comment: false
 
       - name: Format
         if: runner.os == 'Linux' && (github.event_name != 'pull_request' || needs.changes.outputs.code != 'false')
