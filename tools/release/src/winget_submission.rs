@@ -7,10 +7,10 @@ use std::{
     process::{Command, Stdio},
 };
 
-type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
-const REPO: &str = "microsoft/winget-pkgs";
+pub(super) type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
+pub(super) const REPO: &str = "microsoft/winget-pkgs";
 
-fn gh(args: &[&str], input: Option<&Value>) -> Result<String> {
+pub(super) fn gh(args: &[&str], input: Option<&Value>) -> Result<String> {
     let mut command = Command::new("gh");
     command
         .args(args)
@@ -34,7 +34,7 @@ fn gh(args: &[&str], input: Option<&Value>) -> Result<String> {
     Ok(String::from_utf8(out.stdout)?)
 }
 
-fn api(path: &str) -> Result<Value> {
+pub(super) fn api(path: &str) -> Result<Value> {
     Ok(serde_json::from_str(&gh(&["api", path], None)?)?)
 }
 
@@ -130,32 +130,51 @@ fn matches_version(title: &str, package: &str, version: &str) -> bool {
             .any(|word| *word == version || word.strip_prefix('v') == Some(version))
 }
 
-fn find_pr(package: &str, version: &str) -> Result<Option<u64>> {
+pub(super) fn search_prs(query: &str) -> Result<Vec<Value>> {
     let search = gh(
         &[
             "api",
+            "--paginate",
+            "--slurp",
             "--method",
             "GET",
             "search/issues",
             "-f",
-            &format!("q=repo:{REPO} is:pr is:open {package} in:title"),
+            &format!("q=repo:{REPO} is:pr {query}"),
             "-f",
             "per_page=100",
         ],
         None,
     )?;
-    let search: Value = serde_json::from_str(&search)?;
-    if search["incomplete_results"] != false
-        || search["total_count"]
-            .as_u64()
-            .ok_or("missing search count")?
-            > 100
-    {
-        return Err("incomplete WinGet duplicate search".into());
+    search_results(serde_json::from_str(&search)?)
+}
+
+fn search_results(pages: Vec<Value>) -> Result<Vec<Value>> {
+    let count = pages.first().ok_or("missing search page")?["total_count"]
+        .as_u64()
+        .ok_or("missing search count")?;
+    let mut items = Vec::new();
+    for page in pages {
+        if page["incomplete_results"] != false || page["total_count"] != count {
+            return Err("incomplete WinGet PR search".into());
+        }
+        items.extend(
+            page["items"]
+                .as_array()
+                .ok_or("missing search results")?
+                .iter()
+                .cloned(),
+        );
     }
-    let matches: Vec<_> = search["items"]
-        .as_array()
-        .ok_or("missing search results")?
+    if items.len() as u64 != count {
+        return Err("incomplete WinGet PR search".into());
+    }
+    Ok(items)
+}
+
+fn find_pr(package: &str, version: &str) -> Result<Option<u64>> {
+    let search = search_prs(&format!("is:open {package} in:title"))?;
+    let matches: Vec<_> = search
         .iter()
         .filter(|pr| matches_version(pr["title"].as_str().unwrap_or(""), package, version))
         .collect();
@@ -268,6 +287,9 @@ pub fn run(args: &[String]) -> Result<()> {
         return Err("expected a package identifier and stable numeric version".into());
     }
     let (schema, files) = manifests(Path::new(directory), package, version)?;
+    if mode == "--submit" {
+        crate::winget_cleanup::require_latest(version)?;
+    }
     if std::env::var("WINGET_CHECKED").as_deref() != Ok("true") {
         return Err("Windows manifest checks have not passed".into());
     }
@@ -296,6 +318,7 @@ pub fn run(args: &[String]) -> Result<()> {
         }
         let client = std::env::var("WINGET_SUBMIT")
             .map_err(|_| "WINGET_SUBMIT must name the verified Komac executable")?;
+        crate::winget_cleanup::require_latest(version)?;
         let status = Command::new(client)
             .args(["submit", directory, "--yes"])
             .env(
@@ -441,6 +464,7 @@ pub fn run(args: &[String]) -> Result<()> {
     let completed = complete_body(&seeded, package, version, &schema, &evidence, cla)?;
     fs::write("winget-pr-body.md", &completed)?;
     if mode == "--submit" && completed.trim_end() != body.trim_end() {
+        crate::winget_cleanup::require_latest(version)?;
         if std::env::var("WINGET_CHECKED").as_deref() != Ok("true") {
             return Err("Windows manifest checks have not passed".into());
         }
@@ -474,6 +498,21 @@ pub fn run(args: &[String]) -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn search_collects_all_pages_and_rejects_partial_results() {
+        let first = json!({"total_count":2, "incomplete_results":false, "items":[{"number":1}]});
+        let second = json!({"total_count":2, "incomplete_results":false, "items":[{"number":2}]});
+        assert_eq!(
+            search_results(vec![first.clone(), second.clone()])
+                .unwrap()
+                .len(),
+            2
+        );
+        assert!(search_results(vec![first]).is_err());
+        let mut incomplete = second;
+        incomplete["incomplete_results"] = json!(true);
+        assert!(search_results(vec![incomplete]).is_err());
+    }
     #[test]
     fn komac_template_seeding_preserves_same_line_and_later_edits() {
         let body = "### Pull request has been created with [komac](https://github.com/russellbanks/Komac) v2.17.2 :rocket: Same-line note.\n\nLater note.\n";

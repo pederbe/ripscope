@@ -129,6 +129,12 @@ To retry submission or an unfinished description, run the WinGet workflow on
 same-version PR and preserves manual description edits. Preparation without
 submission makes no public changes.
 
+New releases and submission runs close this account's older, unmerged Ripscope
+package PRs and delete their submission branches before checking the new package.
+A retry also finishes branch deletion for an already closed PR. Only the latest
+published release can be submitted. Runs that change PRs share one queue, so an
+older run cannot reopen a superseded submission after a newer run finishes.
+
 Submission uses a public-only credential. Synchronizing the submission fork uses
 a separate fork-write credential and never forces a divergent fork. See the
 workflow for its authentication inputs. Preparation does not use the fork-write

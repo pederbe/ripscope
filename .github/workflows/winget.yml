@@ -4,7 +4,8 @@ name: WinGet
 # Windows ZIP and checks them with the WinGet client: installing the previous release,
 # upgrading to this one, a search, the editors' install command and removal. It never
 # changes a release. Automatic release dispatches also submit and complete the
-# WinGet PR. CI and manual preparation remain read-only by default.
+# WinGet PR. Published releases and submission runs retire older pending PRs.
+# CI and manual preparation remain read-only by default.
 
 on:
   # A release the maintainer publishes from a draft.
@@ -27,24 +28,27 @@ permissions:
   contents: read
 
 concurrency:
-  group: winget-${{ github.event.release.tag_name || inputs.tag || github.ref }}
+  group: winget-${{ (github.event_name == 'release' || inputs.submit) && 'submission' || inputs.tag || github.ref }}
   cancel-in-progress: false
+  queue: max
 
 jobs:
   manifests:
     runs-on: windows-2025
     timeout-minutes: 45
-    environment: ${{ inputs.submit && 'distribution' || '' }}
+    environment: ${{ (github.event_name == 'release' || inputs.submit) && 'distribution' || '' }}
     steps:
       - name: Require submission setup
-        if: inputs.submit
+        if: github.event_name == 'release' || inputs.submit
         shell: bash
         env:
           ENABLED: ${{ vars.WINGET_ENABLED }}
           TOKEN: ${{ secrets.WINGET_TOKEN }}
+          FORK_TOKEN: ${{ secrets.WINGET_FORK_TOKEN }}
         run: |
           test "$ENABLED" = true || { echo 'WinGet submission is disabled' >&2; exit 1; }
           test -n "$TOKEN" || { echo 'WINGET_TOKEN is not configured in distribution' >&2; exit 1; }
+          test -n "$FORK_TOKEN" || { echo 'WINGET_FORK_TOKEN is not configured in distribution' >&2; exit 1; }
       # The tools come from the default branch, or the branch under test, since older
       # release tags predate them.
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -54,6 +58,13 @@ jobs:
       - uses: dtolnay/rust-toolchain@df2a88e9fe4098bad09cb42c3dec7187f15861fc # master
         with:
           toolchain: stable
+      - name: Retire superseded WinGet submissions
+        if: github.event_name == 'release' || inputs.submit
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.WINGET_TOKEN }}
+          WINGET_FORK_TOKEN: ${{ secrets.WINGET_FORK_TOKEN }}
+        run: cargo run --locked --manifest-path tools/release/Cargo.toml -- winget-retire
       - name: Select the published release and its predecessor
         id: release
         shell: bash
