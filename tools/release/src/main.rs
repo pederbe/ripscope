@@ -1,5 +1,5 @@
 //! Build, inspect and smoke the local release archives. Apart from the package
-//! repository commands below, nothing here uploads, signs or publishes. The guarded
+//! repository and WinGet submission commands below, nothing here uploads, signs or publishes. The guarded
 //! release workflow does that separately.
 //!
 //! - `linux`: build the glibc 2.28 x86-64 archive in pinned offline containers, test it
@@ -13,6 +13,9 @@
 //! - `winget VERSION ARCHIVE DATE OUT`: write the WinGet manifests for a checked release ZIP.
 //! - `winget-check PREVIOUS CURRENT INSTALLER WORK`: install, upgrade, use and remove two
 //!   versions' manifests with the WinGet client.
+//! - `winget-submit DIRECTORY PACKAGE VERSION (--prepare|--submit)`: prepare or submit
+//!   the latest release's checked manifests and complete the upstream PR template.
+//! - `winget-retire`: close superseded Ripscope package PRs and delete their branches.
 //! - `package-repository REPOSITORY PUBLIC_KEY PACKAGE...`: add published packages to a
 //!   local copy of the apt and dnf repository and sign it.
 //! - `package-repository-check REPOSITORY ARCHIVE WORK`: install, upgrade, use and remove
@@ -32,12 +35,13 @@ mod repository;
 mod smoke;
 mod windows;
 mod winget;
+mod winget_cleanup;
 mod winget_submission;
 mod workflow;
 
 use std::process::ExitCode;
 
-const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | check-automated-environment | release-notes | check-release-notes | winget | winget-check | package-repository | package-repository-check | package-repository-upload | profile) [OPTIONS]\n\
+const USAGE: &str = "usage: ripscope-release (linux | windows | windows-smoke | check-tag | check-environment | check-automated-environment | release-notes | check-release-notes | winget | winget-check | winget-submit | winget-retire | package-repository | package-repository-check | package-repository-upload | profile) [OPTIONS]\n\
 Run a command with --help for its options. See docs/linux-release.md and docs/windows-release.md.";
 
 fn main() -> ExitCode {
@@ -54,6 +58,7 @@ fn main() -> ExitCode {
         Some("winget") => winget::run(&args[1..]),
         Some("winget-check") => winget::check(&args[1..]),
         Some("winget-submit") => winget_submission::run(&args[1..]),
+        Some("winget-retire") => winget_cleanup::run(&args[1..]),
         Some("package-repository") => repository::run(&args[1..]),
         Some("package-repository-check") => repository::check(&args[1..]),
         Some("package-repository-upload") => repository::upload(&args[1..]),
