@@ -223,6 +223,7 @@ jobs:
         with:
           ref: ${{ inputs.source_sha }}
           fetch-depth: 0
+          persist-credentials: false
       - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8
         with:
           toolchain: stable
@@ -272,7 +273,6 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ inputs.tag }}
-          SOURCE_SHA: ${{ inputs.source_sha }}
           AUTOMATIC: ${{ inputs.automatic }}
         run: |
           set -euo pipefail
@@ -303,11 +303,18 @@ jobs:
           fi
           if [ "$AUTOMATIC" = true ]; then
             gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false --latest
-            # Plugin managers follow this branch. Older release tags can have
-            # sibling histories, so retain the lease when advancing it.
-            old=$(git ls-remote origin refs/heads/release | cut -f1)
-            git push --force-with-lease="refs/heads/release:$old" origin "$SOURCE_SHA:refs/heads/release"
           fi
+      - name: Advance the editor release branch
+        if: inputs.automatic
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
+          SOURCE_SHA: ${{ inputs.source_sha }}
+        run: |
+          set -euo pipefail
+          # Advancing this branch can include reviewed workflow changes.
+          gh auth setup-git --hostname github.com
+          old=$(git ls-remote origin refs/heads/release | cut -f1)
+          git push --force-with-lease="refs/heads/release:$old" origin "$SOURCE_SHA:refs/heads/release"
       - name: Dispatch release follow-ups
         if: inputs.automatic
         env:
