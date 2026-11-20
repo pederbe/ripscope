@@ -1393,24 +1393,16 @@ mod tests {
     use std::path::PathBuf;
     use std::process::Command;
 
-    fn fixture() -> PathBuf {
-        static BUILT: std::sync::OnceLock<()> = std::sync::OnceLock::new();
-        let executable = std::env::current_exe().unwrap();
-        let directory = executable.parent().unwrap();
-        let directory = if directory.file_name().unwrap() == "deps" {
-            directory.parent().unwrap().join("examples")
-        } else {
-            directory.to_owned()
-        };
-        let fixture = directory.join(format!("workflow-fixture{}", std::env::consts::EXE_SUFFIX));
+    fn fixture() -> &'static Path {
+        static BUILT: std::sync::OnceLock<PathBuf> = std::sync::OnceLock::new();
         BUILT.get_or_init(|| {
-            // Cross-built native tests reuse the exported binaries without guest Rust.
-            if Path::new(env!("CARGO")).is_file() {
+            let fixture = if Path::new(env!("CARGO")).is_file() {
                 let built = Command::new("cargo")
                     .current_dir(env!("CARGO_MANIFEST_DIR"))
                     .args([
                         "build",
                         "--locked",
+                        "--message-format=json-render-diagnostics",
                         "--example",
                         "workflow-fixture",
                         "--example",
@@ -1423,7 +1415,21 @@ mod tests {
                     "{}",
                     String::from_utf8_lossy(&built.stderr)
                 );
-            }
+                String::from_utf8_lossy(&built.stdout)
+                    .lines()
+                    .filter_map(|line| serde_json::from_str::<Value>(line).ok())
+                    .find(|message| {
+                        message["reason"] == "compiler-artifact"
+                            && message["target"]["name"] == "workflow-fixture"
+                    })
+                    .and_then(|message| message["executable"].as_str().map(PathBuf::from))
+                    .expect("Cargo did not report the workflow-fixture executable")
+            } else {
+                // Cross-built native tests reuse the exported binaries beside the test.
+                std::env::current_exe()
+                    .unwrap()
+                    .with_file_name(format!("workflow-fixture{}", std::env::consts::EXE_SUFFIX))
+            };
             // Microsoft Defender checks a newly linked executable on its first launch,
             // in about half a second, but ten seconds or more when its cloud lookup is
             // slow. Launch the fixture once here, untimed, so that check never counts
@@ -1438,8 +1444,8 @@ mod tests {
                 "{}",
                 String::from_utf8_lossy(&launched.stderr)
             );
-        });
-        fixture
+            fixture
+        })
     }
 
     #[test]
