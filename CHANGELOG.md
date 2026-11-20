@@ -6,7 +6,7 @@ All notable changes are recorded here. The format follows
 index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
-## [0.3.2] - 2026-11-20
+## [0.3.3] - 2026-11-20
 
 ### Dependencies
 
@@ -22,7 +22,7 @@ index format or command-line behavior, and its entry says so.
 - Clarify the contributor link to design decisions ([#143](https://github.com/pederbe/ripscope/pull/143))
 - Separate contributor tasks from maintenance operations ([#146](https://github.com/pederbe/ripscope/pull/146))
 
-[Full comparison](https://github.com/pederbe/ripscope/compare/v0.3.1...v0.3.2)
+[Full comparison](https://github.com/pederbe/ripscope/compare/v0.3.1...v0.3.3)
 ## [0.3.1] - 2026-11-12
 
 ### Changed
