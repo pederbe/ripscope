@@ -6,7 +6,23 @@ All notable changes are recorded here. The format follows
 index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
+## [0.3.2] - 2026-11-20
 
+### Dependencies
+
+- Update daily dependencies ([#148](https://github.com/pederbe/ripscope/pull/148))
+- Update daily dependencies ([#149](https://github.com/pederbe/ripscope/pull/149))
+- Update daily dependencies ([#152](https://github.com/pederbe/ripscope/pull/152))
+- Update daily dependencies ([#153](https://github.com/pederbe/ripscope/pull/153))
+- Update daily dependencies ([#154](https://github.com/pederbe/ripscope/pull/154))
+
+### Documentation
+
+- Correct release attestation verification command ([#141](https://github.com/pederbe/ripscope/pull/141))
+- Clarify the contributor link to design decisions ([#143](https://github.com/pederbe/ripscope/pull/143))
+- Separate contributor tasks from maintenance operations ([#146](https://github.com/pederbe/ripscope/pull/146))
+
+[Full comparison](https://github.com/pederbe/ripscope/compare/v0.3.1...v0.3.2)
 ## [0.3.1] - 2026-11-12
 
 ### Changed
