@@ -331,7 +331,7 @@ printf '{"success":true,"result":{"build_uuid":"fixture"}}' > "${!#}"
     }
 
     #[test]
-    fn release_pr_preparation_waits_for_the_schedule_and_refreshes_an_open_pr() {
+    fn release_pr_waits_for_the_schedule_and_drafts_before_a_refresh() {
         let root = tempfile::tempdir().unwrap();
         fs::create_dir(root.path().join("bin")).unwrap();
         executable(
@@ -339,18 +339,27 @@ printf '{"success":true,"result":{"build_uuid":"fixture"}}' > "${!#}"
             "gh",
             r#"#!/bin/bash
 set -euo pipefail
-test "$1 $2" = 'pr list'
-echo "$FIXTURE_MODE"
+case "$1 $2" in
+  'pr list') printf '%s\n' "$FIXTURE_MODE";;
+  'pr ready'|'pr merge') echo "$*" >> "$FIXTURE_TRACE";;
+  *) exit 1;;
+esac
 "#,
         );
         let script = release_step("Prepare weekly release or refresh an open release pull request");
-        for (event, open, expected) in [
-            ("push", "0", "run=false\n"),
-            ("push", "1", "run=true\n"),
-            ("schedule", "0", "run=true\n"),
-            ("workflow_dispatch", "0", "run=true\n"),
+        for (event, open, expected, trace) in [
+            ("push", "", "run=false\n", ""),
+            (
+                "push",
+                "123",
+                "run=true\n",
+                "pr ready 123 --undo --repo fixture/ripscope\n",
+            ),
+            ("schedule", "", "run=true\n", ""),
+            ("workflow_dispatch", "", "run=true\n", ""),
         ] {
             fs::write(root.path().join("output"), "").unwrap();
+            fs::write(root.path().join("trace"), "").unwrap();
             let output = run(
                 root.path(),
                 &format!("export EVENT={event}\n{script}"),
@@ -361,7 +370,25 @@ echo "$FIXTURE_MODE"
                 fs::read_to_string(root.path().join("output")).unwrap(),
                 expected
             );
+            assert_eq!(
+                fs::read_to_string(root.path().join("trace")).unwrap(),
+                trace
+            );
         }
+        let promote = release_step("Mark the completed release ready and enable auto-merge");
+        let output = run(
+            root.path(),
+            &format!("export PR='{{\"number\":123}}'\n{promote}"),
+            "",
+        );
+        assert!(output.status.success(), "{output:?}");
+        assert_eq!(
+            fs::read_to_string(root.path().join("trace")).unwrap(),
+            concat!(
+                "pr ready 123 --repo fixture/ripscope\n",
+                "pr merge 123 --repo fixture/ripscope --squash --auto\n",
+            )
+        );
     }
 
     fn release_step(name: &str) -> String {
