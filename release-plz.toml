@@ -7,6 +7,7 @@ git_release_enable = false
 git_tag_name = "v{{ version }}"
 release_always = false
 features_always_increment_minor = true
+pr_draft = true
 pr_name = "chore: release{% if version %} v{{ version }}{% endif %}"
 pr_body = """
 ## Problem

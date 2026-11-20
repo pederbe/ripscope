@@ -1,9 +1,9 @@
 name: Release-plz
 
-# Every Thursday, release-plz opens or updates one release pull request when there
-# are unreleased changes. It merges once CI passes. Pushes to main refresh an
-# open release pull request. Merging it tags the version, and the Release
-# workflow builds and publishes it.
+# Every Thursday, release-plz prepares a release pull request when there are
+# unreleased changes. Pushes to main refresh an open release pull request.
+# The draft becomes ready after the changelog and editor metadata are complete.
+# Merging it tags the version, and the Release workflow builds and publishes it.
 on:
   push:
     branches: [main]
@@ -33,14 +33,17 @@ jobs:
           EVENT: ${{ github.event_name }}
         run: |
           set -euo pipefail
-          if [ "$EVENT" = push ]; then
-            open=$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --json headRefName \
-              --jq '[.[] | select(.headRefName | startswith("release-plz-"))] | length')
-            if [ "$open" = 0 ]; then
-              echo run=false >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
+          open=$(gh pr list --repo "$GITHUB_REPOSITORY" --base main --state open \
+            --json number,headRefName,isCrossRepository \
+            --jq '.[] | select(.isCrossRepository | not) | select(.headRefName | startswith("release-plz-")) | .number')
+          if [ "$EVENT" = push ] && [ -z "$open" ]; then
+            echo run=false >> "$GITHUB_OUTPUT"
+            exit 0
           fi
+          while read -r pr; do
+            [ -n "$pr" ] || continue
+            gh pr ready "$pr" --undo --repo "$GITHUB_REPOSITORY"
+          done <<< "$open"
           echo run=true >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         if: steps.prepare.outputs.run == 'true'
@@ -98,12 +101,16 @@ jobs:
             git push origin "HEAD:refs/heads/$RELEASE_BRANCH"
           fi
           gh pr edit "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --title "chore: release v$version"
-      - name: Merge the release pull request once CI passes
+      - name: Mark the completed release ready and enable auto-merge
         if: steps.release-plz.outputs.prs_created == 'true'
         env:
           GH_TOKEN: ${{ secrets.RELEASE_PLZ_TOKEN }}
           PR: ${{ steps.release-plz.outputs.pr }}
-        run: gh pr merge "$(jq -r .number <<< "$PR")" --repo "$GITHUB_REPOSITORY" --squash --auto
+        run: |
+          set -euo pipefail
+          pr=$(jq -er .number <<< "$PR")
+          gh pr ready "$pr" --repo "$GITHUB_REPOSITORY"
+          gh pr merge "$pr" --repo "$GITHUB_REPOSITORY" --squash --auto
 
   release:
     if: github.repository == 'pederbe/ripscope' && github.event_name == 'push'
