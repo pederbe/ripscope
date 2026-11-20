@@ -296,8 +296,10 @@ jobs:
               done
             fi
           else
+            # Preflight already verified the tag's commit. An explicit target can
+            # require workflow write access after the default branch advances.
             gh release create "$TAG" "${assets[@]}" --repo "$GITHUB_REPOSITORY" --verify-tag \
-              --target "$SOURCE_SHA" --draft --title "Ripscope ${TAG#v}" --notes-file "$RUNNER_TEMP/notes.md"
+              --draft --title "Ripscope ${TAG#v}" --notes-file "$RUNNER_TEMP/notes.md"
           fi
           if [ "$AUTOMATIC" = true ]; then
             gh release edit "$TAG" --repo "$GITHUB_REPOSITORY" --draft=false --latest
