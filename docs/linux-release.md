@@ -234,10 +234,13 @@ because a workflow-token tag push does not start another workflow.
 Retry a failed Release run's failed jobs to keep successful builds and the original
 tag. If tag creation succeeded but dispatch failed, dispatch Release with that tag,
 its resolved commit as `source_sha`, and `publish=true` and `automatic=true`.
-Package, WinGet and website delivery each have their own workflow retry. If a source
-fix is needed, merge it and prepare a higher version through a new release pull
-request, preserving the old tag. Releases are serialized and an older tag cannot
-replace a newer published version or its editor branch.
+Package, WinGet and website delivery each have their own workflow retry. If a
+source fix is needed, merge it and prepare a higher version through a new release
+pull request, preserving the old tag. Wait for any active preparation run to
+finish before opening the pull request. Use a branch starting with
+`release-plz-recovery-` so later preparation runs wait for it. Releases are
+serialized and an older tag cannot replace a newer published version or its
+editor branch.
 
 Publication preflight checks the protected environment, public repository,
 existing tag and exact dispatch SHA. Each platform must satisfy its native

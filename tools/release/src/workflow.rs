@@ -347,16 +347,19 @@ esac
 "#,
         );
         let script = release_step("Prepare weekly release or refresh an open release pull request");
+        let recovery = r#"[{"number":158,"headRefName":"release-plz-recovery-0.3.3"}]"#;
         for (event, open, expected, trace) in [
-            ("push", "", "run=false\n", ""),
+            ("push", "[]", "run=false\n", ""),
             (
                 "push",
-                "123",
+                r#"[{"number":123,"headRefName":"release-plz-example"}]"#,
                 "run=true\n",
                 "pr ready 123 --undo --repo fixture/ripscope\n",
             ),
-            ("schedule", "", "run=true\n", ""),
-            ("workflow_dispatch", "", "run=true\n", ""),
+            ("schedule", "[]", "run=true\n", ""),
+            ("workflow_dispatch", "[]", "run=true\n", ""),
+            ("push", recovery, "run=false\n", ""),
+            ("schedule", recovery, "run=false\n", ""),
         ] {
             fs::write(root.path().join("output"), "").unwrap();
             fs::write(root.path().join("trace"), "").unwrap();

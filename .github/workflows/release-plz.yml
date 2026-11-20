@@ -1,7 +1,7 @@
 name: Release-plz
 
 # Every Thursday, release-plz prepares a release pull request when there are
-# unreleased changes. Pushes to main refresh an open release pull request.
+# unreleased changes. Pushes to main refresh an open automated release pull request.
 # The draft becomes ready after the changelog and editor metadata are complete.
 # Merging it tags the version, and the Release workflow builds and publishes it.
 on:
@@ -35,15 +35,19 @@ jobs:
           set -euo pipefail
           open=$(gh pr list --repo "$GITHUB_REPOSITORY" --base main --state open \
             --json number,headRefName,isCrossRepository \
-            --jq '.[] | select(.isCrossRepository | not) | select(.headRefName | startswith("release-plz-")) | .number')
-          if [ "$EVENT" = push ] && [ -z "$open" ]; then
+            --jq '[.[] | select(.isCrossRepository | not) | select(.headRefName | startswith("release-plz-"))]')
+          # A manually prepared recovery already carries the replacement version.
+          if jq -e 'any(.[]; .headRefName | startswith("release-plz-recovery-"))' <<< "$open" > /dev/null; then
+            echo run=false >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if [ "$EVENT" = push ] && [ "$open" = '[]' ]; then
             echo run=false >> "$GITHUB_OUTPUT"
             exit 0
           fi
           while read -r pr; do
-            [ -n "$pr" ] || continue
             gh pr ready "$pr" --undo --repo "$GITHUB_REPOSITORY"
-          done <<< "$open"
+          done < <(jq -r '.[].number' <<< "$open")
           echo run=true >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         if: steps.prepare.outputs.run == 'true'
