@@ -6,6 +6,16 @@ All notable changes are recorded here. The format follows
 index format or command-line behavior, and its entry says so.
 
 ## [Unreleased]
+## [0.3.4] - 2026-11-26
+
+### Dependencies
+
+- Update daily dependencies ([#162](https://github.com/pederbe/ripscope/pull/162))
+- Update daily dependencies ([#163](https://github.com/pederbe/ripscope/pull/163))
+- Update daily dependencies ([#165](https://github.com/pederbe/ripscope/pull/165))
+
+[Full comparison](https://github.com/pederbe/ripscope/compare/v0.3.3...v0.3.4)
+
 ## [0.3.3] - 2026-11-20
 
 ### Dependencies
