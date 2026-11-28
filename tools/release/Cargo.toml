@@ -26,6 +26,10 @@ toml = { version = "=1.2.3", default-features = false, features = ["parse", "ser
 ctrlc = { version = "=3.5.3", features = ["termination"] }
 rustix = { version = "=1.1.6", features = ["fs", "process"] }
 
+[target.'cfg(windows)'.dependencies]
+# Inspect loaded modules during archive smoke tests through safe Win32 bindings.
+winsafe = { version = "=0.0.29", features = ["psapi"] }
+
 [dev-dependencies]
 tempfile = "=3.27.0"
 
