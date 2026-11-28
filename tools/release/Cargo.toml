@@ -18,7 +18,7 @@ regex = "=1.13.2"
 serde-saphyr = { version = "=2.2.0", default-features = false, features = ["deserialize"] }
 # Receipts keep their members in the order the build records them.
 serde_json = { version = "=1.0.154", features = ["preserve_order"] }
-sha2 = "=0.11.1"
+sha2 = "=0.11.2"
 toml = { version = "=1.2.3", default-features = false, features = ["parse", "serde", "std"] }
 
 [target.'cfg(unix)'.dependencies]
