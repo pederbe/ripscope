@@ -1,11 +1,9 @@
-# A position-dependent Linux executable starts about 75 µs sooner, a tenth of a one-shot
-# query, because the loader relocates no data pages of its own. Shared libraries keep
-# their address randomisation.
 # Functions start on 64-byte boundaries, so a change elsewhere cannot move a hot loop
 # across one. Text and egrep searches take 3 to 8% less time, and timings do not shift
 # with unrelated code.
+# Use the default relocation model so ordinary builds can link procedural macros.
 [target.'cfg(all(target_os = "linux", target_arch = "x86_64"))']
-rustflags = ["-C", "relocation-model=static", "-C", "llvm-args=-align-all-functions=6"]
+rustflags = ["-C", "llvm-args=-align-all-functions=6"]
 
 # The bundled SQLite without what Ripscope never uses: memory-status accounting, which takes a
 # global lock on every allocation, the shared page-cache group that memory management needs,
