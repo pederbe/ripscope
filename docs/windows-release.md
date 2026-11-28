@@ -8,7 +8,8 @@ SQLite and the C runtime. The executable still needs Windows system DLLs.
 
 Use native Windows, Git, stable Rust and Visual Studio's C++ build tools. Run from
 Developer PowerShell for the installed stable Visual Studio, selecting a new
-external directory on local NTFS:
+external directory on local NTFS. Use a short work path so the unpacked executable
+path stays under 260 UTF-16 code units.
 
 ```powershell
 rustup update stable
@@ -32,10 +33,9 @@ and tool inventories, selects the
 compiler/linker explicitly, and runs serial release tests. PE inspection rejects
 dynamic CRT and foreign DLL imports, including delayed imports. Runtime smoke
 uses only Windows system directories on PATH and checks actual loaded DLL paths
-while a session answers queries. The product session keeps its restricted runtime
-environment. The separate Windows PowerShell inspector uses the normal host
-environment and a 30-second deadline. Its phase, JSON inventory and diagnostic log
-are retained beside the smoke receipt, including on failure. LF and CRLF cases cover stored/live separation,
+while a session answers queries. The release tool reads the module paths through
+the Windows API and records them in the smoke receipt before checking them.
+LF and CRLF cases cover stored/live separation,
 available rows with warnings, source deletion, changed-source Refresh and an
 unchanged Refresh that preserves the revision.
 

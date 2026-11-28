@@ -1,10 +1,7 @@
 //! Exercise exact Windows archive bytes with a minimal runtime environment.
 
 use crate::archive::{entry_path, zip_entries, zip_read};
-use crate::common::{
-    Ended, Result, capture_command, command_failure, inventory, json_text, run_logged, sha,
-    write_text,
-};
+use crate::common::{Result, capture_command, inventory, json_text, sha, write_text};
 use serde_json::{Map, Value, json};
 use std::fs;
 use std::io::{Read, Write};
@@ -308,62 +305,28 @@ fn exercise(smoke: &mut Smoke, work: &Path, system: &Path) -> Result<()> {
     Ok(())
 }
 
-/// The inspector is a host tool. Only the product Session gets the restricted
-/// environment. Keep phase/output files if the host probe cannot finish.
-fn module_inventory(system: &Path, pid: u32, work: &Path, label: &str) -> Result<Value> {
-    let powershell = system.join("System32/WindowsPowerShell/v1.0/powershell.exe");
-    let phase = work.join(format!("loaded-modules-{label}.stage"));
-    let listing = work.join(format!("loaded-modules-{label}.json"));
-    let log = work.join(format!("loaded-modules-{label}.log"));
-    let quoted = |path: &Path| path.to_string_lossy().replace('\'', "''");
-    let phase_arg = quoted(&phase);
-    let listing_arg = quoted(&listing);
-    // Process inspection needs the .NET API, without Get-Process's management
-    // module discovery and first-use loading on the host.
-    let script = format!(
-        "$ErrorActionPreference='Stop'; \
-         [IO.File]::WriteAllText('{phase_arg}','entered'); \
-         $p=[Diagnostics.Process]::GetProcessById({pid}); \
-         [IO.File]::WriteAllText('{phase_arg}','process'); \
-         $m=@($p.Modules | ForEach-Object {{$_.FileName}}); \
-         [IO.File]::WriteAllText('{phase_arg}','modules'); \
-         $json=ConvertTo-Json -InputObject $m -Compress; \
-         [IO.File]::WriteAllText('{listing_arg}',$json); \
-         [IO.File]::WriteAllText('{phase_arg}','complete')"
-    );
-    let arguments = [
-        powershell.to_string_lossy().into_owned(),
-        "-NoProfile".into(),
-        "-NonInteractive".into(),
-        "-Command".into(),
-        script,
-    ];
-    // A native child of PowerShell 7 inherits its incompatible module paths.
-    // Windows PowerShell must construct its own defaults for ConvertTo-Json.
-    let environment = std::env::vars_os()
-        .filter(|(name, _)| !name.to_string_lossy().eq_ignore_ascii_case("PSModulePath"))
-        .collect::<Vec<_>>();
-    let ended = run_logged(
-        &arguments,
-        None,
-        Some(&environment),
-        &log,
-        Some(Duration::from_secs(30)),
-        None,
-    )?;
-    if ended != Ended::Exit(0) {
-        let phase = fs::read_to_string(&phase).unwrap_or_else(|_| "before script entry".into());
-        let reason = match ended {
-            Ended::Deadline => "Loaded-module inspection timed out",
-            _ => "Loaded-module inspection failed",
-        };
-        return Err(format!(
-            "{reason} at phase {phase}: {}",
-            command_failure("host module probe", &log)
-        )
-        .into());
-    }
-    Ok(serde_json::from_slice(&fs::read(listing)?)?)
+/// Inspect the paused Session with the read permissions required by PSAPI.
+#[cfg(windows)]
+fn module_inventory(pid: u32) -> Result<Vec<String>> {
+    use winsafe::{HPROCESS, co::PROCESS};
+
+    let inspect = || {
+        let process =
+            HPROCESS::OpenProcess(PROCESS::QUERY_INFORMATION | PROCESS::VM_READ, false, pid)?;
+        process
+            .EnumProcessModules()?
+            .iter()
+            .map(|module| process.GetModuleFileNameEx(Some(module)))
+            .collect::<winsafe::SysResult<_>>()
+    };
+    inspect().map_err(|error| {
+        format!("Could not inspect loaded modules for process {pid}: {error}").into()
+    })
+}
+
+#[cfg(not(windows))]
+fn module_inventory(_pid: u32) -> Result<Vec<String>> {
+    Err("Loaded-module inspection requires Windows".into())
 }
 
 /// A Session answers queries while its loaded modules are checked, then Refreshes.
@@ -405,32 +368,28 @@ fn persistent(
         if first? != expected {
             return Err("Persistent response mismatch".into());
         }
-        let modules = module_inventory(
-            system,
-            child.id(),
-            project
-                .parent()
-                .ok_or("smoke project has no work directory")?,
-            label,
-        )?;
-        let names = modules
-            .as_array()
-            .filter(|names| !names.is_empty())
-            .ok_or("Loaded-module inspection returned no inventory")?;
+        let modules = module_inventory(child.id())?;
+        if modules.is_empty() {
+            return Err("Loaded-module inspection returned no inventory".into());
+        }
+        if let Some(Value::Object(loaded)) = smoke.receipt.get_mut("loaded_modules") {
+            loaded.insert(label.to_owned(), json!(&modules));
+        }
         let binary = smoke.binary.canonicalize()?;
         let allowed = [
             system.join("System32").canonicalize()?,
             system.join("WinSxS").canonicalize()?,
         ];
-        for name in names {
-            let path =
-                PathBuf::from(name.as_str().ok_or("module path is not text")?).canonicalize()?;
+        for name in modules {
+            // WinSafe uses a MAX_PATH + 1 buffer. A full buffer may be truncated.
+            if name.encode_utf16().count() >= 260 {
+                return Err(format!("Loaded module path may be truncated: {name}").into());
+            }
+            let path = fs::canonicalize(&name)
+                .map_err(|error| format!("Could not resolve loaded module {name}: {error}"))?;
             if path != binary && !allowed.iter().any(|directory| path.starts_with(directory)) {
                 return Err(format!("Non-system runtime module loaded: {}", path.display()).into());
             }
-        }
-        if let Some(Value::Object(loaded)) = smoke.receipt.get_mut("loaded_modules") {
-            loaded.insert(label.to_owned(), modules.clone());
         }
         input.write_all(b"r\n1replacement\nr\nq\n")?;
         drop(input);
@@ -484,62 +443,26 @@ mod tests {
 
     #[cfg(windows)]
     #[test]
-    fn host_module_probe_inspects_a_real_live_process() {
-        let root = tempfile::tempdir().unwrap();
+    fn host_module_probe_inspects_a_live_child_process() {
         let system = PathBuf::from(std::env::var_os("SystemRoot").unwrap());
-        let modules = match module_inventory(&system, std::process::id(), root.path(), "test") {
-            Ok(modules) => modules,
-            Err(error) => panic!("{error}; probe files retained at {}", root.keep().display()),
-        };
-        let executable = std::env::current_exe().unwrap().canonicalize().unwrap();
-        assert!(modules.as_array().unwrap().iter().any(|module| {
-            PathBuf::from(module.as_str().unwrap())
-                .canonicalize()
-                .unwrap()
-                == executable
-        }));
-        assert_eq!(
-            fs::read_to_string(root.path().join("loaded-modules-test.stage")).unwrap(),
-            "complete"
-        );
-    }
-
-    #[cfg(windows)]
-    #[test]
-    fn host_module_probe_uses_windows_powershell_module_paths() {
-        let root = tempfile::tempdir().unwrap();
-        let module = root.path().join("Microsoft.PowerShell.Utility");
-        fs::create_dir(&module).unwrap();
-        fs::write(
-            module.join("Microsoft.PowerShell.Utility.psd1"),
-            "@{RootModule='Utility.psm1';ModuleVersion='1.0.0';FunctionsToExport=@('ConvertTo-Json');CmdletsToExport=@()}",
-        )
-        .unwrap();
-        // Reproduce a host stuck loading/invoking ConvertTo-Json through inherited
-        // module paths, without depending on the runner's module cache.
-        fs::write(
-            module.join("Utility.psm1"),
-            "function ConvertTo-Json { [Threading.Thread]::Sleep(60000) }; Export-ModuleMember -Function ConvertTo-Json",
-        )
-        .unwrap();
-        let mut paths = vec![root.path().to_owned()];
-        if let Some(existing) = std::env::var_os("PSModulePath") {
-            paths.extend(std::env::split_paths(&existing));
-        }
-        let output = Command::new(std::env::current_exe().unwrap())
-            .args([
-                "--exact",
-                "smoke::tests::host_module_probe_inspects_a_real_live_process",
-                "--nocapture",
-            ])
-            .env("PSModulePath", std::env::join_paths(paths).unwrap())
-            .output()
+        let executable = system.join("System32/cmd.exe").canonicalize().unwrap();
+        let mut child = Command::new(&executable)
+            .args(["/d", "/c", "pause"])
+            .stdin(Stdio::piped())
+            .stdout(Stdio::piped())
+            .spawn()
             .unwrap();
+        let mut prompt = [0];
+        let ready = child.stdout.take().unwrap().read_exact(&mut prompt);
+        let modules = module_inventory(child.id());
+        let _ = child.kill();
+        child.wait().unwrap();
+        ready.unwrap();
         assert!(
-            output.status.success(),
-            "{}{}",
-            String::from_utf8_lossy(&output.stdout),
-            String::from_utf8_lossy(&output.stderr)
+            modules
+                .unwrap()
+                .iter()
+                .any(|module| fs::canonicalize(module).unwrap() == executable)
         );
     }
 
